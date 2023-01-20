@@ -1,0 +1,25 @@
+- name: default preconfig all nodes
+  hosts: all
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+
+  tasks:
+  
+    - name: installing needed libs
+      yum:
+        name:
+          - libselinux-python
+          - libselinux-python3
+          - epel-release
+        state: present
+        update_cache: true
+
+    - name: disable SELinux
+      selinux:
+        state: disabled
+
+    - name: Reboot VM now
+      reboot:
+        reboot_timeout: 600
