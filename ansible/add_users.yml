@@ -1,0 +1,29 @@
+- name: adding users and ssh public keys
+  hosts: all
+  vars_files:
+    - "./vars/users.yml"
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+
+  tasks:
+
+    - name: Creating new users
+      user:
+        name: "{{ item.name }}"
+        state: present
+        shell: "/bin/bash"
+        create_home: true
+      with_items: 
+        - "{{ users }}"
+
+    - name: Set authorized_keys
+      authorized_key:
+        user: "{{ item.name }}"
+        state: present
+        key: "{{ lookup('pipe','cat ../.metadata/keys/pub/{{ item.name }}.pub') }}"
+      with_items: 
+        - "{{ users }}"
+
+
