@@ -1,0 +1,58 @@
+- name: create LVM and fs on second disk (data)
+  hosts: all
+  gather_facts: false
+  become: true
+  vars:
+    dev: "/dev/vdb"
+    fs: "xfs"
+  become_user: "root"
+  become_method: "sudo"
+
+  tasks:
+
+    - name: installing dependences
+      yum:
+        name: lvm2
+        state: present
+        update_cache: true
+
+    - name: create data directory if doesn't exist
+      file:
+        path: /data
+        state: directory
+        mode: '0755'
+
+    - name: create physical partition
+      parted:
+        device: "{{ dev }}"
+        number: 1
+        flags: [ lvm ]
+        state: present
+
+    - name: Create volume group vg_data
+      lvg:
+        vg: "vg_data"
+        pvs: "{{ dev }}1"
+        pvresize: true
+
+    - name: Create logical volume
+      lvol:
+        vg: "vg_data"
+        lv: "lv_data"
+        size: 100%FREE
+        state: present
+
+    - name: Create FS on volume
+      filesystem:
+        fstype: "{{ fs }}"
+        dev: /dev/vg_data/lv_data
+        state: present
+
+    - name: mount volume to /data
+      mount:
+        boot: true
+        path: /data
+        src: /dev/vg_data/lv_data
+        fstype: "{{ fs }}"
+        state: mounted
+
