@@ -1,0 +1,95 @@
+- name: installing needed soft and mysql
+  hosts: all
+  tags: mysql_inst
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+
+  tasks:
+  
+    - name: installing dependeses and tools
+      yum:
+        name:
+          - wget
+          - curl
+          - gcc
+          - make
+          - openssl-devel
+          - bzip2-devel
+          - certbot-nginx
+        state: present
+        update_cache: true
+
+    - name: creating distrib directory
+      file:
+        path: /data/distrib
+        state: directory
+        mode: "0755"
+
+    - name: download rpm for install mysql repo
+      shell:
+        cmd: "wget https://dev.mysql.com/get/mysql80-community-release-el7-7.noarch.rpm"
+        chdir: /data/distrib
+
+    - name: installing mysql repo
+      yum:
+        name: /data/distrib/mysql80-community-release-el7-7.noarch.rpm
+        state: present
+
+    - name: installing mysql
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - mysql-community-devel*
+        - mysql-community-server*
+        - MySQL-python
+
+    - name: fetch default MySQL config
+      fetch:
+        src: /etc/my.cnf
+        dest: "../conf/"
+        flat: true
+      
+- name: prepare data dir&&configuring mysql
+  hosts: all
+  tags: mysql_conf
+  vars_files:
+    - "./vars/mysql_pass.yml"
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+
+  tasks:
+
+    - name: create mysql data dir
+      file:
+        path: /data/mysql
+        state: directory
+        owner: mysql
+        group: mysql
+        mode: "0751"
+        recurse: true
+
+    - name: copy changed my.cnf
+      copy:
+        src: "../conf/my.cnf"
+        dest: "/etc/my.cnf"
+        mode: "0644"
+        backup: true
+
+    - name: start mysqld and set autostart on boot 
+      systemd:
+        name: mysqld
+        state: restarted
+        enabled: true
+
+    - name: get autogenerate mysql root password
+      shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | awk -F ' ' '{print $(NF)}'"
+      register: old_root_pass #save fetched password to temporary variable
+
+    - name: change autogenerate mysql root password
+      command: mysql --user root --password={{ old_root_pass.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ root_pass }}';"
+
