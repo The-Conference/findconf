@@ -6,6 +6,21 @@
   become_method: "sudo"
 
   tasks:
+
+    - name: download and unzip binaries python 3.8
+      shell:
+        cmd: "wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz && tar xzf ./Python-3.8.12.tgz"
+        chdir: /data/distrib
+
+    - name: configuring py binaries
+      shell:
+        cmd: "./configure --enable-optimizations --prefix=/usr/"
+        chdir: /data/distrib/Python-3.8.12
+
+    - name: install python-3.8
+      make:
+        chdir: /data/distrib/Python-3.8.12
+        target: install
   
     - name: installing needed libs
       package:
