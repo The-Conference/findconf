@@ -6,21 +6,8 @@
   become_user: "root"
   become_method: "sudo"
 
-  tasks:
+  tasks:  
   
-    - name: installing dependeses and tools
-      package:
-        name:
-          - wget
-          - curl
-          - gcc
-          - make
-          - openssl-devel
-          - bzip2-devel
-          - certbot-nginx
-        state: present
-        update_cache: true
-
     - name: creating distrib directory
       file:
         path: /data/distrib

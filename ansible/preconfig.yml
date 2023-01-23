@@ -7,6 +7,19 @@
 
   tasks:
 
+    - name: installing dependeses and tools
+      package:
+        name:
+          - wget
+          - curl
+          - gcc
+          - make
+          - openssl-devel
+          - bzip2-devel
+          - certbot-nginx
+        state: present
+        update_cache: true
+
     - name: download and unzip binaries python 3.8
       shell:
         cmd: "wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz && tar xzf ./Python-3.8.12.tgz"
