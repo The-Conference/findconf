@@ -10,6 +10,7 @@
     - name: installing dependeses and tools
       package:
         name:
+          - epel-release
           - wget
           - curl
           - gcc
@@ -40,7 +41,6 @@
         name:
           - libselinux-python
           - libselinux-python3
-          - epel-release
         state: present
         update_cache: true
 
