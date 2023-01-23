@@ -11,7 +11,7 @@
   tasks:
 
     - name: installing dependences
-      yum:
+      package:
         name: lvm2
         state: present
         update_cache: true

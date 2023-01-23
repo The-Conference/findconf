@@ -8,7 +8,7 @@
   tasks:
   
     - name: installing needed libs
-      yum:
+      package:
         name:
           - libselinux-python
           - libselinux-python3
