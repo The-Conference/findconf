@@ -9,7 +9,7 @@
   tasks:
   
     - name: installing dependeses and tools
-      yum:
+      package:
         name:
           - wget
           - curl
@@ -38,7 +38,7 @@
         state: present
 
     - name: installing mysql
-      yum:
+      package:
         name: "{{ item }}"
         state: present
       with_items:
@@ -92,4 +92,57 @@
 
     - name: change autogenerate mysql root password
       command: mysql --user root --password={{ old_root_pass.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ root_pass }}';"
+
+- name: install nodejs, npm, nginx && preconfig
+  hosts: all
+  tags: websrv
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+
+  tasks:
+
+    - name: install nodejs and npm from epel repo, install nginx
+      package:
+        name:
+          - nodejs
+          - npm
+          - nginx
+        state: present
+        update_cache: true
+
+    - name: create groups for develops
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - appadmin
+        - webadmin
+
+    - name: create folders for app 
+      file:
+        path: /data/apps
+        state: directory
+        owner: root
+        group: appadmin
+        mode: "0664"
+        recurse: true
+
+    - name: create folder for web 
+      file:
+        path: /data/www
+        state: directory
+        owner: root
+        group: webadmin
+        mode: "0755"
+        recurse: true
+
+    - name: restart nginx && autostart true
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: true
+
+
 
