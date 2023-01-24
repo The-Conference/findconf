@@ -10,5 +10,3 @@ output "external_ipaddr_vm01" {
   value       = module.yandex_instance_1.external_ipaddr_vm
 }
 
-
-
