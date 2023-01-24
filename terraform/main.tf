@@ -4,8 +4,10 @@ module "yandex_instance_1" {
   source                = "./modules/create_vm"
   disk_size             = "25"
   disk_type             = "network-ssd"
+  disk_name            = "sys"
   disk2_size            = "60"
   disk2_type            = "network-ssd"
+  disk2_name            = "data"
   cores                 = "2"
   memory                = "4"
   core_fract            = "50"
@@ -14,4 +16,6 @@ module "yandex_instance_1" {
   instance_name         = "test"
   instance_description  = "test VM for findconf project"
   zone_name             = "ru-central1-a"
+  is_ex_static_ipv4     = false # внешний ip был зарезервирован вручную
+  ex_ipv4_name          = "ex-ip-test"
 }
