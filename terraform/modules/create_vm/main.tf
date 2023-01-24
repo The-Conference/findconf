@@ -7,6 +7,13 @@ resource "yandex_compute_disk" "secondary" {
   size = var.disk2_size
 }
 
+resource "yandex_vpc_address" "external" {
+  count = var.is_ex_static_ipv4 ? 1 : 0 # выполняется только если установлена опция резервировать внешний статический ip
+  name = var.ex_ipv4_name
+  external_ipv4_address {
+    zone_id = var.zone_name
+  }
+}
 
 # Создать виртуальную машину с заданным образом
 
@@ -26,6 +33,7 @@ resource "yandex_compute_instance" "vm" {
   boot_disk {
     initialize_params {
       image_id = data.yandex_compute_image.img.id
+      name     = var.disk_name
       type     = var.disk_type
       size     = var.disk_size
     }
@@ -38,6 +46,7 @@ resource "yandex_compute_instance" "vm" {
   network_interface {
     subnet_id = data.yandex_vpc_subnet.subnet.id
     nat       = var.nat
+    nat_ip_address = var.is_ex_static_ipv4 ? data.yandex_vpc_address.external[0].id : null # задается только если установлена опция резервирования статического ip
   }
 
   metadata = {
@@ -46,7 +55,8 @@ resource "yandex_compute_instance" "vm" {
   }
 
 depends_on = [
-  yandex_compute_disk.secondary
+  yandex_compute_disk.secondary,
+  yandex_vpc_address.external
 ]
 }
 
@@ -76,4 +86,14 @@ data "yandex_compute_disk" "secondary" {
     yandex_compute_disk.secondary
   ]
 }
+
+data "yandex_vpc_address" "external" {
+  count = var.is_ex_static_ipv4 ? 1 : 0 # блок выполняется только если установлена опция резервирования внешнего ip
+  name = var.ex_ipv4_name
+  depends_on = [
+    yandex_vpc_address.external
+  ]
+}
+
+
 

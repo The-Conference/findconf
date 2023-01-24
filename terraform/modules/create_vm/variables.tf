@@ -45,6 +45,17 @@ variable "nat" {
   default     = true
 }
 
+variable "is_ex_static_ipv4" {
+  description = "Specify must creating VM has static external ip or not"
+  type        = bool
+  default     = true
+}
+
+variable "ex_ipv4_name" {
+  description = "Name of static external IPV4 for creating VM"
+  type        = string
+}
+
 variable "platform" {
   description = "Specify Compute resource platform"
   type        = string
@@ -63,6 +74,11 @@ variable "disk_type" {
   default     = "network-ssd"
 }
 
+variable "disk_name" {
+  description = "set name of creating disk"
+  type        = string
+}
+
 variable "disk2_size" {
   description = "set size of the boot disk in GB"
   type        = string
@@ -76,9 +92,8 @@ variable "disk2_type" {
 }
 
 variable "disk2_name" {
-  description = "set name of creating disk"
+  description = "set name of creating second disk"
   type        = string
-  default     = "data"
 }
 
 variable "cores" {
