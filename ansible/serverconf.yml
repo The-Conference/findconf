@@ -21,7 +21,12 @@
           - make
           - openssl-devel
           - bzip2-devel
-          - certbot-nginx
+        state: present
+        update_cache: true
+      
+    - name: installing certbot
+      package:
+        name: certbot-nginx
         state: present
         update_cache: true
 
@@ -129,6 +134,20 @@
         state: present
         update_cache: true
 
+    - name: create groups for develops
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - appadmin
+        - webadmin
+
+    - name: add front develops to appadmin and webadmin groups
+      user:
+        name: "{{ front }}"
+        groups: appadmin, webadmin
+        append: true
+
     - name: create folders for apps 
       file:
         path: /data/apps
@@ -166,12 +185,6 @@
         name: nginx
         state: restarted
         enabled: true
-
-    - name: add front develops to appadmin and webadmin groups
-      user:
-        name: "{{ front }}"
-        groups: appadmin, webadmin
-        append: true
 
     - name: install fastAPI
       pip:
