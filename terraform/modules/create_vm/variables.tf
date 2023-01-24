@@ -75,6 +75,12 @@ variable "disk2_type" {
   default     = "network-ssd"
 }
 
+variable "disk2_name" {
+  description = "set name of creating disk"
+  type        = string
+  default     = "data"
+}
+
 variable "cores" {
   description = "number of virtual cores"
   type        = string

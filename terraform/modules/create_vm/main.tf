@@ -1,7 +1,7 @@
 # Создать дополнительный пустой диск
 
 resource "yandex_compute_disk" "secondary" {
-  name = "data"
+  name = var.disk2_name
   type = var.disk2_type
   zone = var.zone_name
   size = var.disk2_size
@@ -26,7 +26,6 @@ resource "yandex_compute_instance" "vm" {
   boot_disk {
     initialize_params {
       image_id = data.yandex_compute_image.img.id
-      name     = "sys"
       type     = var.disk_type
       size     = var.disk_size
     }
@@ -72,7 +71,7 @@ data "yandex_iam_service_account" "user_id" {
 # Получить id второго диска
 
 data "yandex_compute_disk" "secondary" {
-  name = "data"
+  name = var.disk2_name
   depends_on = [
     yandex_compute_disk.secondary
   ]
