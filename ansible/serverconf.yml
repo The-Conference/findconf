@@ -1,0 +1,182 @@
+- name: default preconfig node
+  hosts: all
+  vars:
+    - front: am
+  vars_files:
+    - "./vars/mysql_pass.yml"
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+
+  tasks:
+
+    - name: installing dependeses and tools
+      package:
+        name:
+          - epel-release
+          - wget
+          - curl
+          - gcc
+          - make
+          - openssl-devel
+          - bzip2-devel
+          - certbot-nginx
+        state: present
+        update_cache: true
+
+    - name: creating distrib directory
+      file:
+        path: /data/distrib
+        state: directory
+        mode: "0754"
+
+    - name: download and unzip binaries python 3.8
+      shell:
+        cmd: "wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz && tar xzf ./Python-3.8.12.tgz"
+        chdir: /data/distrib
+
+    - name: configuring py binaries
+      shell:
+        cmd: "./configure --enable-optimizations --prefix=/usr/"
+        chdir: /data/distrib/Python-3.8.12
+
+    - name: install python-3.8
+      make:
+        chdir: /data/distrib/Python-3.8.12
+        target: install
+  
+    - name: installing needed libs
+      package:
+        name:
+          - libselinux-python
+          - libselinux-python3
+        state: present
+        update_cache: true
+
+    - name: disable SELinux
+      selinux:
+        state: disabled
+
+    - name: Reboot VM now
+      reboot:
+        reboot_timeout: 600
+
+    - name: download rpm for install mysql repo
+      shell:
+        cmd: "wget https://dev.mysql.com/get/mysql80-community-release-el7-7.noarch.rpm"
+        chdir: /data/distrib
+
+    - name: installing mysql repo
+      yum:
+        name: /data/distrib/mysql80-community-release-el7-7.noarch.rpm
+        state: present
+
+    - name: installing mysql
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - mysql-community-devel*
+        - mysql-community-server*
+        - MySQL-python
+
+    - name: change default mysql config (datadir)
+      lineinfile:
+        path: "/etc/my.cnf"
+        search_string: "datadir=/var/lib/mysql"
+        line: "datadir=/data/mysql"
+        backup: true
+
+    - name: change default mysql config (auth_plugin)
+      lineinfile:
+        path: "/etc/my.cnf"
+        search_string: "# default-authentication-plugin=mysql_native_password"
+        line: "default-authentication-plugin=mysql_native_password"
+        backup: true
+        owner: root
+        group: root
+        mode: "0644"
+      
+    - name: create mysql data dir
+      file:
+        path: /data/mysql
+        state: directory
+        owner: mysql
+        group: mysql
+        mode: "0751"
+        recurse: true
+
+    - name: start mysqld and set autostart on boot 
+      systemd:
+        name: mysqld
+        state: restarted
+        enabled: true
+
+    - name: get autogenerate mysql root password
+      shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | awk -F ' ' '{print $(NF)}'"
+      register: old_root_pass #save fetched password to temporary variable
+
+    - name: change autogenerate mysql root password
+      command: mysql --user root --password={{ old_root_pass.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ root_pass }}';"
+
+    - name: install nodejs and npm from epel repo, install nginx
+      package:
+        name:
+          - nodejs
+          - npm
+          - nginx
+        state: present
+        update_cache: true
+
+    - name: create folders for apps 
+      file:
+        path: /data/apps
+        state: directory
+        owner: root
+        group: appadmin
+        mode: "0664"
+        recurse: true
+
+    - name: create folder for site 
+      file:
+        path: /data/www/default
+        state: directory
+        owner: root
+        group: webadmin
+        mode: "0755"
+        recurse: true
+
+    - name: copy edited nginx.conf to server
+      copy:
+        src: "../conf/nginx.conf"
+        dest: "/etc/nginx/nginx.conf"
+        mode: "0644"
+        backup: true
+
+    - name: copy default site config to server
+      copy:
+        src: "../conf/default.conf"
+        dest: "/etc/nginx/conf.d/default.conf"
+        mode: "0644"
+        backup: true
+
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: true
+
+    - name: add front develops to appadmin and webadmin groups
+      user:
+        name: "{{ front }}"
+        groups: appadmin, webadmin
+        append: true
+
+    - name: install fastAPI
+      pip:
+        name: fastapi
+        executable: pip3
+
+    
+    
