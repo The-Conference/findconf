@@ -1,0 +1,74 @@
+@import "../../../utils/variables.scss";
+.header {
+  display: flex;
+  height: 88px;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+
+  @media screen and (max-width: $max) and (min-width: $desc) {
+    height: 12vh;
+    gap: 4rem;
+    font-size: 1.2vw;
+  }
+
+  &__logo {
+    width: 14vw;
+    text-align: left;
+    img {
+      max-width: 100%;
+      @media screen and (max-width: $max) and (min-width: $desc) {
+        width: 14vw;
+      }
+    }
+  }
+  &__search {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 511px;
+    background-color: rgba(0, 0, 56, 0.05);
+    border-radius: 14px;
+    @media screen and (max-width: $max) and (min-width: $desc) {
+      width: 35vw;
+      height: 7vh;
+    }
+    img {
+      padding: 12px;
+      max-width: 100%;
+      @media screen and (max-width: $max) and (min-width: $desc) {
+        width: 3vw;
+      }
+    }
+    input {
+      width: 430px;
+      padding: 12px;
+      @media screen and (max-width: $max) and (min-width: $desc) {
+        width: 30vw;
+        height: 7vh;
+      }
+      &::placeholder {
+        text-align: center;
+      }
+    }
+  }
+  &__nav {
+    ul {
+      display: flex;
+      gap: 32px;
+      @media screen and (max-width: $max) and (min-width: $desc) {
+        gap: 4rem;
+      }
+    }
+  }
+  &__signin {
+    width: 96px;
+    height: 40px;
+    background-color: rgba(44, 96, 231, 0.05);
+    border-radius: 15px;
+    color: #2c60e7;
+    @media screen and (max-width: $max) and (min-width: $desc) {
+      width: 5vw;
+      height: 4vh;
+    }
+  }
+}
