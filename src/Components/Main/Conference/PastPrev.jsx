@@ -1,6 +1,7 @@
 import React from "react";
 import heart from "./follow.svg";
-const PastPrev = ({ card, setCard }) => {
+import following from "./following.svg";
+const PastPrev = ({ card, setCard, handleFollow }) => {
   let past = card.filter(
     (item) => new Date(item.date).getMonth() + 1 < new Date().getMonth() + 1
   );
@@ -40,7 +41,11 @@ const PastPrev = ({ card, setCard }) => {
                 (el.register === true && el.finished === false && (
                   <span>Открыта регистрация</span>
                 ))}
-              <img src={heart} alt="follow" />
+              <img
+                src={el.follow === false ? heart : following}
+                alt="follow"
+                onClick={() => handleFollow(el.id)}
+              />
             </div>
             <div className="conference__tags">
               {el.tags.map((tag) => (

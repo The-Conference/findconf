@@ -1,6 +1,7 @@
 import React from "react";
 import heart from "./follow.svg";
-const AllPrev = ({ card, setCard }) => {
+import following from "./following.svg";
+const AllPrev = ({ card, setCard, handleFollow }) => {
   let preview = card.filter((item, index) => index < 2);
 
   return (
@@ -37,7 +38,11 @@ const AllPrev = ({ card, setCard }) => {
                 (el.register === true && el.finished === false && (
                   <span>Открыта регистрация</span>
                 ))}
-              <img src={heart} alt="follow" />
+              <img
+                src={el.follow === false ? heart : following}
+                alt="follow"
+                onClick={() => handleFollow(el.id)}
+              />
             </div>
             <div className="conference__tags">
               {el.tags.map((tag) => (
