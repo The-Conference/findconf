@@ -16,16 +16,27 @@ const AllPrev = ({ card, setCard }) => {
             style={{ opacity: el.finished === true ? "0.5" : "1" }}
           >
             <div className="conference__bg">
-              {(el.register === false && (
+              {(el.register === false && el.finished === false && (
                 <span
                   style={{
-                    backgroundColor:
-                      el.register === false ? "#939393" : "#37D175",
+                    backgroundColor: "#939393",
                   }}
                 >
                   Регистрация закончена
                 </span>
-              )) || <span>Открыта регистрация</span>}
+              )) ||
+                (el.register === false && el.finished === true && (
+                  <span
+                    style={{
+                      backgroundColor: "#939393",
+                    }}
+                  >
+                    Конференция завершена
+                  </span>
+                )) ||
+                (el.register === true && el.finished === false && (
+                  <span>Открыта регистрация</span>
+                ))}
               <img src={heart} alt="follow" />
             </div>
             <div className="conference__tags">
