@@ -5,6 +5,7 @@ import {
 } from "@meinefinsternis/react-horizontal-date-picker";
 import { ru } from "date-fns/locale";
 import "./calendar.scss";
+import calendar from "./calendar.svg";
 const Calendar = () => {
   const [date, setDate] = React.useState<{
     endValue: Date | null;
@@ -19,16 +20,20 @@ const Calendar = () => {
   const handleChange = (d: DatepickerEvent) => {
     const [startValue, endValue, rangeDates] = d;
     setDate((prev) => ({ ...prev, endValue, startValue, rangeDates }));
-    console.log(date.startValue);
+    console.log(date);
   };
-
   return (
-    <Datepicker
-      onChange={handleChange}
-      locale={ru}
-      startValue={date.startValue}
-      endValue={date.endValue}
-    />
+    <div className="datepicker">
+      <span>
+        <img src={calendar} alt="datepicker" />
+      </span>
+      <Datepicker
+        onChange={handleChange}
+        locale={ru}
+        startValue={date.startValue}
+        endValue={date.endValue}
+      />
+    </div>
   );
 };
 

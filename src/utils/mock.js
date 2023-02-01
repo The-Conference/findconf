@@ -1,7 +1,7 @@
-const smallCard = [
+const conferenceCard = [
   {
-    id: 4234234,
-    registration: false,
+    id: 42332423488,
+    regexpire: "January 17, 2023 03:24:00",
     follow: false,
     tags: [
       "Ринц",
@@ -13,11 +13,11 @@ const smallCard = [
     title:
       "Mеждународная научно - практическая конференция “Advances in Scienceand Technology”",
     organizer: "Московский Государственный Университет",
-    date: "1 февраля 2023 – 10 февраля 2023",
+    date: "January 17, 2023 03:24:00",
   },
   {
-    id: 4232344234,
-    registration: false,
+    id: 423234454423554,
+    regexpire: "February 14, 2023 03:24:00",
     follow: false,
     tags: [
       "Ринц",
@@ -29,11 +29,11 @@ const smallCard = [
     title:
       "Mеждународная научно - практическая конференция “Advances in Scienceand Technology”",
     organizer: "Московский Государственный Университет",
-    date: "1 февраля 2023 – 10 февраля 2023",
+    date: "February 17, 2023 03:24:00",
   },
   {
-    id: 4234264534,
-    registration: false,
+    id: 423237884423466,
+    regexpire: "May 17, 2023 03:24:00",
     follow: false,
     tags: [
       "Ринц",
@@ -45,11 +45,11 @@ const smallCard = [
     title:
       "Mеждународная научно - практическая конференция “Advances in Scienceand Technology”",
     organizer: "Московский Государственный Университет",
-    date: "1 февраля 2023 – 10 февраля 2023",
+    date: "May 17, 2023 03:24:00",
   },
   {
-    id: 4234867234,
-    registration: false,
+    id: 411123235444234,
+    regexpire: "January 17, 2023 03:24:00",
     follow: false,
     tags: [
       "Ринц",
@@ -61,24 +61,8 @@ const smallCard = [
     title:
       "Mеждународная научно - практическая конференция “Advances in Scienceand Technology”",
     organizer: "Московский Государственный Университет",
-    date: "1 февраля 2023 – 10 февраля 2023",
-  },
-  {
-    id: 42348978234,
-    registration: false,
-    follow: false,
-    tags: [
-      "Ринц",
-      "Транспортные коммуникации",
-      "Офлайн",
-      "Онлайн",
-      "Петропавловск - Камчатский",
-    ],
-    title:
-      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology”",
-    organizer: "Московский Государственный Университет",
-    date: "1 февраля 2023 – 10 февраля 2023",
+    date: "January 17, 2023 03:24:00",
   },
 ];
 
-export default smallCard;
+export default conferenceCard;

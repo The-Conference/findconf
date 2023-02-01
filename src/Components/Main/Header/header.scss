@@ -5,6 +5,8 @@
   justify-content: center;
   align-items: center;
   gap: 36px;
+  max-width: 1170px;
+  margin: 0 auto;
 
   @media screen and (max-width: $max) and (min-width: $desc) {
     height: 12vh;
@@ -63,9 +65,12 @@
   &__signin {
     width: 96px;
     height: 40px;
-    background-color: rgba(44, 96, 231, 0.05);
+    background-color: #2c60e7;
     border-radius: 15px;
-    color: #2c60e7;
+    color: white;
+    &:hover {
+      background-color: #4074fb;
+    }
     @media screen and (max-width: $max) and (min-width: $desc) {
       width: 5vw;
       height: 4vh;
