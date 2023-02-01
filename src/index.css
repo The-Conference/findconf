@@ -1,6 +1,6 @@
 @font-face {
-  src: url("fonts/Rubik-Regular.ttf");
-  font-family: "Rubik";
+  src: url("fonts/Manrope-Regular.ttf");
+  font-family: "Manrope";
 }
 * {
   padding: 0px;
@@ -106,12 +106,14 @@ legend {
   display: block;
 }
 body {
-  font-family: "Rubik";
+  font-family: "Manrope";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   margin: 0 auto;
   max-width: 1440px;
+  background-color: #f7f7f9;
+  font-weight: 600;
 }
 
 code {

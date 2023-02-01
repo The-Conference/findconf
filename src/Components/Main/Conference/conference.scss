@@ -1,0 +1,84 @@
+.conference {
+  padding-top: 61px;
+  text-align: left;
+  max-width: 1170px;
+  margin: 0 auto;
+
+  &__title {
+    font-size: 18px;
+    margin: 16px 0;
+  }
+  &__tags {
+    padding: 10px 16px 20px 16px;
+    background-color: white;
+    border-radius: 0 0 16px 16px;
+
+    small {
+      padding: 20px 0;
+      color: #0000384d;
+      &:not(:last-of-type):after {
+        content: "\2022";
+        padding: 0 8px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  &__type {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    span {
+      font-size: 18px;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+  }
+  &__container {
+    display: flex;
+    gap: 36px;
+    max-height: 393px;
+  }
+  &__bg {
+    height: 214px;
+    max-width: 582px;
+    background-image: url(Background.png);
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 16px;
+
+    span {
+      color: white;
+      height: 34px;
+      background-color: #37d175;
+      padding: 7px 14px;
+      border-radius: 6px;
+    }
+  }
+  &__organizer {
+    color: #00003880;
+    margin: 5px 0;
+    display: flex;
+
+    p {
+      color: #0000384d;
+      width: 140px;
+      margin-right: 10px;
+    }
+  }
+  &__date {
+    color: #00003880;
+    margin: 5px 0;
+    display: flex;
+    p {
+      color: #0000384d;
+      width: 140px;
+      margin-right: 10px;
+    }
+  }
+}

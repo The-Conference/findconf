@@ -1,7 +1,9 @@
 const conferenceCard = [
   {
     id: 42332423488,
-    regexpire: "January 17, 2023 03:24:00",
+
+    register: false,
+    finished: true,
     follow: false,
     tags: [
       "Ринц",
@@ -17,8 +19,10 @@ const conferenceCard = [
   },
   {
     id: 423234454423554,
-    regexpire: "February 14, 2023 03:24:00",
+
+    register: true,
     follow: false,
+    finished: false,
     tags: [
       "Ринц",
       "Транспортные коммуникации",
@@ -33,7 +37,9 @@ const conferenceCard = [
   },
   {
     id: 423237884423466,
-    regexpire: "May 17, 2023 03:24:00",
+
+    register: true,
+    finished: false,
     follow: false,
     tags: [
       "Ринц",
@@ -49,7 +55,9 @@ const conferenceCard = [
   },
   {
     id: 411123235444234,
-    regexpire: "January 17, 2023 03:24:00",
+
+    register: false,
+    finished: true,
     follow: false,
     tags: [
       "Ринц",
