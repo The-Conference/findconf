@@ -1,15 +1,15 @@
 import React from "react";
-import { Header } from "./Header/Header";
+import "./main.scss";
+
 import Calendar from "./Calendar/Calendar.tsx";
 import UpPrev from "./Conference/UpPrev";
 import PastPrev from "./Conference/PastPrev";
 import AllPrev from "./Conference/AllPrev";
-import Greeting from "./Greeting/Greeting.jsx";
+import Greeting from "./Greeting/Greeting";
 
 const Main = ({ card, setCard, handleFollow }) => {
   return (
-    <div>
-      <Header />
+    <div className="main">
       <Greeting />
       <Calendar />
       <UpPrev card={card} setCard={setCard} handleFollow={handleFollow} />

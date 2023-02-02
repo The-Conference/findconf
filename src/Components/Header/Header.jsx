@@ -3,8 +3,7 @@ import logo from "./logo.png";
 import "./header.scss";
 import search from "./searchgrey.svg";
 
-
-export const Header = () => {
+const Header = () => {
   return (
     <header>
       <div className="header">
@@ -27,3 +26,4 @@ export const Header = () => {
     </header>
   );
 };
+export default Header;
