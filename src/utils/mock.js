@@ -14,7 +14,7 @@ const conferenceCard = [
     title:
       "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
     organizer: "Московский Государственный Университет",
-    date: "January 17, 2023 03:24:00 GMT+0300",
+    date: "17.01.2023",
   },
   {
     id: 423234454423554,
@@ -122,7 +122,7 @@ const conferenceCard = [
     title:
       "Mеждународная научно - практическая конференция “Advances in Scienceand Technology”",
     organizer: "Московский Государственный Университет",
-    date: "19.02.2023",
+    date: "17.01.2023",
   },
 ];
 

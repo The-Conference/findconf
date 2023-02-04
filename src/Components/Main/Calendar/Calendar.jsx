@@ -9,7 +9,6 @@ function Calendar({ card }) {
       <DatePicker
         card={card}
         startDate={startDate}
-        days={366 * 25}
         type="day"
         selectDate={new Date()}
         labelFormat={"LLLL"}

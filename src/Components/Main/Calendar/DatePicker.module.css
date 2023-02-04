@@ -23,7 +23,7 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 0;
   margin-bottom: 18px;
 }
@@ -104,4 +104,8 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 15px;
+}
+.amount {
+  color: #00003880;
+  font-size: 14px;
 }

@@ -91,19 +91,46 @@ const DateView = ({
             id={`${getId(currentDay)}`}
             className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
             key={currentDay}
-            onClick={() => onDateClick(currentDay)}
+            // onClick={() => onDateClick(currentDay)}
           >
-            <div className={styles.dayLabel}>
+            <div
+              className={styles.dayLabel}
+              style={{
+                color:
+                  currentDay.getDay() === 6 || currentDay.getDay() === 0
+                    ? "#D14137"
+                    : "#00003880",
+              }}
+            >
               {format(currentDay, dayFormat, { locale: ru })}
             </div>
-            <div className={styles.dateLabel}>
+            <div
+              className={styles.dateLabel}
+              style={{
+                color:
+                  currentDay.getDay() === 6 || currentDay.getDay() === 0
+                    ? "#D14137"
+                    : "black",
+              }}
+            >
               {format(currentDay, dateFormat, { locale: ru })}
             </div>
             {getMarked(currentDay)}
-            <div>{card.filter((el) => el.date === newFormat).length}</div>
+            <div
+              className={styles.amount}
+              style={{
+                color:
+                  currentDay.getDay() === 6 || currentDay.getDay() === 0
+                    ? "#D14137"
+                    : "#00003880",
+              }}
+            >
+              {card.filter((el) => el.date === newFormat).length}
+            </div>
           </div>
         );
       }
+
       months.push(
         <div className={styles.monthContainer} key={month}>
           <span className={styles.monthYearLabel} style={labelColor}>
@@ -127,40 +154,40 @@ const DateView = ({
     );
   };
 
-  const onDateClick = (day) => {
-    setSelectedDate(day);
-    if (getSelectedDay) {
-      getSelectedDay(day);
-    }
-  };
+  // const onDateClick = (day) => {
+  //   setSelectedDate(day);
+  //   if (getSelectedDay) {
+  //     getSelectedDay(day);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (getSelectedDay) {
-      if (selectDate) {
-        getSelectedDay(selectDate);
-      } else {
-        getSelectedDay(startDate);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (getSelectedDay) {
+  //     if (selectDate) {
+  //       getSelectedDay(selectDate);
+  //     } else {
+  //       getSelectedDay(startDate);
+  //     }
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (selectDate) {
-      if (!isSameDay(selectedDate, selectDate)) {
-        setSelectedDate(selectDate);
-        setTimeout(() => {
-          let view = document.getElementById("selected");
-          if (view) {
-            view.scrollIntoView({
-              behavior: "smooth",
-              inline: "center",
-              block: "nearest",
-            });
-          }
-        }, 20);
-      }
-    }
-  }, [selectDate]);
+  // useEffect(() => {
+  //   if (selectDate) {
+  //     if (!isSameDay(selectedDate, selectDate)) {
+  //       setSelectedDate(selectDate);
+  //       setTimeout(() => {
+  //         let view = document.getElementById("selected");
+  //         if (view) {
+  //           view.scrollIntoView({
+  //             behavior: "smooth",
+  //             inline: "center",
+  //             block: "nearest",
+  //           });
+  //         }
+  //       }, 20);
+  //     }
+  //   }
+  // }, [selectDate]);
 
   return <React.Fragment>{renderDays()}</React.Fragment>;
 };

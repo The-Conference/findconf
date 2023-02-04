@@ -4,11 +4,8 @@ import heart from "./follow.svg";
 import following from "./following.svg";
 
 const UpPrev = ({ card, setCard, handleFollow }) => {
-  let past = card.filter(
-    (item) => new Date(item.date).getMonth() + 1 >= new Date().getMonth() + 1
-  );
-  let upPrev = past.filter((el, index) => index < 2);
-
+  let past = card.filter((item) => item.finished === false);
+  let upPrev = past.filter((item, index) => index < 2);
   return (
     <section className="conference">
       <p className="conference__type">
