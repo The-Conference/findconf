@@ -4,9 +4,18 @@
   max-width: 1170px;
   margin: 0 auto;
 
+  &__block {
+    max-width: 572px;
+  }
   &__title {
     font-size: 18px;
     margin: 16px 0;
+    height: 100px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-flex: 1;
+    -webkit-line-clamp: 4;
   }
   &__tags {
     padding: 10px 16px 20px 16px;
@@ -28,6 +37,7 @@
     font-size: 32px;
     font-weight: 600;
     margin-bottom: 20px;
+    padding-top: 50px;
     span {
       font-size: 23px;
       vertical-align: middle;
@@ -41,7 +51,7 @@
   }
   &__bg {
     height: 214px;
-    max-width: 582px;
+
     background-image: url(Background.png);
 
     background-size: cover;

@@ -1,6 +1,7 @@
 import React from "react";
 import heart from "./follow.svg";
 import following from "./following.svg";
+
 const AllPrev = ({ card, setCard, handleFollow }) => {
   let preview = card.filter((item, index) => index < 2);
 
@@ -11,11 +12,7 @@ const AllPrev = ({ card, setCard, handleFollow }) => {
       </p>
       <div className="conference__container">
         {preview.map((el) => (
-          <div
-            el={el.id}
-            className="conference__block"
-            style={{ opacity: el.finished === true ? "0.5" : "1" }}
-          >
+          <div el={el.id} className="conference__block">
             <div className="conference__bg">
               {(el.register === false && el.finished === false && (
                 <span

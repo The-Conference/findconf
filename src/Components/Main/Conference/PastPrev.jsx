@@ -14,11 +14,7 @@ const PastPrev = ({ card, setCard, handleFollow }) => {
       </p>
       <div className="conference__container">
         {pastPrev.map((el) => (
-          <div
-            el={el.id}
-            className="conference__block"
-            style={{ opacity: el.finished === true ? "0.5" : "1" }}
-          >
+          <div el={el.id} className="conference__block">
             <div className="conference__bg">
               {(el.register === false && el.finished === false && (
                 <span

@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: flex-end;
+  background-color: #f7f7f9;
+  z-index: 3;
+}
+
+.button {
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  width: 25px;
+  height: 53px;
+  color: rgba(0, 0, 56, 0.3);
+  font-size: 25px;
+  font-weight: bold;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 0;
+  margin-bottom: 18px;
+}
+
+.dateListScrollable {
+  display: flex;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  margin: 2px 0 2px -40px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dateListScrollable::-webkit-scrollbar {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.monthContainer {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 2px;
+  margin: 2px;
+}
+
+.monthYearLabel {
+  align-self: flex-start;
+  z-index: 3;
+  font-size: 15px;
+  font-weight: bold;
+  position: sticky;
+  top: 10px;
+  left: 0;
+  width: max-content;
+  margin: 0 60px;
+  color: rgba(0, 0, 56, 0.217);
+  text-transform: capitalize;
+}
+
+.dateDayItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 0 0 5px;
+  width: 45px;
+  height: 49px;
+  flex-shrink: 0;
+}
+
+.daysContainer {
+  display: flex;
+  z-index: 1;
+  margin: 20px 0;
+}
+
+.dayLabel {
+  font-size: 12px;
+  margin: 4px 0 0 0;
+}
+
+.dateLabel {
+  font-size: 18px;
+}
+.dayLabel {
+  color: rgba(0, 0, 56, 0.3);
+}
+.markedLabel {
+  margin-top: 10px;
+}
+
+.calendar {
+  width: 50px;
+  background-color: #d6e1ff;
+  height: 50px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}

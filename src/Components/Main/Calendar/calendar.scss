@@ -14,7 +14,7 @@
     right: 0;
     top: 15px;
     cursor: pointer;
-    display: none;
+
     img {
       max-width: 50%;
     }
@@ -35,7 +35,7 @@
       }
     }
     .jb {
-      font-weight: 500;
+      font-weight: 800;
       color: rgba(0, 0, 56, 0.3);
     }
 
@@ -50,7 +50,7 @@
     }
     .Kq {
       width: 210px;
-      background-color: #2c60e7;
+
       height: 32px;
       border-radius: 8px;
       margin-top: 50px;
@@ -61,8 +61,11 @@
       svg {
         width: 50%;
         height: 50%;
-        fill: white;
       }
     }
   }
+}
+
+.calend {
+  display: flex;
 }
