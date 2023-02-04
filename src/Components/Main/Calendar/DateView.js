@@ -22,7 +22,8 @@ const DateView = ({
   marked,
   card,
 }) => {
-  const [selectedDate, setSelectedDate] = useState(null);
+  // const [selectedDate, setSelectedDate] = useState(null);
+  const [hover, setHover] = useState(false);
   const firstSection = { marginLeft: "40px" };
   // const selectedStyle = {
   //   fontWeight: "bold",
@@ -33,35 +34,35 @@ const DateView = ({
   //   color: primaryColor,
   // };
   const labelColor = { color: primaryColor };
-  const markedStyle = { color: "#8c3737", padding: "2px", fontSize: 12 };
+  // const markedStyle = { color: "#8c3737", padding: "2px", fontSize: 12 };
 
   // const getStyles = (day) => {
   //   return isSameDay(day, selectedDate) ? selectedStyle : null;
   // };
 
-  const getId = (day) => {
-    return isSameDay(day, selectedDate) ? "selected" : "";
-  };
+  // const getId = (day) => {
+  //   return isSameDay(day, selectedDate) ? "selected" : "";
+  // };
 
-  const getMarked = (day) => {
-    let markedRes = marked?.find((i) => isSameDay(i.date, day));
-    if (markedRes) {
-      if (!markedRes?.marked) {
-        return;
-      }
+  // const getMarked = (day) => {
+  //   let markedRes = marked?.find((i) => isSameDay(i.date, day));
+  //   if (markedRes) {
+  //     if (!markedRes?.marked) {
+  //       return;
+  //     }
 
-      return (
-        <div
-          style={{ ...(markedRes?.style ?? markedStyle) }}
-          className={styles.markedLabel}
-        >
-          {markedRes.text}
-        </div>
-      );
-    }
+  //     return (
+  //       <div
+  //         style={{ ...(markedRes?.style ?? markedStyle) }}
+  //         className={styles.markedLabel}
+  //       >
+  //         {markedRes.text}
+  //       </div>
+  //     );
+  //   }
 
-    return "";
-  };
+  //   return "";
+  // };
 
   const renderDays = () => {
     const dayFormat = "EEEEEE";
@@ -88,7 +89,8 @@ const DateView = ({
 
         days.push(
           <div
-            id={`${getId(currentDay)}`}
+            // id={`${getId(currentDay)}`}
+
             className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
             key={currentDay}
             // onClick={() => onDateClick(currentDay)}
@@ -115,7 +117,7 @@ const DateView = ({
             >
               {format(currentDay, dateFormat, { locale: ru })}
             </div>
-            {getMarked(currentDay)}
+
             <div
               className={styles.amount}
               style={{
