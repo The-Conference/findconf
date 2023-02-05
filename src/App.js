@@ -3,7 +3,8 @@ import Main from "./Components/Main/Main";
 import { useState } from "react";
 import conferenceCard from "./utils/mock";
 import Footer from "./Components/Footer/Footer";
-import Header from "./Components/Header/Header";
+// import Header from "./Components/Header/Header";
+import HeaderForAuth from "./Components/Header/HeaderForAuth";
 
 function App() {
   const [card, setCard] = useState(conferenceCard);
@@ -14,7 +15,7 @@ function App() {
   };
   return (
     <div className="App">
-      <Header />
+      <HeaderForAuth />
       <Main card={card} setCard={setCard} handleFollow={handleFollow} />
       <Footer />
     </div>

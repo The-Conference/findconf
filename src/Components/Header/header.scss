@@ -20,7 +20,8 @@
   &__search {
     display: flex;
     flex-wrap: nowrap;
-    width: 480px;
+    width: 370px;
+    height: 44px;
     background-color: rgba(0, 0, 56, 0.05);
     border-radius: 14px;
 
@@ -29,7 +30,7 @@
       max-width: 100%;
     }
     input {
-      width: 400px;
+      width: 300px;
       padding: 12px;
 
       &::placeholder {
@@ -48,13 +49,35 @@
     width: 96px;
     height: 40px;
     background-color: #2c60e7;
-    border-radius: 15px;
+    border-radius: 7px;
     color: white;
     font-size: 16px;
 
     &:hover {
       background-color: #4074fb;
       color: white;
+    }
+  }
+  &__profile {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ebefff;
+      width: 40px;
+      height: 40px;
+      border-radius: 7px;
+    }
+    button {
+      width: 134px;
+      height: 40px;
+      background-color: #2c60e7;
+      border-radius: 7px;
+      color: white;
+      font-size: 16px;
     }
   }
 }

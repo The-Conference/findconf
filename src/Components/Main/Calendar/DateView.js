@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./DatePicker.module.css";
 import { ru } from "date-fns/locale";
 import {
@@ -7,7 +7,7 @@ import {
   addMonths,
   differenceInMonths,
   format,
-  isSameDay,
+  // isSameDay,
   lastDayOfMonth,
   startOfMonth,
 } from "date-fns";
@@ -15,15 +15,14 @@ import {
 const DateView = ({
   startDate,
   lastDate,
-  selectDate,
-  getSelectedDay,
+  // selectDate,
+  // getSelectedDay,
   primaryColor,
   labelFormat,
   marked,
   card,
 }) => {
   // const [selectedDate, setSelectedDate] = useState(null);
-  const [hover, setHover] = useState(false);
   const firstSection = { marginLeft: "40px" };
   // const selectedStyle = {
   //   fontWeight: "bold",
