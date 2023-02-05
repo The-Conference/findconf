@@ -17,7 +17,7 @@ const Header = () => {
 
         <nav className="header__nav">
           <ul>
-            <li>Гайд по конференции</li>
+            <li>План конференции</li>
             <li>О нас</li>
           </ul>
         </nav>
