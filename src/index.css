@@ -109,6 +109,12 @@ label {
 legend {
   display: block;
 }
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   font-family: "Manrope";
   -webkit-font-smoothing: antialiased;

@@ -1,11 +1,11 @@
 .conference {
-  padding-top: 61px;
   text-align: left;
   max-width: 1170px;
   margin: 0 auto;
+  padding-bottom: 80px;
 
   &__block {
-    max-width: 572px;
+    max-width: 550px;
   }
   &__title {
     font-size: 18px;
@@ -46,8 +46,10 @@
   }
   &__container {
     display: flex;
-    gap: 36px;
-    max-height: 393px;
+    row-gap: 36px;
+
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
   &__bg {
     height: 214px;

@@ -7,9 +7,11 @@ const AllPrev = ({ card, setCard, handleFollow }) => {
 
   return (
     <section className="conference">
-      <p className="conference__type">
-        Все конференции <span>&gt;</span>
-      </p>
+      <a href="/all">
+        <p className="conference__type">
+          Все конференции <span>&gt;</span>
+        </p>
+      </a>
       <div className="conference__container">
         {preview.map((el) => (
           <div el={el.id} className="conference__block">

@@ -12,6 +12,7 @@ const Main = ({ card, setCard, handleFollow }) => {
   return (
     <div className="main">
       {/* <Greeting /> */}
+
       <GreetingForAuth />
       <Calendar card={card} />
       {/* <LoaderTemplate /> */}
