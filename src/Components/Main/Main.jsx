@@ -6,6 +6,7 @@ import AllPrev from "./Conference/AllPrev";
 // import Greeting from "./Greeting/Greeting";
 import Calendar from "./Calendar/Calendar";
 import GreetingForAuth from "./Greeting/GreetingForAuth";
+// import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 
 const Main = ({ card, setCard, handleFollow }) => {
   return (
@@ -13,6 +14,7 @@ const Main = ({ card, setCard, handleFollow }) => {
       {/* <Greeting /> */}
       <GreetingForAuth />
       <Calendar card={card} />
+      {/* <LoaderTemplate /> */}
       <UpPrev card={card} setCard={setCard} handleFollow={handleFollow} />
       <AllPrev card={card} setCard={setCard} handleFollow={handleFollow} />
       <PastPrev card={card} setCard={setCard} handleFollow={handleFollow} />
