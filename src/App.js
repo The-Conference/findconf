@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import React from "react";
 import LoaderTemplate from "./utils/Loader/LoaderTemplate";
 
+const Conf = React.lazy(() => import("./Components/Main/Main"));
 const All = React.lazy(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -17,6 +18,7 @@ const All = React.lazy(() => {
     }, 1000);
   });
 });
+
 function App() {
   const [card, setCard] = useState(conferenceCard);
   const handleFollow = (id) => {
@@ -33,7 +35,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Main
+                <Conf
                   card={card}
                   setCard={setCard}
                   handleFollow={handleFollow}

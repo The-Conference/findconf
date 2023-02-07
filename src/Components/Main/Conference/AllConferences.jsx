@@ -1,9 +1,30 @@
 import React from "react";
 import heart from "./follow.svg";
 import following from "./following.svg";
-import { Suspense } from "react";
+import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+
+const LIMIT = 7;
 
 const AllConferences = ({ card, setCard, handleFollow }) => {
+  const [postData, setPostData] = useState(card.slice(0, LIMIT));
+  const [visible, setVisible] = useState(LIMIT);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchData = () => {
+    const newLimit = visible + LIMIT;
+    const dataToAdd = card.slice(visible, newLimit);
+
+    if (card.length > postData.length) {
+      setTimeout(() => {
+        setPostData([...postData].concat(dataToAdd));
+      }, 1000);
+      setVisible(newLimit);
+    } else {
+      setHasMore(false);
+    }
+  };
+
   return (
     <section className="conference">
       <a href="/">
@@ -11,9 +32,14 @@ const AllConferences = ({ card, setCard, handleFollow }) => {
           Все конференции <span>&gt;</span>
         </p>
       </a>
-      <Suspense fallback={<div>Loading...</div>}>
+      <InfiniteScroll
+        dataLength={postData.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+      >
         <div className="conference__container">
-          {card.map((el) => (
+          {postData.map((el) => (
             <div el={el.id} className="conference__block">
               <div className="conference__bg">
                 {(el.register === false && el.finished === false && (
@@ -59,9 +85,9 @@ const AllConferences = ({ card, setCard, handleFollow }) => {
                 </div>
               </div>
             </div>
-          ))}
+          ))}{" "}
         </div>
-      </Suspense>
+      </InfiniteScroll>
     </section>
   );
 };
