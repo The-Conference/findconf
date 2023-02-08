@@ -24,7 +24,9 @@ const Header = () => {
             <li>О нас</li>
           </ul>
         </nav>
-        <button className="header__signin">Войти</button>
+        <a href="./login">
+          <button className="header__signin">Войти</button>
+        </a>
       </div>
     </header>
   );

@@ -3,8 +3,9 @@ import heart from "./follow.svg";
 import following from "./following.svg";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoaderTemplate from "../../../utils/Loader/LoaderTemplate";
 
-const LIMIT = 7;
+const LIMIT = 8;
 
 const AllConferences = ({ card, setCard, handleFollow }) => {
   const [postData, setPostData] = useState(card.slice(0, LIMIT));
@@ -36,7 +37,7 @@ const AllConferences = ({ card, setCard, handleFollow }) => {
         dataLength={postData.length} //This is important field to render the next data
         next={fetchData}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={<LoaderTemplate />}
       >
         <div className="conference__container">
           {postData.map((el) => (
