@@ -11,9 +11,14 @@ import React from "react";
 import LoaderTemplate from "./utils/Loader/LoaderTemplate";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
-import PastConference from "./Components/Main/Conference/PastConference";
-import UpcomingConference from "./Components/Main/Conference/UpcomingConference";
+import { Audio } from "react-loader-spinner";
 
+const Up = React.lazy(() =>
+  import("./Components/Main/Conference/UpcomingConference")
+);
+const Past = React.lazy(() =>
+  import("./Components/Main/Conference/PastConference")
+);
 const Conf = React.lazy(() => import("./Components/Main/Main"));
 const All = React.lazy(() => {
   return new Promise((resolve) => {
@@ -52,7 +57,22 @@ function App() {
       <Router>
         {/* <HeaderForAuth /> */}
         <Header />
-        <Suspense fallback={<LoaderTemplate />}>
+        <Suspense
+          fallback={
+            <>
+              <LoaderTemplate />
+              <Audio
+                height="80"
+                width="80"
+                radius="9"
+                color="green"
+                ariaLabel="three-dots-loading"
+                wrapperStyle
+                wrapperClass
+              />
+            </>
+          }
+        >
           <Routes>
             <Route
               path="/"
@@ -78,7 +98,7 @@ function App() {
             <Route
               path="/finished"
               element={
-                <PastConference
+                <Past
                   postData={postData}
                   hasMore={hasMore}
                   fetchData={fetchData}
@@ -89,7 +109,7 @@ function App() {
             <Route
               path="/upcoming"
               element={
-                <UpcomingConference
+                <Up
                   postData={postData}
                   hasMore={hasMore}
                   fetchData={fetchData}

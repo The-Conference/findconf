@@ -1,6 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import LoaderTemplate from "../../../utils/Loader/LoaderTemplate";
+import Spinner from "../../../utils/Loader/Spinner";
 import heart from "./follow.svg";
 import following from "./following.svg";
 
@@ -16,7 +16,7 @@ const UpcomingConference = ({ postData, fetchData, hasMore, handleFollow }) => {
         dataLength={postData.length} //This is important field to render the next data
         next={fetchData}
         hasMore={hasMore}
-        loader={<LoaderTemplate />}
+        loader={<Spinner />}
       >
         <div className="conference__container">
           {postData.map(
