@@ -8,9 +8,11 @@ const UpPrev = ({ handleFollow, postData }) => {
   let upPrev = past.filter((item, index) => index < 2);
   return (
     <section className="conference">
-      <p className="conference__type">
-        Предстоящие конференции <span>&gt;</span>
-      </p>
+      <a href="/upcoming">
+        <p className="conference__type">
+          Предстоящие конференции <span>&gt;</span>
+        </p>
+      </a>
       <div className="conference__container">
         {upPrev.map((el) => (
           <div el={el.id} className="conference__block">

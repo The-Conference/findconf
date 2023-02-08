@@ -11,6 +11,8 @@ import React from "react";
 import LoaderTemplate from "./utils/Loader/LoaderTemplate";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
+import PastConference from "./Components/Main/Conference/PastConference";
+import UpcomingConference from "./Components/Main/Conference/UpcomingConference";
 
 const Conf = React.lazy(() => import("./Components/Main/Main"));
 const All = React.lazy(() => {
@@ -66,6 +68,28 @@ function App() {
               path="/all"
               element={
                 <All
+                  postData={postData}
+                  hasMore={hasMore}
+                  fetchData={fetchData}
+                  handleFollow={handleFollow}
+                />
+              }
+            />
+            <Route
+              path="/finished"
+              element={
+                <PastConference
+                  postData={postData}
+                  hasMore={hasMore}
+                  fetchData={fetchData}
+                  handleFollow={handleFollow}
+                />
+              }
+            />
+            <Route
+              path="/upcoming"
+              element={
+                <UpcomingConference
                   postData={postData}
                   hasMore={hasMore}
                   fetchData={fetchData}

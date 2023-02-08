@@ -7,9 +7,11 @@ const PastPrev = ({ handleFollow, postData }) => {
 
   return (
     <section className="conference">
-      <p className="conference__type">
-        Прошедшие конференции <span>&gt;</span>
-      </p>
+      <a href="/finished">
+        <p className="conference__type">
+          Прошедшие конференции <span>&gt;</span>
+        </p>
+      </a>
       <div className="conference__container">
         {pastPrev.map((el) => (
           <div el={el.id} className="conference__block">
