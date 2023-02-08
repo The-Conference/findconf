@@ -20,14 +20,31 @@ const All = React.lazy(() => {
     }, 1000);
   });
 });
-
+const LIMIT = 8;
 function App() {
-  const [card, setCard] = useState(conferenceCard);
+  const [postData, setPostData] = useState(conferenceCard.slice(0, LIMIT));
+  const [visible, setVisible] = useState(LIMIT);
+  const [hasMore, setHasMore] = useState(true);
+
   const handleFollow = (id) => {
-    setCard(
-      card.map((el) => (el.id === id ? { ...el, follow: !el.follow } : el))
+    setPostData(
+      postData.map((el) => (el.id === id ? { ...el, follow: !el.follow } : el))
     );
   };
+  const fetchData = () => {
+    const newLimit = visible + LIMIT;
+    const dataToAdd = conferenceCard.slice(visible, newLimit);
+
+    if (conferenceCard.length > postData.length) {
+      setTimeout(() => {
+        setPostData([...postData].concat(dataToAdd));
+      }, 1000);
+      setVisible(newLimit);
+    } else {
+      setHasMore(false);
+    }
+  };
+
   return (
     <div className="App">
       <Router>
@@ -39,8 +56,8 @@ function App() {
               path="/"
               element={
                 <Conf
-                  card={card}
-                  setCard={setCard}
+                  postData={postData}
+                  fetchData={fetchData}
                   handleFollow={handleFollow}
                 />
               }
@@ -49,12 +66,14 @@ function App() {
               path="/all"
               element={
                 <All
-                  card={card}
-                  setCard={setCard}
+                  postData={postData}
+                  hasMore={hasMore}
+                  fetchData={fetchData}
                   handleFollow={handleFollow}
                 />
               }
             />
+
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>

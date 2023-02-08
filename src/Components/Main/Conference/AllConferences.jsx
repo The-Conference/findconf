@@ -1,31 +1,11 @@
 import React from "react";
 import heart from "./follow.svg";
 import following from "./following.svg";
-import { useState } from "react";
+
 import InfiniteScroll from "react-infinite-scroll-component";
 import LoaderTemplate from "../../../utils/Loader/LoaderTemplate";
 
-const LIMIT = 8;
-
-const AllConferences = ({ card, setCard, handleFollow }) => {
-  const [postData, setPostData] = useState(card.slice(0, LIMIT));
-  const [visible, setVisible] = useState(LIMIT);
-  const [hasMore, setHasMore] = useState(true);
-
-  const fetchData = () => {
-    const newLimit = visible + LIMIT;
-    const dataToAdd = card.slice(visible, newLimit);
-
-    if (card.length > postData.length) {
-      setTimeout(() => {
-        setPostData([...postData].concat(dataToAdd));
-      }, 1000);
-      setVisible(newLimit);
-    } else {
-      setHasMore(false);
-    }
-  };
-
+const AllConferences = ({ handleFollow, postData, fetchData, hasMore }) => {
   return (
     <section className="conference">
       <a href="/">

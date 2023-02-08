@@ -3,8 +3,8 @@ import "./conference.scss";
 import heart from "./follow.svg";
 import following from "./following.svg";
 
-const UpPrev = ({ card, setCard, handleFollow }) => {
-  let past = card.filter((item) => item.finished === false);
+const UpPrev = ({ handleFollow, postData }) => {
+  let past = postData.filter((item) => item.finished === false);
   let upPrev = past.filter((item, index) => index < 2);
   return (
     <section className="conference">

@@ -8,17 +8,17 @@ import Calendar from "./Calendar/Calendar";
 import GreetingForAuth from "./Greeting/GreetingForAuth";
 // import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 
-const Main = ({ card, setCard, handleFollow }) => {
+const Main = ({ handleFollow, postData }) => {
   return (
     <div className="main">
       {/* <Greeting /> */}
 
       <GreetingForAuth />
-      <Calendar card={card} />
+      <Calendar />
       {/* <LoaderTemplate /> */}
-      <UpPrev card={card} setCard={setCard} handleFollow={handleFollow} />
-      <AllPrev card={card} setCard={setCard} handleFollow={handleFollow} />
-      <PastPrev card={card} setCard={setCard} handleFollow={handleFollow} />
+      <UpPrev handleFollow={handleFollow} postData={postData} />
+      <AllPrev handleFollow={handleFollow} postData={postData} />
+      <PastPrev handleFollow={handleFollow} postData={postData} />
     </div>
   );
 };

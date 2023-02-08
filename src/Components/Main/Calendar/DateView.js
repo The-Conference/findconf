@@ -21,6 +21,7 @@ const DateView = ({
   labelFormat,
   marked,
   card,
+  conferenceCard,
 }) => {
   // const [selectedDate, setSelectedDate] = useState(null);
   const firstSection = { marginLeft: "40px" };
@@ -126,7 +127,7 @@ const DateView = ({
                     : "#00003880",
               }}
             >
-              {card.filter((el) => el.date === newFormat).length}
+              {conferenceCard.filter((el) => el.date === newFormat).length}
             </div>
           </div>
         );

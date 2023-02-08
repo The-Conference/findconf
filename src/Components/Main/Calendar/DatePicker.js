@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from "./MonthView";
+import conferenceCard from "../../../utils/mock";
 // import hexToRgb from "./global/helpers/hexToRgb";
 import calendar from "./calendar.svg";
 const DatePicker = (props) => {
@@ -52,6 +53,7 @@ const DatePicker = (props) => {
       <Component
         {...props}
         card={card}
+        conferenceCard={conferenceCard}
         startDate={startDate}
         lastDate={lastDate}
       />

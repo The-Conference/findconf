@@ -1,8 +1,8 @@
 import React from "react";
 import heart from "./follow.svg";
 import following from "./following.svg";
-const PastPrev = ({ card, setCard, handleFollow }) => {
-  let past = card.filter((item) => item.finished === true);
+const PastPrev = ({ handleFollow, postData }) => {
+  let past = postData.filter((item) => item.finished === true);
   let pastPrev = past.filter((el, index) => index < 2);
 
   return (

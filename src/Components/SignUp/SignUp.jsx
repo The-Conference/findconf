@@ -29,7 +29,9 @@ const SignUp = () => {
         <hr />
         <span>или</span> <hr />
       </div>
-      <button className="login__button-blue">Войти</button>
+      <a href="/login">
+        <button className="login__button-blue">Войти</button>
+      </a>
     </div>
   );
 };

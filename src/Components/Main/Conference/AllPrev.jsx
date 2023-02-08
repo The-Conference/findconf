@@ -2,8 +2,8 @@ import React from "react";
 import heart from "./follow.svg";
 import following from "./following.svg";
 
-const AllPrev = ({ card, setCard, handleFollow }) => {
-  let preview = card.filter((item, index) => index < 2);
+const AllPrev = ({ handleFollow, postData }) => {
+  let preview = postData.filter((item, index) => index < 2);
 
   return (
     <section className="conference">
