@@ -3,6 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../../../utils/Loader/Spinner";
 import heart from "./follow.svg";
 import following from "./following.svg";
+import Filters from "../../Filters/Filters";
 
 const UpcomingConference = ({ postData, fetchData, hasMore, handleFollow }) => {
   return (
@@ -12,6 +13,7 @@ const UpcomingConference = ({ postData, fetchData, hasMore, handleFollow }) => {
           Прошедшие конференции <span>&gt;</span>
         </p>
       </a>
+      <Filters />
       <InfiniteScroll
         dataLength={postData.length} //This is important field to render the next data
         next={fetchData}

@@ -7,7 +7,7 @@ const Spinner = () => {
       width="100"
       color="#2c60e7"
       secondaryColor="#00002e"
-      radius="10.5"
+      radius="9.5"
       ariaLabel="mutating-dots-loading"
       wrapperStyle={{ display: "flex", justifyContent: "center" }}
       wrapperClass=""

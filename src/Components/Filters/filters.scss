@@ -1,0 +1,23 @@
+.filter {
+  display: flex;
+  gap: 8px;
+  padding: 20px 0;
+  &__delete-button {
+    border-radius: 8px;
+
+    cursor: pointer;
+    padding: 10px;
+    align-self: baseline;
+  }
+  &__container-button {
+    padding: 10px 20px 10px 10px;
+
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+
+    span {
+      padding-right: 10px;
+    }
+  }
+}

@@ -9,9 +9,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense } from "react";
 import React from "react";
 import LoaderTemplate from "./utils/Loader/LoaderTemplate";
-import Login from "./Components/Login/Login";
-import SignUp from "./Components/SignUp/SignUp";
-import { Audio } from "react-loader-spinner";
 
 const Up = React.lazy(() =>
   import("./Components/Main/Conference/UpcomingConference")
@@ -19,7 +16,9 @@ const Up = React.lazy(() =>
 const Past = React.lazy(() =>
   import("./Components/Main/Conference/PastConference")
 );
-const Conf = React.lazy(() => import("./Components/Main/Main"));
+const Login = React.lazy(() => import("./Components/Login/Login"));
+const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
+
 const All = React.lazy(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -29,10 +28,9 @@ const All = React.lazy(() => {
 });
 const LIMIT = 8;
 function App() {
-  const [postData, setPostData] = useState(conferenceCard.slice(0, LIMIT));
+  const [postData, setPostData] = useState(conferenceCard); //.slice(0, LIMIT)
   const [visible, setVisible] = useState(LIMIT);
   const [hasMore, setHasMore] = useState(true);
-
   const handleFollow = (id) => {
     setPostData(
       postData.map((el) => (el.id === id ? { ...el, follow: !el.follow } : el))
@@ -56,28 +54,14 @@ function App() {
     <div className="App">
       <Router>
         {/* <HeaderForAuth /> */}
+
         <Header />
-        <Suspense
-          fallback={
-            <>
-              <LoaderTemplate />
-              <Audio
-                height="80"
-                width="80"
-                radius="9"
-                color="green"
-                ariaLabel="three-dots-loading"
-                wrapperStyle
-                wrapperClass
-              />
-            </>
-          }
-        >
+        <Suspense fallback={<LoaderTemplate />}>
           <Routes>
             <Route
               path="/"
               element={
-                <Conf
+                <Main
                   postData={postData}
                   fetchData={fetchData}
                   handleFollow={handleFollow}
@@ -89,6 +73,7 @@ function App() {
               element={
                 <All
                   postData={postData}
+                  setPostData={setPostData}
                   hasMore={hasMore}
                   fetchData={fetchData}
                   handleFollow={handleFollow}
@@ -103,6 +88,7 @@ function App() {
                   hasMore={hasMore}
                   fetchData={fetchData}
                   handleFollow={handleFollow}
+                  setPostData={setPostData}
                 />
               }
             />

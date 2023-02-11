@@ -11,10 +11,12 @@ const SignUp = () => {
         </p>
       </div>
       <form className="login__form" action="">
+        <label htmlFor="">email</label>
         <input type="mail" placeholder="E-mail" />
+        <label htmlFor="">пароль</label>
         <input type="password" placeholder="Пароль" />
+        <label htmlFor=""></label>{" "}
         <input type="password" placeholder="Подтвердить пароль" />
-
         <div className="login__form-agreement">
           <input type="checkbox" />
           <label htmlFor="">

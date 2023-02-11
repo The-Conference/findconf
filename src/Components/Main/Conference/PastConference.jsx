@@ -1,10 +1,17 @@
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Spinner from "../../../utils/Loader/Spinner";
+// import InfiniteScroll from "react-infinite-scroll-component";
+// import Spinner from "../../../utils/Loader/Spinner";
 import heart from "./follow.svg";
 import following from "./following.svg";
+import Filters from "../../Filters/Filters";
 
-const PastConference = ({ postData, fetchData, hasMore, handleFollow }) => {
+const PastConference = ({
+  postData,
+  fetchData,
+  hasMore,
+  handleFollow,
+  setPostData,
+}) => {
   return (
     <section className="conference">
       <a href="/">
@@ -12,14 +19,16 @@ const PastConference = ({ postData, fetchData, hasMore, handleFollow }) => {
           Прошедшие конференции <span>&gt;</span>
         </p>
       </a>
-      <InfiniteScroll
+      <Filters postData={postData} setPostData={setPostData} />
+      {/* <InfiniteScroll
         dataLength={postData.length} //This is important field to render the next data
         next={fetchData}
         hasMore={hasMore}
         loader={<Spinner />}
-      >
-        <div className="conference__container">
-          {postData.map(
+      > */}
+      <div className="conference__container">
+        {postData.length > 0 &&
+          postData.map(
             (el) =>
               el.finished === true && (
                 <div el={el.id} className="conference__block">
@@ -68,9 +77,10 @@ const PastConference = ({ postData, fetchData, hasMore, handleFollow }) => {
                   </div>
                 </div>
               )
-          )}{" "}
-        </div>
-      </InfiniteScroll>
+          )}
+        {postData.length === 0 && <div>нет такой конфы беач</div>}
+      </div>
+      {/* </InfiniteScroll> */}
     </section>
   );
 };

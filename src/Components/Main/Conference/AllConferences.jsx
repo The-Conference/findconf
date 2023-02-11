@@ -1,10 +1,21 @@
 import React from "react";
-import heart from "./follow.svg";
+import hearts from "./follow.svg";
 import following from "./following.svg";
-import Spinner from "../../../utils/Loader/Spinner";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import Spinner from "../../../utils/Loader/Spinner";
+// import InfiniteScroll from "react-infinite-scroll-component";
+import Filters from "../../Filters/Filters";
+import { handleFollow, card } from "../../../store/postData";
+import { useDispatch, useSelector } from "react-redux";
 
-const AllConferences = ({ handleFollow, postData, fetchData, hasMore }) => {
+const AllConferences = (
+  {
+    // fetchData,
+    // hasMore,
+  }
+) => {
+  const dispatch = useDispatch();
+  const data = useSelector(card);
+
   return (
     <section className="conference">
       <a href="/">
@@ -12,14 +23,16 @@ const AllConferences = ({ handleFollow, postData, fetchData, hasMore }) => {
           Все конференции <span>&gt;</span>
         </p>
       </a>
-      <InfiniteScroll
+      <Filters />
+      {/* <InfiniteScroll
         dataLength={postData.length} //This is important field to render the next data
         next={fetchData}
         hasMore={hasMore}
         loader={<Spinner />}
-      >
-        <div className="conference__container">
-          {postData.map((el) => (
+      > */}
+      <div className="conference__container">
+        {data.length > 0 &&
+          data.map((el) => (
             <div el={el.id} className="conference__block">
               <div className="conference__bg">
                 {(el.register === false && el.finished === false && (
@@ -44,9 +57,9 @@ const AllConferences = ({ handleFollow, postData, fetchData, hasMore }) => {
                     <span>Открыта регистрация</span>
                   ))}
                 <img
-                  src={el.follow === false ? heart : following}
+                  src={el.follow === false ? hearts : following}
                   alt="follow"
-                  onClick={() => handleFollow(el.id)}
+                  onClick={() => dispatch(handleFollow(el.id))}
                 />
               </div>
               <div className="conference__tags">
@@ -65,9 +78,10 @@ const AllConferences = ({ handleFollow, postData, fetchData, hasMore }) => {
                 </div>
               </div>
             </div>
-          ))}{" "}
-        </div>
-      </InfiniteScroll>
+          ))}
+        {data.length === 0 && <div>нет такой конфы беач</div>}
+      </div>
+      {/* </InfiniteScroll> */}
     </section>
   );
 };

@@ -42,13 +42,21 @@ const DatePicker = (props) => {
     Component = MonthView;
     // buttonStyle = { background: primaryColor, marginBottom: "5px" };
   }
-
+  const prev = (event) => {
+    event.preventDefault();
+    const e = document.getElementById("container");
+    const width = e ? e.getBoundingClientRect().width : null;
+    e.scrollLeft -= width - 60;
+  };
   return (
     <div className={styles.container}>
       <div className={styles.buttonWrapper} style={buttonzIndex}>
         <span role="button" className={styles.calendar}>
           <img src={calendar} alt="calendar" />
         </span>
+        <button className={styles.button} onClick={prev}>
+          &lt;
+        </button>
       </div>
       <Component
         {...props}

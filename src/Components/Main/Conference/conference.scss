@@ -1,8 +1,8 @@
 .conference {
   text-align: left;
-  max-width: 1170px;
+  width: 1170px;
   margin: 0 auto;
-
+  padding-bottom: 40px;
   &__block {
     max-width: 550px;
   }
@@ -36,7 +36,7 @@
     font-size: 32px;
     font-weight: 600;
     margin-bottom: 20px;
-    padding-top: 50px;
+
     span {
       font-size: 23px;
       vertical-align: middle;
