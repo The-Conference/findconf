@@ -7,12 +7,7 @@ import Filters from "../../Filters/Filters";
 import { handleFollow, card } from "../../../store/postData";
 import { useDispatch, useSelector } from "react-redux";
 
-const AllConferences = (
-  {
-    // fetchData,
-    // hasMore,
-  }
-) => {
+const AllConferences = ({ fetchData, hasMore }) => {
   const dispatch = useDispatch();
   const data = useSelector(card);
 
@@ -85,4 +80,5 @@ const AllConferences = (
     </section>
   );
 };
+console.log(AllConferences.data);
 export default AllConferences;

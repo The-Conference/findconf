@@ -18,10 +18,13 @@ export const filterSlice = createSlice({
     handleDeleteColor: (state) => {
       return state.forEach((el) => (el.applied = false));
     },
+    removeAllFlags: (state) => {
+      return state.forEach((el) => (el.flag = false));
+    },
   },
 });
 
-export const { handleFlag, handleColor, handleDeleteColor } =
+export const { handleFlag, handleColor, handleDeleteColor, removeAllFlags } =
   filterSlice.actions;
 export const filter = (state) => state.filters;
 export const selectedFilter = (state) => state.filters;

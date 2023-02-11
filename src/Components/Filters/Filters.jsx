@@ -5,6 +5,7 @@ import {
   selectedFilter,
   handleColor,
   handleDeleteColor,
+  removeAllFlags,
 } from "../../store/filterSlice";
 import { handleFilter, handleDelete } from "../../store/postData";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +27,7 @@ const Filters = () => {
         onClick={() => {
           dispatch(handleDelete());
           dispatch(handleDeleteColor());
+          dispatch(removeAllFlags());
         }}
       >
         X

@@ -16,13 +16,9 @@ const Main = ({ handleFollow, postData, setPostData }) => {
       {/* <GreetingForAuth /> */}
       <Calendar />
       {/* <LoaderTemplate /> */}
-      <UpPrev handleFollow={handleFollow} postData={postData} />
-      <AllPrev
-        handleFollow={handleFollow}
-        postData={postData}
-        setPostData={setPostData}
-      />
-      <PastPrev handleFollow={handleFollow} postData={postData} />
+      <UpPrev />
+      <AllPrev />
+      <PastPrev />
     </div>
   );
 };

@@ -1,9 +1,13 @@
 import React from "react";
 import heart from "./follow.svg";
 import following from "./following.svg";
+import { handleFollow, card } from "../../../store/postData";
+import { useDispatch, useSelector } from "react-redux";
 
-const AllPrev = ({ handleFollow, postData }) => {
-  let preview = postData.filter((item, index) => index < 2);
+const AllPrev = () => {
+  const dispatch = useDispatch();
+  const data = useSelector(card);
+  let preview = data.filter((item, index) => index < 2);
 
   return (
     <section className="conference">
@@ -40,7 +44,7 @@ const AllPrev = ({ handleFollow, postData }) => {
               <img
                 src={el.follow === false ? heart : following}
                 alt="follow"
-                onClick={() => handleFollow(el.id)}
+                onClick={() => dispatch(handleFollow(el.id))}
               />
             </div>
             <div className="conference__tags">
