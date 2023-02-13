@@ -1,8 +1,16 @@
 import React from "react";
 import "../Login/login.scss";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/");
+  };
   return (
     <div className="login">
+      <span className="login__close" onClick={handleNavigate}>
+        x
+      </span>
       <div className="login__welcome">
         <p className="login__welcome-black">Добро пожаловать</p>
         <p className="login__welcome-blue">в The Conference</p>{" "}
@@ -11,9 +19,9 @@ const SignUp = () => {
         </p>
       </div>
       <form className="login__form" action="">
-        <label htmlFor="">email</label>
+        {/* <label htmlFor="">email</label> */}
         <input type="mail" placeholder="E-mail" />
-        <label htmlFor="">пароль</label>
+        {/* <label htmlFor="">пароль</label> */}
         <input type="password" placeholder="Пароль" />
         <label htmlFor=""></label>{" "}
         <input type="password" placeholder="Подтвердить пароль" />

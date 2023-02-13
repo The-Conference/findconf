@@ -121,8 +121,7 @@ const conferenceCard = [
       "Онлайн",
       "Петропавловск - Камчатский",
     ],
-    title:
-      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    title: "политика и право древнего рима",
     organizer: "СПБГУ",
     date: "17.01.2023",
     filter: false,
@@ -144,7 +143,7 @@ const conferenceCard = [
       "Петропавловск - Камчатский",
     ],
     title:
-      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+      "Международная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
     organizer:
       "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
     date: "17.01.2023",
@@ -168,7 +167,322 @@ const conferenceCard = [
     ],
     title:
       "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
-    organizer: "Московский Государственный Университет",
+    organizer: "Саратовский Государственный Университет",
+    date: "17.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["физика", "генетика"],
+    publish: ["kitch", "винк"],
+  },
+  {
+    id: 42332423488,
+    register: false,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer:
+      "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
+    date: "18.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["медицина", "биология"],
+    publish: ["bitch", "linch"],
+  },
+  {
+    id: 42332423488,
+    register: true,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer: "Саратовский Государственный Университет",
+    date: "17.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["физика", "генетика"],
+    publish: ["kitch", "винк"],
+  },
+  {
+    id: 42332423488,
+    register: false,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer:
+      "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
+    date: "18.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["медицина", "биология"],
+    publish: ["bitch", "linch"],
+  },
+  {
+    id: 42332423488,
+    register: true,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer: "Саратовский Государственный Университет",
+    date: "17.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["физика", "генетика"],
+    publish: ["kitch", "винк"],
+  },
+  {
+    id: 42332423488,
+    register: false,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer:
+      "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
+    date: "18.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["медицина", "биология"],
+    publish: ["bitch", "linch"],
+  },
+  {
+    id: 42332423488,
+    register: true,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer: "Саратовский Государственный Университет",
+    date: "17.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["физика", "генетика"],
+    publish: ["kitch", "винк"],
+  },
+  {
+    id: 42332423488,
+    register: false,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer:
+      "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
+    date: "18.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["медицина", "биология"],
+    publish: ["bitch", "linch"],
+  },
+  {
+    id: 42332423488,
+    register: true,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer: "Саратовский Государственный Университет",
+    date: "17.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["физика", "генетика"],
+    publish: ["kitch", "винк"],
+  },
+  {
+    id: 42332423488,
+    register: false,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer:
+      "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
+    date: "18.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["медицина", "биология"],
+    publish: ["bitch", "linch"],
+  },
+  {
+    id: 42332423488,
+    register: true,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer: "Саратовский Государственный Университет",
+    date: "17.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["физика", "генетика"],
+    publish: ["kitch", "винк"],
+  },
+  {
+    id: 42332423488,
+    register: false,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer:
+      "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
+    date: "18.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["медицина", "биология"],
+    publish: ["bitch", "linch"],
+  },
+  {
+    id: 42332423488,
+    register: true,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer: "Саратовский Государственный Университет",
+    date: "17.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["физика", "генетика"],
+    publish: ["kitch", "винк"],
+  },
+  {
+    id: 42332423488,
+    register: false,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer:
+      "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова",
+    date: "18.02.2023",
+    filter: false,
+
+    form: ["online", "offline"],
+    themes: ["медицина", "биология"],
+    publish: ["bitch", "linch"],
+  },
+  {
+    id: 42332423488,
+    register: true,
+    finished: false,
+    follow: false,
+    tags: [
+      "Ринц",
+      "Транспортные коммуникации",
+      "Офлайн",
+      "Онлайн",
+      "Петропавловск - Камчатский",
+    ],
+    title:
+      "Mеждународная научно - практическая конференция “Advances in Scienceand Technology.Mеждународная научно - практическая конференция “Advances in Scienceand Technology”“Advances in Scienceand Technology”“Advances in Scienceand Technology”.“Advances in Scienceand Technology”",
+    organizer: "Саратовский Государственный Университет",
     date: "17.02.2023",
     filter: false,
 

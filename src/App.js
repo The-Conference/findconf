@@ -56,11 +56,11 @@ function App() {
   return (
     <div className="App">
       {/* <HeaderForAuth /> */}
-      <Header />
       <Suspense fallback={<LoaderTemplate />}>
+        <Header />
         <RouterProvider router={router} />
+        <Footer />
       </Suspense>
-      <Footer />
     </div>
   );
 }

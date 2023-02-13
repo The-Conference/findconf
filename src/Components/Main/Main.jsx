@@ -5,10 +5,11 @@ import PastPrev from "./Conference/PastPrev";
 import AllPrev from "./Conference/AllPrev";
 import Greeting from "./Greeting/Greeting";
 import Calendar from "./Calendar/Calendar";
+
 // import GreetingForAuth from "./Greeting/GreetingForAuth";
 // import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 
-const Main = ({ handleFollow, postData, setPostData }) => {
+const Main = () => {
   return (
     <div className="main">
       <Greeting />

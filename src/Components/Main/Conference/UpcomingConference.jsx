@@ -1,6 +1,5 @@
 import React from "react";
 // import InfiniteScroll from "react-infinite-scroll-component";
-// import Spinner from "../../../utils/Loader/Spinner";
 import heart from "./follow.svg";
 import following from "./following.svg";
 import Filters from "../../Filters/Filters";

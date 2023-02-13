@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.png";
 import "./header.scss";
-import search from "./searchgrey.svg";
+import SearchFilter from "../SearchFilter/SearchFilter";
 
 const Header = () => {
   return (
@@ -12,18 +12,13 @@ const Header = () => {
             <img src={logo} alt="logo" />
           </div>
         </a>
-        <div className="header__search">
-          <img src={search} alt="search" role="button" />
-          <input type="text" placeholder="Тема конференции, организатор" />
-        </div>
-
+        <SearchFilter />
         <nav className="header__nav">
           <ul>
-            <li>План конференции</li>
-            <li>О нас</li>
+            <li>О сервисе</li>
           </ul>
         </nav>
-        <a href="./login">
+        <a href="/login">
           <button className="header__signin">Войти</button>
         </a>
       </div>

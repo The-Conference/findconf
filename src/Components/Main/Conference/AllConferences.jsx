@@ -1,7 +1,7 @@
 import React from "react";
 import hearts from "./follow.svg";
 import following from "./following.svg";
-// import Spinner from "../../../utils/Loader/Spinner";
+
 // import InfiniteScroll from "react-infinite-scroll-component";
 import Filters from "../../Filters/Filters";
 import { handleFollow, card } from "../../../store/postData";

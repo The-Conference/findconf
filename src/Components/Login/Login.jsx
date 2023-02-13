@@ -1,8 +1,16 @@
 import React from "react";
 import "./login.scss";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/");
+  };
   return (
     <div className="login">
+      <span className="login__close" onClick={handleNavigate}>
+        x
+      </span>
       <div className="login__welcome">
         <p className="login__welcome-black">Добро пожаловать</p>
         <p className="login__welcome-blue">в The Conference</p>{" "}
