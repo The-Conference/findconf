@@ -1,7 +1,5 @@
 - name: default preconfig node
   hosts: all
-  vars:
-    - front: am
   vars_files:
     - "./vars/mysql_pass.yml"
   gather_facts: false
@@ -133,20 +131,6 @@
           - nginx
         state: present
         update_cache: true
-
-    - name: create groups for develops
-      group:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - appadmin
-        - webadmin
-
-    - name: add front develops to appadmin and webadmin groups
-      user:
-        name: "{{ front }}"
-        groups: appadmin, webadmin
-        append: true
 
     - name: create folders for apps 
       file:
