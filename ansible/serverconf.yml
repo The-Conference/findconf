@@ -1,7 +1,5 @@
 - name: default preconfig node
-  hosts: all
-  vars_files:
-    - "./vars/mysql_pass.yml"
+  hosts: test
   gather_facts: false
   become: true
   become_user: "root"
@@ -65,63 +63,63 @@
       reboot:
         reboot_timeout: 600
 
-    - name: download rpm for install mysql repo
-      shell:
-        cmd: "wget https://dev.mysql.com/get/mysql80-community-release-el7-7.noarch.rpm"
-        chdir: /data/distrib
-
-    - name: installing mysql repo
-      yum:
-        name: /data/distrib/mysql80-community-release-el7-7.noarch.rpm
-        state: present
-
-    - name: installing mysql
+    - name: install postgresql and dependeses
       package:
-        name: "{{ item }}"
+        name:
+          - postgresql
+          - postgresql-server
+          - postgresql-contrib
+          - postgresql-libs
+          - python3-psycopg2
         state: present
-      with_items:
-        - mysql-community-devel*
-        - mysql-community-server*
-        - MySQL-python
+        update_cache: true
+      tags:
+        - pg
 
-    - name: change default mysql config (datadir)
-      lineinfile:
-        path: "/etc/my.cnf"
-        search_string: "datadir=/var/lib/mysql"
-        line: "datadir=/data/mysql"
-        backup: true
-
-    - name: change default mysql config (auth_plugin)
-      lineinfile:
-        path: "/etc/my.cnf"
-        search_string: "# default-authentication-plugin=mysql_native_password"
-        line: "default-authentication-plugin=mysql_native_password"
-        backup: true
-        owner: root
-        group: root
-        mode: "0644"
-      
-    - name: create mysql data dir
+    - name: create pg data directory
       file:
-        path: /data/mysql
+        path: /data/pgsql
         state: directory
-        owner: mysql
-        group: mysql
-        mode: "0751"
+        owner: postgres
+        group: postgres
+        mode: "u=rwx,g=rx,o=rx"
         recurse: true
-
-    - name: start mysqld and set autostart on boot 
+      tags:
+        - pg
+    
+    - name: stop postgresql demon if it runned
       systemd:
-        name: mysqld
-        state: restarted
+        name: postgresql
+        state: stopped
+      tags:
+        - pg
+
+    - name: postgresql init instance
+      shell:
+        cmd: "sudo -u postgres /usr/bin/initdb -D /data/pgsql/main"
+      tags:
+        - pg
+
+    - name: change pg data directory
+      lineinfile:
+        path: "/lib/systemd/system/postgresql.service"
+        search_string: "Environment=PGDATA=/var/lib/pgsql/data"
+        line: "Environment=PGDATA=/data/pgsql/main"
+      tags:
+        - pg
+
+    - name: reload systemctl
+      command: "systemctl daemon-reload"
+      tags:
+        - pg
+
+    - name: start && enable postgresql service
+      systemd:
+        name: postgresql
+        state: started
         enabled: true
-
-    - name: get autogenerate mysql root password
-      shell: "grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | awk -F ' ' '{print $(NF)}'"
-      register: old_root_pass #save fetched password to temporary variable
-
-    - name: change autogenerate mysql root password
-      command: mysql --user root --password={{ old_root_pass.stdout }} --connect-expired-password --execute="ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ root_pass }}';"
+      tags:
+        - pg
 
     - name: install nodejs and npm from epel repo, install nginx
       package:
