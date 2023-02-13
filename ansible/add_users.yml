@@ -2,6 +2,13 @@
   hosts: all
   vars_files:
     - "./vars/users.yml"
+  vars:
+    - front: 
+      - am
+    - back: 
+      - kl
+      - amc
+      - vn
   gather_facts: false
   become: true
   become_user: "root"
@@ -25,5 +32,25 @@
         key: "{{ lookup('pipe','cat ../.metadata/keys/pub/{{ item.name }}.pub') }}"
       with_items: 
         - "{{ users }}"
+
+    - name: create groups for develops
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - appadmin
+        - webadmin
+
+    - name: add front develops to webadmin groups
+      user:
+        name: "{{ front }}"
+        groups: webadmin
+        append: true
+
+    - name: add back develops to appadmin groups
+      user:
+        name: "{{ back }}"
+        groups: appadmin
+        append: true
 
 
