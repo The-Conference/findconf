@@ -7,7 +7,7 @@ from .Parsers import parser_1spbgmu, parser_bstu, parser_linguanet, \
     parser_mgsu, parser_msal, parser_pstu, parser_s_vfu, parser_samsmu, \
     parser_spbgasu, parser_ssmu, parser_unecon, parser_almazovcentre, parser_kazangmu, \
     parser_gpmu, parser_mgou, parser_miet, parser_szgmu, parser_tusur, parser_uni_dubna, \
-    parser_unitech_mo
+    parser_unitech_mo, parser_petrsu, parser_rzgmu
 
 
 def save_conferences(lst):
@@ -236,3 +236,23 @@ def parser20():
         'https://unitech-mo.ru/announcement/'],
         datetime.strptime('2023.01.01', '%Y.%m.%d')
     ))
+    parser21.apply_async()
+
+
+@shared_task
+def parser21():
+    run_parser(parser_petrsu.parser_petrsu(
+        'petrsu', ['https://conf.petrsu.ru/index.php',
+        'https://petrsu.ru/page/education/school/project/konferentsii-i-konkursy'],
+        datetime.strptime('2023.01.01', '%Y.%m.%d'))
+    )
+    parser22.apply_async()
+
+
+@shared_task
+def parser22():
+    run_parser(parser_rzgmu.parser_rzgmu(
+        'rzgmu', 'https://rzgmu.ru/actions/',
+        datetime.strptime('2023.01.01', '%Y.%m.%d'))
+    )
+    # parser23.apply_async()

@@ -18,7 +18,7 @@ headers = {
 
 async def make_queue_kazangmu(un_id, url, filter_date):
     try:
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             tasks = []
             try:
                 page = 1
