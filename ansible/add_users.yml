@@ -1,9 +1,9 @@
 - name: adding users and ssh public keys
-  hosts: all
+  hosts: test_sf
   vars_files:
     - "./vars/users.yml"
   vars:
-    - front: 
+    - front:  
       - am
     - back: 
       - kl
@@ -43,14 +43,16 @@
 
     - name: add front develops to webadmin groups
       user:
-        name: "{{ front }}"
+        name: "{{ item }}"
         groups: webadmin
         append: true
+      loop: "{{ front | list }}"
 
     - name: add back develops to appadmin groups
       user:
-        name: "{{ back }}"
+        name: "{{ item }}"
         groups: appadmin
         append: true
+      loop: "{{ back | list }}"
 
 
