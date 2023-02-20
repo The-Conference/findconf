@@ -15,6 +15,7 @@
           - wget
           - curl
           - gcc
+          - git
           - openssl
           - certbot
           - ca-certificates
@@ -22,6 +23,8 @@
           - software-properties-common
         state: present
         update_cache: true
+      tags:
+        - inst
 
     - name: creating develop content directory
       file:
