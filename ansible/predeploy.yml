@@ -1,0 +1,46 @@
+- name: predeploy docker compose
+  hosts: test_sf
+  vars:
+    - dev_path: /usr/develop
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+  
+  tasks:
+  
+    - name: create needed directories
+      file:
+        path: "{{ dev_path }}/{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "u=rwx,g=rwx,o=x"
+      with_items:
+        - static
+        - media
+        - nginx_conf
+        - pg_data
+
+    - name: copy nginx default.conf
+      copy:
+        src: "../docker_config/nginx/default.conf"
+        dest: "{{ dev_path }}/nginx_conf/"
+        owner: root
+        group: root
+        mode: "0664"
+
+    - name: copy gunicorn folder
+      copy:
+        src: "../docker_config/gunicorn"
+        dest: "{{ dev_path }}/"
+    
+    - name: copy docker-compose.yml
+      copy:
+        src: "../docker_config/docker-compose.yml"
+        dest: "{{ dev_path }}/"
+
+    - name: copy env. file
+      copy:
+        src: "../.metadata/.docker_env"
+        dest: "/root/"
