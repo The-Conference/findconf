@@ -26,7 +26,7 @@
         group: root
         mode: "u=rwx,g=rwx,o=x"
       with_items:
-        - wwww
+        - www
         - nginx_conf
         - pg_data
 
