@@ -37,6 +37,8 @@
         owner: root
         group: root
         mode: "0664"
+      tags:
+        - conf_nginx
 
     - name: copy django folder
       copy:
@@ -47,23 +49,31 @@
       get_url:
         url: "https://github.com/The-Conference/findconf/archive/refs/heads/backend.zip"
         dest: "/root"
+      tags:
+        - conf_back
 
     - name: unzip django app
       unarchive:
         src: "/root/findconf-backend.zip"
         dest: "/root"
         remote_src: true
+      tags:
+        - conf_back
 
     - name: copy django app to data dir
       copy:
         src: "/root/findconf-backend/"
         dest: "{{ dev_path }}/django/app"
         remote_src: true
+      tags:
+        - conf_back
 
     - name: add unicorn to django requirements
       lineinfile:
         path: "{{ dev_path }}/django/app/requirements.txt"
         line: "gunicorn==20.0.4"
+      tags:
+        - conf_back
 
     - name: remove temp files from /root
       file:
@@ -72,6 +82,8 @@
       with_items:
         - "/root/findconf-backend.zip"
         - "/root/findconf-backend"
+      tags:
+        - conf_back
     
     - name: copy docker-compose.yml
       copy:
