@@ -27,15 +27,6 @@
       tags:
         - inst
 
-    - name: creating develop content directory
-      file:
-        path: /usr/develop
-        state: directory
-        owner: root
-        group: root
-        mode: "u=rw,g=rw,o=r"
-        recurse: true
-
     - name: add docker repo gpg key
       shell:
         cmd: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
