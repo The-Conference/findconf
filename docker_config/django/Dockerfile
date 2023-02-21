@@ -7,3 +7,4 @@ FROM python:3.10-buster
   COPY ./app/requirements.txt .
   RUN pip install -r requirements.txt
   COPY ./app /app
+  RUN python manage.py makemigrations && python manage.py migrate
