@@ -29,6 +29,7 @@
         - www
         - nginx_conf
         - pg_data
+        - pgsql
 
     - name: copy nginx default.conf
       copy:
@@ -39,6 +40,12 @@
         mode: "0664"
       tags:
         - conf_nginx
+
+    - name: copy pgsql folder
+      copy:
+        src: "../docker_config/pgsql"
+        dest: "{{ dev_path }}/"
+        decrypt: true
 
     - name: copy django folder
       copy:
