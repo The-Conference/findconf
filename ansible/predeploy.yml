@@ -50,13 +50,13 @@
 
     - name: unzip django app
       unarchive:
-        src: "/root/backend.zip"
-        dest: "root/backend"
+        src: "/root/findconf-backend.zip"
+        dest: "/root"
         remote_src: true
 
     - name: copy django app to data dir
       copy:
-        src: "/root/backend/findconf-backend/"
+        src: "/root/findconf-backend/"
         dest: "{{ dev_path }}/django/app"
         remote_src: true
 
@@ -65,8 +65,8 @@
         path: "{{ item }}"
         state: absent
       with_items:
-        - "/root/backend.zip"
-        - "/root/backend"
+        - "/root/findconf-backend.zip"
+        - "/root/findconf-backend"
     
     - name: copy docker-compose.yml
       copy:
