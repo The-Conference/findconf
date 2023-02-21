@@ -60,6 +60,11 @@
         dest: "{{ dev_path }}/django/app"
         remote_src: true
 
+    - name: add unicorn to django requirements
+      lineinfile:
+        path: "{{ dev_path }}/django/app/requirements.txt"
+        line: "gunicorn==20.0.4"
+
     - name: remove temp files from /root
       file:
         path: "{{ item }}"
