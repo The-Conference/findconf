@@ -1,66 +1,23 @@
 import "./App.css";
-import Main from "./Components/Main/Main";
-import Footer from "./Components/Footer/Footer";
-import Header from "./Components/Header/Header";
-// import HeaderForAuth from "./Components/Header/HeaderForAuth";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
 import React from "react";
-import LoaderTemplate from "./utils/Loader/LoaderTemplate";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-const Up = React.lazy(() =>
-  import("./Components/Main/Conference/UpcomingConference")
-);
-const Past = React.lazy(() =>
-  import("./Components/Main/Conference/PastConference")
-);
-const Login = React.lazy(() => import("./Components/Login/Login"));
-const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
-const All = React.lazy(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(import("./Components/Main/Conference/AllConferences"));
-    }, 1000);
-  });
-});
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Main />,
-  },
-  {
-    path: "/all",
-    element: <All />,
-  },
-  {
-    path: "/finished",
-    element: <Past />,
-  },
-  {
-    path: "/upcoming",
-    element: <Up />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
-]);
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
+import Main from "./Components/Main/Main";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchAllConferences } from "./store/postData";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllConferences());
+  }, []);
+
   return (
     <div className="App">
-      {/* <HeaderForAuth /> */}
-      <Suspense fallback={<LoaderTemplate />}>
-        <Header />
-        <RouterProvider router={router} />
-        <Footer />
-      </Suspense>
+      <Header />
+      <Main />
+      <Footer />
     </div>
   );
 }

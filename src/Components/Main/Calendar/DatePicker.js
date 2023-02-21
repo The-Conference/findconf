@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { addDays } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from "./MonthView";
-import conferenceCard from "../../../utils/mock";
+import CalendarFilter from "./CalendarFilter";
+
 // import hexToRgb from "./global/helpers/hexToRgb";
 import calendar from "./calendar.svg";
-const DatePicker = (props) => {
-  const { card } = props;
 
+const DatePicker = (props) => {
+  const [showCalendar, setShowCalendar] = useState(false);
   const next = (event) => {
     event.preventDefault();
     const e = document.getElementById("container");
@@ -51,20 +52,19 @@ const DatePicker = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.buttonWrapper} style={buttonzIndex}>
-        <span role="button" className={styles.calendar}>
+        <span
+          role="button"
+          className={styles.calendar}
+          onClick={() => setShowCalendar(!showCalendar)}
+        >
           <img src={calendar} alt="calendar" />
         </span>
+        {showCalendar && <CalendarFilter />}
         <button className={styles.button} onClick={prev}>
           &lt;
         </button>
       </div>
-      <Component
-        {...props}
-        card={card}
-        conferenceCard={conferenceCard}
-        startDate={startDate}
-        lastDate={lastDate}
-      />
+      <Component {...props} startDate={startDate} lastDate={lastDate} />
       <div className={styles.buttonWrapper} style={buttonzIndex}>
         <button className={styles.button} onClick={next}>
           &gt;

@@ -22,10 +22,12 @@ a,
 a:link,
 a:visited {
   text-decoration: none;
+  color: black;
 }
 
 a:hover {
   text-decoration: none;
+  color: black;
 }
 
 aside,
@@ -121,15 +123,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   margin: 0 auto;
-
+  height: 100%;
   background-color: #f7f7f9;
-  font-weight: 600;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-::-webkit-scrollbar {
-  width: 0;
 }

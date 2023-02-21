@@ -1,21 +1,23 @@
 import React from "react";
-import { card } from "../../store/postData";
 import { useSelector } from "react-redux";
 import "./searchfilter.scss";
-import search from "./searchgrey.svg";
+import searchPic from "./searchgrey.svg";
 import Highlighter from "react-highlight-words";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SearchFilter = () => {
-  const data = useSelector(card);
-
-  const [filteredList, setFilteredList] = useState(data);
+  const { conferences } = useSelector((state) => state.conferences);
+  const nav = useNavigate();
+  const [filteredList, setFilteredList] = useState(conferences);
   const [value, setValue] = useState("");
+
   let query = "";
   const filterBySearch = (event) => {
     query = event.target.value;
     setValue(event.target.value);
-    var updatedList = [...data];
+    var updatedList = [...conferences];
 
     updatedList = updatedList.filter((item) => {
       return (
@@ -26,14 +28,19 @@ const SearchFilter = () => {
 
     setFilteredList(updatedList);
   };
-  const handleSubmit = (e, val) => {
-    e.preventDefault();
-    console.log(val);
+
+  const handleKeyDown = (event) => {
+    if (value.length !== 0) {
+      if (event.key === "Enter") {
+        nav(`/search/${value}`);
+      }
+    }
   };
+
   return (
-    <form className="search" onSubmit={(e) => handleSubmit(e, value)}>
+    <form className="search" onKeyDown={handleKeyDown}>
       <div className="input">
-        <img src={search} alt="search" />
+        <img src={searchPic} alt="search" />
         <input
           placeholder="Тема конференции, организатор"
           className="search-box"
@@ -46,29 +53,37 @@ const SearchFilter = () => {
             filteredList.map(
               (item, index) =>
                 index < 3 && (
-                  <div className="conf">
-                    <li key={index}>
-                      <Highlighter
-                        highlightClassName="highlight"
-                        searchWords={[value]}
-                        autoEscape={true}
-                        textToHighlight={item.organizer}
-                      />
-                    </li>
-                    <div>
-                      <Highlighter
-                        highlightClassName="highlight"
-                        searchWords={[value]}
-                        autoEscape={true}
-                        textToHighlight={item.title}
-                      />
+                  <Link
+                    key={item.id}
+                    to={`/conferences/${item.id}`}
+                    onClick={() => setValue("")}
+                  >
+                    <div className="conf">
+                      <li>
+                        <Highlighter
+                          highlightClassName="highlight"
+                          searchWords={[value]}
+                          autoEscape={true}
+                          textToHighlight={item.organizer}
+                        />
+                      </li>
+                      <div>
+                        <Highlighter
+                          highlightClassName="highlight"
+                          searchWords={[value]}
+                          autoEscape={true}
+                          textToHighlight={item.title}
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 )
             )}
           {filteredList.length > 0 && value.length > 0 && (
             <div className="sticky-button">
-              <button>Все результаты</button>
+              <Link to={`/search/${value}`}>
+                <button onClick={() => setValue("")}>Все результаты</button>
+              </Link>
             </div>
           )}
         </ul>

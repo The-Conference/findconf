@@ -5,7 +5,6 @@
   border-radius: 7px;
   display: flex;
   flex-direction: column;
-  text-align: center;
 
   .input {
     display: flex;
@@ -35,19 +34,24 @@
       box-shadow: 0px 8px 24px rgba(0, 0, 46, 0.12);
       color: #00003880;
       border-radius: 7px;
+      cursor: pointer;
+      a {
+        color: #00003880;
+      }
       .conf {
-        width: 582px;
+        text-align: justify;
+        &:hover {
+          background-color: #0000380d;
+        }
         li {
           padding: 15px 15px 0 15px;
           color: #00003880;
-          align-self: center;
+          font-weight: 600;
         }
         div {
           padding: 0 15px 15px 15px;
           font-weight: 200;
           min-height: 40px;
-          display: flex;
-          justify-content: center;
         }
       }
 
@@ -92,5 +96,8 @@
   .highlight {
     background-color: transparent;
     font-weight: bold;
+  }
+  ::-webkit-scrollbar {
+    width: 0;
   }
 }

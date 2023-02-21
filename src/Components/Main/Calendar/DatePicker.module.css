@@ -55,7 +55,7 @@
 
 .monthYearLabel {
   align-self: flex-start;
-  z-index: 3;
+  z-index: 2;
   font-size: 15px;
   font-weight: bold;
   position: sticky;
@@ -118,4 +118,7 @@
 }
 .weekend {
   background-color: rgba(209, 65, 55, 0.05);
+}
+.calendar {
+  cursor: pointer;
 }

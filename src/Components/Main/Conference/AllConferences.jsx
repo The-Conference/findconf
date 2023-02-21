@@ -1,24 +1,25 @@
 import React from "react";
 import hearts from "./follow.svg";
 import following from "./following.svg";
-
 // import InfiniteScroll from "react-infinite-scroll-component";
-import Filters from "../../Filters/Filters";
-import { handleFollow, card } from "../../../store/postData";
-import { useDispatch, useSelector } from "react-redux";
-
+import "./conference.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { handleFollow } from "../../../store/postData";
+import { Link } from "react-router-dom";
+import LoaderTemplate from "../../../utils/Loader/LoaderTemplate";
 const AllConferences = ({ fetchData, hasMore }) => {
+  const { conferences } = useSelector((state) => state.conferences);
   const dispatch = useDispatch();
-  const data = useSelector(card);
+  console.log(conferences);
+  var options = { year: "numeric", month: "long", day: "numeric" };
 
   return (
     <section className="conference">
-      <a href="/">
+      <a href="/all">
         <p className="conference__type">
           Все конференции <span>&gt;</span>
         </p>
       </a>
-      <Filters />
       {/* <InfiniteScroll
         dataLength={postData.length} //This is important field to render the next data
         next={fetchData}
@@ -26,10 +27,10 @@ const AllConferences = ({ fetchData, hasMore }) => {
         loader={<Spinner />}
       > */}
       <div className="conference__container">
-        {data.length > 0 &&
-          data.map((el) => (
-            <div el={el.id} className="conference__block">
-              <div className="conference__bg">
+        {conferences.map((el) => (
+          <div key={el.id} className="conference__block">
+            <div className="conference__bg">
+              <div className="conference__bg-top">
                 {(el.register === false && el.finished === false && (
                   <span
                     style={{
@@ -57,24 +58,39 @@ const AllConferences = ({ fetchData, hasMore }) => {
                   onClick={() => dispatch(handleFollow(el.id))}
                 />
               </div>
-              <div className="conference__tags">
-                {el.tags.map((tag) => (
-                  <small>{tag}</small>
-                ))}
-
-                <div className="conference__title">{el.title}</div>
-                <div className="conference__organizer">
-                  <p>Организатор:</p>
-                  {el.organizer}
-                </div>
-                <div className="conference__date">
-                  <p>Дата проведения:</p>
-                  {el.date}
-                </div>
+              <div
+                className="conference__bg-bottom"
+                style={{ maxWidth: el.dateEnd.length ? "308px" : "200px" }}
+              >
+                {!el.dateEnd.length && !el.dateStart.length
+                  ? "дата уточняется"
+                  : el.dateEnd.length
+                  ? new Date(el.dateStart)
+                      .toLocaleDateString("ru", options)
+                      .slice(0, -3) +
+                    " - " +
+                    new Date(el.dateEnd)
+                      .toLocaleDateString("ru", options)
+                      .slice(0, -3)
+                  : new Date(el.dateStart)
+                      .toLocaleDateString("ru", options)
+                      .slice(0, -3)}
               </div>
             </div>
-          ))}
-        {data.length === 0 && <div>нет такой конфы беач</div>}
+
+            <div className="conference__tags">
+              {/* <div>
+                  {el.tags.map((tag) => (
+                    <small>{tag}</small>
+                  ))}
+                </div> */}
+              <Link to={`/conferences/${el.id}`}>
+                <div className="conference__title">{el.title}</div>
+              </Link>
+            </div>
+          </div>
+        ))}
+        {conferences.length === 0 && <LoaderTemplate />}
       </div>
       {/* </InfiniteScroll> */}
     </section>

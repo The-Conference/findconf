@@ -7,6 +7,7 @@ const FILTERS = [
     flag: false,
     applied: false,
     dropdown: Array.from(new Set(conferenceCard.map((el) => el.organizer))),
+    filter: [],
   },
   {
     name: "Форма участия",
@@ -14,6 +15,7 @@ const FILTERS = [
     flag: false,
     applied: false,
     dropdown: ["online", "offline"],
+    filter: [],
   },
   {
     name: "Тематика",
@@ -21,6 +23,7 @@ const FILTERS = [
     flag: false,
     applied: false,
     dropdown: ["архитектура", "строительство", "медицина"],
+    filter: [],
   },
   {
     name: "Публикация работы",
@@ -28,6 +31,7 @@ const FILTERS = [
     flag: false,
     applied: false,
     dropdown: ["ринц", "винкс"],
+    filter: [],
   },
   {
     name: "Статус",
@@ -39,6 +43,7 @@ const FILTERS = [
       "Регистрация окончена",
       "Конференция завершена",
     ],
+    filter: [],
   },
   //   {
   //     name: "Дата",

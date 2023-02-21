@@ -2,6 +2,7 @@
 import React from "react";
 import styles from "./DatePicker.module.css";
 import { ru } from "date-fns/locale";
+import { useSelector } from "react-redux";
 import {
   addDays,
   addMonths,
@@ -20,10 +21,9 @@ const DateView = ({
   primaryColor,
   labelFormat,
   marked,
-  card,
-  conferenceCard,
 }) => {
   // const [selectedDate, setSelectedDate] = useState(null);
+  const { conferences } = useSelector((state) => state.conferences);
   const firstSection = { marginLeft: "40px" };
   // const selectedStyle = {
   //   fontWeight: "bold",
@@ -86,7 +86,6 @@ const DateView = ({
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
         let newFormat = currentDay.toLocaleDateString();
-
         days.push(
           <div
             // id={`${getId(currentDay)}`}
@@ -127,7 +126,13 @@ const DateView = ({
                     : "#00003880",
               }}
             >
-              {conferenceCard.filter((el) => el.date === newFormat).length}
+              {
+                conferences.filter(
+                  (el) =>
+                    new Date(el.dateStart).toLocaleDateString() === newFormat ||
+                    new Date(el.dateEnd).toLocaleDateString() === newFormat
+                ).length
+              }
             </div>
           </div>
         );

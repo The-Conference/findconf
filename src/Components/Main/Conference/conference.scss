@@ -3,8 +3,11 @@
   width: 1170px;
   margin: 0 auto;
   padding-bottom: 40px;
+
   &__block {
-    max-width: 550px;
+    width: 550px;
+    background-color: white;
+    border-radius: 16px;
     &:hover {
       box-shadow: 0px 8px 24px rgba(0, 0, 46, 0.12);
     }
@@ -21,16 +24,18 @@
   }
   &__tags {
     padding: 10px 16px 20px 16px;
-    background-color: white;
-    border-radius: 0 0 16px 16px;
+    div {
+      display: flex;
+      flex-wrap: wrap;
+      small {
+        white-space: pre-wrap;
 
-    small {
-      padding: 20px 0;
-      color: #0000384d;
-      &:not(:last-of-type):after {
-        content: "\2022";
-        padding: 0 8px;
-        font-size: 18px;
+        color: #0000384d;
+        &:not(:last-of-type):after {
+          content: "\2022";
+          padding: 0 8px;
+          font-size: 18px;
+        }
       }
     }
   }
@@ -54,17 +59,26 @@
   }
   &__bg {
     height: 214px;
-
     background-image: url(Background.png);
-
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 16px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    &-bottom {
+      color: white;
+      background-color: #001036bd;
 
+      padding: 7px 14px;
+      border-radius: 6px;
+    }
     span {
       color: white;
       height: 34px;
