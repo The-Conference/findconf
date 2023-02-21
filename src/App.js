@@ -23,21 +23,3 @@ function App() {
 }
 
 export default App;
-
-// const LIMIT = 8;
-//.slice(0, LIMIT)
-// const [visible, setVisible] = useState(LIMIT);
-// const [hasMore, setHasMore] = useState(true);
-// const fetchData = () => {
-//   const newLimit = visible + LIMIT;
-//   const dataToAdd = conferenceCard.slice(visible, newLimit);
-
-//   if (conferenceCard.length > postData.length) {
-//     setTimeout(() => {
-//       setPostData([...postData].concat(dataToAdd));
-//     }, 1000);
-//     setVisible(newLimit);
-//   } else {
-//     setHasMore(false);
-//   }
-// };

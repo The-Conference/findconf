@@ -3,7 +3,9 @@
   box-shadow: 0px 8px 24px rgba(0, 0, 46, 0.12);
   border-radius: 10px;
   padding: 24px;
+  font-family: "Manrope medium";
 }
+
 .react-calendar__navigation__prev2-button,
 .react-calendar__navigation__next2-button {
   display: none;
@@ -57,4 +59,11 @@ abbr[title] {
 .react-calendar__tile:hover {
   background-color: #0000380d !important;
   color: black;
+}
+
+.react-calendar__tile--hasActive {
+  background-color: #0000381a;
+}
+.react-calendar__month-view__weekdays {
+  color: #00003866;
 }

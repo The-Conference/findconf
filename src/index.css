@@ -6,6 +6,26 @@
   src: url("fonts/Manrope-Bold.ttf");
   font-family: "Manrope bold";
 }
+@font-face {
+  src: url("fonts/Manrope-ExtraBold.ttf");
+  font-family: "Manrope extrabold";
+}
+@font-face {
+  src: url("fonts/Manrope-ExtraLight.ttf");
+  font-family: "Manrope extralight";
+}
+@font-face {
+  src: url("fonts/Manrope-Medium.ttf");
+  font-family: "Manrope medium";
+}
+@font-face {
+  src: url("fonts/Manrope-SemiBold.ttf");
+  font-family: "Manrope semibold";
+}
+@font-face {
+  src: url("fonts/Manrope-Light.ttf");
+  font-family: "Manrope Light";
+}
 * {
   padding: 0px;
   margin: 0px;
@@ -125,9 +145,4 @@ body {
   margin: 0 auto;
   height: 100%;
   background-color: #f7f7f9;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }

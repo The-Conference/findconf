@@ -99,8 +99,8 @@ const DateView = ({
               style={{
                 color:
                   currentDay.getDay() === 6 || currentDay.getDay() === 0
-                    ? "#D14137"
-                    : "#00003880",
+                    ? "#D1413780"
+                    : "#00002E4D",
               }}
             >
               {format(currentDay, dayFormat, { locale: ru })}
@@ -111,7 +111,7 @@ const DateView = ({
                 color:
                   currentDay.getDay() === 6 || currentDay.getDay() === 0
                     ? "#D14137"
-                    : "black",
+                    : "#00002E",
               }}
             >
               {format(currentDay, dateFormat, { locale: ru })}
@@ -122,7 +122,7 @@ const DateView = ({
               style={{
                 color:
                   currentDay.getDay() === 6 || currentDay.getDay() === 0
-                    ? "#D14137"
+                    ? "#D1413780"
                     : "#00003880",
               }}
             >

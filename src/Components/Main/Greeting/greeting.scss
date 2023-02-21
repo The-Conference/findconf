@@ -1,11 +1,11 @@
 .greeting {
   display: flex;
   gap: 20px;
-  max-width: 1170px;
+  max-width: 1220px;
   margin: 0 auto;
   justify-content: space-between;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 47px;
+  padding-bottom: 30px;
 
   img {
     max-width: 100%;
@@ -57,12 +57,12 @@
   &__text-second {
     color: #2c60e7;
     font-size: 56px;
-    font-family: "Manrope bold";
+    font-family: "Manrope extrabold";
     line-height: 56px;
   }
   &__text-first {
     font-size: 56px;
-    font-family: "Manrope bold";
+    font-family: "Manrope extrabold";
     line-height: 56px;
   }
 }

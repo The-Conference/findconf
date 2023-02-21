@@ -12,9 +12,12 @@
       margin-right: 10px;
     }
     input {
-      width: 454px;
+      width: 562px;
       &::placeholder {
         text-align: center;
+        color: #00002e4d;
+        font-size: 16px;
+        font-weight: 500;
       }
     }
   }
@@ -40,6 +43,7 @@
       }
       .conf {
         text-align: justify;
+        font-family: "Manrope semibold";
         &:hover {
           background-color: #0000380d;
         }
@@ -95,7 +99,8 @@
   }
   .highlight {
     background-color: transparent;
-    font-weight: bold;
+    color: #00002e;
+    font-family: "Manrope extrabold";
   }
   ::-webkit-scrollbar {
     width: 0;

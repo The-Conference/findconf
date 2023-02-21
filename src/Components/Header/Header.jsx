@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./logo.png";
 import "./header.scss";
+import fave from "./favourite.svg";
 import SearchFilter from "../SearchFilter/SearchFilter";
 
 const Header = () => {
@@ -18,9 +19,16 @@ const Header = () => {
             <li>О сервисе</li>
           </ul>
         </nav>
-        <a href="/login">
+        <div>
+          <div className="header__profile">
+            <div>
+              <img src={fave} alt="favourite" />
+            </div>
+          </div>
+        </div>
+        {/* <a href="/login">
           <button className="header__signin">Войти</button>
-        </a>
+        </a> */}
       </div>
     </header>
   );

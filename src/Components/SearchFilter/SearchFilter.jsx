@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "./searchfilter.scss";
-import searchPic from "./searchgrey.svg";
 import Highlighter from "react-highlight-words";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -40,7 +39,6 @@ const SearchFilter = () => {
   return (
     <form className="search" onKeyDown={handleKeyDown}>
       <div className="input">
-        <img src={searchPic} alt="search" />
         <input
           placeholder="Тема конференции, организатор"
           className="search-box"

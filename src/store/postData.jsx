@@ -106,11 +106,6 @@ export const postData = createSlice({
     // :
     // "Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова"
 
-    handleFollow: (state, action) => {
-      return state.conferences.forEach((el) =>
-        el.id === action.payload ? (el.follow = !el.follow) : el
-      );
-    },
     handleFilter: (state, action) => {
       return state.conferences.filter((el) =>
         action.payload.org.includes(el.organizer)

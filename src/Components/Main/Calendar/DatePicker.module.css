@@ -1,7 +1,8 @@
 .container {
   display: flex;
-  max-width: 1170px;
+  max-width: 1220px;
   margin: 0 auto;
+  padding-bottom: 30px;
 }
 
 .buttonWrapper {
@@ -15,7 +16,6 @@
   border: none;
   text-decoration: none;
   cursor: pointer;
-
   color: #00002e;
   font-size: 22px;
   font-weight: bold;
@@ -56,14 +56,15 @@
 .monthYearLabel {
   align-self: flex-start;
   z-index: 2;
-  font-size: 15px;
-  font-weight: bold;
+  font-family: "Manrope bold";
+  font-size: 12px;
+  font-weight: 800;
   position: sticky;
   top: 10px;
   left: 0;
   width: max-content;
   margin: 0 60px;
-  color: rgba(0, 0, 56, 0.217);
+  color: #0000384d;
   text-transform: capitalize;
 }
 
@@ -84,16 +85,19 @@
 .daysContainer {
   display: flex;
   z-index: 1;
-  margin: 20px 0;
+  margin: 8px 0;
 }
 
 .dayLabel {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
   margin: 4px 0 0 0;
 }
 
 .dateLabel {
   font-size: 18px;
+  font-family: "Manrope semibold";
+  font-weight: 600;
 }
 .dayLabel {
   color: rgba(0, 0, 56, 0.3);
@@ -104,7 +108,6 @@
 
 .calendar {
   width: 55px;
-  background-color: #d6e1ff;
   height: 55px;
   border-radius: 8px;
   display: flex;
@@ -112,9 +115,11 @@
   justify-content: center;
   margin-top: 22px;
 }
+
 .amount {
   font-size: 14px;
   padding-bottom: 5px;
+  font-family: "Manrope bold";
 }
 .weekend {
   background-color: rgba(209, 65, 55, 0.05);

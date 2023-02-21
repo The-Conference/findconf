@@ -9,20 +9,15 @@ import { Suspense } from "react";
 import LoaderTemplate from "./utils/Loader/LoaderTemplate";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
-import FullConference from "./Components/FullConference/FullConference";
+import AllConferences from "./Components/Main/Conference/AllConferences";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchResult from "./Components/SearchResult/SearchResult";
 
 const Login = React.lazy(() => import("./Components/Login/Login"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
-const All = React.lazy(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(import("./Components/Main/Conference/AllConferences"));
-    }, 1000);
-  });
-});
-
+const Full = React.lazy(() =>
+  import("./Components/FullConference/FullConference")
+);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,7 +28,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <All />
+        <AllConferences />
         <Footer />
       </>
     ),
@@ -51,7 +46,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <FullConference />
+        <Full />
         <Footer />
       </>
     ),

@@ -1,22 +1,88 @@
 .full-conference {
+  max-width: 786px;
+  margin: 0 auto;
   min-height: 100vh;
-  line-height: 50px;
+  padding: 30px 0 75px 0;
   &__container {
-    display: flex;
-    flex-direction: column;
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      span {
+        color: white;
+        background-color: #37d175;
+        width: 176px;
+        height: 32px;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+    }
+  }
+  &__title {
+    padding: 16px 0;
     h1 {
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 26px;
+      font-weight: 700;
     }
-
+    small {
+      color: #00003833;
+      font-size: 12px;
+    }
+  }
+  &__card {
+    background-color: white;
+    padding: 24px;
+    border-radius: 15px;
+    font-size: 14px;
     span {
-      background-color: grey;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
+      color: #00003880;
     }
+    hr {
+      background-color: #0000380d;
+      height: 1px;
+      margin: 15px 0;
+    }
+  }
+  &__card-flex {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    row-gap: 11px;
+  }
+  &__tabs {
+    margin: 16px 0;
+    button {
+      padding: 5px 19px;
+      margin-right: 16px;
+      border-radius: 7px;
+    }
+  }
+  &__desc {
+    a {
+      font-weight: bold;
+      &:hover {
+        color: #2c60e7;
+        text-decoration: underline;
+      }
+    }
+    h3 {
+      font-size: 22px;
+      font-family: "Manrope semibold";
+      padding-bottom: 10px;
+    }
+  }
+  &__contacts {
     div {
-      padding: 10px;
+      span {
+        font-size: 22px;
+        font-family: "Manrope semibold";
+        padding-bottom: 10px;
+      }
     }
+  }
+  .online,
+  .offline,
+  .both {
+    color: black;
   }
 }

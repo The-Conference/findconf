@@ -1,11 +1,12 @@
 .conference {
   text-align: left;
-  width: 1170px;
+  width: 1220px;
   margin: 0 auto;
   padding-bottom: 40px;
+  min-height: 100vh;
 
   &__block {
-    width: 550px;
+    width: 582px;
     background-color: white;
     border-radius: 16px;
     &:hover {
@@ -14,16 +15,22 @@
   }
   &__title {
     font-size: 18px;
+    font-family: "Manrope semibold";
+
+    line-height: 21.6px;
     margin: 16px 0;
-    height: 100px;
+    height: 65px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-box-flex: 1;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   &__tags {
-    padding: 10px 16px 20px 16px;
+    padding: 10px 16px 10px 16px;
     div {
       display: flex;
       flex-wrap: wrap;
@@ -75,7 +82,8 @@
     &-bottom {
       color: white;
       background-color: #001036bd;
-
+      font-size: 12px;
+      font-weight: 500;
       padding: 7px 14px;
       border-radius: 6px;
     }
@@ -100,6 +108,7 @@
   }
   &__date {
     color: #00003880;
+
     margin: 5px 0;
     display: flex;
     p {

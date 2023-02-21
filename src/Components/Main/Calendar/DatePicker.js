@@ -8,6 +8,7 @@ import CalendarFilter from "./CalendarFilter";
 
 // import hexToRgb from "./global/helpers/hexToRgb";
 import calendar from "./calendar.svg";
+import white from "./calwhite.svg";
 
 const DatePicker = (props) => {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -55,9 +56,12 @@ const DatePicker = (props) => {
         <span
           role="button"
           className={styles.calendar}
+          style={{ backgroundColor: showCalendar ? "#184CD3" : "#ebefff" }}
           onClick={() => setShowCalendar(!showCalendar)}
         >
-          <img src={calendar} alt="calendar" />
+          {(!showCalendar && <img src={calendar} alt="calendar" />) || (
+            <img src={white} alt="calendar" />
+          )}
         </span>
         {showCalendar && <CalendarFilter />}
         <button className={styles.button} onClick={prev}>
