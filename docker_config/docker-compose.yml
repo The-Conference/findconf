@@ -11,13 +11,13 @@ services:
       /root/.docker_env
     restart: always
 
-  gunicorn:
-    build: ./gunicorn
-    container_name: app_gunicorn
-    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
+  django:
+    build: ./django
+    container_name: app_django
+    command: gunicorn Conferences.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static:/app/static/
-      - media:/app/media/
+      - nginx_conf:/etc/nginx/conf.d/
+      - ./django/app:/app/
     expose:
       - 8000
     env_file:
@@ -32,16 +32,14 @@ services:
     ports:
       - "80:80"
     volumes:
-      - static:/app/static
-      - media:/app/media
+      - www:/usr/share/nginx/html
       - nginx_conf:/etc/nginx/conf.d/
     depends_on:
-      - gunicorn
+      - django
     restart: always
 
 volumes:
   pg_data:
-  static:
-  media:
+  www:
   nginx_conf:
 
