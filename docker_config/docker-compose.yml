@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   db:
-    image: postgres:latest
+    build: ./pgsql
     container_name: app_db
     volumes:
       - ./pg_data:/var/lib/postgresql/data/
