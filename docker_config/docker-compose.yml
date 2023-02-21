@@ -6,7 +6,7 @@ services:
     image: postgres:latest
     container_name: app_db
     volumes:
-      - pg_data:/var/lib/postgresql/data/
+      - ./pg_data:/var/lib/postgresql/data/
     env_file:
       /root/.docker_env
     restart: always
@@ -16,7 +16,7 @@ services:
     container_name: app_django
     command: gunicorn Conferences.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - nginx_conf:/etc/nginx/conf.d/
+      - ./nginx_conf:/etc/nginx/conf.d/
       - ./django/app:/app/
     expose:
       - 8000
@@ -32,14 +32,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - www:/usr/share/nginx/html
-      - nginx_conf:/etc/nginx/conf.d/
+      - ./www:/usr/share/nginx/html
+      - ./nginx_conf:/etc/nginx/conf.d/
     depends_on:
       - django
     restart: always
-
-volumes:
-  pg_data:
-  www:
-  nginx_conf:
-
+    
