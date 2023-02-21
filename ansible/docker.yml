@@ -16,6 +16,7 @@
           - curl
           - gcc
           - git
+          - gzip
           - openssl
           - certbot
           - ca-certificates
