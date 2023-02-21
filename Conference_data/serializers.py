@@ -1,8 +1,16 @@
 from rest_framework import serializers
-from .models import Conference
+from .models import Conference, Tag
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'name')
 
 
 class ConferenceSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True)
+
     class Meta:
         model = Conference
         fields = ('id', 'conf_id', 'hash', 'un_name', 'local',
@@ -10,4 +18,4 @@ class ConferenceSerializer(serializers.ModelSerializer):
                   'conf_date_end', 'conf_card_href', 'reg_href',
                   'conf_name', 'conf_s_desc', 'conf_desc', 'org_name',
                   'themes', 'online', 'conf_href', 'offline', 'conf_address',
-                  'contacts', 'rinc')
+                  'contacts', 'rinc', 'tags')

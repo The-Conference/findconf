@@ -1,13 +1,24 @@
+from rest_framework import generics
+from django.shortcuts import get_object_or_404
+
 from .models import Conference
 from .serializers import ConferenceSerializer
-from rest_framework import generics
 
 
 class ConferenceList(generics.ListCreateAPIView):
-    queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
+
+    def get_queryset(self):
+        return Conference.objects.filter(checked=True)
 
 
 class ConferenceDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
+
+    def get_queryset(self):
+        return Conference.objects.filter(checked=True)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, pk=self.kwargs['pk'])
+        return obj
