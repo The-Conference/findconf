@@ -12,7 +12,7 @@ import Footer from "./Components/Footer/Footer";
 import AllConferences from "./Components/Main/Conference/AllConferences";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchResult from "./Components/SearchResult/SearchResult";
-
+import Favourites from "./Components/Favourite/Favourite";
 const Login = React.lazy(() => import("./Components/Login/Login"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 const Full = React.lazy(() =>
@@ -22,6 +22,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/favourite",
+    element: (
+      <>
+        <Header />
+        <Favourites />
+        <Footer />
+      </>
+    ),
   },
   {
     path: "/all",

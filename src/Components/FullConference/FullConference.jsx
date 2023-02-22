@@ -18,6 +18,7 @@ const FullConference = () => {
   var options = { year: "numeric", month: "long", day: "numeric" };
   console.log(conferences);
   useEffect(() => {
+    dispatch(fetchAllConferences());
     window.scrollTo(0, 0);
   }, []);
 
@@ -31,10 +32,7 @@ const FullConference = () => {
     if (desc === true) setDesc(false);
     setContacts(true);
   };
-  useEffect(() => {
-    dispatch(fetchAllConferences());
-    window.scrollTo(0, 0);
-  }, []);
+
   return (
     <div className="full-conference">
       {(conf === 0 && <div style={{ height: "100vh" }}>404</div>) || (
