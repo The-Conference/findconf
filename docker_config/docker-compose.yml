@@ -14,12 +14,12 @@ services:
   django:
     build: ./django
     container_name: app_django
-    command: gunicorn Conferences.wsgi:application --bind 0.0.0.0:8000
+    entrypoint: /start/run.sh
     volumes:
       - ./nginx_conf:/etc/nginx/conf.d/
       - ./django/app:/app/
-    expose:
-      - 8000
+    ports:
+      - "8000:8000"
     env_file:
       - /root/.docker_env
     restart: always
