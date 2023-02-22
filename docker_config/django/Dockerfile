@@ -1,10 +1,11 @@
 FROM python:3.10-buster
   ENV PYTHONDONTWRITEBYTECODE 1
   ENV PYTHONUNBUFFERED 1
-  RUN mkdir /app
+  RUN mkdir /app /start
   WORKDIR /app
   RUN pip install --upgrade pip
-  COPY ./app/requirements.txt .
+  COPY ./app/requirements.txt ./
   RUN pip install -r requirements.txt
   COPY ./app /app
-  RUN python manage.py makemigrations && python manage.py migrate
+  COPY ./run.sh /start/
+  RUN chmod +x /start/run.sh
