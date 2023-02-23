@@ -24,6 +24,7 @@ const DateView = ({
 }) => {
   // const [selectedDate, setSelectedDate] = useState(null);
   const { conferences } = useSelector((state) => state.conferences);
+
   const firstSection = { marginLeft: "40px" };
   // const selectedStyle = {
   //   fontWeight: "bold",
@@ -63,6 +64,26 @@ const DateView = ({
 
   //   return "";
   // };
+  function getDatesInRange(startDate, endDate) {
+    const date = new Date(startDate.getTime());
+
+    date.setDate(date.getDate() + 1);
+
+    const dates = [startDate, endDate];
+
+    while (date < endDate) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+
+    return dates.map((el) => el.toLocaleDateString());
+  }
+  let period = conferences.map((el) => {
+    const d1 = new Date(el.dateStart);
+    const d2 = new Date(el.dateEnd);
+    let period = getDatesInRange(d1, d2);
+    return period;
+  });
 
   const renderDays = () => {
     const dayFormat = "EEEEEE";
@@ -85,7 +106,6 @@ const DateView = ({
 
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
-        let newFormat = currentDay.toLocaleDateString();
         days.push(
           <div
             // id={`${getId(currentDay)}`}
@@ -127,10 +147,8 @@ const DateView = ({
               }}
             >
               {
-                conferences.filter(
-                  (el) =>
-                    new Date(el.dateStart).toLocaleDateString() === newFormat ||
-                    new Date(el.dateEnd).toLocaleDateString() === newFormat
+                period.filter((el) =>
+                  el.includes(currentDay.toLocaleDateString())
                 ).length
               }
             </div>

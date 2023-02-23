@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 // import Filters from "../Filters/Filters";
 import { handleFollow, fetchAllConferences } from "../../store/postData";
@@ -7,11 +7,22 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import following from "./following.svg";
 import hearts from "./follow.svg";
+import { handleSave } from "../../store/postData";
 const SearchResult = () => {
   const { value } = useParams();
   const dispatch = useDispatch();
   const { conferences } = useSelector((state) => state.conferences);
+  const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
+  const [fave, setFave] = useState(Favourite);
 
+  const handleFave = (id) => {
+    if (fave.includes(id)) {
+      setFave(fave.filter((el) => el !== id));
+      console.log(fave);
+    } else {
+      setFave([...fave, id]);
+    }
+  };
   var options = { year: "numeric", month: "long", day: "numeric" };
 
   let match = conferences.filter((el) => {
@@ -27,7 +38,9 @@ const SearchResult = () => {
     dispatch(fetchAllConferences());
     window.scrollTo(0, 0);
   }, []);
-
+  useEffect(() => {
+    dispatch(handleSave(fave));
+  }, [fave]);
   return (
     <section className="conference">
       <a href="/">
@@ -49,31 +62,43 @@ const SearchResult = () => {
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
                 <div className="conference__bg-top">
-                  {(el.register === false && el.finished === false && (
-                    <span
-                      style={{
-                        backgroundColor: "#939393",
-                      }}
-                    >
-                      Регистрация закончена
-                    </span>
-                  )) ||
-                    (el.register === false && el.finished === true && (
+                  {(new Date(el.regEnd).getDay() < new Date().getDay() &&
+                    new Date(el.regEnd).getMonth() <= new Date().getMonth() &&
+                    new Date(el.regEnd).getYear() === new Date().getYear() && (
                       <span
                         style={{
                           backgroundColor: "#939393",
                         }}
                       >
-                        Конференция завершена
+                        Регистрация закончена
                       </span>
                     )) ||
-                    (el.register === true && el.finished === false && (
-                      <span>Открыта регистрация</span>
-                    ))}
+                    (new Date(el.dateEnd).getDay() < new Date().getDay() &&
+                      new Date(el.dateEnd).getMonth() <=
+                        new Date().getMonth() &&
+                      new Date(el.dateEnd).getYear() ===
+                        new Date().getYear() && (
+                        <span
+                          style={{
+                            backgroundColor: "#939393",
+                          }}
+                        >
+                          Конференция завершена
+                        </span>
+                      )) ||
+                    (new Date().getDay() < new Date(el.regEnd).getDay() &&
+                      new Date().getMonth() <= new Date(el.regEnd).getMonth() &&
+                      new Date(el.regEnd).getYear() ===
+                        new Date().getYear() && (
+                        <span>Открыта регистрация</span>
+                      ))}
                   <img
                     src={el.follow === false ? hearts : following}
                     alt="follow"
-                    onClick={() => dispatch(handleFollow(el.id))}
+                    onClick={() => {
+                      handleFave(el.id);
+                      dispatch(handleFollow(el.id));
+                    }}
                   />
                 </div>
                 <div

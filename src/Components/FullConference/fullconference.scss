@@ -46,7 +46,7 @@
   &__card-flex {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-
+    column-gap: 3px;
     row-gap: 11px;
   }
   &__tabs {
@@ -78,6 +78,10 @@
         font-family: "Manrope semibold";
         padding-bottom: 10px;
       }
+    }
+    .details {
+      font-family: "Manrope";
+      font-size: 16px;
     }
   }
   .online,

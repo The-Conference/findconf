@@ -112,7 +112,9 @@ const Favourites = () => {
               </div>
             </div>
           ))}
-        {conferences.length === 0 && <LoaderTemplate />}
+        {conferences.filter((el) => el.follow === true).length === 0 && (
+          <div>Добавьте интересные конференции в избранное</div>
+        )}
       </div>
       {/* </InfiniteScroll> */}
     </section>

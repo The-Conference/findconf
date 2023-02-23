@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectedFilter);
-  const newF = useSelector(newSelectFilter);
   const [filter, setFilter] = useState("");
 
   const handleFill = (name) => {

@@ -1,36 +1,18 @@
 import React, { useState, useEffect } from "react";
 import hearts from "./follow.svg";
 import following from "./following.svg";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import "./conference.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import LoaderTemplate from "../../../utils/Loader/LoaderTemplate";
 import { handleSave, handleFollow } from "../../../store/postData";
-
+import Filters from "../../Filters/Filters";
 const AllConferences = () => {
   const dispatch = useDispatch();
   const { conferences } = useSelector((state) => state.conferences);
-  // const LIMIT = 4;
-  // const [postData, setPostData] = useState(conferences.slice(0, LIMIT));
-  // const [visible, setVisible] = useState(LIMIT);
-  // const [hasMore, setHasMore] = useState(true);
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
-
-  // const fetchData = () => {
-  //   const newLimit = visible + LIMIT;
-  //   const dataToAdd = conferences.slice(visible, newLimit);
-
-  //   if (conferences.length > postData.length) {
-  //     setTimeout(() => {
-  //       setPostData([...postData].concat(dataToAdd));
-  //     }, 1000);
-  //     setVisible(newLimit);
-  //   } else {
-  //     setHasMore(false);
-  //   }
-  // };
 
   const handleFave = (id) => {
     if (fave.includes(id)) {
@@ -42,11 +24,10 @@ const AllConferences = () => {
   };
 
   var options = { year: "numeric", month: "long", day: "numeric" };
-
   useEffect(() => {
     dispatch(handleSave(fave));
   }, [fave]);
-
+  console.log(conferences);
   return (
     <section className="conference">
       <a href="/all">
@@ -60,6 +41,7 @@ const AllConferences = () => {
         hasMore={hasMore}
         loader={<LoaderTemplate />}
       > */}
+      {/* <Filters /> */}
       <div className="conference__container">
         {conferences.map((el) => (
           <div key={el.id} className="conference__block">
@@ -135,3 +117,22 @@ const AllConferences = () => {
 };
 console.log(AllConferences.data);
 export default AllConferences;
+
+// const LIMIT = 4;
+// const [postData, setPostData] = useState(conferences.slice(0, LIMIT));
+// const [visible, setVisible] = useState(LIMIT);
+// const [hasMore, setHasMore] = useState(true);
+
+// const fetchData = () => {
+//   const newLimit = visible + LIMIT;
+//   const dataToAdd = conferences.slice(visible, newLimit);
+
+//   if (conferences.length > postData.length) {
+//     setTimeout(() => {
+//       setPostData([...postData].concat(dataToAdd));
+//     }, 1000);
+//     setVisible(newLimit);
+//   } else {
+//     setHasMore(false);
+//   }
+// };
