@@ -42,6 +42,7 @@ const SearchFilter = () => {
     <form className="search" onKeyDown={handleKeyDown}>
       <div className="input">
         <input
+          type="search"
           placeholder="Тема конференции, организатор"
           className="search-box"
           onChange={(e) => filterBySearch(e)}

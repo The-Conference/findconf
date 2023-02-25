@@ -17,7 +17,9 @@ const Header = () => {
         <SearchFilter />
         <nav className="header__nav">
           <ul>
-            <li>О сервисе</li>
+            <Link to="/about">
+              <li>О сервисе</li>
+            </Link>
           </ul>
         </nav>
         <div>

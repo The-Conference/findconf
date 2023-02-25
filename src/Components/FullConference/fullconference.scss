@@ -7,6 +7,9 @@
     &-top {
       display: flex;
       justify-content: space-between;
+      img {
+        cursor: pointer;
+      }
       span {
         color: white;
         background-color: #37d175;

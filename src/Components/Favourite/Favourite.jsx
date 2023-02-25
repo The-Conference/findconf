@@ -72,6 +72,7 @@ const Favourites = () => {
                       <span>Открыта регистрация</span>
                     ))}
                   <img
+                    title="добавить в избранное"
                     src={el.follow === false ? hearts : following}
                     alt="follow"
                     onClick={() => {

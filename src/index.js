@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import LoaderTemplate from "./utils/Loader/LoaderTemplate";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
+import AboutService from "./Components/AboutService/AboutService";
 import AllConferences from "./Components/Main/Conference/AllConferences";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchResult from "./Components/SearchResult/SearchResult";
@@ -67,6 +68,16 @@ const router = createBrowserRouter([
       <>
         <Header />
         <SearchResult />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/about",
+    element: (
+      <>
+        <Header />
+        <AboutService />
         <Footer />
       </>
     ),

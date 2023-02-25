@@ -93,6 +93,7 @@ const SearchResult = () => {
                         <span>Открыта регистрация</span>
                       ))}
                   <img
+                    title="добавить в избранное"
                     src={el.follow === false ? hearts : following}
                     alt="follow"
                     onClick={() => {
@@ -126,9 +127,8 @@ const SearchResult = () => {
                   {el.tags.map((tag) => (
                     <small>{tag}</small>
                   ))}
-                </div> */}
+                </div> */}{" "}
                 <Link to={`/conferences/${el.id}`}>
-                  {" "}
                   <div className="conference__title">{el.title}</div>
                 </Link>
               </div>

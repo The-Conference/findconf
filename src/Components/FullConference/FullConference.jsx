@@ -55,6 +55,7 @@ const FullConference = () => {
           <div className="full-conference__container-top">
             <span>Открыта регистрация</span>
             <img
+              title="добавить в избранное"
               src={conf.follow === false ? follow : following}
               alt="follow"
               onClick={() => {

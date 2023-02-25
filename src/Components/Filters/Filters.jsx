@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./filters.scss";
-import { handleNewFilter, newSelectFilter } from "../../store/newFilter";
+
 import {
   handleFlag,
   selectedFilter,

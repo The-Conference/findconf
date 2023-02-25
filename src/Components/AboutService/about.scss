@@ -1,0 +1,94 @@
+.about {
+  max-width: 1220px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    font-size: 56px;
+    font-family: "Manrope extrabold";
+    span {
+      color: #2c60e7;
+    }
+  }
+
+  &__launched {
+    max-width: 725px;
+    text-align: center;
+    color: #000038cc;
+    font-size: 16px;
+    padding-bottom: 64px;
+  }
+
+  &__timeline {
+    display: flex;
+    border-top: 4px solid #bacaf4;
+    padding-bottom: 200px;
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      width: 380px;
+      &:nth-of-type(3) {
+        width: 250px;
+      }
+      img {
+        position: absolute;
+        left: 0;
+        top: -25px;
+      }
+    }
+    &-card {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      box-shadow: 0px 8px 32px rgba(0, 0, 46, 0.16), inset 0px 2px 0px #2c60e7;
+      border-radius: 15px;
+      position: absolute;
+      top: 90px;
+      left: -42%;
+      max-width: 273px;
+      padding: 16px;
+    }
+    .last {
+      left: -35%;
+    }
+  }
+  &__staff {
+    h1 {
+      text-align: center;
+      padding-bottom: 40px;
+    }
+    h2 {
+      font-family: "Manrope bold";
+      text-align: center;
+      padding-bottom: 24px;
+      font-size: 32px;
+    }
+    &-container {
+      display: flex;
+      gap: 35px;
+      padding-bottom: 63px;
+    }
+    &-founders {
+      position: relative;
+      .role {
+        position: absolute;
+        bottom: 30px;
+        left: 8px;
+        background-color: #2c60e7;
+        border-radius: 6px;
+        color: white;
+        font-size: 12px;
+        font-family: "Manrope medium";
+        padding: 6px 14px;
+      }
+      p {
+        font-size: 18px;
+        font-family: "Manrope semibold";
+      }
+    }
+  }
+}

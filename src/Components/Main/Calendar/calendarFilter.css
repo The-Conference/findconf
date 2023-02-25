@@ -44,7 +44,8 @@ abbr[title] {
   margin-bottom: 15px;
 }
 .react-calendar__tile--active {
-  background-color: #2c60e7;
+  background-color: #0000380d;
+  color: black;
   border-radius: 6px;
 }
 .react-calendar button {
@@ -66,4 +67,24 @@ abbr[title] {
 }
 .react-calendar__month-view__weekdays {
   color: #00003866;
+}
+.react-calendar__tile--rangeEnd {
+  background-color: #000038cc !important;
+  color: white;
+}
+.react-calendar__tile--rangeEnd:hover,
+.react-calendar__tile--rangeStart:hover {
+  background-color: #000038cc !important ;
+  color: white !important;
+}
+.react-calendar__tile--rangeStart {
+  background-color: #000038cc !important;
+  color: white;
+}
+.react-calendar__tile--now {
+  background-color: #2c60e7;
+  color: white;
+}
+.react-calendar__tile {
+  margin-bottom: 5px !important;
 }

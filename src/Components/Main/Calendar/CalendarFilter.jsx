@@ -5,10 +5,11 @@ import "./calendarFilter.css";
 
 const CalendarFilter = () => {
   const [value, onChange] = useState(new Date());
+  console.log(value);
 
   return (
     <div className="calender-filter">
-      <Calendar onChange={onChange} value={value} />
+      <Calendar selectRange={true} onChange={onChange} value={value} />
     </div>
   );
 };
