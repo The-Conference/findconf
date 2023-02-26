@@ -50,7 +50,7 @@ resource "yandex_compute_instance" "vm" {
   network_interface {
     subnet_id = data.yandex_vpc_subnet.subnet.id
     nat       = var.nat
-    nat_ip_address = var.is_ex_static_ipv4 ? data.yandex_vpc_address.external[0].id : null # задается только если установлена опция резервирования статического ip
+    nat_ip_address = var.is_ex_static_ipv4 ? data.yandex_vpc_address.external[0].external_ipv4_address[0].address : null # задается только если установлена опция резервирования статического ip
   }
 
   metadata = {
