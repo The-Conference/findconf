@@ -12,11 +12,11 @@ module "yandex_instance_1" {
   cores                 = "2"
   memory                = "4"
   core_fract            = "50"
-  instance_family_image = "centos-7"
+  instance_family_image = "ubuntu-2204-lts"
   instance_subnet_name  = "default-ru-central1-a"
   instance_name         = "test"
   instance_description  = "test VM for findconf project"
   zone_name             = "ru-central1-a"
-  is_ex_static_ipv4     = false # внешний ip был зарезервирован вручную
+  is_ex_static_ipv4     = "true"
   ex_ipv4_name          = "ex-ip-test"
 }
