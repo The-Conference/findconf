@@ -106,5 +106,5 @@
 
     - name: copy env. file
       copy:
-        src: "../.metadata/.docker_env"
+        src: "../.metadata/.env"
         dest: "/root/"
