@@ -79,6 +79,12 @@ variable "disk_name" {
   type        = string
 }
 
+variable "is_second_disk" {
+  description = "Specify must creating VM has second disk"
+  type        = bool
+  default     = false
+}
+
 variable "disk2_size" {
   description = "set size of the boot disk in GB"
   type        = string

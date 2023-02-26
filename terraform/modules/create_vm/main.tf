@@ -1,6 +1,7 @@
 # Создать дополнительный пустой диск
 
 resource "yandex_compute_disk" "secondary" {
+  count = var.is_second_disk ? 1 : 0 # выполнять только если установлена опция создания второго диска
   name = var.disk2_name
   type = var.disk2_type
   zone = var.zone_name
@@ -39,8 +40,11 @@ resource "yandex_compute_instance" "vm" {
     }
   }
 
-  secondary_disk {
-    disk_id = data.yandex_compute_disk.secondary.id
+  dynamic "secondary_disk" {
+    for_each = var.is_second_disk ? [1] : []
+    content {
+      disk_id = data.yandex_compute_disk.secondary[0].id
+    }
   }
 
   network_interface {
@@ -81,6 +85,7 @@ data "yandex_iam_service_account" "user_id" {
 # Получить id второго диска
 
 data "yandex_compute_disk" "secondary" {
+  count = var.is_second_disk ? 1 : 0 # выполнять только если установлена опция создания второго диска
   name = var.disk2_name
   depends_on = [
     yandex_compute_disk.secondary
