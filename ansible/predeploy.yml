@@ -82,6 +82,13 @@
       tags:
         - conf_back
 
+    - name: copy .env file to django poject
+      copy:
+        src: "../.metadata/.env"
+        dest: "{{ dev_path }}/django/app/Conferences/"
+      tags:
+        - conf_back
+
     - name: remove temp files from /root
       file:
         path: "{{ item }}"
