@@ -10,6 +10,8 @@ services:
     env_file:
       /root/.env
     restart: always
+    networks:
+      - backend
 
   django:
     build: ./django
@@ -25,6 +27,10 @@ services:
     restart: always
     depends_on:
       - db
+      - redis
+    networks:
+      - frontend
+      - backend
 
   nginx:
     image: nginx:latest
@@ -37,4 +43,19 @@ services:
     depends_on:
       - django
     restart: always
+    networks:
+      - frontend
+
+  redis:
+    image: redis:latest
+    container_name: app_redis
+    volumes:
+      - ./redis_data:/data
+    restart: always
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
     
