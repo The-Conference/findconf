@@ -15,15 +15,27 @@ def save_conferences(lst):
         if Conference.objects.filter(conf_id=conference["conf_id"]).exists():
             continue
         else:
+            if conference["reg_date_begin"] == '':
+                conference["reg_date_begin"] = None
+            if conference["reg_date_end"] == '':
+                conference["reg_date_end"] = None
+            if conference["conf_date_begin"] == '':
+                conference["conf_date_begin"] = None
+            if conference["conf_date_end"] == '':
+                conference["conf_date_end"] = None
             Conference.objects.create(
                 conf_id=conference["conf_id"],
                 hash=conference["hash"],
                 un_name=conference["un_name"],
                 local=conference["local"],
-                reg_date_begin=conference["reg_date_begin"],
-                reg_date_end=conference["reg_date_end"],
-                conf_date_begin=conference["conf_date_begin"],
-                conf_date_end=conference["conf_date_end"],
+                reg_date_begin=datetime.strptime(conference["reg_date_begin"], '%Y-%m-%d') \
+                if conference["reg_date_begin"] is not None else None,
+                reg_date_end=datetime.strptime(conference["reg_date_end"], '%Y-%m-%d') \
+                if conference["reg_date_end"] is not None else None,
+                conf_date_begin=datetime.strptime(conference["conf_date_begin"], '%Y-%m-%d') \
+                if conference["conf_date_begin"] is not None else None,
+                conf_date_end=datetime.strptime(conference["conf_date_end"], '%Y-%m-%d') \
+                if conference["conf_date_end"] is not None else None,
                 conf_card_href=conference["conf_card_href"],
                 reg_href=conference["reg_href"],
                 conf_name=conference["conf_name"],

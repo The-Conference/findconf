@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_co5$38c_i%@)d8-2bw9y=@bm8k&x%5+k8oz=-ozf071dr%kyc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '51.250.87.75']
+ALLOWED_HOSTS = ['127.0.0.1', '51.250.87.75', 'localhost', '0.0.0.0' ]
 
 
 # Application definition
@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': 'mydatabase',
         'USER': 'postgres',
         'PASSWORD': '909961',
-        'HOST': 'localhost', # If the database is running on the same WSL instance, you can use "localhost"
-        'PORT': '5432', # Default PostgreSQL port is 5432
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
