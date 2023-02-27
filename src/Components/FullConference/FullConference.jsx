@@ -188,8 +188,15 @@ const FullConference = () => {
             <div>
               <span>Полезные ссылки </span>
               <br />
-              <a href={full.link}>Ссылка на источник</a> <br />
-              {full.reg.length > 0 && <a href={full.link}>Регистрация</a>}
+              <a rel="noreferrer" target="_blank" href={full.link}>
+                Ссылка на источник
+              </a>{" "}
+              <br />
+              {full.reg.length > 0 && (
+                <a rel="noreferrer" target="_blank" href={full.link}>
+                  Регистрация
+                </a>
+              )}
             </div>
           </div>
         )}

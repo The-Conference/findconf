@@ -22,9 +22,7 @@ const SearchFilter = () => {
       return (
         item.organizer.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
         item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        item.tags.forEach(
-          (el) => el.toLowerCase().indexOf(query.toLowerCase()) !== -1
-        )
+        item.tags.join(" ").toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
     });
 
@@ -77,14 +75,18 @@ const SearchFilter = () => {
                           textToHighlight={item.title}
                         />
                       </div>
-                      <small>
-                        <Highlighter
-                          highlightClassName="highlight"
-                          searchWords={[value]}
-                          autoEscape={true}
-                          textToHighlight={item.tags.join(" | ")}
-                        />
-                      </small>
+                      <div>
+                        {item.tags.map((tag, index) => (
+                          <small key={index}>
+                            <Highlighter
+                              highlightClassName="highlight"
+                              searchWords={[value]}
+                              autoEscape={true}
+                              textToHighlight={tag}
+                            />
+                          </small>
+                        ))}
+                      </div>
                     </div>
                   </Link>
                 )

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-// import Filters from "../Filters/Filters";
+import Filters from "../Filters/Filters";
 import { handleFollow, fetchAllConferences } from "../../store/postData";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -14,29 +14,21 @@ const SearchResult = () => {
   const { conferences } = useSelector((state) => state.conferences);
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
-
+  var options = { year: "numeric", month: "long", day: "numeric" };
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
-      console.log(fave);
     } else {
       setFave([...fave, id]);
     }
   };
-  var options = { year: "numeric", month: "long", day: "numeric" };
-
   let match = conferences.filter((el) => {
     return (
       el.organizer.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
       el.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-      el.tags.forEach(
-        (el) => el.toLowerCase().indexOf(value.toLowerCase()) !== -1
-      )
+      el.tags.join(" ").toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
   });
-
-  console.log(match);
-
   useEffect(() => {
     dispatch(fetchAllConferences());
     window.scrollTo(0, 0);
@@ -46,13 +38,11 @@ const SearchResult = () => {
   }, [fave]);
   return (
     <section className="conference">
-      <a href="/">
-        <p className="conference__type">
-          Найдено <span>{match.length} </span>
-          конференции
-        </p>
-      </a>
-      {/* <Filters /> */}
+      <p className="conference__type">
+        Найдено конференций:<span>{match.length} </span>
+      </p>
+
+      <Filters />
       {/* <InfiniteScroll
         dataLength={postData.length} //This is important field to render the next data
         next={fetchData}
