@@ -10,13 +10,20 @@
   padding: 75px 0;
 
   &__logo {
-    width: 230px;
+    width: 236px;
     text-align: left;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     img {
       max-width: 100%;
-      visibility: hidden;
+    }
+    span {
+      font-size: 26px;
+      font-family: "Manrope semibold";
+      letter-spacing: 4.7px;
+      margin-left: 13px;
     }
   }
 

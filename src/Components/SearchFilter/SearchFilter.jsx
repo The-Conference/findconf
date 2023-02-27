@@ -5,7 +5,6 @@ import Highlighter from "react-highlight-words";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import divider from "./Divider.svg";
 
 const SearchFilter = () => {
   const { conferences } = useSelector((state) => state.conferences);
@@ -23,7 +22,9 @@ const SearchFilter = () => {
       return (
         item.organizer.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
         item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        item.tags.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        item.tags.forEach(
+          (el) => el.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        )
       );
     });
 
@@ -81,7 +82,7 @@ const SearchFilter = () => {
                           highlightClassName="highlight"
                           searchWords={[value]}
                           autoEscape={true}
-                          textToHighlight={item.tags.split(",").join("  |  ")}
+                          textToHighlight={item.tags.join(" | ")}
                         />
                       </small>
                     </div>

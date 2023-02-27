@@ -5,12 +5,12 @@ import Footer from "./Components/Footer/Footer";
 import Main from "./Components/Main/Main";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchAllConferences } from "./store/postData";
+import { fetchFilteredConferences } from "./store/postData";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllConferences());
+    dispatch(fetchFilteredConferences());
   }, []);
 
   return (

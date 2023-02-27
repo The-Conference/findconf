@@ -6,11 +6,12 @@ import "./conference.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import LoaderTemplate from "../../../utils/Loader/LoaderTemplate";
-import { handleSave, handleFollow } from "../../../store/postData";
+import { handleSave, handleFollow, card } from "../../../store/postData";
 import Filters from "../../Filters/Filters";
 const AllConferences = () => {
   const dispatch = useDispatch();
-  const { conferences } = useSelector((state) => state.conferences);
+  const { conferences, isLoading } = useSelector((state) => state.conferences);
+  const data = useSelector(card);
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
 
@@ -30,11 +31,10 @@ const AllConferences = () => {
   console.log(conferences);
   return (
     <section className="conference">
-      <a href="/all">
-        <p className="conference__type">
-          Все конференции <span>&gt;</span>
-        </p>
-      </a>
+      <p className="conference__type">
+        Все конференции <span>&gt;</span>
+      </p>
+      <Filters />
       {/* <InfiniteScroll
         dataLength={postData.length}
         next={fetchData}
@@ -43,80 +43,81 @@ const AllConferences = () => {
       > */}
       {/* <Filters /> */}
       <div className="conference__container">
-        {conferences.map((el) => (
-          <div key={el.id} className="conference__block">
-            <div className="conference__bg">
-              <div className="conference__bg-top">
-                {(el.register === false && el.finished === false && (
-                  <span
-                    style={{
-                      backgroundColor: "#939393",
-                    }}
-                  >
-                    Регистрация закончена
-                  </span>
-                )) ||
-                  (el.register === false && el.finished === true && (
-                    <span
-                      style={{
-                        backgroundColor: "#939393",
+        {(!isLoading && <LoaderTemplate />) ||
+          (isLoading &&
+            conferences.map((el) => (
+              <div key={el.id} className="conference__block">
+                <div className="conference__bg">
+                  <div className="conference__bg-top">
+                    {(el.register === false && el.finished === false && (
+                      <span
+                        style={{
+                          backgroundColor: "#939393",
+                        }}
+                      >
+                        Регистрация закончена
+                      </span>
+                    )) ||
+                      (el.register === false && el.finished === true && (
+                        <span
+                          style={{
+                            backgroundColor: "#939393",
+                          }}
+                        >
+                          Конференция завершена
+                        </span>
+                      )) ||
+                      (el.register === true && el.finished === false && (
+                        <span>Открыта регистрация</span>
+                      ))}
+                    <img
+                      title="добавить в избранное"
+                      src={el.follow === false ? hearts : following}
+                      alt="follow"
+                      onClick={() => {
+                        handleFave(el.id);
+                        dispatch(handleFollow(el.id));
                       }}
-                    >
-                      Конференция завершена
-                    </span>
-                  )) ||
-                  (el.register === true && el.finished === false && (
-                    <span>Открыта регистрация</span>
-                  ))}
-                <img
-                  title="добавить в избранное"
-                  src={el.follow === false ? hearts : following}
-                  alt="follow"
-                  onClick={() => {
-                    handleFave(el.id);
-                    dispatch(handleFollow(el.id));
-                  }}
-                />
-              </div>
-              <div
-                className="conference__bg-bottom"
-                style={{ maxWidth: el.dateEnd.length ? "250px" : "140px" }}
-              >
-                {!el.dateEnd.length && !el.dateStart.length
-                  ? "дата уточняется"
-                  : el.dateEnd.length
-                  ? new Date(el.dateStart)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3) +
-                    " - " +
-                    new Date(el.dateEnd)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)
-                  : new Date(el.dateStart)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)}
-              </div>
-            </div>
+                    />
+                  </div>
+                  <div
+                    className="conference__bg-bottom"
+                    style={{ maxWidth: el.dateEnd.length ? "250px" : "140px" }}
+                  >
+                    {!el.dateEnd.length && !el.dateStart.length
+                      ? "дата уточняется"
+                      : el.dateEnd.length
+                      ? new Date(el.dateStart)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3) +
+                        " - " +
+                        new Date(el.dateEnd)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3)
+                      : new Date(el.dateStart)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3)}
+                  </div>
+                </div>
 
-            <div className="conference__tags">
-              {/* <div>
-                  {el.tags.map((tag) => (
-                    <small>{tag}</small>
-                  ))}
-                </div> */}
-              <Link to={`/conferences/${el.id}`}>
-                <div className="conference__title">{el.title}</div>
-              </Link>
-            </div>
-          </div>
-        ))}
-        {conferences.length === 0 && <LoaderTemplate />}
-      </div>
+                <div className="conference__tags">
+                  <div>
+                    {el.tags.map((tag, index) => (
+                      <small key={index}>{tag}</small>
+                    ))}
+                  </div>
+                  <Link to={`/conferences/${el.id}`}>
+                    <div className="conference__title">{el.title}</div>
+                  </Link>
+                </div>
+              </div>
+            )))}
+      </div>{" "}
       {/* </InfiniteScroll> */}
     </section>
   );
 };
-console.log(AllConferences.data);
+
 export default AllConferences;
 
 // const LIMIT = 4;

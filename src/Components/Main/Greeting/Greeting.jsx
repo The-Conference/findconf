@@ -1,5 +1,5 @@
 import React from "react";
-import greet from "./greeting.svg";
+import greet from "./main.svg";
 import "./greeting.scss";
 
 const Greeting = () => {
@@ -12,7 +12,7 @@ const Greeting = () => {
         <p>Мы помогаем студентам и профессионалам развиваться</p>
         {/* <button>Зарегистрироваться</button> */}
       </div>
-      <img src={greet} alt="man with laptop" />
+      {/* <img style={{ visibility: "hidden" }} src={greet} alt="man with laptop" /> */}
     </div>
   );
 };

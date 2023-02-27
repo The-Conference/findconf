@@ -14,11 +14,20 @@ import AllConferences from "./Components/Main/Conference/AllConferences";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SearchResult from "./Components/SearchResult/SearchResult";
 import Favourites from "./Components/Favourite/Favourite";
+import NotFound from "./Components/404/404";
 const Login = React.lazy(() => import("./Components/Login/Login"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 const Full = React.lazy(() =>
   import("./Components/FullConference/FullConference")
 );
+
+// const NotFound = React.lazy(() => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve(import("./Components/404/404"));
+//     }, 1000);
+//   });
+// });
 const router = createBrowserRouter([
   {
     path: "/",
@@ -53,7 +62,7 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: "/conferences/:itemId",
+    path: "/conferences/:confId",
     element: (
       <>
         <Header />
@@ -78,6 +87,16 @@ const router = createBrowserRouter([
       <>
         <Header />
         <AboutService />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <>
+        <Header />
+        <NotFound />
         <Footer />
       </>
     ),

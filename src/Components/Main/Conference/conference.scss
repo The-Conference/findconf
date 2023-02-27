@@ -34,9 +34,10 @@
     div {
       display: flex;
       flex-wrap: wrap;
+
       small {
         white-space: pre-wrap;
-
+        align-self: flex-end;
         color: #0000384d;
         &:not(:last-of-type):after {
           content: "\2022";

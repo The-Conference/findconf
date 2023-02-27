@@ -32,11 +32,10 @@ const Favourites = () => {
 
   return (
     <section className="conference">
-      <a href="/all">
-        <p className="conference__type">
-          Избранное <span>&gt;</span>
-        </p>
-      </a>
+      <p className="conference__type">
+        Избранное <span>&gt;</span>
+      </p>
+
       {/* <InfiniteScroll
         dataLength={postData.length}
         next={fetchData}
@@ -102,11 +101,11 @@ const Favourites = () => {
               </div>
 
               <div className="conference__tags">
-                {/* <div>
+                <div>
                   {el.tags.map((tag) => (
                     <small>{tag}</small>
                   ))}
-                </div> */}
+                </div>
                 <Link to={`/conferences/${el.id}`}>
                   <div className="conference__title">{el.title}</div>
                 </Link>

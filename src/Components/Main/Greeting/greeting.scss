@@ -1,6 +1,6 @@
 .greeting {
   display: flex;
-  gap: 20px;
+
   max-width: 1220px;
   margin: 0 auto;
   justify-content: space-between;
@@ -32,9 +32,10 @@
   }
   &__text {
     display: flex;
-    justify-content: center;
+
     flex-direction: column;
-    align-self: flex-start;
+    align-self: center;
+    margin: 0 auto;
 
     p {
       color: #0000384d;

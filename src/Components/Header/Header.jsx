@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./logo.png";
+import logo from "./logo.svg";
 import "./header.scss";
 import fave from "./favourite.svg";
 import SearchFilter from "../SearchFilter/SearchFilter";
@@ -11,7 +11,7 @@ const Header = () => {
       <div className="header">
         <a href="/">
           <div className="header__logo">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="logo" /> <span>THE CONF</span>
           </div>
         </a>
         <SearchFilter />

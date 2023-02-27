@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import NotFound from "../404/404";
 import { fetchAllConferences } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
 import follow from "./follow.svg";
 import following from "./following.svg";
 import { handleSave, handleFollow } from "../../store/postData";
+import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
+
 const FullConference = () => {
   const dispatch = useDispatch();
   const [desc, setDesc] = useState(true);
   const [contacts, setContacts] = useState(false);
-  const { conferences } = useSelector((state) => state.conferences);
+  const { conferences, isLoading } = useSelector((state) => state.conferences);
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
 
@@ -22,18 +25,14 @@ const FullConference = () => {
       setFave([...fave, id]);
     }
   };
-  const { itemId } = useParams();
-  let conf = 0;
-  let full = conferences.find(({ id }) => id === itemId);
-  if (full) {
-    conf = full;
-  }
+  const { confId } = useParams();
+
   var options = { year: "numeric", month: "long", day: "numeric" };
-  console.log(conferences);
+
   useEffect(() => {
     dispatch(fetchAllConferences());
     window.scrollTo(0, 0);
-  }, []);
+  }, [confId]);
   useEffect(() => {
     dispatch(handleSave(fave));
   }, [fave]);
@@ -48,158 +47,158 @@ const FullConference = () => {
     setContacts(true);
   };
 
-  return (
-    <div className="full-conference">
-      {(conf === 0 && <div style={{ height: "100vh" }}>404</div>) || (
-        <div className="full-conference__container">
-          <div className="full-conference__container-top">
-            <span>Открыта регистрация</span>
-            <img
-              title="добавить в избранное"
-              src={conf.follow === false ? follow : following}
-              alt="follow"
-              onClick={() => {
-                handleFave(conf.id);
-                dispatch(handleFollow(conf.id));
-              }}
-            />
-          </div>
-          <div className="full-conference__title">
-            <h1>{conf.title}</h1>
-            <small>Информация актуальна на {conf.dateStart} </small>
-          </div>
+  let full = conferences.find(({ id }) => id === +confId);
 
-          <div className="full-conference__card">
-            <div className="full-conference__card-flex">
-              <div>
-                <span>Дата проведения:</span>
-                {!conf.dateEnd.length && !conf.dateStart.length
-                  ? "дата уточняется"
-                  : conf.dateEnd.length
-                  ? new Date(conf.dateStart)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3) +
-                    " - " +
-                    new Date(conf.dateEnd)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)
-                  : new Date(conf.dateStart)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)}
-              </div>
-              <div>
-                <span>Форма участия:</span>
-                {(conf.online === true && conf.offline === true && (
-                  <span className="both">online, offline</span>
-                )) ||
-                  (conf.offline === true && (
-                    <span className="offline">offline</span>
-                  )) ||
-                  (conf.online === true && (
-                    <span className="online">online</span>
-                  ))}
-              </div>
-              <div>
-                <span>Регистрация:</span>
-                {(conf.regStart.length === 0 && conf.regEnd.length !== 0 && (
-                  <span className="online">
-                    {" "}
-                    до{" "}
-                    {new Date(conf.regEnd)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)}{" "}
-                  </span>
-                )) || (
-                  <span className="online">
-                    {" "}
-                    {new Date(conf.regStart)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)}
-                    -
-                    {new Date(conf.regEnd)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)}
-                  </span>
-                )}
-              </div>
-              <div>
-                <span>Публикация:</span>{" "}
-                {conf.rinc === true && <span className="online">ринц</span>}
-              </div>
-            </div>
-            <hr />
-            <div className="full-conference__card-block">
-              <div>
-                <span>Организатор:</span> {conf.organizer}
-              </div>
-              <hr />
-              <div>
-                <span>Тематика:</span>{" "}
-                <span className="online"> {conf.tags}</span>
-              </div>
-            </div>
-          </div>
-          <div className="full-conference__tabs">
-            <button
-              style={{
-                color: !desc ? "#2C60E7" : "white",
-                backgroundColor: !desc ? "#EBEFFF" : "#2C60E7",
-              }}
-              onClick={handleDesc}
-            >
-              Описание
-            </button>
-            <button
-              style={{
-                color: !contacts ? "#2C60E7" : "white",
-                backgroundColor: !contacts ? "#EBEFFF" : "#2C60E7",
-              }}
-              onClick={handleContacts}
-            >
-              Контакты
-            </button>
-          </div>
+  let content;
+  if (conferences.length === 0) {
+    content = <LoaderTemplate />;
+  }
+  if (conferences.filter((el) => el.id === +confId).length > 0) {
+    content = (
+      <div className="full-conference__container">
+        <div className="full-conference__container-top">
+          <span>Открыта регистрация</span>
+          <img
+            title="добавить в избранное"
+            src={full.follow === false ? follow : following}
+            alt="follow"
+            onClick={() => {
+              handleFave(full.id);
+              dispatch(handleFollow(full.id));
+            }}
+          />
+        </div>
+        <div className="full-conference__title">
+          <h1>{full.title}</h1>
+          <small>Информация актуальна на {full.dateStart} </small>
+        </div>
 
-          {desc && !contacts && (
-            <div className="full-conference__desc">
-              <h3>Условия участия</h3>
-              {(conf.description.length === 0 && (
-                <a href={conf.link} rel="noreferrer" target="_blank">
-                  Подробнее о конференции
-                </a>
+        <div className="full-conference__card">
+          <div className="full-conference__card-flex">
+            <div>
+              <span>Дата проведения:</span>
+              {!full.dateEnd.length && !full.dateStart.length
+                ? "дата уточняется"
+                : full.dateEnd.length
+                ? new Date(full.dateStart)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3) +
+                  " - " +
+                  new Date(full.dateEnd)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)
+                : new Date(full.dateStart)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)}
+            </div>
+            <div>
+              <span>Форма участия:</span>
+              <span className="both">{full.online + " " + full.offline}</span>
+            </div>
+            <div>
+              <span>Регистрация:</span>
+              {(full.regStart.length === 0 && full.regEnd.length !== 0 && (
+                <span className="online">
+                  {" "}
+                  до{" "}
+                  {new Date(full.regEnd)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)}{" "}
+                </span>
               )) || (
-                <div>
-                  {conf.description}{" "}
-                  <div>
-                    <a href={conf.link} rel="noreferrer" target="_blank">
-                      Подробнее о конференции
-                    </a>
-                  </div>
-                </div>
+                <span className="online">
+                  {" "}
+                  {new Date(full.regStart)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)}
+                  -
+                  {new Date(full.regEnd)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)}
+                </span>
               )}
             </div>
-          )}
-          {!desc && contacts && (
-            <div className="full-conference__contacts">
-              <div>
-                <span>Адрес </span>
-                <br /> {conf.address}
-              </div>
-              <div>
-                <span>Контактная информация </span>
-                <br /> <span className="details">{conf.contacts}</span>
-              </div>
-              <div>
-                <span>Полезные ссылки </span>
-                <br />
-                <a href={conf.link}>Ссылка на источник</a> <br />
-                {conf.reg.length > 0 && <a href={conf.link}>Регистрация</a>}
-              </div>
+            <div>
+              <span>Публикация:</span>
+              <span className="online">{full.rinc}</span>
             </div>
-          )}
+          </div>
+          <hr />
+          <div className="full-conference__card-block">
+            <div>
+              <span>Организатор:</span> {full.organizer}
+            </div>
+            <hr />
+            <div>
+              <span>Тематика:</span>{" "}
+              <span className="online"> {full.tags.join(",  ")}</span>
+            </div>
+          </div>
         </div>
-      )}
-    </div>
-  );
+        <div className="full-conference__tabs">
+          <button
+            style={{
+              color: !desc ? "#2C60E7" : "white",
+              backgroundColor: !desc ? "#EBEFFF" : "#2C60E7",
+            }}
+            onClick={handleDesc}
+          >
+            Описание
+          </button>
+          <button
+            style={{
+              color: !contacts ? "#2C60E7" : "white",
+              backgroundColor: !contacts ? "#EBEFFF" : "#2C60E7",
+            }}
+            onClick={handleContacts}
+          >
+            Контакты
+          </button>
+        </div>
+
+        {desc && !contacts && (
+          <div className="full-conference__desc">
+            <h3>Условия участия</h3>
+            {(full.description.length === 0 && (
+              <a href={full.link} rel="noreferrer" target="_blank">
+                Подробнее о конференции
+              </a>
+            )) || (
+              <div>
+                {full.description}
+                <div>
+                  <a href={full.link} rel="noreferrer" target="_blank">
+                    Подробнее о конференции
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {!desc && contacts && (
+          <div className="full-conference__contacts">
+            <div>
+              <span>Адрес </span>
+              <br /> {full.address}
+            </div>
+            <div>
+              <span>Контактная информация </span>
+              <br /> <span className="details">{full.contacts}</span>
+            </div>
+            <div>
+              <span>Полезные ссылки </span>
+              <br />
+              <a href={full.link}>Ссылка на источник</a> <br />
+              {full.reg.length > 0 && <a href={full.link}>Регистрация</a>}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  } else if (conferences.length && !full) {
+    content = <NotFound />;
+  }
+
+  return <div className="full-conference">{content}</div>;
 };
 export default FullConference;

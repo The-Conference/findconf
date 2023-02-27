@@ -28,7 +28,10 @@ const SearchResult = () => {
   let match = conferences.filter((el) => {
     return (
       el.organizer.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-      el.title.toLowerCase().indexOf(value.toLowerCase()) !== -1
+      el.title.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+      el.tags.forEach(
+        (el) => el.toLowerCase().indexOf(value.toLowerCase()) !== -1
+      )
     );
   });
 
@@ -123,11 +126,11 @@ const SearchResult = () => {
               </div>
 
               <div className="conference__tags">
-                {/* <div>
+                <div>
                   {el.tags.map((tag) => (
                     <small>{tag}</small>
                   ))}
-                </div> */}{" "}
+                </div>
                 <Link to={`/conferences/${el.id}`}>
                   <div className="conference__title">{el.title}</div>
                 </Link>

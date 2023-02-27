@@ -1,24 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import "./filters.scss";
 
 import {
-  handleFlag,
   selectedFilter,
   handleColor,
   handleDeleteColor,
-  removeAllFlags,
 } from "../../store/filterSlice";
-import { handleFilter, reset } from "../../store/postData";
+import {
+  saveFilter,
+  deleteAllFilters,
+  fetchFilteredConferences,
+} from "../../store/postData";
 import { useDispatch, useSelector } from "react-redux";
+import white from "./whitecross.svg";
+import grey from "./greycross.svg";
 
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectedFilter);
-  const [filter, setFilter] = useState("");
-
-  const handleFill = (name) => {
-    setFilter(name);
-  };
 
   return (
     <div className="filter">
@@ -28,19 +27,20 @@ const Filters = () => {
           backgroundColor: data.some((el) => el.applied === true)
             ? "#2c60e7"
             : "#0000381A",
-          color: data.some((el) => el.applied === true) ? "white" : "#00002E",
         }}
         className="filter__delete-button"
         onClick={() => {
-          dispatch(reset());
           dispatch(handleDeleteColor());
-          dispatch(removeAllFlags());
+          dispatch(deleteAllFilters());
+          dispatch(fetchFilteredConferences());
         }}
       >
-        X
+        {(data.some((el) => el.applied === true) && (
+          <img src={white} alt="" />
+        )) || <img src={grey} alt="" />}
       </button>
       {data.map((item) => (
-        <div className="filter__container">
+        <div className="filter__container" key={item.id}>
           <div
             className="filter__container-button"
             style={{
@@ -49,34 +49,16 @@ const Filters = () => {
             }}
             key={item.id}
           >
-            <div onClick={() => dispatch(handleFlag(item.id))}>
-              <span>&#10008;</span>
+            <div
+              onClick={() => {
+                dispatch(handleColor(item.id));
+                dispatch(saveFilter(item.name));
+                dispatch(fetchFilteredConferences());
+              }}
+            >
               {item.name}
             </div>
           </div>
-          {item.flag === true &&
-            item.dropdown.map((el) => (
-              <label htmlFor="">
-                <input
-                  type="checkbox"
-                  className="filter__container-dropdown"
-                  onClick={() => {
-                    handleFill(el);
-                    // dispatch(handleNewFilter(el));
-                    dispatch(handleColor(item.id));
-                    dispatch(handleFlag(item.id));
-                    dispatch(
-                      handleFilter({
-                        name: el,
-                        id: item.id,
-                        org: filter,
-                      })
-                    );
-                  }}
-                />
-                {el}
-              </label>
-            ))}
         </div>
       ))}
     </div>
