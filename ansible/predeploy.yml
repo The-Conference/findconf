@@ -1,5 +1,5 @@
 - name: predeploy docker compose
-  hosts: test_sf
+  hosts: test
   vars:
     - dev_path: /usr/data
   gather_facts: false
@@ -30,6 +30,9 @@
         - nginx_conf
         - pg_data
         - pgsql
+        - redis_data
+      tags:
+        - volumes
 
     - name: copy nginx default.conf
       copy:
@@ -103,6 +106,8 @@
       copy:
         src: "../docker_config/docker-compose.yml"
         dest: "{{ dev_path }}/"
+      tags:
+        - compose
 
     - name: copy env. file
       copy:
