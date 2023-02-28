@@ -55,36 +55,6 @@ const SearchResult = () => {
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
                 <div className="conference__bg-top">
-                  {(new Date(el.regEnd).getDay() < new Date().getDay() &&
-                    new Date(el.regEnd).getMonth() <= new Date().getMonth() &&
-                    new Date(el.regEnd).getYear() === new Date().getYear() && (
-                      <span
-                        style={{
-                          backgroundColor: "#939393",
-                        }}
-                      >
-                        Регистрация закончена
-                      </span>
-                    )) ||
-                    (new Date(el.dateEnd).getDay() < new Date().getDay() &&
-                      new Date(el.dateEnd).getMonth() <=
-                        new Date().getMonth() &&
-                      new Date(el.dateEnd).getYear() ===
-                        new Date().getYear() && (
-                        <span
-                          style={{
-                            backgroundColor: "#939393",
-                          }}
-                        >
-                          Конференция завершена
-                        </span>
-                      )) ||
-                    (new Date().getDay() < new Date(el.regEnd).getDay() &&
-                      new Date().getMonth() <= new Date(el.regEnd).getMonth() &&
-                      new Date(el.regEnd).getYear() ===
-                        new Date().getYear() && (
-                        <span>Открыта регистрация</span>
-                      ))}
                   <img
                     title="добавить в избранное"
                     src={el.follow === false ? hearts : following}
@@ -113,6 +83,26 @@ const SearchResult = () => {
                         .toLocaleDateString("ru", options)
                         .slice(0, -3)}
                 </div>
+                <Link
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "50px",
+                    right: "0",
+                    top: "0",
+                  }}
+                  to={`/conferences/${el.id}`}
+                ></Link>
+                <Link
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    right: "0",
+                    top: "50px",
+                  }}
+                  to={`/conferences/${el.id}`}
+                ></Link>
               </div>
 
               <div className="conference__tags">

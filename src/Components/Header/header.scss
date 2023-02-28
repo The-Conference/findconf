@@ -7,7 +7,7 @@
   gap: 39px;
   max-width: 1220px;
   margin: 0 auto;
-  padding: 75px 0;
+  padding: 75px 0 75px 0;
 
   &__logo {
     width: 236px;
@@ -18,6 +18,7 @@
 
     img {
       max-width: 100%;
+      height: 40px;
     }
     span {
       font-size: 26px;

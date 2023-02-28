@@ -36,6 +36,7 @@
         white-space: pre-wrap;
         align-self: flex-end;
         color: #0000384d;
+        font-family: "Manrope bold";
         &:not(:last-of-type):after {
           content: "\2022";
           padding: 0 8px;

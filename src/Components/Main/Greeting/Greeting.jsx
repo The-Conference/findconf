@@ -12,7 +12,7 @@ const Greeting = () => {
         <p>Мы помогаем студентам и профессионалам развиваться</p>
         {/* <button>Зарегистрироваться</button> */}
       </div>
-      {/* <img style={{ visibility: "hidden" }} src={greet} alt="man with laptop" /> */}
+      <img src={greet} alt="man with laptop" />
     </div>
   );
 };

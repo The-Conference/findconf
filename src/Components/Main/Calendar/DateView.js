@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./DatePicker.module.css";
 import { ru } from "date-fns/locale";
 import { useSelector } from "react-redux";
+
 import {
   addDays,
   addMonths,
@@ -12,6 +13,7 @@ import {
   lastDayOfMonth,
   startOfMonth,
 } from "date-fns";
+import { Link } from "react-router-dom";
 
 const DateView = ({
   startDate,
@@ -64,7 +66,7 @@ const DateView = ({
 
   //   return "";
   // };
-  function getDatesInRange(startDate, endDate) {
+  function getDatesInRange(startDate, endDate, id) {
     const date = new Date(startDate.getTime());
 
     date.setDate(date.getDate() + 1);
@@ -81,8 +83,10 @@ const DateView = ({
   let period = conferences.map((el) => {
     const d1 = new Date(el.dateStart);
     const d2 = new Date(el.dateEnd);
+    const id = el.id;
+
     let period = getDatesInRange(d1, d2);
-    return period;
+    return { per: period, ind: id };
   });
 
   const renderDays = () => {
@@ -106,53 +110,59 @@ const DateView = ({
 
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
+        let amount = period.filter((el) =>
+          el.per.includes(currentDay.toLocaleDateString())
+        );
+
         days.push(
-          <div
-            // id={`${getId(currentDay)}`}
+          <Link to={`/conferences/dates/${currentDay.toLocaleDateString()}`}>
+            <div
+              // id={`${getId(currentDay)}`}
 
-            className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
-            key={currentDay}
-            // onClick={() => onDateClick(currentDay)}
-          >
-            <div
-              className={styles.dayLabel}
-              style={{
-                color:
-                  currentDay.getDay() === 6 || currentDay.getDay() === 0
-                    ? "#D1413780"
-                    : "#00002E4D",
-              }}
+              className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
+              key={currentDay}
+              // onClick={() => onDateClick(currentDay)}
             >
-              {format(currentDay, dayFormat, { locale: ru })}
-            </div>
-            <div
-              className={styles.dateLabel}
-              style={{
-                color:
-                  currentDay.getDay() === 6 || currentDay.getDay() === 0
-                    ? "#D14137"
-                    : "#00002E",
-              }}
-            >
-              {format(currentDay, dateFormat, { locale: ru })}
-            </div>
+              <div
+                className={styles.dayLabel}
+                style={{
+                  color:
+                    currentDay.getDay() === 6 || currentDay.getDay() === 0
+                      ? "#D1413780"
+                      : "#00002E4D",
+                }}
+              >
+                {format(currentDay, dayFormat, { locale: ru })}
+              </div>
+              <div
+                className={styles.dateLabel}
+                style={{
+                  color:
+                    currentDay.getDay() === 6 || currentDay.getDay() === 0
+                      ? "#D14137"
+                      : "#00002E",
+                }}
+              >
+                {format(currentDay, dateFormat, { locale: ru })}
+              </div>
 
-            <div
-              className={styles.amount}
-              style={{
-                color:
-                  currentDay.getDay() === 6 || currentDay.getDay() === 0
-                    ? "#D1413780"
-                    : "#00003880",
-              }}
-            >
-              {
-                period.filter((el) =>
-                  el.includes(currentDay.toLocaleDateString())
-                ).length
-              }
+              <div
+                className={styles.amount}
+                style={{
+                  color:
+                    currentDay.getDay() === 6 || currentDay.getDay() === 0
+                      ? "#D1413780"
+                      : "#00003880",
+                }}
+              >
+                {
+                  period.filter((el) =>
+                    el.per.includes(currentDay.toLocaleDateString())
+                  ).length
+                }
+              </div>
             </div>
-          </div>
+          </Link>
         );
       }
 

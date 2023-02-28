@@ -71,7 +71,9 @@ const AboutService = () => {
         <div className="about__staff-container">
           {developers.map((el) => (
             <div className="about__staff-founders">
-              <img src={el.pic} alt="" />
+              <div className="about__staff-founders-pic">
+                <img src={el.pic} alt="фото" />
+              </div>
               <div className="role">{el.role}</div>
               <p>{el.name}</p>
             </div>
