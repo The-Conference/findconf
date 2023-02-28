@@ -110,15 +110,29 @@ const DateView = ({
 
       for (let j = start; j < end; j++) {
         let currentDay = addDays(month, j);
-        let amount = period.filter((el) =>
-          el.per.includes(currentDay.toLocaleDateString())
-        );
 
         days.push(
-          <Link to={`/conferences/dates/${currentDay.toLocaleDateString()}`}>
+          <Link
+            style={{
+              pointerEvents:
+                period.filter((el) =>
+                  el.per.includes(currentDay.toLocaleDateString())
+                ).length === 0
+                  ? "none"
+                  : "auto",
+            }}
+            to={`/conferences/dates/${currentDay.toLocaleDateString()}`}
+          >
             <div
               // id={`${getId(currentDay)}`}
-
+              style={{
+                opacity:
+                  period.filter((el) =>
+                    el.per.includes(currentDay.toLocaleDateString())
+                  ).length === 0
+                    ? "0.4"
+                    : "1",
+              }}
               className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
               key={currentDay}
               // onClick={() => onDateClick(currentDay)}

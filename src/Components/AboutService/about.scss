@@ -74,16 +74,19 @@
     }
     &-founders {
       position: relative;
-      -webkit-transition: all 0.3s ease-in-out;
-      &:hover {
-        transform: scale(1.1);
-      }
+
       &-pic {
         max-width: 273px;
         max-height: 273px;
         border-radius: 13px;
         filter: grayscale(100%);
         overflow: hidden;
+        img {
+          -webkit-transition: all 0.3s ease-in-out;
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
       }
       .role {
         position: absolute;
