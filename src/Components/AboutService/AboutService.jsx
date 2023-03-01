@@ -1,5 +1,5 @@
 import React from "react";
-import step from "./Step.svg";
+import step from "../../assets/Step.svg";
 import "./about.scss";
 import { developers, founders } from "../../utils/Founders/FOUNDERS";
 const AboutService = () => {
@@ -10,9 +10,8 @@ const AboutService = () => {
       </h1>
 
       <p className="about__launched">
-        Сервис был запущен <datagrid>в 2023 году</datagrid> с целью упрощения
-        поиска конференций для студентов различных направлений и профессионалов
-        своего дела
+        Сервис был запущен в 2023 году с целью упрощения поиска конференций для
+        студентов различных направлений и профессионалов своего дела
       </p>
 
       <div className="about__timeline">
@@ -59,8 +58,8 @@ const AboutService = () => {
         </h1>
         <h2>Руководство</h2>
         <div className="about__staff-container">
-          {founders.map((el) => (
-            <div className="about__staff-founders">
+          {founders.map((el, index) => (
+            <div key={index} className="about__staff-founders">
               <div className="about__staff-founders-pic">
                 <img src={el.pic} alt="" />
               </div>
@@ -72,8 +71,8 @@ const AboutService = () => {
         </div>
         <h2>Разработчики</h2>
         <div className="about__staff-container">
-          {developers.map((el) => (
-            <div className="about__staff-founders">
+          {developers.map((el, index) => (
+            <div key={index} className="about__staff-founders">
               <div className="about__staff-founders-pic">
                 <img src={el.pic} alt="фото" />
               </div>

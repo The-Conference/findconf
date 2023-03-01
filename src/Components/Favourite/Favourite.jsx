@@ -1,13 +1,16 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllConferences } from "../../store/postData";
-import "../Main/Conference/conference.scss";
+import {
+  fetchFilteredConferences,
+  handleFollow,
+  handleSave,
+} from "../../store/postData";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
-import hearts from "./follow.svg";
-import following from "./following.svg";
+import Filters from "../Filters/Filters";
+import hearts from "../../assets/follow.svg";
+import following from "../../assets/following.svg";
 import { Link } from "react-router-dom";
-import { handleFollow, handleSave } from "../../store/postData";
+import { options } from "../../utils/options";
 
 const Favourites = () => {
   const dispatch = useDispatch();
@@ -25,17 +28,15 @@ const Favourites = () => {
   };
   useEffect(() => {
     dispatch(handleSave(fave));
-    dispatch(fetchAllConferences());
+    dispatch(fetchFilteredConferences());
   }, [fave]);
-
-  var options = { year: "numeric", month: "long", day: "numeric" };
 
   return (
     <section className="conference">
       <p className="conference__type">
         Избранное <span>&gt;</span>
       </p>
-
+      <Filters />
       {/* <InfiniteScroll
         dataLength={postData.length}
         next={fetchData}
@@ -82,19 +83,21 @@ const Favourites = () => {
                 </div>
                 <div
                   className="conference__bg-bottom"
-                  style={{ maxWidth: el.dateEnd.length ? "250px" : "140px" }}
+                  style={{
+                    maxWidth: el.conf_date_end.length ? "250px" : "140px",
+                  }}
                 >
-                  {!el.dateEnd.length && !el.dateStart.length
+                  {!el.conf_date_end.length && !el.conf_date_begin.length
                     ? "дата уточняется"
-                    : el.dateEnd.length
-                    ? new Date(el.dateStart)
+                    : el.conf_date_end.length
+                    ? new Date(el.conf_date_begin)
                         .toLocaleDateString("ru", options)
                         .slice(0, -3) +
                       " - " +
-                      new Date(el.dateEnd)
+                      new Date(el.conf_date_end)
                         .toLocaleDateString("ru", options)
                         .slice(0, -3)
-                    : new Date(el.dateStart)
+                    : new Date(el.conf_date_begin)
                         .toLocaleDateString("ru", options)
                         .slice(0, -3)}
                 </div>
@@ -122,12 +125,12 @@ const Favourites = () => {
 
               <div className="conference__tags">
                 <div>
-                  {el.tags.map((tag) => (
-                    <small>{tag}</small>
+                  {el.themes.split(",").map((tag, index) => (
+                    <small key={index}>{tag}</small>
                   ))}
                 </div>
                 <Link to={`/conferences/${el.id}`}>
-                  <div className="conference__title">{el.title}</div>
+                  <div className="conference__title">{el.conf_name}</div>
                 </Link>
               </div>
             </div>

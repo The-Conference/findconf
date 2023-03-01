@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "./logo.svg";
+import logo from "../../assets/logo.svg";
+import fave from "../../assets/favourite.svg";
 import "./header.scss";
-import fave from "./favourite.svg";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import { Link } from "react-router-dom";
 

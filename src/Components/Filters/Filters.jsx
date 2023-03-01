@@ -1,6 +1,5 @@
 import React from "react";
 import "./filters.scss";
-
 import {
   selectedFilter,
   handleColor,
@@ -12,8 +11,8 @@ import {
   fetchFilteredConferences,
 } from "../../store/postData";
 import { useDispatch, useSelector } from "react-redux";
-import white from "./whitecross.svg";
-import grey from "./greycross.svg";
+import white from "../../assets/whitecross.svg";
+import grey from "../../assets/greycross.svg";
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -22,7 +21,6 @@ const Filters = () => {
   return (
     <div className="filter">
       <button
-        on
         style={{
           backgroundColor: data.some((el) => el.applied === true)
             ? "#2c60e7"

@@ -25,30 +25,13 @@ export const postData = createSlice({
     fetchConferences: (state, action) => {
       state.conferences = [];
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
-
-      action.payload.forEach((item) => {
-        state.conferences.push({
-          address: item.conf_address,
-          link: item.conf_card_href,
-          description: item.conf_desc,
-          online: item.online ? "онлайн" : "",
-          offline: item.offline ? "оффлайн" : "",
-          local: item.local,
-          title: item.conf_name,
-          id: item.id,
-          follow:
-            followed.includes(item.id) && followed.length > 0 ? true : false,
-          regStart: item.reg_date_begin,
-          regEnd: item.reg_date_end,
-          contacts: item.contacts,
-          organizer: item.org_name,
-          dateStart: item.conf_date_begin,
-          dateEnd: item.conf_date_end,
-          tags: item.themes.split(","),
-          rinc: item.rinc ? "ринц" : "без публикации",
-          reg: item.reg_href,
-        });
-      });
+      let data = action.payload;
+      for (let item of data) {
+        item.follow =
+          followed.includes(item.id) && followed.length > 0 ? true : false;
+      }
+      state.conferences = data;
+      console.log(data);
     },
     handleFollow: (state, action) => {
       return state.conferences.forEach((el) =>
@@ -78,133 +61,39 @@ export const postData = createSlice({
     handleFilter: (state, action) => {
       state.conferences = [];
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
-      console.log(action.payload);
+      let data = action.payload;
+      for (let item of data) {
+        item.follow =
+          followed.includes(item.id) && followed.length > 0 ? true : false;
+      }
       if (
         state.filters.filter.online === false &&
         state.filters.filter.offline === false &&
         state.filters.filter.rinc === false
       ) {
-        action.payload.forEach((item) =>
-          state.conferences.push({
-            address: item.conf_address,
-            link: item.conf_card_href,
-            description: item.conf_desc,
-            online: item.online ? "онлайн" : "",
-            offline: item.offline ? "оффлайн" : "",
-            local: item.local,
-            title: item.conf_name,
-            id: item.id,
-            follow:
-              followed.includes(item.id) && followed.length > 0 ? true : false,
-            regStart: item.reg_date_begin,
-            regEnd: item.reg_date_end,
-            contacts: item.contacts,
-            organizer: item.org_name,
-            dateStart: item.conf_date_begin,
-            dateEnd: item.conf_date_end,
-            tags: item.themes.split(","),
-            rinc: item.rinc ? "ринц" : "",
-            reg: item.reg_href,
-          })
-        );
+        state.conferences = data;
       }
       if (
         state.filters.filter.online === true &&
         state.filters.filter.offline === false &&
         state.filters.filter.rinc === false
       ) {
-        action.payload.filter((item) =>
-          item.online === true
-            ? state.conferences.push({
-                address: item.conf_address,
-                link: item.conf_card_href,
-                description: item.conf_desc,
-                online: item.online ? "онлайн" : "",
-                offline: item.offline ? "оффлайн" : "",
-                local: item.local,
-                title: item.conf_name,
-                id: item.id,
-                follow:
-                  followed.includes(item.id) && followed.length > 0
-                    ? true
-                    : false,
-                regStart: item.reg_date_begin,
-                regEnd: item.reg_date_end,
-                contacts: item.contacts,
-                organizer: item.org_name,
-                dateStart: item.conf_date_begin,
-                dateEnd: item.conf_date_end,
-                tags: item.themes.split(","),
-                rinc: item.rinc ? "ринц" : "",
-                reg: item.reg_href,
-              })
-            : []
-        );
+        state.conferences = data.filter((el) => el.online === true);
       }
       if (
         state.filters.filter.online === false &&
         state.filters.filter.offline === true &&
         state.filters.filter.rinc === false
       ) {
-        action.payload.forEach((item) =>
-          item.offline === true
-            ? state.conferences.push({
-                address: item.conf_address,
-                link: item.conf_card_href,
-                description: item.conf_desc,
-                online: item.online ? "онлайн" : "",
-                offline: item.offline ? "оффлайн" : "",
-                local: item.local,
-                title: item.conf_name,
-                id: item.id,
-                follow:
-                  followed.includes(item.id) && followed.length > 0
-                    ? true
-                    : false,
-                regStart: item.reg_date_begin,
-                regEnd: item.reg_date_end,
-                contacts: item.contacts,
-                organizer: item.org_name,
-                dateStart: item.conf_date_begin,
-                dateEnd: item.conf_date_end,
-                tags: item.themes.split(","),
-                rinc: item.rinc ? "ринц" : "",
-                reg: item.reg_href,
-              })
-            : []
-        );
+        state.conferences = data.filter((el) => el.offline === true);
       }
       if (
         state.filters.filter.online === true &&
         state.filters.filter.offline === true &&
         state.filters.filter.rinc === false
       ) {
-        action.payload.forEach((item) =>
-          item.online === true && item.offline === true
-            ? state.conferences.push({
-                address: item.conf_address,
-                link: item.conf_card_href,
-                description: item.conf_desc,
-                online: item.online ? "онлайн" : "",
-                offline: item.offline ? "оффлайн" : "",
-                local: item.local,
-                title: item.conf_name,
-                id: item.id,
-                follow:
-                  followed.includes(item.id) && followed.length > 0
-                    ? true
-                    : false,
-                regStart: item.reg_date_begin,
-                regEnd: item.reg_date_end,
-                contacts: item.contacts,
-                organizer: item.org_name,
-                dateStart: item.conf_date_begin,
-                dateEnd: item.conf_date_end,
-                tags: item.themes.split(","),
-                rinc: item.rinc ? "ринц" : "",
-                reg: item.reg_href,
-              })
-            : []
+        state.conferences = data.filter(
+          (el) => el.online === true && el.offline === true
         );
       }
       if (
@@ -212,32 +101,8 @@ export const postData = createSlice({
         state.filters.filter.offline === true &&
         state.filters.filter.rinc === true
       ) {
-        action.payload.forEach((item) =>
-          item.online === true && item.offline === true && item.rinc === true
-            ? state.conferences.push({
-                address: item.conf_address,
-                link: item.conf_card_href,
-                description: item.conf_desc,
-                online: item.online ? "онлайн" : "",
-                offline: item.offline ? "оффлайн" : "",
-                local: item.local,
-                title: item.conf_name,
-                id: item.id,
-                follow:
-                  followed.includes(item.id) && followed.length > 0
-                    ? true
-                    : false,
-                regStart: item.reg_date_begin,
-                regEnd: item.reg_date_end,
-                contacts: item.contacts,
-                organizer: item.org_name,
-                dateStart: item.conf_date_begin,
-                dateEnd: item.conf_date_end,
-                tags: item.themes.split(","),
-                rinc: item.rinc === true ? "ринц" : "",
-                reg: item.reg_href,
-              })
-            : []
+        state.conferences = data.filter(
+          (el) => el.online === true && el.offline === true && el.rinc === true
         );
       }
       if (
@@ -245,32 +110,8 @@ export const postData = createSlice({
         state.filters.filter.offline === false &&
         state.filters.filter.rinc === true
       ) {
-        action.payload.filter((item) =>
-          item.online === true && item.offline === false && item.rinc === true
-            ? state.conferences.push({
-                address: item.conf_address,
-                link: item.conf_card_href,
-                description: item.conf_desc,
-                online: item.online ? "онлайн" : "",
-                offline: item.offline ? "оффлайн" : "",
-                local: item.local,
-                title: item.conf_name,
-                id: item.id,
-                follow:
-                  followed.includes(item.id) && followed.length > 0
-                    ? true
-                    : false,
-                regStart: item.reg_date_begin,
-                regEnd: item.reg_date_end,
-                contacts: item.contacts,
-                organizer: item.org_name,
-                dateStart: item.conf_date_begin,
-                dateEnd: item.conf_date_end,
-                tags: item.themes.split(","),
-                rinc: item.rinc ? "ринц" : "",
-                reg: item.reg_href,
-              })
-            : []
+        state.conferences = data.filter(
+          (el) => el.online === true && el.rinc === true
         );
       }
       if (
@@ -278,32 +119,8 @@ export const postData = createSlice({
         state.filters.filter.offline === true &&
         state.filters.filter.rinc === true
       ) {
-        action.payload.filter((item) =>
-          item.online === false && item.offline === true && item.rinc === true
-            ? state.conferences.push({
-                address: item.conf_address,
-                link: item.conf_card_href,
-                description: item.conf_desc,
-                online: item.online ? "онлайн" : "",
-                offline: item.offline ? "оффлайн" : "",
-                local: item.local,
-                title: item.conf_name,
-                id: item.id,
-                follow:
-                  followed.includes(item.id) && followed.length > 0
-                    ? true
-                    : false,
-                regStart: item.reg_date_begin,
-                regEnd: item.reg_date_end,
-                contacts: item.contacts,
-                organizer: item.org_name,
-                dateStart: item.conf_date_begin,
-                dateEnd: item.conf_date_end,
-                tags: item.themes.split(","),
-                rinc: item.rinc ? "ринц" : "",
-                reg: item.reg_href,
-              })
-            : []
+        state.conferences = data.filter(
+          (el) => el.offline === true && el.rinc === true
         );
       }
       if (
@@ -311,33 +128,7 @@ export const postData = createSlice({
         state.filters.filter.offline === false &&
         state.filters.filter.rinc === true
       ) {
-        action.payload.filter((item) =>
-          item.rinc === true
-            ? state.conferences.push({
-                address: item.conf_address,
-                link: item.conf_card_href,
-                description: item.conf_desc,
-                online: item.online ? "онлайн" : "",
-                offline: item.offline ? "оффлайн" : "",
-                local: item.local,
-                title: item.conf_name,
-                id: item.id,
-                follow:
-                  followed.includes(item.id) && followed.length > 0
-                    ? true
-                    : false,
-                regStart: item.reg_date_begin,
-                regEnd: item.reg_date_end,
-                contacts: item.contacts,
-                organizer: item.org_name,
-                dateStart: item.conf_date_begin,
-                dateEnd: item.conf_date_end,
-                tags: item.themes.split(","),
-                rinc: item.rinc ? "ринц" : "",
-                reg: item.reg_href,
-              })
-            : []
-        );
+        state.conferences = data.filter((el) => el.rinc === true);
       }
     },
   },
@@ -376,9 +167,3 @@ export const fetchFilteredConferences = () => async (dispatch) => {
 };
 
 export const card = (state) => state;
-// state.filters.filter.includes(action.payload)
-//   ? state.filters.filter.splice(
-//       state.filters.filter.indexOf(action.payload),
-//       1
-//     )
-//   : state.filters.filter.push(action.payload);

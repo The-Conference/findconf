@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import hearts from "./follow.svg";
-import following from "./following.svg";
+import hearts from "../../assets/follow.svg";
+import following from "../../assets/following.svg";
 // import InfiniteScroll from "react-infinite-scroll-component";
 import "./conference.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import LoaderTemplate from "../../../utils/Loader/LoaderTemplate";
-import { handleSave, handleFollow, card } from "../../../store/postData";
-import Filters from "../../Filters/Filters";
+import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
+import { handleSave, handleFollow } from "../../store/postData";
+import Filters from "../Filters/Filters";
+import { options } from "../../utils/options";
+
 const AllConferences = () => {
   const dispatch = useDispatch();
   const { conferences, isLoading } = useSelector((state) => state.conferences);
-  const data = useSelector(card);
+
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
 
@@ -24,7 +26,6 @@ const AllConferences = () => {
     }
   };
 
-  var options = { year: "numeric", month: "long", day: "numeric" };
   useEffect(() => {
     dispatch(handleSave(fave));
   }, [fave]);
@@ -82,19 +83,21 @@ const AllConferences = () => {
                   </div>
                   <div
                     className="conference__bg-bottom"
-                    style={{ maxWidth: el.dateEnd.length ? "250px" : "140px" }}
+                    style={{
+                      maxWidth: el.conf_date_end.length ? "250px" : "140px",
+                    }}
                   >
-                    {!el.dateEnd.length && !el.dateStart.length
+                    {!el.conf_date_end.length && !el.conf_date_begin.length
                       ? "дата уточняется"
-                      : el.dateEnd.length
-                      ? new Date(el.dateStart)
+                      : el.conf_date_end.length
+                      ? new Date(el.conf_date_begin)
                           .toLocaleDateString("ru", options)
                           .slice(0, -3) +
                         " - " +
-                        new Date(el.dateEnd)
+                        new Date(el.conf_date_end)
                           .toLocaleDateString("ru", options)
                           .slice(0, -3)
-                      : new Date(el.dateStart)
+                      : new Date(el.conf_date_begin)
                           .toLocaleDateString("ru", options)
                           .slice(0, -3)}
                   </div>
@@ -122,12 +125,12 @@ const AllConferences = () => {
 
                 <div className="conference__tags">
                   <div>
-                    {el.tags.map((tag, index) => (
+                    {el.themes.split(",").map((tag, index) => (
                       <small key={index}>{tag}</small>
                     ))}
                   </div>
                   <Link to={`/conferences/${el.id}`}>
-                    <div className="conference__title">{el.title}</div>
+                    <div className="conference__title">{el.conf_name}</div>
                   </Link>
                 </div>
               </div>

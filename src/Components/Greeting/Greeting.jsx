@@ -1,5 +1,5 @@
 import React from "react";
-import greet from "./main.svg";
+import greet from "../../assets/main.svg";
 import "./greeting.scss";
 
 const Greeting = () => {

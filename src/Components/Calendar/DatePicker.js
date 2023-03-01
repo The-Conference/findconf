@@ -7,8 +7,8 @@ import { MonthView } from "./MonthView";
 import CalendarFilter from "./CalendarFilter";
 
 // import hexToRgb from "./global/helpers/hexToRgb";
-import calendar from "./calendar.svg";
-import white from "./calwhite.svg";
+import calendar from "../../assets/calendar.svg";
+import white from "../../assets/calwhite.svg";
 
 const DatePicker = (props) => {
   const [showCalendar, setShowCalendar] = useState(false);

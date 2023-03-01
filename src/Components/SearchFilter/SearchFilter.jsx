@@ -1,31 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./searchfilter.scss";
 import Highlighter from "react-highlight-words";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SearchFilter = () => {
-  const { conferences } = useSelector((state) => state.conferences);
   const nav = useNavigate();
+  const { conferences } = useSelector((state) => state.conferences);
   const [filteredList, setFilteredList] = useState(conferences);
   const [value, setValue] = useState("");
 
   let query = "";
+
   const filterBySearch = (event) => {
     query = event.target.value;
     setValue(event.target.value);
     var updatedList = [...conferences];
-
     updatedList = updatedList.filter((item) => {
       return (
-        item.organizer.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        item.tags.join(" ").toLowerCase().indexOf(query.toLowerCase()) !== -1
+        item.org_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        item.conf_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        item.themes.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
     });
-
     setFilteredList(updatedList);
   };
 
@@ -64,7 +61,7 @@ const SearchFilter = () => {
                           highlightClassName="highlight"
                           searchWords={[value]}
                           autoEscape={true}
-                          textToHighlight={item.organizer}
+                          textToHighlight={item.org_name}
                         />
                       </li>
                       <div>
@@ -72,11 +69,11 @@ const SearchFilter = () => {
                           highlightClassName="highlight"
                           searchWords={[value]}
                           autoEscape={true}
-                          textToHighlight={item.title}
+                          textToHighlight={item.conf_name}
                         />
                       </div>
                       <div>
-                        {item.tags.map((tag, index) => (
+                        {item.themes.split(",").map((tag, index) => (
                           <small key={index}>
                             <Highlighter
                               highlightClassName="highlight"

@@ -1,9 +1,8 @@
 import React from "react";
 import "./main.scss";
-import Greeting from "./Greeting/Greeting";
-import Calendar from "./Calendar/Calendar";
-import AllConferences from "./Conference/AllConferences";
-
+import AllConferences from "../Conference/AllConferences";
+import Calendar from "../Calendar/Calendar";
+import Greeting from "../Greeting/Greeting";
 // import GreetingForAuth from "./Greeting/GreetingForAuth";
 // import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 

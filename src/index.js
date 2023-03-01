@@ -1,21 +1,20 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
+import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import { Suspense } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoaderTemplate from "./utils/Loader/LoaderTemplate";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import AboutService from "./Components/AboutService/AboutService";
-import AllConferences from "./Components/Main/Conference/AllConferences";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import AllConferences from "./Components/Conference/AllConferences";
 import SearchResult from "./Components/SearchResult/SearchResult";
 import Favourites from "./Components/Favourite/Favourite";
 import NotFound from "./Components/404/404";
-import SearchDate from "./SearchDate/SearchDate";
+import SearchDate from "./Components/SearchDate/SearchDate";
 const Login = React.lazy(() => import("./Components/Login/Login"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 const Full = React.lazy(() =>

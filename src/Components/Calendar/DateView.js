@@ -81,8 +81,8 @@ const DateView = ({
     return dates.map((el) => el.toLocaleDateString());
   }
   let period = conferences.map((el) => {
-    const d1 = new Date(el.dateStart);
-    const d2 = new Date(el.dateEnd);
+    const d1 = new Date(el.conf_date_begin);
+    const d2 = new Date(el.conf_date_end);
     const id = el.id;
 
     let period = getDatesInRange(d1, d2);
@@ -113,6 +113,7 @@ const DateView = ({
 
         days.push(
           <Link
+            key={j}
             style={{
               pointerEvents:
                 period.filter((el) =>
@@ -120,19 +121,18 @@ const DateView = ({
                 ).length === 0
                   ? "none"
                   : "auto",
+              cursor:
+                period.filter((el) =>
+                  el.per.includes(currentDay.toLocaleDateString())
+                ).length === 0
+                  ? "not-allowed"
+                  : "pointer",
             }}
             to={`/conferences/dates/${currentDay.toLocaleDateString()}`}
           >
             <div
               // id={`${getId(currentDay)}`}
-              style={{
-                opacity:
-                  period.filter((el) =>
-                    el.per.includes(currentDay.toLocaleDateString())
-                  ).length === 0
-                    ? "0.4"
-                    : "1",
-              }}
+
               className={marked ? styles.dateDayItemMarked : styles.dateDayItem}
               key={currentDay}
               // onClick={() => onDateClick(currentDay)}
