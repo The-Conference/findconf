@@ -42,7 +42,9 @@ class Conference(models.Model):
     @property
     def conf_status(self):
         current_date = timezone.now().date()
-        if self.conf_date_begin <= current_date <= self.conf_date_end:
+        if self.conf_date_begin is None or self.conf_date_end is None:
+            return "unclear"
+        elif self.conf_date_begin <= current_date <= self.conf_date_end:
             return "ongoing"
         else:
             return "upcoming" if self.conf_date_begin > current_date else "past"
