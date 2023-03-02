@@ -15,7 +15,7 @@
         state: directory
         owner: root
         group: root
-        mode: "u=rw,g=rw,o=r"
+        mode: "u=rwx,g=rx,o=rx"
         recurse: true
   
     - name: create needed content directories
