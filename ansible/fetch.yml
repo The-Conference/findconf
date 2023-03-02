@@ -1,0 +1,14 @@
+- name: fetch orig django settings.py
+  hosts: test
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+  
+  tasks:
+
+    - name: fetch orig settings.py
+      fetch:
+        src: "/usr/data/django/app/Conferences/settings.py"
+        dest: "../docker_config/django/"
+        flat: true
