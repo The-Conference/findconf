@@ -78,13 +78,6 @@
       tags:
         - conf_back
 
-    - name: add unicorn to django requirements
-      lineinfile:
-        path: "{{ dev_path }}/django/app/requirements.txt"
-        line: "gunicorn==20.0.4"
-      tags:
-        - conf_back
-
     - name: copy .env file to django poject
       copy:
         src: "../.metadata/.env"
