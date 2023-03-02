@@ -10,7 +10,7 @@ from .Parsers import parser_1spbgmu, parser_bstu, parser_linguanet, \
     parser_unitech_mo, parser_petrsu, parser_rzgmu, parser_asou_mo, parser_bashgmu, \
     parser_cchgeu, parser_donstu, parser_ggtu, parser_gubkin, parser_kai, parser_kbsu, \
     parser_kurskmed, parser_mgppu, parser_mgpu, parser_mrsu, parser_narfu, parser_pimunn, \
-    parser_rosnou, parser_tsuab, parser_tyuiu, parser_volsu, parser_vstu, parser_mpgu, parser_rudn
+    parser_rosnou, parser_tsuab, parser_tyuiu, parser_volsu, parser_vstu, parser_mpgu
 
 
 def save_conferences(lst):
@@ -455,5 +455,6 @@ def parser42():
 
 @shared_task
 def parser43():
-    run_parser(parser_rudn.main())
+    pass
+    # run_parser(parser_nsu.main())
     # parser44.apply_async()
