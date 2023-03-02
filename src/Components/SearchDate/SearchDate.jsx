@@ -11,7 +11,7 @@ import following from "../../assets/following.svg";
 import hearts from "../../assets/follow.svg";
 import { options } from "../../utils/options";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
-
+import Calendar from "../Calendar/Calendar";
 const SearchDate = () => {
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
@@ -57,6 +57,7 @@ const SearchDate = () => {
   }, [fave]);
   return (
     <section className="conference">
+      {/* <Calendar /> */}
       <p className="conference__type">
         Найдено конференций:<span>{match.length} </span>
       </p>

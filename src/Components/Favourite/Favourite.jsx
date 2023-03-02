@@ -43,6 +43,10 @@ const Favourites = () => {
         hasMore={hasMore}
         loader={<LoaderTemplate />}
       > */}
+      {!isLoading &&
+        conferences.filter((el) => el.follow === true).length === 0 && (
+          <div>Добавьте интересные конференции в избранное</div>
+        )}
       {isLoading && <LoaderTemplate />}
       <div className="conference__container">
         {!isLoading &&
@@ -137,9 +141,6 @@ const Favourites = () => {
                 </div>
               </div>
             ))}
-        {conferences.filter((el) => el.follow === true).length === 0 && (
-          <div>Добавьте интересные конференции в избранное</div>
-        )}
       </div>
       {/* </InfiniteScroll> */}
     </section>

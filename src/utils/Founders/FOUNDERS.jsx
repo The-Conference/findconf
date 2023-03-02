@@ -12,7 +12,7 @@ const founders = [
 ];
 
 const developers = [
-  { role: "Web  Design", name: "Марк Fromm", pic: Fromm },
+  { role: "UX/UI", name: "Марк Fromm", pic: Fromm },
   { role: "Backend", name: "Кирилл Левин", pic: Levin },
   { role: "DevOps", name: "Сергей Ершов", pic: Ershov },
   { role: "Frontend", name: "Андрей Мощенко", pic: Mosh },
