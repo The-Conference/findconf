@@ -20,6 +20,7 @@
           - unzip
           - openssl
           - certbot
+          - tree
           - ca-certificates
           - apt-transport-https
           - software-properties-common
