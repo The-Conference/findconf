@@ -85,6 +85,13 @@
       tags:
         - conf_back
 
+    - name: copy settings.py to django
+      copy:
+        src: "../docker_config/django/settings.py"
+        dest: "{{ dev_path }}/django/app/Conferences/"
+      tags:
+        - conf_back
+
     - name: remove temp files from /root
       file:
         path: "{{ item }}"
