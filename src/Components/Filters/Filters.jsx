@@ -40,6 +40,11 @@ const Filters = () => {
       {data.map((item) => (
         <div className="filter__container" key={item.id}>
           <div
+            onClick={() => {
+              dispatch(handleColor(item.id));
+              dispatch(saveFilter(item.name));
+              dispatch(fetchFilteredConferences());
+            }}
             className="filter__container-button"
             style={{
               backgroundColor: item.applied === true ? "#2c60e7" : "#0000381A",
@@ -47,15 +52,7 @@ const Filters = () => {
             }}
             key={item.id}
           >
-            <div
-              onClick={() => {
-                dispatch(handleColor(item.id));
-                dispatch(saveFilter(item.name));
-                dispatch(fetchFilteredConferences());
-              }}
-            >
-              {item.name}
-            </div>
+            <div>{item.name}</div>
           </div>
         </div>
       ))}

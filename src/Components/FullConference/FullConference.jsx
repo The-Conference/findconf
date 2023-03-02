@@ -93,7 +93,7 @@ const FullConference = () => {
             </div>
             <div>
               <span>Регистрация:</span>
-              {(full.reg_date_begin.length === 0 &&
+              {(full.reg_date_begin === null &&
                 full.reg_date_end.length !== 0 && (
                   <span className="online">
                     {" "}

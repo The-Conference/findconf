@@ -9,11 +9,11 @@ const Header = () => {
   return (
     <header>
       <div className="header">
-        <a href="/">
+        <Link to="/">
           <div className="header__logo">
             <img src={logo} alt="logo" /> <span>THE CONF</span>
           </div>
-        </a>
+        </Link>
         <SearchFilter />
         <nav className="header__nav">
           <ul>
@@ -24,11 +24,11 @@ const Header = () => {
         </nav>
         <div>
           <div className="header__profile">
-            <Link to="/favourite">
+            <a href="/favourite">
               <div>
                 <img src={fave} alt="favourite" />
               </div>
-            </Link>
+            </a>
           </div>
         </div>
         {/* <a href="/login">

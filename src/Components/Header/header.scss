@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 39px;
-  max-width: 1220px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 75px 0 75px 0;
 
@@ -33,6 +33,7 @@
       display: flex;
       gap: 32px;
       font-weight: 500;
+      white-space: nowrap;
     }
   }
   &__signin {

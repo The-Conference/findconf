@@ -1,14 +1,23 @@
 .greeting {
   display: flex;
-
-  max-width: 1220px;
+  max-width: 1200px;
   margin: 0 auto;
   justify-content: space-between;
   padding-bottom: 30px;
+  gap: 10px;
 
   img {
     max-width: 100%;
+    @media screen and (max-width: 1187px) {
+      width: 506px;
+    }
+    &:nth-of-type(2) {
+      @media screen and (max-width: 1187px) {
+        display: none;
+      }
+    }
   }
+
   &__text-auth {
     display: flex;
     justify-content: center;
@@ -34,7 +43,9 @@
 
     flex-direction: column;
     align-self: center;
-
+    @media screen and (max-width: 1187px) {
+      margin: 0 auto;
+    }
     p {
       color: #0000384d;
       font-size: 16px;
@@ -58,10 +69,18 @@
     font-size: 56px;
     font-family: "Manrope extrabold";
     line-height: 56px;
+    white-space: nowrap;
+    @media screen and (max-width: 1187px) {
+      font-size: 52px;
+    }
   }
   &__text-first {
     font-size: 56px;
     font-family: "Manrope extrabold";
     line-height: 56px;
+    white-space: nowrap;
+    @media screen and (max-width: 1187px) {
+      font-size: 52px;
+    }
   }
 }

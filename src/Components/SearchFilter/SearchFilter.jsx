@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./searchfilter.scss";
 import Highlighter from "react-highlight-words";
 import { Link, useNavigate } from "react-router-dom";
-
+import { fetchResults } from "../../store/searchSlice";
 const SearchFilter = () => {
   const nav = useNavigate();
-  const { conferences } = useSelector((state) => state.conferences);
-  const [filteredList, setFilteredList] = useState(conferences);
+  const dispatch = useDispatch();
+  const { search } = useSelector((state) => state);
+  const [filteredList, setFilteredList] = useState(search);
   const [value, setValue] = useState("");
 
   let query = "";
@@ -15,7 +16,7 @@ const SearchFilter = () => {
   const filterBySearch = (event) => {
     query = event.target.value;
     setValue(event.target.value);
-    var updatedList = [...conferences];
+    var updatedList = [...search];
     updatedList = updatedList.filter((item) => {
       return (
         item.org_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
@@ -34,12 +35,16 @@ const SearchFilter = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchResults());
+  }, []);
   return (
     <form className="search" onKeyDown={handleKeyDown}>
       <div className="input">
         <input
           type="search"
-          placeholder="Тема конференции, организатор"
+          placeholder="Тема конференции, организатор, тематика"
           className="search-box"
           onChange={(e) => filterBySearch(e)}
         />
@@ -90,9 +95,9 @@ const SearchFilter = () => {
             )}
           {filteredList.length > 0 && value.length > 0 && (
             <div className="sticky-button">
-              <Link to={`/search/${value}`}>
+              <a href={`/search/${value}`}>
                 <button onClick={() => setValue("")}>Все результаты</button>
-              </Link>
+              </a>
             </div>
           )}
         </ul>

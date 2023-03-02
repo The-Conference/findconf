@@ -31,7 +31,6 @@ export const postData = createSlice({
           followed.includes(item.id) && followed.length > 0 ? true : false;
       }
       state.conferences = data;
-      console.log(data);
     },
     handleFollow: (state, action) => {
       return state.conferences.forEach((el) =>
@@ -60,6 +59,7 @@ export const postData = createSlice({
     },
     handleFilter: (state, action) => {
       state.conferences = [];
+
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
       let data = action.payload;
       for (let item of data) {
@@ -130,6 +130,7 @@ export const postData = createSlice({
       ) {
         state.conferences = data.filter((el) => el.rinc === true);
       }
+      state.isLoading = false;
     },
   },
 });

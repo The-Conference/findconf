@@ -112,7 +112,7 @@ const DateView = ({
         let currentDay = addDays(month, j);
 
         days.push(
-          <Link
+          <a
             key={j}
             style={{
               pointerEvents:
@@ -128,7 +128,7 @@ const DateView = ({
                   ? "not-allowed"
                   : "pointer",
             }}
-            to={`/conferences/dates/${currentDay.toLocaleDateString()}`}
+            href={`/conferences/dates/${currentDay.toLocaleDateString()}`}
           >
             <div
               // id={`${getId(currentDay)}`}
@@ -176,7 +176,7 @@ const DateView = ({
                 }
               </div>
             </div>
-          </Link>
+          </a>
         );
       }
 

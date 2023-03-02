@@ -10,13 +10,14 @@ import { useSelector, useDispatch } from "react-redux";
 import following from "../../assets/following.svg";
 import hearts from "../../assets/follow.svg";
 import { options } from "../../utils/options";
+import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 
 const SearchResult = () => {
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
   const { value } = useParams();
   const dispatch = useDispatch();
-  const { conferences } = useSelector((state) => state.conferences);
+  const { conferences, isLoading } = useSelector((state) => state.conferences);
 
   const handleFave = (id) => {
     if (fave.includes(id)) {
@@ -53,8 +54,9 @@ const SearchResult = () => {
         hasMore={hasMore}
         loader={<Spinner />}
       > */}
+      {isLoading && <LoaderTemplate />}
       <div className="conference__container">
-        {match.length === 0 && (
+        {!isLoading && match.length === 0 && (
           <div style={{ minHeight: "100vh" }}>
             <p>По запросу {value} ничего не найдено. </p>
 
