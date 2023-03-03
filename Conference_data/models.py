@@ -43,11 +43,13 @@ class Conference(models.Model):
     def conf_status(self):
         current_date = timezone.now().date()
         if self.conf_date_begin is None or self.conf_date_end is None:
-            return "unclear"
+            return "Неизвестно (уточнить у организатора)"
         elif self.conf_date_begin <= current_date <= self.conf_date_end:
-            return "ongoing"
+            return "Конференция началась"
+        elif (self.conf_date_begin - current_date).days == 2:
+            return "Конференция скоро начнётся"
         else:
-            return "upcoming" if self.conf_date_begin > current_date else "past"
+            return None if self.conf_date_begin > current_date else "Конференция окончена"
 
     class Meta:
         verbose_name = "Конференция"

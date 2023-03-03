@@ -26,8 +26,10 @@ class ConferenceSerializer(serializers.ModelSerializer):
     def get_conf_status(self, obj):
         current_date = timezone.now().date()
         if obj.conf_date_begin is None or obj.conf_date_end is None:
-            return "unclear"
+            return "Неизвестно (уточнить у организатора)"
         elif obj.conf_date_begin <= current_date <= obj.conf_date_end:
-            return "ongoing"
+            return "Конференция началась"
+        elif (obj.conf_date_begin - current_date).days == 2:
+            return "Конференция скоро начнётся"
         else:
-            return "upcoming" if obj.conf_date_begin > current_date else "past"
+            return None if obj.conf_date_begin > current_date else "Конференция окончена"
