@@ -113,3 +113,45 @@
       copy:
         src: "../.metadata/.env"
         dest: "/root/"
+
+    - name: download frontend archive from github
+      get_url:
+        url: "https://github.com/The-Conference/findconf/archive/refs/heads/frontend.zip"
+        dest: "/root"
+      tags:
+        - update_front
+
+    - name: unzip frontend
+      unarchive:
+        src: "/root/findconf-frontend.zip"
+        dest: "/root"
+        remote_src: true
+      tags:
+        - update_front
+
+    - name: remove old version from www
+      shell:
+        cmd: "rm -rf {{ dev_path }}/www/*"
+      tags:
+        - update_front
+
+    - name: copy front build to www dir
+      copy:
+        src: "/root/findconf-frontend/build/"
+        dest: "{{ dev_path }}/www/"
+        owner: root
+        group: webadmin
+        mode: "u=rwx,g=rwx,o=rx"
+        remote_src: true
+      tags:
+        - update_front
+
+    - name: remove temp files from /root
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/root/findconf-frontend.zip"
+        - "/root/findconf-frontend"
+      tags:
+        - update_front
