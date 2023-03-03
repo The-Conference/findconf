@@ -9,6 +9,7 @@ import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { handleSave, handleFollow } from "../../store/postData";
 import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
+import EmptyResult from "../EmptyResult/EmptyResult";
 
 const AllConferences = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const AllConferences = () => {
       > */}
       {/* <Filters /> */}
       {isLoading && <LoaderTemplate />}
+      {!isLoading && conferences.length === 0 && <EmptyResult />}
       <div className="conference__container">
         {!isLoading &&
           conferences.map((el) => (

@@ -159,9 +159,11 @@ export const fetchAllConferences = () => async (dispatch) => {
 export const fetchFilteredConferences = () => async (dispatch) => {
   dispatch(startLoading());
   try {
-    await api
-      .get("/api/")
-      .then((response) => dispatch(handleFilter(response.data)));
+    await api.get("/api/").then((response) =>
+      setTimeout(() => {
+        dispatch(handleFilter(response.data));
+      }, 1000)
+    );
   } catch (e) {
     dispatch(hasError(e.message));
   }

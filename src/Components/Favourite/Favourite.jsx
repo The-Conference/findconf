@@ -11,6 +11,7 @@ import hearts from "../../assets/follow.svg";
 import following from "../../assets/following.svg";
 import { Link } from "react-router-dom";
 import { options } from "../../utils/options";
+import EmptyFave from "../EmptyResult/emptyFave";
 
 const Favourites = () => {
   const dispatch = useDispatch();
@@ -45,9 +46,10 @@ const Favourites = () => {
       > */}
       {!isLoading &&
         conferences.filter((el) => el.follow === true).length === 0 && (
-          <div>Добавьте интересные конференции в избранное</div>
+          <EmptyFave />
         )}
       {isLoading && <LoaderTemplate />}
+
       <div className="conference__container">
         {!isLoading &&
           conferences

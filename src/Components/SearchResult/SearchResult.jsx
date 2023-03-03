@@ -11,6 +11,7 @@ import following from "../../assets/following.svg";
 import hearts from "../../assets/follow.svg";
 import { options } from "../../utils/options";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
+import EmptyResult from "../EmptyResult/EmptyResult";
 
 const SearchResult = () => {
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
@@ -55,19 +56,8 @@ const SearchResult = () => {
         loader={<Spinner />}
       > */}
       {isLoading && <LoaderTemplate />}
+      {!isLoading && match.length === 0 && <EmptyResult />}
       <div className="conference__container">
-        {!isLoading && match.length === 0 && (
-          <div style={{ minHeight: "100vh" }}>
-            <p>По запросу {value} ничего не найдено. </p>
-
-            <p>Рекомендации:</p>
-
-            <p>Убедитесь, что все слова написаны без ошибок.</p>
-            <p>Попробуйте использовать другие ключевые слова.</p>
-            <p>Попробуйте использовать более популярные ключевые слова.</p>
-            <p>Попробуйте уменьшить количество слов в запросе.</p>
-          </div>
-        )}
         {match.length > 0 &&
           match.map((el) => (
             <div key={el.id} className="conference__block">

@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import LoaderTemplate from "./utils/Loader/LoaderTemplate";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import AboutService from "./Components/AboutService/AboutService";
@@ -16,16 +16,9 @@ import Favourites from "./Components/Favourite/Favourite";
 import NotFound from "./Components/404/404";
 import SearchDate from "./Components/SearchDate/SearchDate";
 import FullConference from "./Components/FullConference/FullConference";
+
 const Login = React.lazy(() => import("./Components/Login/Login"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
-
-const LoaderTemplate = React.lazy(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(import("./utils/Loader/LoaderTemplate"));
-    }, 1000);
-  });
-});
 
 const router = createBrowserRouter([
   {
@@ -100,16 +93,16 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  {
-    path: "*",
-    element: (
-      <>
-        <Header />
-        <NotFound />
-        <Footer />
-      </>
-    ),
-  },
+  // {
+  //   path: "*",
+  //   element: (
+  //     <>
+  //       <Header />
+  //       <NotFound />
+  //       <Footer />
+  //     </>
+  //   ),
+  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
