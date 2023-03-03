@@ -22,7 +22,6 @@ const Favourites = () => {
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
-      console.log(fave);
     } else {
       setFave([...fave, id]);
     }
@@ -30,7 +29,7 @@ const Favourites = () => {
   useEffect(() => {
     dispatch(handleSave(fave));
     dispatch(fetchFilteredConferences());
-  }, [fave]);
+  }, []);
 
   return (
     <section className="conference">
@@ -80,7 +79,11 @@ const Favourites = () => {
                         <span>Открыта регистрация</span>
                       ))}
                     <img
-                      title="добавить в избранное"
+                      title={
+                        el.follow === false
+                          ? "добавить в избранное"
+                          : "удалить из избранного"
+                      }
                       src={el.follow === false ? hearts : following}
                       alt="follow"
                       onClick={() => {

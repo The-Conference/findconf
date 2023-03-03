@@ -7,7 +7,16 @@ const LoaderTemplate = () => {
     <div>
       {/* <LoaderHeader /> */}
       <Loader />
+      <Loader />
     </div>
   );
 };
 export default LoaderTemplate;
+
+export const LoaderTemplateTwo = () => {
+  return (
+    <div>
+      <Loader />
+    </div>
+  );
+};

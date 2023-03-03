@@ -1,7 +1,13 @@
 .loader {
-  max-width: 1170px;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  padding: 40px 0;
+  gap: 36px;
+  margin-bottom: 30px;
+  div {
+    background-color: white;
+    border-radius: 13px;
+    height: 355px;
+  }
 }

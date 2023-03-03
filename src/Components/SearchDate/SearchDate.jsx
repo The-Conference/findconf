@@ -101,7 +101,11 @@ const SearchDate = () => {
                         <span>Открыта регистрация</span>
                       ))}
                     <img
-                      title="добавить в избранное"
+                      title={
+                        el.follow === false
+                          ? "добавить в избранное"
+                          : "удалить из избранного"
+                      }
                       src={el.follow === false ? hearts : following}
                       alt="follow"
                       onClick={() => {

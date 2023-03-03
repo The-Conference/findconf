@@ -44,9 +44,9 @@ const SearchResult = () => {
   }, [fave]);
   return (
     <section className="conference">
-      <p className="conference__type">
+      {/* <p className="conference__type">
         Найдено конференций:<span>{match.length} </span>
-      </p>
+      </p> */}
 
       <Filters />
       {/* <InfiniteScroll
@@ -55,10 +55,12 @@ const SearchResult = () => {
         hasMore={hasMore}
         loader={<Spinner />}
       > */}
-      {isLoading && <LoaderTemplate />}
       {!isLoading && match.length === 0 && <EmptyResult />}
+      {isLoading && <LoaderTemplate />}
+
       <div className="conference__container">
-        {match.length > 0 &&
+        {!isLoading &&
+          match.length > 0 &&
           match.map((el) => (
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
@@ -85,7 +87,11 @@ const SearchResult = () => {
                       <span>Открыта регистрация</span>
                     ))}
                   <img
-                    title="добавить в избранное"
+                    title={
+                      el.follow === false
+                        ? "добавить в избранное"
+                        : "удалить из избранного"
+                    }
                     src={el.follow === false ? hearts : following}
                     alt="follow"
                     onClick={() => {

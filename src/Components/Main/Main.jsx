@@ -1,6 +1,6 @@
 import React from "react";
 import "./main.scss";
-import AllConferences from "../Conference/AllConferences";
+import { Prev1, Prev2 } from "../Previews/Previews";
 import Calendar from "../Calendar/Calendar";
 import Greeting from "../Greeting/Greeting";
 // import GreetingForAuth from "./Greeting/GreetingForAuth";
@@ -12,7 +12,8 @@ const Main = ({ conferences }) => {
       <Greeting />
       {/* <GreetingForAuth /> */}
       <Calendar />
-      <AllConferences />
+      <Prev1 />
+      <Prev2 />
       {/* <LoaderTemplate /> */}
     </div>
   );

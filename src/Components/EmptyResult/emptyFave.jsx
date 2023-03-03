@@ -5,7 +5,7 @@ const EmptyFave = () => {
   return (
     <div className="empty">
       <img src={empty} alt="пусто" />
-      <p>Добавьте интересные конференции в избранное </p>
+      <p>Не найдено ни одной конференции</p>
     </div>
   );
 };

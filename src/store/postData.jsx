@@ -21,7 +21,9 @@ export const postData = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
-
+    reset: (state) => {
+      return (state.conferences = []);
+    },
     fetchConferences: (state, action) => {
       state.conferences = [];
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
@@ -158,11 +160,12 @@ export const fetchAllConferences = () => async (dispatch) => {
 };
 export const fetchFilteredConferences = () => async (dispatch) => {
   dispatch(startLoading());
+
   try {
     await api.get("/api/").then((response) =>
       setTimeout(() => {
         dispatch(handleFilter(response.data));
-      }, 1000)
+      }, 200)
     );
   } catch (e) {
     dispatch(hasError(e.message));
