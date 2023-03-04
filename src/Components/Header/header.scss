@@ -15,7 +15,9 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-
+    @media screen and (max-width: 860px) {
+      display: none;
+    }
     img {
       max-width: 100%;
       height: 40px;

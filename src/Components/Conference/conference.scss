@@ -2,7 +2,7 @@
   text-align: left;
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 40px;
+  padding: 0 20px 40px 20px;
   min-height: 100vh;
 
   &__block {
@@ -43,6 +43,18 @@
           content: "\2022";
           padding: 0 8px;
           font-size: 18px;
+          @media screen and (max-width: 1000px) {
+            font-size: 14px;
+          }
+          @media screen and (max-width: 1000px) {
+            font-size: 10px;
+          }
+        }
+        @media screen and (max-width: 1000px) {
+          font-size: 11px;
+        }
+        @media screen and (max-width: 800px) {
+          font-size: 10px;
         }
       }
     }
@@ -80,7 +92,12 @@
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-
+    @media screen and (max-width: 1000px) {
+      height: 190px;
+    }
+    @media screen and (max-width: 900px) {
+      height: 130px;
+    }
     &-top {
       display: flex;
       align-items: flex-start;

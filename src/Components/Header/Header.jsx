@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header>
+    <header style={{ padding: "0 20px" }}>
       <div className="header">
         <a href="/">
           <div className="header__logo">

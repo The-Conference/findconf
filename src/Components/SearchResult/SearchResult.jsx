@@ -20,6 +20,9 @@ const SearchResult = () => {
   const dispatch = useDispatch();
   const { conferences, isLoading } = useSelector((state) => state.conferences);
 
+  let newValue = value.split(" ").join("|");
+  let regexp = new RegExp(newValue, "gi");
+
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
@@ -29,9 +32,9 @@ const SearchResult = () => {
   };
   let match = conferences.filter((el) => {
     return (
-      el.org_name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-      el.conf_name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
-      el.themes.toLowerCase().indexOf(value.toLowerCase()) !== -1
+      regexp.test(el.org_name) ||
+      regexp.test(el.conf_name) ||
+      regexp.test(el.themes)
     );
   });
 

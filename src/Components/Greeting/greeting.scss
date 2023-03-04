@@ -4,18 +4,10 @@
   margin: 0 auto;
   justify-content: space-between;
   padding-bottom: 30px;
-  gap: 10px;
-
-  img {
+  align-items: center;
+  gap: 20px;
+  &__pic {
     max-width: 100%;
-    @media screen and (max-width: 1187px) {
-      width: 506px;
-    }
-    &:nth-of-type(2) {
-      @media screen and (max-width: 1187px) {
-        display: none;
-      }
-    }
   }
 
   &__text-auth {
