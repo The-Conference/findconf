@@ -12,6 +12,8 @@ import hearts from "../../assets/follow.svg";
 import { options } from "../../utils/options";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import Calendar from "../Calendar/Calendar";
+import EmptyResult from "../EmptyResult/EmptyResult";
+
 const SearchDate = () => {
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
@@ -69,6 +71,10 @@ const SearchDate = () => {
         hasMore={hasMore}
         loader={<Spinner />}
       > */}
+      {!isLoading &&
+        conferences.filter((el) => confs.includes(el.id)).length === 0 && (
+          <EmptyResult />
+        )}
       {isLoading && <LoaderTemplate />}
       <div className="conference__container">
         {!isLoading &&
