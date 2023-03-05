@@ -17,7 +17,7 @@ import NotFound from "./Components/404/404";
 import EmptyResult from "./Components/EmptyResult/EmptyResult";
 import SearchDate from "./Components/SearchDate/SearchDate";
 import FullConference from "./Components/FullConference/FullConference";
-
+import SearchDatePeriod from "./Components/SearchDatePeriod/SearchDatePeriod";
 const Login = React.lazy(() => import("./Components/Login/Login"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 
@@ -96,11 +96,21 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/conferences/dates/:date",
+    path: "/:date",
     element: (
       <>
         <Header />
         <SearchDate />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/dates/:periods",
+    element: (
+      <>
+        <Header />
+        <SearchDatePeriod />
         <Footer />
       </>
     ),

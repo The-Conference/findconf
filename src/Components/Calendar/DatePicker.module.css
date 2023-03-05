@@ -1,8 +1,8 @@
 .container {
   display: flex;
-  max-width: 1220px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 30px;
+  padding: 0 20px 30px 20px;
 }
 
 .buttonWrapper {
@@ -111,7 +111,7 @@
   align-items: center;
   cursor: pointer;
   margin: 0 0 0 5px;
-  width: 46px;
+  width: 45px;
 
   flex-shrink: 0;
 }

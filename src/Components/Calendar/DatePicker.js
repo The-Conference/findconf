@@ -53,7 +53,7 @@ const DatePicker = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.buttonWrapper} style={buttonzIndex}>
-        {/* <span
+        <span
           role="button"
           className={styles.calendar}
           style={{ backgroundColor: showCalendar ? "#184CD3" : "#ebefff" }}
@@ -62,7 +62,7 @@ const DatePicker = (props) => {
           {(!showCalendar && <img src={calendar} alt="calendar" />) || (
             <img src={white} alt="calendar" />
           )}
-        </span> */}
+        </span>
         {showCalendar && <CalendarFilter />}
         <button className={styles.button} onClick={prev}>
           &lt;
