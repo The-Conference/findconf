@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import Filters from "../Filters/Filters";
 import {
   handleFollow,
@@ -14,15 +14,17 @@ import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import EmptyResult from "../EmptyResult/EmptyResult";
 
 const SearchResult = () => {
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  let value = searchParams.get("q");
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
 
-  const { value } = useParams();
-  const dispatch = useDispatch();
-
   const { conferences, isLoading } = useSelector((state) => state.conferences);
   let newValue = value.trim().split(" ").join("|");
+
   let regexp = new RegExp(newValue, "gi");
+
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));

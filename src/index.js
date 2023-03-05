@@ -64,9 +64,8 @@ const router = createBrowserRouter([
       </>
     ),
   },
-
   {
-    path: "/search/:value",
+    path: "/search/",
     element: (
       <>
         <Header />
@@ -75,6 +74,17 @@ const router = createBrowserRouter([
       </>
     ),
   },
+
+  // {
+  //   path: "/search/:value",
+  //   element: (
+  //     <>
+  //       <Header />
+  //       <SearchResult />
+  //       <Footer />
+  //     </>
+  //   ),
+  // },
   {
     path: "/search/",
     element: (
