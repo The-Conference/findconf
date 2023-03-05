@@ -18,6 +18,7 @@ const SearchFilter = () => {
   const handleValue = (e) => {
     e.preventDefault();
     setSearchParams({ q: value });
+    handleNavigation();
   };
   const [popup, setPopup] = useState(false);
   useOnClickOutside(ref, () => setPopup(false));
@@ -27,7 +28,10 @@ const SearchFilter = () => {
     query = event.target.value;
 
     setValue(
-      event.target.value.replace(/[+/)/(/*/^/$/|/]/gi, " characterREPLACEMENT")
+      event.target.value.replace(
+        /[+/)/(/*/^/$/|/%/]/gi,
+        " characterREPLACEMENT"
+      )
     );
 
     var updatedList = [...search];
@@ -44,16 +48,8 @@ const SearchFilter = () => {
     }
   };
   const handleNavigation = () => {
-    setValue(searchParams.get("q"));
     nav({ pathname: "/search", search: `?q=${value}` });
     window.location.reload();
-  };
-  const handleKeyDown = (event) => {
-    if (value.length !== 0) {
-      if (event.key === "Enter") {
-        handleNavigation();
-      }
-    }
   };
 
   useEffect(() => {
@@ -122,10 +118,8 @@ const SearchFilter = () => {
           {filteredList.length > 0 && value.length > 0 && popup === true && (
             <div className="sticky-button">
               <button
-                onKeyDown={handleKeyDown}
                 onClick={() => {
                   handleNavigation();
-                  // nav(`/search/${value}`);
                   setValue("");
                 }}
               >
