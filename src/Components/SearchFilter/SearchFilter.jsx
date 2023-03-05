@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./searchfilter.scss";
 import Highlighter from "react-highlight-words";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchResults } from "../../store/searchSlice";
+import useOnClickOutside from "../Hooks/useOnClickOutside";
+
 const SearchFilter = () => {
   const nav = useNavigate();
+  const ref = useRef();
   const dispatch = useDispatch();
   const { search } = useSelector((state) => state);
   const [filteredList, setFilteredList] = useState(search);
   const [value, setValue] = useState("");
-
+  const [popup, setPopup] = useState(false);
+  useOnClickOutside(ref, () => setPopup(false));
   let query = "";
 
   const filterBySearch = (event) => {
     query = event.target.value;
+
     setValue(
       event.target.value.replace(
         /[+/)/(/*/^/$/|/%/]/gi,
@@ -31,6 +36,9 @@ const SearchFilter = () => {
       );
     });
     setFilteredList(updatedList);
+    if (value.length > 0) {
+      setPopup(true);
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -58,9 +66,10 @@ const SearchFilter = () => {
           }}
         />
       </div>
-      <div className="dropdown-filter">
+      <div className="dropdown-filter" ref={ref}>
         <ul>
           {value.length !== 0 &&
+            popup === true &&
             filteredList.map(
               (item, index) =>
                 index < 3 && (
@@ -102,7 +111,7 @@ const SearchFilter = () => {
                   </Link>
                 )
             )}
-          {filteredList.length > 0 && value.length > 0 && (
+          {filteredList.length > 0 && value.length > 0 && popup === true && (
             <div className="sticky-button">
               <a href={`/search/${value}`}>
                 <button onClick={() => setValue("")}>Все результаты</button>

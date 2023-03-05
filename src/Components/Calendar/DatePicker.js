@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { addDays } from "date-fns";
 import React, { useState } from "react";
+
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from "./MonthView";
@@ -12,6 +13,7 @@ import white from "../../assets/calwhite.svg";
 
 const DatePicker = (props) => {
   const [showCalendar, setShowCalendar] = useState(false);
+
   const next = (event) => {
     event.preventDefault();
     const e = document.getElementById("container");
@@ -50,6 +52,7 @@ const DatePicker = (props) => {
     const width = e ? e.getBoundingClientRect().width : null;
     e.scrollLeft -= width - 60;
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.buttonWrapper} style={buttonzIndex}>
@@ -63,7 +66,7 @@ const DatePicker = (props) => {
             <img src={white} alt="calendar" />
           )}
         </span>
-        {showCalendar && <CalendarFilter />}
+        {showCalendar && <CalendarFilter setShowCalendar={setShowCalendar} />}
         <button className={styles.button} onClick={prev}>
           &lt;
         </button>
