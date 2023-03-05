@@ -14,6 +14,7 @@ import AllConferences from "./Components/Conference/AllConferences";
 import SearchResult from "./Components/SearchResult/SearchResult";
 import Favourites from "./Components/Favourite/Favourite";
 import NotFound from "./Components/404/404";
+
 import SearchDate from "./Components/SearchDate/SearchDate";
 import FullConference from "./Components/FullConference/FullConference";
 
@@ -63,12 +64,23 @@ const router = createBrowserRouter([
       </>
     ),
   },
+
   {
     path: "/search/:value",
     element: (
       <>
         <Header />
         <SearchResult />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/search",
+    element: (
+      <>
+        <Header />
+        <AllConferences />
         <Footer />
       </>
     ),

@@ -15,7 +15,17 @@ const SearchFilter = () => {
 
   const filterBySearch = (event) => {
     query = event.target.value;
-    setValue(event.target.value);
+    setValue(
+      event.target.value.replace(
+        /[+/)/(/*/^/$/|/%]/gi,
+        " 123characterREPLACEMENT123."
+      )
+    );
+    // let uri = `http://localhost:3000/search/${value}`;
+    // let encoded = encodeURI(uri);
+    // let decoded = decodeURI(encoded);
+    // console.log(encoded, decoded);
+
     var updatedList = [...search];
     updatedList = updatedList.filter((item) => {
       return (
@@ -46,7 +56,9 @@ const SearchFilter = () => {
           type="search"
           placeholder="Тема конференции, организатор, тематика"
           className="search-box"
-          onChange={(e) => filterBySearch(e)}
+          onChange={(e) => {
+            filterBySearch(e);
+          }}
         />
       </div>
       <div className="dropdown-filter">

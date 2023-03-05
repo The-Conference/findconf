@@ -16,13 +16,17 @@ import EmptyResult from "../EmptyResult/EmptyResult";
 const SearchResult = () => {
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
+
   const { value } = useParams();
   const dispatch = useDispatch();
-  const { conferences, isLoading } = useSelector((state) => state.conferences);
+  // let uri = `http://localhost:3000/search/${value}`;
+  // let encoded = encodeURI(uri);
+  // let decoded = decodeURI(encoded);
+  // console.log(encoded, decoded);
 
+  const { conferences, isLoading } = useSelector((state) => state.conferences);
   let newValue = value.split(" ").join("|");
   let regexp = new RegExp(newValue, "gi");
-
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
