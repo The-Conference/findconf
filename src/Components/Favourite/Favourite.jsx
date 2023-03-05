@@ -30,7 +30,9 @@ const Favourites = () => {
     dispatch(handleSave(fave));
     dispatch(fetchFilteredConferences());
   }, []);
-
+  useEffect(() => {
+    dispatch(handleSave(fave));
+  }, [fave]);
   return (
     <section className="conference">
       <p className="conference__type">
