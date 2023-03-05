@@ -27,7 +27,6 @@ const Favourites = () => {
     }
   };
   useEffect(() => {
-    dispatch(handleSave(fave));
     dispatch(fetchFilteredConferences());
   }, []);
   useEffect(() => {
