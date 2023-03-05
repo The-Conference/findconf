@@ -17,14 +17,10 @@ const SearchFilter = () => {
     query = event.target.value;
     setValue(
       event.target.value.replace(
-        /[+/)/(/*/^/$/|/%]/gi,
-        " 123characterREPLACEMENT123."
+        /[+/)/(/*/^/$/|/%/]/gi,
+        " characterREPLACEMENT"
       )
     );
-    // let uri = `http://localhost:3000/search/${value}`;
-    // let encoded = encodeURI(uri);
-    // let decoded = decodeURI(encoded);
-    // console.log(encoded, decoded);
 
     var updatedList = [...search];
     updatedList = updatedList.filter((item) => {
@@ -53,6 +49,7 @@ const SearchFilter = () => {
     <form className="search" onKeyDown={handleKeyDown}>
       <div className="input">
         <input
+          autoFocus={true}
           type="search"
           placeholder="Тема конференции, организатор, тематика"
           className="search-box"

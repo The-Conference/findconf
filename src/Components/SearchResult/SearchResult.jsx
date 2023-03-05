@@ -19,13 +19,9 @@ const SearchResult = () => {
 
   const { value } = useParams();
   const dispatch = useDispatch();
-  // let uri = `http://localhost:3000/search/${value}`;
-  // let encoded = encodeURI(uri);
-  // let decoded = decodeURI(encoded);
-  // console.log(encoded, decoded);
 
   const { conferences, isLoading } = useSelector((state) => state.conferences);
-  let newValue = value.split(" ").join("|");
+  let newValue = value.trim().split(" ").join("|");
   let regexp = new RegExp(newValue, "gi");
   const handleFave = (id) => {
     if (fave.includes(id)) {
