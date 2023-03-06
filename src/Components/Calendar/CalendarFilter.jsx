@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import "./calendarFilter.css";
 import { useNavigate } from "react-router-dom";
 import useOnClickOutside from "../Hooks/useOnClickOutside";
+import cross from "../../assets/Cross.svg";
 const CalendarFilter = ({ setShowCalendar }) => {
   const nav = useNavigate();
   const ref = useRef();
@@ -21,6 +22,9 @@ const CalendarFilter = ({ setShowCalendar }) => {
 
   return (
     <div className="calender-filter" ref={ref}>
+      <span className="close-calendar" onClick={() => setShowCalendar(false)}>
+        <img src={cross} alt="закрыть" />
+      </span>
       <Calendar
         selectRange={true}
         onChange={onChange}

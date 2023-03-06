@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.dac0447a.css",
-    "main.js": "/static/js/main.b2cb3a41.js",
+    "main.css": "/static/css/main.c19fcdf5.css",
+    "main.js": "/static/js/main.1d11437a.js",
     "static/css/712.d7f569cc.chunk.css": "/static/css/712.d7f569cc.chunk.css",
     "static/js/712.707985c8.chunk.js": "/static/js/712.707985c8.chunk.js",
     "static/css/68.d7f569cc.chunk.css": "/static/css/68.d7f569cc.chunk.css",
@@ -32,11 +32,12 @@
     "static/media/follow.svg": "/static/media/follow.b4f2d12bdf350dc85af593be3d7c024a.svg",
     "static/media/greycross.svg": "/static/media/greycross.361cfc398f7bb4f00f1d5ff1cc414c78.svg",
     "static/media/whitecross.svg": "/static/media/whitecross.61344037d52ae9697008c0cc5b66151f.svg",
+    "static/media/Cross.svg": "/static/media/Cross.75fbf81742ebb6cf60cd95376ca9c414.svg",
     "index.html": "/index.html",
     "static/media/logo.svg": "/static/media/logo.bc8ca2730e7b651170857d9a9c2a41bc.svg",
     "static/media/Step.svg": "/static/media/Step.c669cfce5c04389161edb5a3a701b754.svg",
-    "main.dac0447a.css.map": "/static/css/main.dac0447a.css.map",
-    "main.b2cb3a41.js.map": "/static/js/main.b2cb3a41.js.map",
+    "main.c19fcdf5.css.map": "/static/css/main.c19fcdf5.css.map",
+    "main.1d11437a.js.map": "/static/js/main.1d11437a.js.map",
     "712.d7f569cc.chunk.css.map": "/static/css/712.d7f569cc.chunk.css.map",
     "712.707985c8.chunk.js.map": "/static/js/712.707985c8.chunk.js.map",
     "68.d7f569cc.chunk.css.map": "/static/css/68.d7f569cc.chunk.css.map",
@@ -44,7 +45,7 @@
     "787.d5fbb612.chunk.js.map": "/static/js/787.d5fbb612.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dac0447a.css",
-    "static/js/main.b2cb3a41.js"
+    "static/css/main.c19fcdf5.css",
+    "static/js/main.1d11437a.js"
   ]
 }
