@@ -54,8 +54,8 @@ abbr[title] {
 
 .calender-filter {
   position: absolute;
-  top: 10%;
-  left: 10%;
+  top: 15%;
+  left: 38%;
 }
 .react-calendar__tile:hover {
   background-color: #0000380d !important;

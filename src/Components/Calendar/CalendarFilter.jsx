@@ -1,14 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendarFilter.css";
 import { useNavigate } from "react-router-dom";
-import useOnClickOutside from "../Hooks/useOnClickOutside";
-const CalendarFilter = ({ setShowCalendar }) => {
+
+const CalendarFilter = ({ showCalendar }) => {
   const nav = useNavigate();
-  const ref = useRef();
+
   const [value, onChange] = useState(new Date());
-  useOnClickOutside(ref, () => setShowCalendar(false));
+
   const handleDates = (value) => {
     nav(
       `/dates/${
@@ -20,7 +20,10 @@ const CalendarFilter = ({ setShowCalendar }) => {
   };
 
   return (
-    <div className="calender-filter" ref={ref}>
+    <div
+      className="calender-filter"
+      style={{ display: !showCalendar ? "none" : "block" }}
+    >
       <Calendar
         selectRange={true}
         onChange={onChange}

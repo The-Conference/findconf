@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { addDays } from "date-fns";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from "./MonthView";
 import CalendarFilter from "./CalendarFilter";
-
+import useOnClickOutside from "../Hooks/useOnClickOutside";
 // import hexToRgb from "./global/helpers/hexToRgb";
 import calendar from "../../assets/calendar.svg";
 import white from "../../assets/calwhite.svg";
 
 const DatePicker = (props) => {
   const [showCalendar, setShowCalendar] = useState(false);
-
+  const ref = useRef();
+  useOnClickOutside(ref, () => setShowCalendar(false));
   const next = (event) => {
     event.preventDefault();
     const e = document.getElementById("container");
@@ -57,6 +58,7 @@ const DatePicker = (props) => {
     <div className={styles.container}>
       <div className={styles.buttonWrapper} style={buttonzIndex}>
         <span
+          ref={ref}
           role="button"
           className={styles.calendar}
           style={{ backgroundColor: showCalendar ? "#184CD3" : "#ebefff" }}
@@ -66,7 +68,7 @@ const DatePicker = (props) => {
             <img src={white} alt="calendar" />
           )}
         </span>
-        {showCalendar && <CalendarFilter setShowCalendar={setShowCalendar} />}
+        {showCalendar && <CalendarFilter showCalendar={showCalendar} />}
         <button className={styles.button} onClick={prev}>
           &lt;
         </button>
