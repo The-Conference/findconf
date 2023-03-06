@@ -34,7 +34,7 @@ export const Prev1 = () => {
       className="conference"
     >
       <p className="conference__type">
-        <a href="/search/история">
+        <a href="/search?q=история">
           Конференции по истории <span>&gt;</span>
         </a>
       </p>
@@ -172,7 +172,7 @@ export const Prev2 = () => {
       className="conference"
     >
       <p className="conference__type">
-        <a href="/search/филология">
+        <a href="/search?q=филология">
           Конференции по филологии <span>&gt;</span>
         </a>
       </p>
