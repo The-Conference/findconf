@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useOnClickOutside = (ref, handler) => {
+const useOnClickOutside = (ref, handler, popup) => {
   useEffect(
     () => {
       const listener = (event) => {
