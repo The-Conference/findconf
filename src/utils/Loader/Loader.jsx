@@ -15,7 +15,7 @@ const Loader = () => {
           <rect x="149" y="240" rx="6" ry="6" width="47" height="10" />
           <rect x="210" y="242.5" rx="6" ry="6" width="6" height="6" />
           <rect x="230" y="240" rx="6" ry="6" width="177" height="10" />
-          <rect x="20" y="260" rx="16" ry="16" width="550" height="90" />
+          <rect x="20" y="260" rx="16" ry="16" width="550" height="110" />
         </ContentLoader>
       </div>
       <div>
@@ -29,7 +29,7 @@ const Loader = () => {
           <rect x="149" y="240" rx="6" ry="6" width="47" height="10" />
           <rect x="210" y="242.5" rx="6" ry="6" width="6" height="6" />
           <rect x="230" y="240" rx="6" ry="6" width="177" height="10" />
-          <rect x="20" y="260" rx="16" ry="16" width="550" height="90" />
+          <rect x="20" y="260" rx="16" ry="16" width="550" height="110" />
         </ContentLoader>
       </div>
     </div>

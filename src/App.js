@@ -5,7 +5,6 @@ import Footer from "./Components/Footer/Footer";
 import Main from "./Components/Main/Main";
 import { useDispatch } from "react-redux";
 import { fetchFilteredConferences } from "./store/postData";
-
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {

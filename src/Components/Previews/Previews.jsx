@@ -30,8 +30,8 @@ export const Prev1 = () => {
 
   return (
     <section
-      style={{ minHeight: "auto", paddingBottom: "60px" }}
-      className="conference"
+      style={{ minHeight: "auto" }}
+      className="conference preview-bottom"
     >
       <p className="conference__type">
         <a href="/search?q=история">
@@ -168,8 +168,8 @@ export const Prev2 = () => {
 
   return (
     <section
-      style={{ minHeight: "auto", paddingBottom: "60px" }}
-      className="conference"
+      style={{ minHeight: "auto" }}
+      className="conference preview-bottom"
     >
       <p className="conference__type">
         <a href="/search?q=филология">

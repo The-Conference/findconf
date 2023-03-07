@@ -2,10 +2,13 @@
   height: 72px;
   display: flex;
   background-color: #0000380d;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   gap: 67px;
   color: black;
   margin-top: auto;
   width: 100%;
+  @media screen and (max-width: 1000px) {
+    height: 65px;
+  }
 }

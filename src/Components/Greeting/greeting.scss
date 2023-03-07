@@ -6,8 +6,19 @@
   padding: 0 20px 30px 20px;
   align-items: center;
   gap: 20px;
+  @media screen and (max-width: 446px) {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 20px 10px 20px;
+    gap: 0;
+  }
   &__pic {
     max-width: 100%;
+    &:last-child {
+      @media screen and (max-width: 720px) {
+        display: none;
+      }
+    }
   }
 
   &__text-auth {
@@ -44,6 +55,22 @@
       font-weight: 500;
       line-height: 20.8px;
       padding: 10px;
+      @media screen and (max-width: 1024px) {
+        font-size: 14px;
+        line-height: 15.8px;
+      }
+      @media screen and (max-width: 963px) {
+        font-size: 12px;
+        line-height: 10.8px;
+      }
+      @media screen and (max-width: 780px) {
+        font-size: 10px;
+        line-height: 8px;
+      }
+      @media screen and (max-width: 559px) {
+        font-size: 6px;
+        line-height: 5px;
+      }
     }
     button {
       background-color: #2c60e7;
@@ -64,6 +91,19 @@
     white-space: nowrap;
     @media screen and (max-width: 1187px) {
       font-size: 52px;
+      line-height: 52px;
+    }
+    @media screen and (max-width: 963px) {
+      font-size: 40px;
+      line-height: 45px;
+    }
+    @media screen and (max-width: 780px) {
+      font-size: 35px;
+      line-height: 35px;
+    }
+    @media screen and (max-width: 559px) {
+      font-size: 25px;
+      line-height: 25px;
     }
   }
   &__text-first {
@@ -73,6 +113,19 @@
     white-space: nowrap;
     @media screen and (max-width: 1187px) {
       font-size: 52px;
+      line-height: 52px;
+    }
+    @media screen and (max-width: 963px) {
+      font-size: 40px;
+      line-height: 45px;
+    }
+    @media screen and (max-width: 780px) {
+      font-size: 35px;
+      line-height: 35px;
+    }
+    @media screen and (max-width: 559px) {
+      font-size: 25px;
+      line-height: 25px;
     }
   }
 }

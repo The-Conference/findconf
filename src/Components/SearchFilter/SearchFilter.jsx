@@ -26,20 +26,25 @@ const SearchFilter = () => {
 
   const filterBySearch = (event) => {
     query = event.target.value;
+    let newValue = query.trim().split(" ").join("|");
 
+    let regexp = new RegExp(newValue, "gi");
     setValue(
-      event.target.value.replace(
-        /[+/)/(/*/^/$/|/%/]/gi,
-        " characterREPLACEMENT"
-      )
+      event.target.value
+        .trim()
+        .replace(/[+/)/(/*/^/$/|/%/]/gi, " characterREPLACEMENT")
     );
 
     var updatedList = [...search];
     updatedList = updatedList.filter((item) => {
       return (
-        item.org_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        item.conf_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        item.themes.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        regexp.test(item.org_name) ||
+        regexp.test(item.conf_name) ||
+        regexp.test(item.themes)
+
+        // item.org_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        // item.conf_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        // item.themes.toLowerCase().indexOf(query.toLowerCase()) !== -1
       );
     });
     setFilteredList(updatedList);

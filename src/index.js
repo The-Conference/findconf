@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       <>
         <Header />
         <FullConference />
-        <Footer />
+        {/* <Footer /> */}
       </>
     ),
   },
@@ -125,16 +125,16 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  // {
-  //   path: "*",
-  //   element: (
-  //     <>
-  //       <Header />
-  //       <NotFound />
-  //       <Footer />
-  //     </>
-  //   ),
-  // },
+  {
+    path: "*",
+    element: (
+      <>
+        <Header />
+        <NotFound />
+        <Footer />
+      </>
+    ),
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -8,15 +8,24 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 75px 0 75px 0;
-
+  @media (max-width: 860px) {
+    gap: 20px;
+    padding: 65px 0 65px 0;
+  }
+  @media (max-width: 460px) {
+    padding: 45px 0 45px 0;
+  }
+  // @media (max-width: 860px) {
+  //   gap: 20px;
+  // }
   &__logo {
-    width: 236px;
     text-align: left;
     cursor: pointer;
     display: flex;
     align-items: center;
     @media screen and (max-width: 860px) {
-      display: none;
+      display: block;
+      width: auto;
     }
     img {
       max-width: 100%;
@@ -27,10 +36,16 @@
       font-family: "Manrope semibold";
       letter-spacing: 4.7px;
       margin-left: 13px;
+      @media screen and (max-width: 967px) {
+        display: none;
+      }
     }
   }
 
   &__nav {
+    @media screen and (max-width: 1300px) {
+      display: none;
+    }
     ul {
       display: flex;
       gap: 32px;

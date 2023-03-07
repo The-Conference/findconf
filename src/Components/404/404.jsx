@@ -5,8 +5,10 @@ const NotFound = () => {
   return (
     <div className="notfound">
       <div className="notfound-container">
-        <img src={notfound} alt="не найдено" />
-        <div>
+        <div className="notfound-container-pic">
+          <img src={notfound} alt="не найдено" />
+        </div>
+        <div className="notfound-container-text">
           <h1>Что-то пошло не так(</h1>
           <p>Не волнуйся, мы уже работаем над ошибкой)</p>
           <a href="/">

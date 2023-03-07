@@ -21,10 +21,14 @@ const SearchResult = () => {
   const [fave, setFave] = useState(Favourite);
 
   const { conferences, isLoading } = useSelector((state) => state.conferences);
-  let newValue = value.trim().split(" ").join("|");
+  let newValue = value
+    .trim()
+    .split(" ")
+    .filter((el) => el !== "и" || el !== "в" || el !== "на" || el !== "или")
+    .join("|");
 
   let regexp = new RegExp(newValue, "gi");
-
+  console.log(newValue);
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));

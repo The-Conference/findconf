@@ -2,6 +2,12 @@
   display: flex;
   gap: 8px;
   padding: 20px 0;
+  @media screen and (max-width: 398px) {
+    display: none;
+  }
+  @media screen and (max-width: 419px) {
+    padding: 0 0 20px 0;
+  }
   &__delete-button {
     border-radius: 8px;
 
@@ -18,6 +24,49 @@
 
     span {
       padding-right: 10px;
+    }
+  }
+}
+.filter-adaptive {
+  display: none;
+  position: relative;
+
+  @media screen and (max-width: 398px) {
+    display: flex;
+    gap: 8px;
+    padding: 0 0 20px 0;
+    align-items: center;
+  }
+  &__delete-button {
+    @media screen and (max-width: 398px) {
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 10px 10px 2px 10px;
+      align-self: baseline;
+    }
+  }
+  &__container-button {
+    @media screen and (max-width: 398px) {
+    }
+    span {
+      padding: 6px 10px;
+      border-radius: 7px;
+    }
+    ul {
+      @media screen and (max-width: 398px) {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        left: 0;
+        box-shadow: 0px 8px 24px rgba(0, 0, 46, 0.12);
+        border-radius: 9px;
+        margin-top: 10px;
+        background-color: rgb(237, 237, 237);
+        li {
+          padding: 10px;
+          border-radius: 9px;
+        }
+      }
     }
   }
 }
