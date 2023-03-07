@@ -1,14 +1,21 @@
-.footer {
-  height: 72px;
-  display: flex;
-  background-color: #0000380d;
-  justify-content: space-around;
-  align-items: center;
-  gap: 67px;
-  color: black;
-  margin-top: auto;
+footer {
   width: 100%;
-  @media screen and (max-width: 1000px) {
-    height: 65px;
+  background-color: #0000380d;
+  margin: 0 auto;
+  padding: 0 20px;
+  .footer {
+    height: 72px;
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    gap: 67px;
+    color: black;
+    margin-top: auto;
+
+    @media screen and (max-width: 1000px) {
+      height: 65px;
+    }
   }
 }

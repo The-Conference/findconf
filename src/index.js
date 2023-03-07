@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       <>
         <Header />
         <FullConference />
-        {/* <Footer /> */}
+        <Footer />
       </>
     ),
   },
