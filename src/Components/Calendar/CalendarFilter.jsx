@@ -9,15 +9,12 @@ const CalendarFilter = ({ setShowCalendar }) => {
   const nav = useNavigate();
   const ref = useRef();
   const [value, onChange] = useState(new Date());
+
   useOnClickOutside(ref, () => setShowCalendar(false));
   const handleDates = (value) => {
-    nav(
-      `/dates/${
-        typeof value === "string"
-          ? value.toLocaleDateString()
-          : value.map((el) => el.toISOString()).join(",")
-      }`
-    );
+    value.length === 1
+      ? nav(`/${value.map((el) => el.toLocaleDateString())}`)
+      : nav(`/dates/${value.map((el) => el.toISOString()).join(",")}`);
   };
 
   return (
@@ -28,7 +25,7 @@ const CalendarFilter = ({ setShowCalendar }) => {
       <Calendar
         selectRange={true}
         onChange={onChange}
-        allowPartialRange={false}
+        allowPartialRange={true}
       />
       <button onClick={() => handleDates(value)} className="find">
         Найти
