@@ -91,16 +91,16 @@ const SearchFilter = () => {
                       <li>
                         <Highlighter
                           highlightClassName="highlight"
-                          searchWords={[value]}
-                          autoEscape={true}
+                          searchWords={value.split(" ")}
+                          autoEscape={false}
                           textToHighlight={item.org_name}
                         />
                       </li>
                       <div>
                         <Highlighter
                           highlightClassName="highlight"
-                          searchWords={[value]}
-                          autoEscape={true}
+                          searchWords={value.split(" ")}
+                          autoEscape={false}
                           textToHighlight={item.conf_name}
                         />
                       </div>
@@ -109,8 +109,8 @@ const SearchFilter = () => {
                           <small key={index}>
                             <Highlighter
                               highlightClassName="highlight"
-                              searchWords={[value]}
-                              autoEscape={true}
+                              searchWords={value.split(" ")}
+                              autoEscape={false}
                               textToHighlight={tag}
                             />
                           </small>
