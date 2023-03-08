@@ -35,7 +35,7 @@ const DatePicker = (props) => {
   //     : "rgb(54, 105, 238)";
 
   const startDate = props.startDate || new Date();
-  const lastDate = addDays(startDate, props.days || 90);
+  const lastDate = addDays(startDate, props.days || 200);
 
   let buttonzIndex = { zIndex: 2 };
   //   let buttonStyle = { background: primaryColor };
