@@ -96,12 +96,12 @@ const Favourites = () => {
                   <div
                     className="conference__bg-bottom"
                     style={{
-                      maxWidth: el.conf_date_end.length ? "250px" : "140px",
+                      maxWidth: el.conf_date_end ? "250px" : "140px",
                     }}
                   >
-                    {!el.conf_date_end.length && !el.conf_date_begin.length
+                    {el.conf_date_end === null && el.conf_date_begin === null
                       ? "дата уточняется"
-                      : el.conf_date_end.length
+                      : el.conf_date_end !== null
                       ? new Date(el.conf_date_begin)
                           .toLocaleDateString("ru", options)
                           .slice(0, -3) +

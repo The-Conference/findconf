@@ -28,7 +28,7 @@ const SearchResult = () => {
     .join("|");
 
   let regexp = new RegExp(newValue, "gi");
-  console.log(newValue);
+
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
@@ -64,12 +64,14 @@ const SearchResult = () => {
         hasMore={hasMore}
         loader={<Spinner />}
       > */}
-      {!isLoading && match.length === 0 && <EmptyResult />}
+      {(!isLoading && match.length === 0 && <EmptyResult />) ||
+        (newValue.length === 0 && <EmptyResult />)}
       {isLoading && <LoaderTemplate />}
 
       <div className="conference__container">
         {!isLoading &&
           match.length > 0 &&
+          newValue.length !== 0 &&
           match.map((el) => (
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
@@ -112,12 +114,12 @@ const SearchResult = () => {
                 <div
                   className="conference__bg-bottom"
                   style={{
-                    maxWidth: el.conf_date_end.length ? "250px" : "140px",
+                    maxWidth: el.conf_date_end ? "250px" : "140px",
                   }}
                 >
-                  {!el.conf_date_end.length && !el.conf_date_begin.length
+                  {el.conf_date_end === null && el.conf_date_begin === null
                     ? "дата уточняется"
-                    : el.conf_date_end.length
+                    : el.conf_date_end !== null
                     ? new Date(el.conf_date_begin)
                         .toLocaleDateString("ru", options)
                         .slice(0, -3) +

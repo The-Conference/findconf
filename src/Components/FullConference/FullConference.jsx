@@ -71,9 +71,9 @@ const FullConference = () => {
           <div className="full-conference__card-flex">
             <div>
               <span>Дата проведения:</span>
-              {!full.conf_date_end.length && !full.conf_date_begin.length
+              {full.conf_date_end === null && !full.conf_date_begin === null
                 ? "дата уточняется"
-                : full.conf_date_end.length
+                : full.conf_date_end !== null
                 ? new Date(full.conf_date_begin)
                     .toLocaleDateString("ru", options)
                     .slice(0, -3) +
@@ -93,16 +93,16 @@ const FullConference = () => {
             </div>
             <div>
               <span>Регистрация:</span>
-              {(full.reg_date_begin === null &&
-                full.reg_date_end.length !== 0 && (
-                  <span className="online">
-                    {" "}
-                    до{" "}
-                    {new Date(full.reg_date_end)
-                      .toLocaleDateString("ru", options)
-                      .slice(0, -3)}{" "}
-                  </span>
-                )) || (
+
+              {(full.reg_date_begin === null && full.reg_date_end !== null && (
+                <span className="online">
+                  {" "}
+                  до{" "}
+                  {new Date(full.reg_date_end)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)}{" "}
+                </span>
+              )) || (
                 <span className="online">
                   {" "}
                   {new Date(full.reg_date_begin)
