@@ -10,4 +10,6 @@ python manage.py createcachetable
 python manage.py collectstatic  --noinput
 gunicorn Conferences.wsgi:application --bind 0.0.0.0:8000
 
+celery -A Conferences worker -l INFO -B
+
 exec "$@"
