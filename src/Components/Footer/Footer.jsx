@@ -5,7 +5,9 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer">
-        <img src={logo} alt="logo" />
+        <a href="/">
+          <img src={logo} alt="logo" />
+        </a>
         <p> &#169; The Conference 2023</p>
       </div>
     </footer>

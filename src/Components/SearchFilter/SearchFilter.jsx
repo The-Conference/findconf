@@ -66,7 +66,7 @@ const SearchFilter = () => {
     <form className="search" onSubmit={(e) => handleValue(e)}>
       <div className="input">
         <input
-          autoFocus={true}
+          maxLength={100}
           type="search"
           placeholder="Тема конференции, организатор, тематика"
           className="search-box"
