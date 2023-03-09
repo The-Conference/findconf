@@ -1,16 +1,10 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import Main from "./Components/Main/Main";
-import { useDispatch } from "react-redux";
-import { fetchFilteredConferences } from "./store/postData";
-function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchFilteredConferences());
-  }, []);
 
+function App() {
   return (
     <div className="App">
       <Header />

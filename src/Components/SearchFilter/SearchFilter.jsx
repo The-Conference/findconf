@@ -14,6 +14,10 @@ const SearchFilter = () => {
   const [filteredList, setFilteredList] = useState(search);
   const [value, setValue] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+  let lighted = value
+    .trim()
+    .split(" ")
+    .filter((el) => el.length > 2);
 
   const handleValue = (e) => {
     e.preventDefault();
@@ -77,7 +81,7 @@ const SearchFilter = () => {
       </div>
       <div className="dropdown-filter" ref={ref}>
         <ul>
-          {value.length !== 0 &&
+          {lighted.length !== 0 &&
             popup === true &&
             filteredList.map(
               (item, index) =>
@@ -91,7 +95,7 @@ const SearchFilter = () => {
                       <li>
                         <Highlighter
                           highlightClassName="highlight"
-                          searchWords={value.split(" ")}
+                          searchWords={lighted}
                           autoEscape={false}
                           textToHighlight={item.org_name}
                         />
@@ -99,7 +103,7 @@ const SearchFilter = () => {
                       <div>
                         <Highlighter
                           highlightClassName="highlight"
-                          searchWords={value.split(" ")}
+                          searchWords={lighted}
                           autoEscape={false}
                           textToHighlight={item.conf_name}
                         />
@@ -109,7 +113,7 @@ const SearchFilter = () => {
                           <small key={index}>
                             <Highlighter
                               highlightClassName="highlight"
-                              searchWords={value.split(" ")}
+                              searchWords={lighted}
                               autoEscape={false}
                               textToHighlight={tag}
                             />
@@ -120,7 +124,7 @@ const SearchFilter = () => {
                   </Link>
                 )
             )}
-          {filteredList.length > 0 && value.length > 0 && popup === true && (
+          {filteredList.length > 0 && lighted.length > 0 && popup === true && (
             <div className="sticky-button">
               <button
                 onClick={() => {

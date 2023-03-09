@@ -128,7 +128,7 @@ const DateView = ({
                   ? "not-allowed"
                   : "pointer",
             }}
-            href={`/${currentDay.toLocaleDateString()}`}
+            href={`/date/${currentDay.toLocaleDateString()}`}
           >
             <div
               // id={`${getId(currentDay)}`}

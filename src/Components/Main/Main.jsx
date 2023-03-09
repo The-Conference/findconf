@@ -1,19 +1,20 @@
 import React from "react";
 import "./main.scss";
-import { Prev1, Prev2 } from "../Previews/Previews";
 import Calendar from "../Calendar/Calendar";
 import Greeting from "../Greeting/Greeting";
+import AllConferences from "../Conference/AllConferences";
 // import GreetingForAuth from "./Greeting/GreetingForAuth";
 // import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 
-const Main = ({ conferences }) => {
+const Main = () => {
   return (
     <div className="main">
       <Greeting />
       {/* <GreetingForAuth /> */}
       <Calendar />
-      <Prev1 />
-      <Prev2 />
+      <AllConferences data={"prev1"} />
+      <AllConferences data={"prev2"} />
+      <AllConferences data={"prev3"} />
       {/* <LoaderTemplate /> */}
     </div>
   );

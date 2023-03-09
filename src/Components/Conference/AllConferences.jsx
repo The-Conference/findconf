@@ -1,22 +1,140 @@
 import React, { useState, useEffect } from "react";
+import { Link, useSearchParams, useParams } from "react-router-dom";
 import hearts from "../../assets/follow.svg";
 import following from "../../assets/following.svg";
 // import InfiniteScroll from "react-infinite-scroll-component";
 import "./conference.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
-import { handleSave, handleFollow } from "../../store/postData";
+import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
+import {
+  handleSave,
+  handleFollow,
+  fetchFilteredConferences,
+} from "../../store/postData";
 import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
 import EmptyResult from "../EmptyResult/EmptyResult";
+import EmptyFave from "../EmptyResult/emptyFave";
 
-const AllConferences = () => {
+const AllConferences = ({ data }) => {
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const { conferences, isLoading } = useSelector((state) => state.conferences);
+  const { date } = useParams();
 
+  const { periods } = useParams();
+  const { conferences, isLoading } = useSelector((state) => state.conferences);
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
+  let result = [];
+  let match = [];
+  let confs = [];
+  let range = [];
+  let value = [];
+  let newPeriod = [];
+  function getDatesInRange(startDate, endDate) {
+    const date = new Date(startDate.getTime());
+    date.setDate(date.getDate() + 1);
+    const dates = [startDate, endDate];
+    while (date < endDate) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return dates.map((el) => el.toLocaleDateString());
+  }
+  if (data === "search-results") {
+    value = searchParams.get("q");
+    let newValue = value
+      .trim()
+      .split(" ")
+      .filter((el) => el.length > 2)
+      .join("|");
+    console.log(value);
+    let regexp = new RegExp(newValue, "gi");
+    match = conferences.filter((el) => {
+      return (
+        regexp.test(el.org_name) ||
+        regexp.test(el.conf_name) ||
+        regexp.test(el.themes)
+      );
+    });
+  }
+  if (data === "date") {
+    let period = conferences.map((el) => {
+      const d1 = new Date(el.conf_date_begin);
+      const d2 = new Date(el.conf_date_end);
+      const id = el.id;
+      let period = getDatesInRange(d1, d2);
+      return { per: period, ind: id };
+    });
+    let amount = period.filter((el) => el.per.includes(date));
+    confs = amount.map((el) => el.ind);
+  }
+  if (data === "periods") {
+    newPeriod = periods.split(",").map((item) => new Date(item));
+    range = getDatesInRange(newPeriod[0], newPeriod[1]);
+  }
+
+  const types = {
+    all: conferences,
+    favourites: conferences.filter((el) => el.follow === true),
+    searchRes: match,
+    date: conferences.filter((el) => confs.includes(el.id)),
+    collection1: conferences.filter(
+      (el) => el.themes.toLowerCase().indexOf("история".toLowerCase()) !== -1
+    ),
+    collection2: conferences.filter(
+      (el) => el.themes.toLowerCase().indexOf("филология".toLowerCase()) !== -1
+    ),
+    periods: conferences.filter(
+      (el) =>
+        range.includes(new Date(el.conf_date_begin).toLocaleDateString()) ||
+        range.includes(new Date(el.conf_date_end).toLocaleDateString())
+    ),
+    prev1: conferences
+      .filter(
+        (el) => el.themes.toLowerCase().indexOf("история".toLowerCase()) !== -1
+      )
+      .filter((el, i) => i < 2),
+    prev2: conferences
+      .filter(
+        (el) =>
+          el.themes.toLowerCase().indexOf("филология".toLowerCase()) !== -1
+      )
+      .filter((el, i) => i < 2),
+    prev3: conferences.filter((el, index) => index < 2),
+  };
+
+  if (data === "all") {
+    result = types.all;
+  }
+  if (data === "favourites") {
+    result = types.favourites;
+  }
+  if (data === "search-results") {
+    result = types.searchRes;
+  }
+  if (data === "collection1") {
+    result = types.collection1;
+  }
+  if (data === "collection2") {
+    result = types.collection2;
+  }
+  if (data === "date") {
+    result = types.date;
+  }
+  if (data === "periods") {
+    result = types.periods;
+  }
+  if (data === "prev1") {
+    result = types.prev1;
+  }
+  if (data === "prev2") {
+    result = types.prev2;
+  }
+  if (data === "prev3") {
+    result = types.prev3;
+  }
 
   const handleFave = (id) => {
     if (fave.includes(id)) {
@@ -30,25 +148,107 @@ const AllConferences = () => {
   useEffect(() => {
     dispatch(handleSave(fave));
   }, [fave]);
-
+  useEffect(() => {
+    dispatch(fetchFilteredConferences());
+  }, []);
   return (
-    <section className="conference">
-      <p className="conference__type">
-        Все конференции <span>&gt;</span>
-      </p>
-      <Filters />
+    <section
+      className={
+        data === "prev1" || data === "prev2" || data === "prev3"
+          ? "conference prev preview-bottom"
+          : "conference"
+      }
+    >
+      <div className="conference__type">
+        {data === "all" && (
+          <p>
+            <span>&lt;</span> Все конференции
+          </p>
+        )}
+
+        {data === "favourites" && (
+          <p>
+            <span>&lt;</span> Избранное
+          </p>
+        )}
+        {data === "search-results" && (
+          <p>
+            <span>&lt;</span> Результаты по запросу "{value}"
+          </p>
+        )}
+        {data === "collection1" && (
+          <p>
+            <span>&lt;</span> История
+          </p>
+        )}
+        {data === "collection2" && (
+          <p>
+            <span>&lt;</span> Филология
+          </p>
+        )}
+        {data === "prev1" && (
+          <a href="/collection1">
+            {" "}
+            <p>
+              История <span>&gt;</span>
+            </p>
+          </a>
+        )}
+        {data === "prev2" && (
+          <a href="/collection2">
+            <p>
+              {" "}
+              Филология <span>&gt;</span>
+            </p>
+          </a>
+        )}
+        {data === "prev3" && (
+          <a href="/all">
+            <p>
+              Все конференции <span>&gt;</span>
+            </p>
+          </a>
+        )}
+        {data === "date" && (
+          <p>
+            Конференции на <span>{date}</span>
+          </p>
+        )}
+        {data === "periods" && (
+          <p>
+            Конференции с{" "}
+            <span>
+              {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
+            </span>{" "}
+            по{" "}
+            <span>
+              {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
+            </span>
+          </p>
+        )}
+      </div>
+      {data !== "prev1" && data !== "prev2" && data !== "prev3" && <Filters />}
       {/* <InfiniteScroll
         dataLength={postData.length}
         next={fetchData}
         hasMore={hasMore}
         loader={<LoaderTemplate />}
       > */}
-      {/* <Filters /> */}
-      {isLoading && <LoaderTemplate />}
-      {!isLoading && conferences.length === 0 && <EmptyResult />}
+      {(isLoading &&
+        data !== "prev1" &&
+        data !== "prev2" &&
+        data !== "prev3" && <LoaderTemplate />) ||
+        (isLoading && <LoaderTemplateTwo />)}
+      {!isLoading && result.length === 0 && data !== "favourites" && (
+        <EmptyResult />
+      )}
+      {!isLoading && result.length === 0 && data === "favourites" && (
+        <EmptyFave />
+      )}
       <div className="conference__container">
         {!isLoading &&
-          conferences.map((el) => (
+          result.length > 0 &&
+          result.map((el) => (
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
                 <div className="conference__bg-top">
@@ -90,7 +290,7 @@ const AllConferences = () => {
                 <div
                   className="conference__bg-bottom"
                   style={{
-                    maxWidth: el.conf_date_end.length ? "250px" : "140px",
+                    maxWidth: el.conf_date_end ? "250px" : "140px",
                   }}
                 >
                   {el.conf_date_end === null && el.conf_date_begin === null

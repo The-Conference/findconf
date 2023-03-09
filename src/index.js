@@ -11,13 +11,9 @@ import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import AboutService from "./Components/AboutService/AboutService";
 import AllConferences from "./Components/Conference/AllConferences";
-import SearchResult from "./Components/SearchResult/SearchResult";
-import Favourites from "./Components/Favourite/Favourite";
 import NotFound from "./Components/404/404";
 import EmptyResult from "./Components/EmptyResult/EmptyResult";
-import SearchDate from "./Components/SearchDate/SearchDate";
 import FullConference from "./Components/FullConference/FullConference";
-import SearchDatePeriod from "./Components/SearchDatePeriod/SearchDatePeriod";
 const Login = React.lazy(() => import("./Components/Login/Login"));
 const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
 
@@ -31,7 +27,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <Favourites />
+        <AllConferences data={"favourites"} />
         <Footer />
       </>
     ),
@@ -41,7 +37,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <AllConferences />
+        <AllConferences data={"all"} />
         <Footer />
       </>
     ),
@@ -69,7 +65,27 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <SearchResult />
+        <AllConferences data={"search-results"} />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/collection2/",
+    element: (
+      <>
+        <Header />
+        <AllConferences data={"collection2"} />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/collection1/",
+    element: (
+      <>
+        <Header />
+        <AllConferences data={"collection1"} />
         <Footer />
       </>
     ),
@@ -106,11 +122,11 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/:date",
+    path: "/date/:date",
     element: (
       <>
         <Header />
-        <SearchDate />
+        <AllConferences data={"date"} />
         <Footer />
       </>
     ),
@@ -120,7 +136,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
-        <SearchDatePeriod />
+        <AllConferences data={"periods"} />
         <Footer />
       </>
     ),

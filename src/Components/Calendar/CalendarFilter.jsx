@@ -13,7 +13,7 @@ const CalendarFilter = ({ setShowCalendar }) => {
   useOnClickOutside(ref, () => setShowCalendar(false));
   const handleDates = (value) => {
     value.length === 1
-      ? nav(`/${value.map((el) => el.toLocaleDateString())}`)
+      ? nav(`/date/${value.map((el) => el.toLocaleDateString())}`)
       : nav(`/dates/${value.map((el) => el.toISOString()).join(",")}`);
   };
 

@@ -61,7 +61,7 @@
         font-family: "Manrope bold";
         &:not(:last-of-type):after {
           content: "\2022";
-          padding: 0 8px;
+          padding: 0 1.5px 0 2.5px;
           font-size: 18px;
           @media screen and (max-width: 1000px) {
             font-size: 14px;
@@ -108,6 +108,7 @@
     @media screen and (max-width: 450px) {
       font-size: 16px;
     }
+
     span {
       font-size: 23px;
       vertical-align: middle;
@@ -217,4 +218,7 @@
   @media (max-width: 810px) {
     padding-bottom: 40px;
   }
+}
+.prev {
+  min-height: auto;
 }
