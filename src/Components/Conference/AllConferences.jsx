@@ -162,28 +162,29 @@ const AllConferences = ({ data }) => {
       <div className="conference__type">
         {data === "all" && (
           <p>
-            <span>&lt;</span> Все конференции
+            <span className="backarrow">&lt;</span> Все конференции
           </p>
         )}
 
         {data === "favourites" && (
           <p>
-            <span>&lt;</span> Избранное
+            <span className="backarrow">&lt;</span> Избранное
           </p>
         )}
         {data === "search-results" && (
           <p>
-            <span>&lt;</span> Результаты по запросу "{value}"
+            <span className="backarrow">&lt;</span> Результаты по запросу "
+            {value}"
           </p>
         )}
         {data === "collection1" && (
           <p>
-            <span>&lt;</span> История
+            <span className="backarrow">&lt;</span> История
           </p>
         )}
         {data === "collection2" && (
           <p>
-            <span>&lt;</span> Филология
+            <span className="backarrow">&lt;</span> Филология
           </p>
         )}
         {data === "prev1" && (
@@ -216,13 +217,12 @@ const AllConferences = ({ data }) => {
         )}
         {data === "periods" && (
           <p>
-            Конференции с{" "}
+            Конференции
             <span>
-              {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
+              c {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
             </span>{" "}
-            по{" "}
             <span>
-              {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
+              по {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
             </span>
           </p>
         )}

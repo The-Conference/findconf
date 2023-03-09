@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./calendarFilter.css";
@@ -16,7 +16,9 @@ const CalendarFilter = ({ setShowCalendar }) => {
       ? nav(`/date/${value.map((el) => el.toLocaleDateString())}`)
       : nav(`/dates/${value.map((el) => el.toISOString()).join(",")}`);
   };
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="calender-filter" ref={ref}>
       <span className="close-calendar" onClick={() => setShowCalendar(false)}>
