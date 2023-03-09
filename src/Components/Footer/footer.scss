@@ -1,5 +1,6 @@
 footer {
   width: 100%;
+
   background-color: #0000380d;
   margin: 0 auto;
   padding: 0 20px;
@@ -8,12 +9,19 @@ footer {
     display: flex;
     max-width: 1170px;
     margin: 0 auto;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    gap: 67px;
+
     color: black;
     margin-top: auto;
-
+    @media screen and (max-width: 604px) {
+      font-size: 12px;
+      white-space: nowrap;
+      gap: 0;
+    }
+    img {
+      min-width: 40px;
+    }
     @media screen and (max-width: 1000px) {
       height: 65px;
     }

@@ -5,11 +5,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 20px 40px 20px;
   h1 {
     font-size: 56px;
     font-family: "Manrope extrabold";
+    text-align: center;
     span {
       color: #2c60e7;
+    }
+    @media (max-width: 1260px) {
+      font-size: 40px;
+    }
+    @media (max-width: 700px) {
+      font-size: 30px;
+    }
+    @media (max-width: 434px) {
+      font-size: 20px;
     }
   }
 
@@ -19,12 +30,30 @@
     color: #000038cc;
     font-size: 16px;
     padding-bottom: 64px;
+    @media (max-width: 1260px) {
+      font-size: 15px;
+      max-width: 525px;
+      padding-bottom: 44px;
+    }
+    @media (max-width: 700px) {
+      font-size: 13px;
+      max-width: 425px;
+      padding-bottom: 34px;
+    }
+    @media (max-width: 439px) {
+      font-size: 10px;
+      max-width: 325px;
+      padding-bottom: 24px;
+    }
   }
 
   &__timeline {
     display: flex;
     border-top: 4px solid #bacaf4;
     padding-bottom: 200px;
+    @media (max-width: 1260px) {
+      display: none;
+    }
     div {
       display: flex;
       flex-direction: column;
@@ -60,27 +89,57 @@
     h1 {
       text-align: center;
       padding-bottom: 40px;
+      @media (max-width: 1260px) {
+        font-size: 40px;
+        padding-bottom: 30px;
+      }
+      @media (max-width: 700px) {
+        font-size: 30px;
+        padding-bottom: 20px;
+      }
+      @media (max-width: 434px) {
+        font-size: 20px;
+        padding-bottom: 10px;
+      }
     }
     h2 {
       font-family: "Manrope bold";
       text-align: center;
       padding-bottom: 24px;
       font-size: 32px;
+      @media (max-width: 1260px) {
+        font-size: 25px;
+        padding-bottom: 20px;
+      }
+      @media (max-width: 700px) {
+        font-size: 20px;
+        padding-bottom: 15px;
+      }
+      @media (max-width: 434px) {
+        font-size: 15px;
+        padding-bottom: 10px;
+      }
     }
     &-container {
       display: flex;
+      justify-content: center;
       gap: 35px;
       padding-bottom: 63px;
+      flex-wrap: wrap;
     }
     &-founders {
       position: relative;
 
       &-pic {
-        max-width: 273px;
-        max-height: 273px;
+        max-width: 260px;
+        max-height: 260px;
         border-radius: 13px;
         filter: grayscale(100%);
         overflow: hidden;
+        @media (max-width: 617px) {
+          max-width: 220px;
+          max-height: 220px;
+        }
         img {
           -webkit-transition: all 0.3s ease-in-out;
           &:hover {

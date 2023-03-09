@@ -212,12 +212,13 @@ const AllConferences = ({ data }) => {
         )}
         {data === "date" && (
           <p>
-            Конференции на <span>{date}</span>
+            <span className="backarrow">&lt;</span> Конференции на{" "}
+            <span>{date}</span>
           </p>
         )}
         {data === "periods" && (
           <p>
-            Конференции
+            <span className="backarrow">&lt;</span> Конференции
             <span>
               c {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
             </span>{" "}

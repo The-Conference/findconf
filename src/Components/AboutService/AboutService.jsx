@@ -2,6 +2,7 @@ import React from "react";
 import step from "../../assets/Step.svg";
 import "./about.scss";
 import { developers, founders } from "../../utils/Founders/FOUNDERS";
+
 const AboutService = () => {
   return (
     <div className="about">
@@ -57,6 +58,7 @@ const AboutService = () => {
           Создатели <span>The Conference</span>
         </h1>
         <h2>Руководство</h2>
+
         <div className="about__staff-container">
           {founders.map((el, index) => (
             <div key={index} className="about__staff-founders">
