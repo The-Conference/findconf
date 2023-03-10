@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useSearchParams, useParams } from "react-router-dom";
 import hearts from "../../assets/follow.svg";
 import following from "../../assets/following.svg";
-// import InfiniteScroll from "react-infinite-scroll-component";
 import "./conference.scss";
 import { useSelector, useDispatch } from "react-redux";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
@@ -16,32 +15,23 @@ import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
 import EmptyResult from "../EmptyResult/EmptyResult";
 import EmptyFave from "../EmptyResult/emptyFave";
-
+import { getDatesInRange } from "../../utils/getDatesRange";
 const AllConferences = ({ data }) => {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { date } = useParams();
-
   const { periods } = useParams();
   const { conferences, isLoading } = useSelector((state) => state.conferences);
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
+
   let result = [];
   let match = [];
   let confs = [];
   let range = [];
   let value = [];
   let newPeriod = [];
-  function getDatesInRange(startDate, endDate) {
-    const date = new Date(startDate.getTime());
-    date.setDate(date.getDate() + 1);
-    const dates = [startDate, endDate];
-    while (date < endDate) {
-      dates.push(new Date(date));
-      date.setDate(date.getDate() + 1);
-    }
-    return dates.map((el) => el.toLocaleDateString());
-  }
+
   if (data === "search-results") {
     value = searchParams.get("q");
     let newValue = value
@@ -49,7 +39,7 @@ const AllConferences = ({ data }) => {
       .split(" ")
       .filter((el) => el.length > 2)
       .join("|");
-    console.log(value);
+
     let regexp = new RegExp(newValue, "gi");
     match = conferences.filter((el) => {
       return (
@@ -147,10 +137,10 @@ const AllConferences = ({ data }) => {
 
   useEffect(() => {
     dispatch(handleSave(fave));
-  }, [fave]);
+  }, [dispatch, fave]);
   useEffect(() => {
     dispatch(fetchFilteredConferences());
-  }, []);
+  }, [dispatch]);
   return (
     <section
       className={
@@ -229,12 +219,7 @@ const AllConferences = ({ data }) => {
         )}
       </div>
       {data !== "prev1" && data !== "prev2" && data !== "prev3" && <Filters />}
-      {/* <InfiniteScroll
-        dataLength={postData.length}
-        next={fetchData}
-        hasMore={hasMore}
-        loader={<LoaderTemplate />}
-      > */}
+      {}{" "}
       {(isLoading &&
         data !== "prev1" &&
         data !== "prev2" &&
@@ -272,7 +257,7 @@ const AllConferences = ({ data }) => {
                       </span>
                     )) ||
                     (el.register === true && el.finished === false && (
-                      <span>Открыта регистрация</span>
+                      <span>Идет регистрация</span>
                     ))}
                   <img
                     title={
@@ -288,12 +273,7 @@ const AllConferences = ({ data }) => {
                     }}
                   />
                 </div>
-                <div
-                  className="conference__bg-bottom"
-                  style={{
-                    maxWidth: el.conf_date_end ? "250px" : "140px",
-                  }}
-                >
+                <div className="conference__bg-bottom">
                   {el.conf_date_end === null && el.conf_date_begin === null
                     ? "дата уточняется"
                     : el.conf_date_end !== null
@@ -312,8 +292,8 @@ const AllConferences = ({ data }) => {
                   style={{
                     position: "absolute",
                     bottom: "0",
-                    left: "50px",
-                    right: "0",
+                    left: "0",
+                    right: "50px",
                     top: "0",
                   }}
                   to={`/conferences/${el.id}`}
@@ -343,28 +323,8 @@ const AllConferences = ({ data }) => {
             </div>
           ))}
       </div>{" "}
-      {/* </InfiniteScroll> */}
     </section>
   );
 };
 
 export default AllConferences;
-
-// const LIMIT = 4;
-// const [postData, setPostData] = useState(conferences.slice(0, LIMIT));
-// const [visible, setVisible] = useState(LIMIT);
-// const [hasMore, setHasMore] = useState(true);
-
-// const fetchData = () => {
-//   const newLimit = visible + LIMIT;
-//   const dataToAdd = conferences.slice(visible, newLimit);
-
-//   if (conferences.length > postData.length) {
-//     setTimeout(() => {
-//       setPostData([...postData].concat(dataToAdd));
-//     }, 1000);
-//     setVisible(newLimit);
-//   } else {
-//     setHasMore(false);
-//   }
-// };

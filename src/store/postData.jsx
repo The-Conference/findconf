@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
-
+import { dateToYMD } from "../utils/dateSort";
 const initialState = {
   filters: {
     searchValue: "",
-    filter: { online: false, offline: false, rinc: false },
+    filter: {
+      online: false,
+      offline: false,
+      rinc: false,
+      register: false,
+      nearest: false,
+    },
   },
   conferences: [],
   isLoading: false,
@@ -24,16 +30,7 @@ export const postData = createSlice({
     reset: (state) => {
       return (state.conferences = []);
     },
-    fetchConferences: (state, action) => {
-      state.conferences = [];
-      let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
-      let data = action.payload;
-      for (let item of data) {
-        item.follow =
-          followed.includes(item.id) && followed.length > 0 ? true : false;
-      }
-      state.conferences = data;
-    },
+
     handleFollow: (state, action) => {
       return state.conferences.forEach((el) =>
         el.id === action.payload ? (el.follow = !el.follow) : el
@@ -55,44 +52,79 @@ export const postData = createSlice({
       if (action.payload === "ринц") {
         state.filters.filter.rinc = !state.filters.filter.rinc;
       }
+      if (action.payload === "идет регистрация") {
+        state.filters.filter.register = !state.filters.filter.register;
+      }
+      if (action.payload === "ближайшие") {
+        state.filters.filter.nearest = !state.filters.filter.nearest;
+      }
     },
     deleteAllFilters: (state, action) => {
-      state.filters.filter = { online: false, offline: false, rinc: false };
+      state.filters.filter = {
+        online: false,
+        offline: false,
+        rinc: false,
+        register: false,
+        nearest: false,
+      };
     },
+    //отсюда начинается фильтрация!!!
     handleFilter: (state, action) => {
       state.conferences = [];
 
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
       let data = action.payload;
+      let month = new Date().getMonth() + 1;
+      let day = new Date().getDate();
       for (let item of data) {
         item.follow =
           followed.includes(item.id) && followed.length > 0 ? true : false;
+        item.register =
+          new Date(item.reg_date_end).getMonth() + 1 < month ||
+          (new Date(item.reg_date_end).getMonth() + 1 === month &&
+            new Date(item.reg_date_end).getDate() < day)
+            ? false
+            : true;
+        item.finished =
+          new Date(item.conf_date_end).getMonth() + 1 < month ||
+          (new Date(item.conf_date_end).getMonth() + 1 === month &&
+            new Date(item.conf_date_end).getDate() < day)
+            ? true
+            : false;
       }
       if (
         state.filters.filter.online === false &&
         state.filters.filter.offline === false &&
-        state.filters.filter.rinc === false
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data;
       }
       if (
         state.filters.filter.online === true &&
         state.filters.filter.offline === false &&
-        state.filters.filter.rinc === false
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter((el) => el.online === true);
       }
       if (
         state.filters.filter.online === false &&
         state.filters.filter.offline === true &&
-        state.filters.filter.rinc === false
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter((el) => el.offline === true);
       }
       if (
         state.filters.filter.online === true &&
         state.filters.filter.offline === true &&
-        state.filters.filter.rinc === false
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
           (el) => el.online === true && el.offline === true
@@ -101,7 +133,9 @@ export const postData = createSlice({
       if (
         state.filters.filter.online === true &&
         state.filters.filter.offline === true &&
-        state.filters.filter.rinc === true
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
           (el) => el.online === true && el.offline === true && el.rinc === true
@@ -110,7 +144,9 @@ export const postData = createSlice({
       if (
         state.filters.filter.online === true &&
         state.filters.filter.offline === false &&
-        state.filters.filter.rinc === true
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
           (el) => el.online === true && el.rinc === true
@@ -119,7 +155,9 @@ export const postData = createSlice({
       if (
         state.filters.filter.online === false &&
         state.filters.filter.offline === true &&
-        state.filters.filter.rinc === true
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
           (el) => el.offline === true && el.rinc === true
@@ -128,13 +166,396 @@ export const postData = createSlice({
       if (
         state.filters.filter.online === false &&
         state.filters.filter.offline === false &&
-        state.filters.filter.rinc === true
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter((el) => el.rinc === true);
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter((el) => el.register === true);
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter(
+          (el) => el.register === true && el.rinc === true
+        );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter(
+          (el) => el.register === true && el.offline === true
+        );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter(
+          (el) => el.register === true && el.online === true
+        );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter(
+          (el) =>
+            el.register === true && el.online === true && el.offline === true
+        );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter(
+          (el) => el.register === true && el.online === true && el.rinc === true
+        );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter(
+          (el) =>
+            el.register === true && el.offline === true && el.rinc === true
+        );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === false
+      ) {
+        state.conferences = data.filter(
+          (el) =>
+            el.register === true &&
+            el.online === true &&
+            el.rinc === true &&
+            el.offline === true
+        );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data.sort((a, b) =>
+          dateToYMD(new Date(a.conf_date_begin)) >
+          dateToYMD(new Date(b.conf_date_begin)) >
+          0
+            ? 1
+            : -1
+        );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.register === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.rinc === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.offline === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.online === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.online === true && el.offline === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.online === true && el.rinc === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.online === true && el.register === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.rinc === true && el.offline === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.register === true && el.offline === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter((el) => el.register === true && el.rinc === true)
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === false &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter(
+            (el) =>
+              el.online === true && el.offline === true && el.rinc === true
+          )
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === false &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter(
+            (el) =>
+              el.online === true && el.register === true && el.rinc === true
+          )
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === false &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter(
+            (el) =>
+              el.register === true && el.offline === true && el.rinc === true
+          )
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === true &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter(
+            (el) =>
+              el.online === true &&
+              el.offline === true &&
+              el.rinc === true &&
+              el.register === true
+          )
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
+      }
+      if (
+        state.filters.filter.online === true &&
+        state.filters.filter.offline === true &&
+        state.filters.filter.rinc === false &&
+        state.filters.filter.register === true &&
+        state.filters.filter.nearest === true
+      ) {
+        state.conferences = data
+          .filter(
+            (el) =>
+              el.online === true && el.offline === true && el.register === true
+          )
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          );
       }
       state.isLoading = false;
     },
   },
+  //и только здесь она заканчивается!!!
 });
 export default postData.reducer;
 export const {
@@ -148,16 +569,7 @@ export const {
   reset,
   hasError,
 } = postData.actions;
-export const fetchAllConferences = () => async (dispatch) => {
-  dispatch(startLoading());
-  try {
-    await api
-      .get("/api/")
-      .then((response) => dispatch(fetchConferences(response.data)));
-  } catch (e) {
-    dispatch(hasError(e.message));
-  }
-};
+
 export const fetchFilteredConferences = () => async (dispatch) => {
   dispatch(startLoading());
 

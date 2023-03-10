@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./searchfilter.scss";
 import Highlighter from "react-highlight-words";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchResults } from "../../store/searchSlice";
 import useOnClickOutside from "../Hooks/useOnClickOutside";
 
@@ -13,7 +13,7 @@ const SearchFilter = () => {
   const { search } = useSelector((state) => state);
   const [filteredList, setFilteredList] = useState(search);
   const [value, setValue] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+
   let lighted = value
     .trim()
     .split(" ")
@@ -21,17 +21,14 @@ const SearchFilter = () => {
 
   const handleValue = (e) => {
     e.preventDefault();
-    setSearchParams({ q: value });
+
     handleNavigation();
   };
   const [popup, setPopup] = useState(false);
   useOnClickOutside(ref, () => setPopup(false));
-  let query = "";
 
   const filterBySearch = (event) => {
-    query = event.target.value;
-    let newValue = query.trim().split(" ").join("|");
-
+    let newValue = event.target.value.trim().split(" ").join("|");
     let regexp = new RegExp(newValue, "gi");
     setValue(
       event.target.value
@@ -64,7 +61,7 @@ const SearchFilter = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchResults());
-  }, []);
+  }, [dispatch]);
 
   return (
     <form className="search" onSubmit={(e) => handleValue(e)}>

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../404/404";
-import {
-  fetchAllConferences,
-  handleSave,
-  handleFollow,
-} from "../../store/postData";
+import { handleSave, handleFollow } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
 import follow from "../../assets/followSmall.svg";
@@ -51,7 +47,27 @@ const FullConference = () => {
     content = (
       <div className="full-conference__container">
         <div className="full-conference__container-top">
-          <span>Открыта регистрация</span>
+          {(full.register === false && full.finished === false && (
+            <span
+              style={{
+                backgroundColor: "#939393",
+              }}
+            >
+              Регистрация закончена
+            </span>
+          )) ||
+            (full.register === false && full.finished === true && (
+              <span
+                style={{
+                  backgroundColor: "#939393",
+                }}
+              >
+                Конференция завершена
+              </span>
+            )) ||
+            (full.register === true && full.finished === false && (
+              <span>Идет регистрация</span>
+            ))}
           <img
             title="добавить в избранное"
             src={full.follow === false ? follow : following}
@@ -165,20 +181,21 @@ const FullConference = () => {
               <a href={full.conf_card_href} rel="noreferrer" target="_blank">
                 Подробнее о конференции
               </a>
-            )) || (
-              <div>
-                {full.conf_desc}
+            )) ||
+              (full.conf_card_href.length > 0 && (
                 <div>
-                  <a
-                    href={full.conf_card_href}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    Подробнее о конференции
-                  </a>
+                  {full.conf_desc}
+                  <div>
+                    <a
+                      href={full.conf_card_href}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Подробнее о конференции
+                    </a>
+                  </div>
                 </div>
-              </div>
-            )}
+              ))}
           </div>
         )}
         {!desc && contacts && (
@@ -194,9 +211,11 @@ const FullConference = () => {
             <div>
               <span>Полезные ссылки </span>
               <br />
-              <a rel="noreferrer" target="_blank" href={full.conf_card_href}>
-                Ссылка на источник
-              </a>{" "}
+              {full.conf_card_href.length > 0 && (
+                <a rel="noreferrer" target="_blank" href={full.conf_card_href}>
+                  Ссылка на источник
+                </a>
+              )}
               <br />
               {full.reg_href.length > 0 && (
                 <a rel="noreferrer" target="_blank" href={full.reg_href}>
@@ -212,12 +231,11 @@ const FullConference = () => {
     content = <NotFound />;
   }
   useEffect(() => {
-    dispatch(fetchAllConferences());
     window.scrollTo(0, 0);
   }, [confId]);
   useEffect(() => {
     dispatch(handleSave(fave));
-  }, [fave]);
+  }, [fave, dispatch]);
   return <div className="full-conference">{content}</div>;
 };
 export default FullConference;

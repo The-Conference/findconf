@@ -171,6 +171,12 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+      @media (max-width: 966px) {
+        font-size: 15px;
+      }
+      @media (max-width: 544px) {
+        font-size: 13px;
+      }
       img {
         cursor: pointer;
         @media (max-width: 544px) {
@@ -185,6 +191,7 @@
       font-weight: 500;
       padding: 7px 14px;
       border-radius: 6px;
+      width: max-content;
       @media (max-width: 544px) {
         font-size: 10px;
       }
@@ -195,6 +202,10 @@
       background-color: #37d175;
       padding: 7px 14px;
       border-radius: 6px;
+      @media (max-width: 544px) {
+        padding: 5px;
+        height: 28px;
+      }
     }
   }
   &__organizer {
