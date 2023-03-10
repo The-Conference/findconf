@@ -1,7 +1,7 @@
 # This playbook for GNU Ubuntu/Debian Linux
 
 - name: preconfig/docker/docker-compose
-  hosts: test_sf
+  hosts: test
   gather_facts: false
   become: true
   become_user: "root"
@@ -28,6 +28,17 @@
         update_cache: true
       tags:
         - inst
+
+    - name: creating distrib directory
+      file:
+        path: /tmp/distrib
+        state: directory
+        owner: root
+        group: root
+        mode: "u=rwx,g=rx,o=rx"
+        recurse: true
+      tags:
+        - distrib
 
     - name: add docker repo gpg key
       shell:
