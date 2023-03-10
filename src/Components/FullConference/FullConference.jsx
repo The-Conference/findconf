@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../404/404";
-import { handleSave, handleFollow } from "../../store/postData";
+import {
+  handleSave,
+  handleFollow,
+  fetchAllConferences,
+} from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
 import follow from "../../assets/followSmall.svg";
@@ -231,8 +235,9 @@ const FullConference = () => {
     content = <NotFound />;
   }
   useEffect(() => {
+    dispatch(fetchAllConferences());
     window.scrollTo(0, 0);
-  }, [confId]);
+  }, [confId, dispatch]);
   useEffect(() => {
     dispatch(handleSave(fave));
   }, [fave, dispatch]);

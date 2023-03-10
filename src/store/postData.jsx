@@ -68,6 +68,31 @@ export const postData = createSlice({
         nearest: false,
       };
     },
+    fetchConferences: (state, action) => {
+      state.conferences = [];
+
+      let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
+      let data = action.payload;
+      let month = new Date().getMonth() + 1;
+      let day = new Date().getDate();
+      for (let item of data) {
+        item.follow =
+          followed.includes(item.id) && followed.length > 0 ? true : false;
+        item.register =
+          new Date(item.reg_date_end).getMonth() + 1 < month ||
+          (new Date(item.reg_date_end).getMonth() + 1 === month &&
+            new Date(item.reg_date_end).getDate() < day)
+            ? false
+            : true;
+        item.finished =
+          new Date(item.conf_date_end).getMonth() + 1 < month ||
+          (new Date(item.conf_date_end).getMonth() + 1 === month &&
+            new Date(item.conf_date_end).getDate() < day)
+            ? true
+            : false;
+      }
+      state.conferences = data;
+    },
     //отсюда начинается фильтрация!!!
     handleFilter: (state, action) => {
       state.conferences = [];
@@ -569,6 +594,20 @@ export const {
   reset,
   hasError,
 } = postData.actions;
+
+export const fetchAllConferences = () => async (dispatch) => {
+  dispatch(startLoading());
+
+  try {
+    await api.get("/api/").then((response) =>
+      setTimeout(() => {
+        dispatch(fetchConferences(response.data));
+      }, 200)
+    );
+  } catch (e) {
+    dispatch(hasError(e.message));
+  }
+};
 
 export const fetchFilteredConferences = () => async (dispatch) => {
   dispatch(startLoading());
