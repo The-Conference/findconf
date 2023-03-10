@@ -140,6 +140,14 @@
           max-width: 220px;
           max-height: 220px;
         }
+        @media (max-width: 517px) {
+          max-width: 150px;
+          max-height: 150px;
+        }
+        @media (max-width: 379px) {
+          max-width: 260px;
+          max-height: 260px;
+        }
         img {
           -webkit-transition: all 0.3s ease-in-out;
           &:hover {
@@ -157,11 +165,20 @@
         font-size: 12px;
         font-family: "Manrope medium";
         padding: 6px 14px;
+        @media (max-width: 575px) {
+          font-size: 12px;
+        }
       }
       p {
         font-size: 18px;
         font-family: "Manrope semibold";
         padding: 5px 14px;
+        @media (max-width: 575px) {
+          font-size: 12px;
+        }
+        @media (max-width: 379px) {
+          font-size: 15px;
+        }
       }
     }
   }
