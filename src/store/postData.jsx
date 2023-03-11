@@ -17,7 +17,7 @@ const initialState = {
   isLoading: false,
   error: false,
   currentPage: 1,
-  conferencesPerPage: 10,
+  conferencesPerPage: 20,
 };
 export const postData = createSlice({
   name: "conferences",

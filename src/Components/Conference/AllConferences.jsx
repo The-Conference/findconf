@@ -336,7 +336,7 @@ const AllConferences = ({ data }) => {
       {data !== "prev1" &&
         data !== "prev2" &&
         data !== "prev3" &&
-        result.length > 10 && (
+        result.length > 20 && (
           <Pagination
             conferencesPerPage={conferencesPerPage}
             totalConferences={result.length}
