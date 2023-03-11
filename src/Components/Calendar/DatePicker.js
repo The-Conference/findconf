@@ -77,7 +77,7 @@ const DatePicker = (props) => {
         </button>
       </div>
       <Component {...props} startDate={startDate} lastDate={lastDate} />
-      <div className={styles.buttonWrapper} style={buttonzIndex}>
+      <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={next}>
           &gt;
         </button>

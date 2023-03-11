@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
 
 import "./pagination.scss";
@@ -11,6 +10,7 @@ const Pagination = ({ conferencesPerPage, totalConferences, paginate }) => {
   for (let i = 1; i <= Math.ceil(totalConferences / conferencesPerPage); i++) {
     pageNumbers.push(i);
   }
+
   return (
     <div className="pagination">
       <ul>

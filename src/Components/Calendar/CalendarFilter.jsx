@@ -17,7 +17,7 @@ const CalendarFilter = ({ setShowCalendar }) => {
       : nav(`/dates/${value.map((el) => el.toISOString()).join(",")}`);
   };
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
   return (
     <div className="calender-filter" ref={ref}>
