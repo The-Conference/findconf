@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.1233d0f9.css",
-    "main.js": "/static/js/main.4d5e7637.js",
+    "main.css": "/static/css/main.73fb1db5.css",
+    "main.js": "/static/js/main.ec789623.js",
     "static/css/712.d7f569cc.chunk.css": "/static/css/712.d7f569cc.chunk.css",
     "static/js/712.707985c8.chunk.js": "/static/js/712.707985c8.chunk.js",
     "static/css/68.d7f569cc.chunk.css": "/static/css/68.d7f569cc.chunk.css",
@@ -10,6 +10,7 @@
     "static/media/Ershov.png": "/static/media/Ershov.151342f97b7d710d5f2b.png",
     "static/media/Mosh.png": "/static/media/Mosh.b6b21fb85d58f7f458bf.png",
     "static/media/Levin.png": "/static/media/Levin.a5279c49e0804206482d.png",
+    "static/media/Makover.png": "/static/media/Makover.dbd4784fad622de580e8.png",
     "static/media/Background.png": "/static/media/Background.a771cb5b1906631737f5.png",
     "static/media/Manrope-ExtraBold.ttf": "/static/media/Manrope-ExtraBold.b0ac9f1b582da5d98892.ttf",
     "static/media/Manrope-SemiBold.ttf": "/static/media/Manrope-SemiBold.0a3797b8dd78c25ef6b4.ttf",
@@ -38,8 +39,8 @@
     "index.html": "/index.html",
     "static/media/logo.svg": "/static/media/logo.bc8ca2730e7b651170857d9a9c2a41bc.svg",
     "static/media/Step.svg": "/static/media/Step.c669cfce5c04389161edb5a3a701b754.svg",
-    "main.1233d0f9.css.map": "/static/css/main.1233d0f9.css.map",
-    "main.4d5e7637.js.map": "/static/js/main.4d5e7637.js.map",
+    "main.73fb1db5.css.map": "/static/css/main.73fb1db5.css.map",
+    "main.ec789623.js.map": "/static/js/main.ec789623.js.map",
     "712.d7f569cc.chunk.css.map": "/static/css/712.d7f569cc.chunk.css.map",
     "712.707985c8.chunk.js.map": "/static/js/712.707985c8.chunk.js.map",
     "68.d7f569cc.chunk.css.map": "/static/css/68.d7f569cc.chunk.css.map",
@@ -47,7 +48,7 @@
     "787.d5fbb612.chunk.js.map": "/static/js/787.d5fbb612.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1233d0f9.css",
-    "static/js/main.4d5e7637.js"
+    "static/css/main.73fb1db5.css",
+    "static/js/main.ec789623.js"
   ]
 }
