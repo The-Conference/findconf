@@ -18,7 +18,7 @@ import EmptyResult from "../EmptyResult/EmptyResult";
 import EmptyFave from "../EmptyResult/emptyFave";
 import { getDatesInRange } from "../../utils/getDatesRange";
 import Pagination from "../Pagination/Pagination";
-const AllConferences = ({ data }) => {
+const AllConferences = ({ data, keywords, id }) => {
   const { conferences, isLoading, currentPage, conferencesPerPage } =
     useSelector((state) => state.conferences);
   const [searchParams] = useSearchParams();
@@ -34,7 +34,24 @@ const AllConferences = ({ data }) => {
   let range = [];
   let value = [];
   let newPeriod = [];
+  let recsPrev = [];
 
+  if (data === "prev4") {
+    let newValue = keywords
+      .trim()
+      .split(" ")
+      .filter((el) => el.length > 2)
+      .join("|");
+
+    let regexp = new RegExp(newValue, "gi");
+    recsPrev = conferences.filter((el) => {
+      return (
+        regexp.test(el.org_name) ||
+        regexp.test(el.conf_name) ||
+        regexp.test(el.themes)
+      );
+    });
+  }
   if (data === "search-results") {
     value = searchParams.get("q");
     let newValue = value
@@ -79,6 +96,7 @@ const AllConferences = ({ data }) => {
     collection2: conferences.filter(
       (el) => el.themes.toLowerCase().indexOf("филология".toLowerCase()) !== -1
     ),
+
     periods: conferences.filter(
       (el) =>
         range.includes(new Date(el.conf_date_begin).toLocaleDateString()) ||
@@ -88,14 +106,15 @@ const AllConferences = ({ data }) => {
       .filter(
         (el) => el.themes.toLowerCase().indexOf("история".toLowerCase()) !== -1
       )
-      .filter((el, i) => i < 2),
+      .slice(0, 2),
     prev2: conferences
       .filter(
         (el) =>
           el.themes.toLowerCase().indexOf("филология".toLowerCase()) !== -1
       )
-      .filter((el, i) => i < 2),
-    prev3: conferences.filter((el, index) => index < 2),
+      .slice(0, 2),
+    prev3: conferences.slice(0, 2),
+    prev4: recsPrev.filter((el) => el.id !== id).slice(0, 2),
   };
 
   if (data === "all") {
@@ -128,6 +147,9 @@ const AllConferences = ({ data }) => {
   if (data === "prev3") {
     result = types.prev3;
   }
+  if (data === "prev4") {
+    result = types.prev4;
+  }
 
   const handleFave = (id) => {
     if (fave.includes(id)) {
@@ -154,7 +176,10 @@ const AllConferences = ({ data }) => {
   return (
     <section
       className={
-        data === "prev1" || data === "prev2" || data === "prev3"
+        data === "prev1" ||
+        data === "prev2" ||
+        data === "prev3" ||
+        data === "prev4"
           ? "conference prev preview-bottom"
           : "conference"
       }
@@ -187,6 +212,7 @@ const AllConferences = ({ data }) => {
             <span className="backarrow">&lt;</span> Филология
           </p>
         )}
+
         {data === "prev1" && (
           <a href="/collection1">
             {" "}
@@ -210,6 +236,11 @@ const AllConferences = ({ data }) => {
             </p>
           </a>
         )}
+        {data === "prev4" && recsPrev.length > 0 && (
+          <p>
+            Похожие конференции <span>&gt;</span>
+          </p>
+        )}
         {data === "date" && (
           <p>
             <span className="backarrow">&lt;</span> Конференции на{" "}
@@ -228,16 +259,24 @@ const AllConferences = ({ data }) => {
           </p>
         )}
       </div>
-      {data !== "prev1" && data !== "prev2" && data !== "prev3" && <Filters />}
-      {}{" "}
+      {data !== "prev1" &&
+        data !== "prev2" &&
+        data !== "prev3" &&
+        data !== "prev4" && <Filters />}
+
       {(isLoading &&
         data !== "prev1" &&
         data !== "prev2" &&
-        data !== "prev3" && <LoaderTemplate />) ||
+        data !== "prev3" &&
+        data !== "prev4" && <LoaderTemplate />) ||
         (isLoading && <LoaderTemplateTwo />)}
-      {!isLoading && result.length === 0 && data !== "favourites" && (
-        <EmptyResult />
-      )}
+      {!isLoading &&
+        result.length === 0 &&
+        data !== "favourites" &&
+        data !== "prev1" &&
+        data !== "prev2" &&
+        data !== "prev3" &&
+        data !== "prev4" && <EmptyResult />}
       {!isLoading && result.length === 0 && data === "favourites" && (
         <EmptyFave />
       )}
@@ -336,6 +375,7 @@ const AllConferences = ({ data }) => {
       {data !== "prev1" &&
         data !== "prev2" &&
         data !== "prev3" &&
+        data !== "prev4" &&
         result.length > 20 && (
           <Pagination
             conferencesPerPage={conferencesPerPage}

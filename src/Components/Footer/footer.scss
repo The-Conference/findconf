@@ -14,6 +14,9 @@ footer {
 
     color: black;
     margin-top: auto;
+    p {
+      color: #00003866;
+    }
     @media screen and (max-width: 604px) {
       font-size: 12px;
       white-space: nowrap;

@@ -9,7 +9,7 @@ const Footer = () => {
           <img src={logo} alt="logo" />
         </a>
         <a href="/about">О сервисе</a>
-        <p> &#169; The Conference 2023</p>
+        <p> &#169;2023 сервис The Conference </p>
       </div>
     </footer>
   );

@@ -5,6 +5,7 @@ import {
   handleSave,
   handleFollow,
   fetchAllConferences,
+  fetchFilteredConferences,
 } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
@@ -12,7 +13,7 @@ import follow from "../../assets/followSmall.svg";
 import following from "../../assets/followingSmall.svg";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { options } from "../../utils/options";
-
+import AllConferences from "../Conference/AllConferences";
 const FullConference = () => {
   const { confId } = useParams();
   const { conferences } = useSelector((state) => state.conferences);
@@ -238,11 +239,20 @@ const FullConference = () => {
   }
   useEffect(() => {
     dispatch(fetchAllConferences());
+    dispatch(fetchFilteredConferences());
     window.scrollTo(0, 0);
-  }, [confId, dispatch]);
-  useEffect(() => {
     dispatch(handleSave(fave));
-  }, [fave, dispatch]);
-  return <div className="full-conference">{content}</div>;
+  }, [confId, dispatch, fave]);
+
+  return (
+    <>
+      <div className="full-conference">{content}</div>
+      {full && (
+        <div>
+          <AllConferences data={"prev4"} keywords={full.themes} id={full.id} />
+        </div>
+      )}
+    </>
+  );
 };
 export default FullConference;
