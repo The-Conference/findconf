@@ -236,7 +236,7 @@ const AllConferences = ({ data, keywords, id }) => {
             </p>
           </a>
         )}
-        {data === "prev4" && recsPrev.length > 0 && (
+        {data === "prev4" && result.length > 0 && (
           <p>
             Похожие конференции <span>&gt;</span>
           </p>
