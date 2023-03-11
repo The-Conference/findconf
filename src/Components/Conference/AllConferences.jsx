@@ -10,18 +10,21 @@ import {
   handleSave,
   handleFollow,
   fetchFilteredConferences,
+  paginate,
 } from "../../store/postData";
 import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
 import EmptyResult from "../EmptyResult/EmptyResult";
 import EmptyFave from "../EmptyResult/emptyFave";
 import { getDatesInRange } from "../../utils/getDatesRange";
+import Pagination from "../Pagination/Pagination";
 const AllConferences = ({ data }) => {
+  const { conferences, isLoading, currentPage, conferencesPerPage } =
+    useSelector((state) => state.conferences);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { date } = useParams();
   const { periods } = useParams();
-  const { conferences, isLoading } = useSelector((state) => state.conferences);
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
 
@@ -129,11 +132,17 @@ const AllConferences = ({ data }) => {
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
-      console.log(fave);
     } else {
       setFave([...fave, id]);
     }
   };
+
+  let lastConferenceIndex = currentPage * conferencesPerPage;
+  let firstConferenceIndex = lastConferenceIndex - conferencesPerPage;
+  let currentConference = result.slice(
+    firstConferenceIndex,
+    lastConferenceIndex
+  );
 
   useEffect(() => {
     dispatch(handleSave(fave));
@@ -141,6 +150,7 @@ const AllConferences = ({ data }) => {
   useEffect(() => {
     dispatch(fetchFilteredConferences());
   }, [dispatch]);
+
   return (
     <section
       className={
@@ -234,7 +244,7 @@ const AllConferences = ({ data }) => {
       <div className="conference__container">
         {!isLoading &&
           result.length > 0 &&
-          result.map((el) => (
+          currentConference.map((el) => (
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
                 <div className="conference__bg-top">
@@ -322,7 +332,17 @@ const AllConferences = ({ data }) => {
               </div>
             </div>
           ))}
-      </div>{" "}
+      </div>
+      {data !== "prev1" &&
+        data !== "prev2" &&
+        data !== "prev3" &&
+        result.length > 10 && (
+          <Pagination
+            conferencesPerPage={conferencesPerPage}
+            totalConferences={result.length}
+            paginate={paginate}
+          />
+        )}
     </section>
   );
 };

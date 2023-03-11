@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
 import { dateToYMD } from "../utils/dateSort";
+
 const initialState = {
   filters: {
     searchValue: "",
@@ -15,6 +16,8 @@ const initialState = {
   conferences: [],
   isLoading: false,
   error: false,
+  currentPage: 1,
+  conferencesPerPage: 10,
 };
 export const postData = createSlice({
   name: "conferences",
@@ -22,6 +25,10 @@ export const postData = createSlice({
   reducers: {
     startLoading: (state) => {
       state.isLoading = true;
+    },
+    paginate: (state, action) => {
+      state.currentPage = action.payload;
+      window.scrollTo(0, 0);
     },
     hasError: (state, action) => {
       state.error = action.payload;
@@ -593,6 +600,7 @@ export const {
   startLoading,
   reset,
   hasError,
+  paginate,
 } = postData.actions;
 
 export const fetchAllConferences = () => async (dispatch) => {
@@ -611,9 +619,10 @@ export const fetchAllConferences = () => async (dispatch) => {
 
 export const fetchFilteredConferences = () => async (dispatch) => {
   dispatch(startLoading());
+  dispatch(paginate(1));
 
   try {
-    await api.get("/api/").then((response) =>
+    await api.get(`/api/`).then((response) =>
       setTimeout(() => {
         dispatch(handleFilter(response.data));
       }, 200)
