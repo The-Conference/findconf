@@ -187,18 +187,20 @@ const FullConference = () => {
               </a>
             )) ||
               (full.conf_card_href.length > 0 && (
-                <div>
-                  {full.conf_desc}
+                <pre>
                   <div>
-                    <a
-                      href={full.conf_card_href}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      Подробнее о конференции
-                    </a>
+                    {full.conf_desc}
+                    <div>
+                      <a
+                        href={full.conf_card_href}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        Подробнее о конференции
+                      </a>
+                    </div>
                   </div>
-                </div>
+                </pre>
               ))}
           </div>
         )}
