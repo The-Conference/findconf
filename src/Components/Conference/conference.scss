@@ -142,9 +142,7 @@
 
   &__bg {
     height: 214px;
-    background-image: url(../../assets/Background.png);
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-color: #00002e;
     border-radius: 16px;
     padding: 16px;
     display: flex;
@@ -186,7 +184,7 @@
     }
     &-bottom {
       color: white;
-      background-color: #001036bd;
+      background-color: #ffffff1a;
       font-size: 12px;
       font-weight: 500;
       padding: 7px 14px;

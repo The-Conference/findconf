@@ -81,6 +81,8 @@ const FullConference = () => {
               handleFave(full.id);
               dispatch(handleFollow(full.id));
             }}
+            width="32"
+            height="32"
           />
         </div>
         <div className="full-conference__title">
@@ -181,7 +183,7 @@ const FullConference = () => {
 
         {desc && !contacts && (
           <div className="full-conference__desc">
-            <h3>Условия участия</h3>
+            <h1>Условия участия</h1>
             {(full.conf_desc.length === 0 && (
               <a href={full.conf_card_href} rel="noreferrer" target="_blank">
                 Подробнее о конференции

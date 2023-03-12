@@ -4,7 +4,7 @@ import "./empty-result.scss";
 const EmptyFave = () => {
   return (
     <div className="empty">
-      <img src={empty} alt="пусто" />
+      <img src={empty} alt="пусто" width="450" height="350" />
       <p>Не найдено ни одной конференции</p>
     </div>
   );

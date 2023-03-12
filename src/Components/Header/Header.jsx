@@ -11,22 +11,29 @@ const Header = () => {
       <div className="header">
         <a href="/">
           <div className="header__logo">
-            <img src={logo} alt="logo" /> <span>THE CONF</span>
+            <img loading="lazy" src={logo} alt="logo" width="57" height="44" />
+            <span>THE CONF</span>
           </div>
         </a>
         <SearchFilter />
         <nav className="header__nav">
           <ul>
-            <Link to="/about">
-              <li>О сервисе</li>
-            </Link>
+            <li>
+              <Link to="/about">О сервисе </Link>
+            </li>
           </ul>
         </nav>
         <div>
           <div className="header__profile">
             <a href="/favourite">
               <div>
-                <img src={fave} alt="favourite" />
+                <img
+                  loading="lazy"
+                  src={fave}
+                  alt="favourite"
+                  width="20"
+                  height="19"
+                />
               </div>
             </a>
           </div>

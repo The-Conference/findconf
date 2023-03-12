@@ -6,7 +6,7 @@ const Footer = () => {
     <footer>
       <div className="footer">
         <a href="/">
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" width="20" height="19" />
         </a>
         <a href="/about">О сервисе</a>
         <p> &#169;2023 сервис The Conference </p>

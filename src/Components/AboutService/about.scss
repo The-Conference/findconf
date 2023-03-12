@@ -149,6 +149,7 @@
           max-height: 260px;
         }
         img {
+          max-width: 100%;
           -webkit-transition: all 0.3s ease-in-out;
           &:hover {
             transform: scale(1.05);

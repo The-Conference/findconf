@@ -6,21 +6,31 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoaderTemplate from "./utils/Loader/LoaderTemplate";
-import Header from "./Components/Header/Header";
-import Footer from "./Components/Footer/Footer";
+import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
-import AllConferences from "./Components/Conference/AllConferences";
-import NotFound from "./Components/404/404";
-import EmptyResult from "./Components/EmptyResult/EmptyResult";
-import FullConference from "./Components/FullConference/FullConference";
-const Login = React.lazy(() => import("./Components/Login/Login"));
-const SignUp = React.lazy(() => import("./Components/SignUp/SignUp"));
+const Header = React.lazy(() => import("./Components/Header/Header"));
+const FullConference = React.lazy(() =>
+  import("./Components/FullConference/FullConference")
+);
+const AllConferences = React.lazy(() =>
+  import("./Components/Conference/AllConferences")
+);
+const Footer = React.lazy(() => import("./Components/Footer/Footer"));
+const EmptyResult = React.lazy(() =>
+  import("./Components/EmptyResult/EmptyResult")
+);
+const NotFound = React.lazy(() => import("./Components/404/404"));
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <>
+        <Header />
+        <App />
+        <Footer />
+      </>
+    ),
   },
   {
     path: "/favourite",
@@ -42,14 +52,7 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
+
   {
     path: "/conferences/:confId",
     element: (
@@ -156,7 +159,7 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Suspense fallback={<LoaderTemplate />}>
+  <Suspense fallback={<LoaderTemplateHeader />}>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>

@@ -1,10 +1,10 @@
 import profPic from "./Photo.png";
-import Levin from "../Founders/pics/Levin.png";
-import Mosh from "../Founders/pics/Mosh.png";
-import Ershov from "../Founders/pics/Ershov.png";
-import Fromm from "../Founders/pics/Fromm.png";
-import Novikov from "../Founders/pics/Novikov.png";
-import Makover from "../Founders/pics/Makover.png";
+import Levin from "../Founders/pics/Levin.webp";
+import Mosh from "../Founders/pics/Mosh.webp";
+import Ershov from "../Founders/pics/Ershov.webp";
+import Fromm from "../Founders/pics/Fromm.webp";
+import Novikov from "../Founders/pics/Novikov.webp";
+import Makover from "../Founders/pics/Makover.webp";
 
 const founders = [
   { role: "Project Manager", name: "Иван Иванов", pic: profPic },

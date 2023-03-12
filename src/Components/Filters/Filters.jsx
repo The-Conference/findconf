@@ -35,8 +35,8 @@ const Filters = () => {
           }}
         >
           {(data.some((el) => el.applied === true) && (
-            <img src={white} alt="" />
-          )) || <img src={grey} alt="" />}
+            <img src={white} alt="удалить фильтры" width="14" height="14" />
+          )) || <img src={grey} alt="удалить фильтры" width="14" height="14" />}
         </button>
         {data.map((item) => (
           <div className="filter__container" key={item.id}>

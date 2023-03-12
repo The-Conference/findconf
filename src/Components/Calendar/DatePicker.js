@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import CalendarFilter from "./CalendarFilter";
 import { addDays } from "date-fns";
 import React, { useState } from "react";
-
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from "./MonthView";
-import CalendarFilter from "./CalendarFilter";
 
-// import hexToRgb from "./global/helpers/hexToRgb";
 import calendar from "../../assets/calendar.svg";
 import white from "../../assets/calwhite.svg";
 
@@ -21,30 +19,15 @@ const DatePicker = (props) => {
     e.scrollLeft += width - 60;
   };
 
-  //   const prev = (event) => {
-  //     event.preventDefault();
-  //     const e = document.getElementById("container");
-  //     const width = e ? e.getBoundingClientRect().width : null;
-  //     e.scrollLeft -= width - 60;
-  //   };
-
-  //   const primaryColor = props.color
-  //     ? props.color.indexOf("rgb") > 0
-  //       ? props.color
-  //       : hexToRgb(props.color)
-  //     : "rgb(54, 105, 238)";
-
   const startDate = props.startDate || new Date();
-  const lastDate = addDays(startDate, props.days || 200);
+  const lastDate = addDays(startDate, props.days || 90);
 
   let buttonzIndex = { zIndex: 2 };
-  //   let buttonStyle = { background: primaryColor };
   let Component = DateView;
 
   if (props.type === "month") {
     buttonzIndex = { zIndex: 5 };
     Component = MonthView;
-    // buttonStyle = { background: primaryColor, marginBottom: "5px" };
   }
   const prev = (event) => {
     event.preventDefault();
@@ -62,9 +45,9 @@ const DatePicker = (props) => {
           style={{ backgroundColor: showCalendar ? "#184CD3" : "#ebefff" }}
           onClick={() => setShowCalendar(!showCalendar)}
         >
-          {(!showCalendar && <img src={calendar} alt="calendar" />) || (
-            <img src={white} alt="calendar" />
-          )}
+          {(!showCalendar && (
+            <img src={calendar} alt="calendar" width="26" height="26" />
+          )) || <img src={white} alt="calendar" width="26" height="26" />}
         </span>
         {showCalendar && (
           <CalendarFilter

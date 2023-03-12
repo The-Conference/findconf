@@ -76,36 +76,6 @@
   padding: 2px;
   margin: 2px;
 }
-
-/* @media (max-width: 1000px) {
-  .daysContainer:before {
-    content: "";
-    position: absolute;
-    height: 15%;
-    width: 7%;
-    right: 35px;
-    background: linear-gradient(
-      to left,
-      rgb(247, 247, 249) 0%,
-      rgb(247, 247, 249) 60%,
-      rgb(247, 247, 249, 0) 100%
-    );
-  }
-  .daysContainer:after {
-    content: "";
-    position: absolute;
-    height: 15%;
-    width: 6%;
-    left: 55px;
-    background: linear-gradient(
-      to right,
-      rgb(247, 247, 249) 0%,
-      rgb(247, 247, 249) 60%,
-      rgb(247, 247, 249, 0) 100%
-    );
-  }
-} */
-
 .monthYearLabel {
   align-self: flex-start;
   font-family: "Manrope bold";

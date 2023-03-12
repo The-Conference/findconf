@@ -4,7 +4,7 @@ import "./empty-result.scss";
 const EmptyResult = () => {
   return (
     <div className="empty">
-      <img src={empty} alt="пусто" />
+      <img src={empty} alt="пусто" width="450" height="350" />
       <h3>Эхх...</h3>
       <p>
         По данному запросу конференций нет, попробуй использовать другие фильтры
