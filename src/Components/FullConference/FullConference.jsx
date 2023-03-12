@@ -14,6 +14,7 @@ import following from "../../assets/followingSmall.svg";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { options } from "../../utils/options";
 import AllConferences from "../Conference/AllConferences";
+import DOMPurify from "dompurify";
 const FullConference = () => {
   const { confId } = useParams();
   const { conferences } = useSelector((state) => state.conferences);
@@ -24,6 +25,10 @@ const FullConference = () => {
   const [contacts, setContacts] = useState(false);
   let content;
   let full = conferences.find(({ id }) => id === +confId);
+  const data = full.conf_desc;
+  const sanitizedData = () => ({
+    __html: DOMPurify.sanitize(data),
+  });
 
   const handleFave = (id) => {
     if (fave.includes(id)) {
@@ -191,17 +196,19 @@ const FullConference = () => {
             )) ||
               (full.conf_card_href.length > 0 && (
                 <pre>
+                  <div
+                    className="full-conference__desc-parsed"
+                    dangerouslySetInnerHTML={sanitizedData()}
+                  />
+
                   <div>
-                    {full.conf_desc}
-                    <div>
-                      <a
-                        href={full.conf_card_href}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        Подробнее о конференции
-                      </a>
-                    </div>
+                    <a
+                      href={full.conf_card_href}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Подробнее о конференции
+                    </a>
                   </div>
                 </pre>
               ))}

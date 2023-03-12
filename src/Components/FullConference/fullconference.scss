@@ -87,6 +87,9 @@
     pre {
       white-space: pre-wrap;
       font-family: "Manrope";
+      li {
+        list-style-type: disc;
+      }
       div {
         margin-top: 20px;
         a {
