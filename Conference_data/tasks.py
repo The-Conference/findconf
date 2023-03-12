@@ -10,7 +10,8 @@ from .Parsers import parser_1spbgmu, parser_bstu, parser_linguanet, \
     parser_unitech_mo, parser_petrsu, parser_rzgmu, parser_asou_mo, parser_bashgmu, \
     parser_cchgeu, parser_donstu, parser_ggtu, parser_gubkin, parser_kai, parser_kbsu, \
     parser_kurskmed, parser_mgppu, parser_mgpu, parser_mrsu, parser_narfu, parser_pimunn, \
-    parser_rosnou, parser_tsuab, parser_tyuiu, parser_volsu, parser_vstu, parser_mpgu
+    parser_rosnou, parser_tsuab, parser_tyuiu, parser_volsu, parser_vstu, parser_mpgu, \
+    parser_bsuedu, parser_mpei, parser_sfu_kras, parser_timacad
 
 
 def save_conferences(lst):
@@ -455,6 +456,33 @@ def parser42():
 
 @shared_task
 def parser43():
-    pass
-    # run_parser(parser_nsu.main())
-    # parser44.apply_async()
+    run_parser(parser_bsuedu.parser_bsuedu('bsuedu', 'https://www.bsuedu.ru/bsu/science/meropr/',
+                                           datetime.strptime('2023.01.01', '%Y.%m.%d')))
+    parser44.apply_async()
+
+
+@shared_task
+def parser44():
+    run_parser(parser_mpei.parser_mpei(
+        'mpei', ['https://mpei.ru/Science/ScientificEvents/Pages/default.aspx'],
+        datetime.strptime('2023.01.01', '%Y.%m.%d')
+    ))
+    parser45.apply_async()
+
+
+@shared_task
+def parser45():
+    run_parser(parser_sfu_kras.parser_sfu_kras(
+        'sfu-kras', 'https://conf.sfu-kras.ru/',
+        datetime.strptime('2023.01.01', '%Y.%m.%d')
+    ))
+    parser46.apply_async()
+
+
+@shared_task
+def parser46():
+    run_parser(parser_timacad.parser_timacad(
+        'timacad', 'https://www.timacad.ru/science/konferentsii',
+        datetime.strptime('2023.01.01', '%Y.%m.%d')
+    ))
+    # parser47.apply_async()
