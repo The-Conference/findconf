@@ -68,6 +68,8 @@
       copy:
         src: "../docker_config/django"
         dest: "{{ dev_path }}/"
+      tags:
+        - conf_back
 
     - name: download django app archive from github
       get_url:
