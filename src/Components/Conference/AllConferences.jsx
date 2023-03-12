@@ -6,7 +6,7 @@ import "./conference.scss";
 import { useSelector, useDispatch } from "react-redux";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
-import LazyLoad from "react-lazyload";
+
 import {
   handleSave,
   handleFollow,
