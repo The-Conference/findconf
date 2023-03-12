@@ -281,98 +281,96 @@ const AllConferences = ({ data, keywords, id }) => {
         {!isLoading &&
           result.length > 0 &&
           currentConference.map((el) => (
-            <LazyLoad key={el.id} height={200} offset={100}>
-              <div className="conference__block">
-                <div className="conference__bg">
-                  <div className="conference__bg-top">
-                    {(el.register === false && el.finished === false && (
+            <div key={el.id} className="conference__block">
+              <div className="conference__bg">
+                <div className="conference__bg-top">
+                  {(el.register === false && el.finished === false && (
+                    <span
+                      style={{
+                        backgroundColor: "#939393",
+                      }}
+                    >
+                      Регистрация закончена
+                    </span>
+                  )) ||
+                    (el.register === false && el.finished === true && (
                       <span
                         style={{
                           backgroundColor: "#939393",
                         }}
                       >
-                        Регистрация закончена
+                        Конференция завершена
                       </span>
                     )) ||
-                      (el.register === false && el.finished === true && (
-                        <span
-                          style={{
-                            backgroundColor: "#939393",
-                          }}
-                        >
-                          Конференция завершена
-                        </span>
-                      )) ||
-                      (el.register === true && el.finished === false && (
-                        <span>Идет регистрация</span>
-                      ))}
-                    <img
-                      title={
-                        el.follow === false
-                          ? "добавить в избранное"
-                          : "удалить из избранного"
-                      }
-                      src={el.follow === false ? hearts : following}
-                      alt="follow"
-                      onClick={() => {
-                        handleFave(el.id);
-                        dispatch(handleFollow(el.id));
-                      }}
-                      width="25"
-                      height="24"
-                    />
-                  </div>
-                  <div className="conference__bg-bottom">
-                    {el.conf_date_end === null && el.conf_date_begin === null
-                      ? "дата уточняется"
-                      : el.conf_date_end !== null
-                      ? new Date(el.conf_date_begin)
-                          .toLocaleDateString("ru", options)
-                          .slice(0, -3) +
-                        " - " +
-                        new Date(el.conf_date_end)
-                          .toLocaleDateString("ru", options)
-                          .slice(0, -3)
-                      : new Date(el.conf_date_begin)
-                          .toLocaleDateString("ru", options)
-                          .slice(0, -3)}
-                  </div>
-                  <Link
-                    aria-label="Подробнее о конференции"
-                    style={{
-                      position: "absolute",
-                      bottom: "0",
-                      left: "0",
-                      right: "50px",
-                      top: "0",
-                    }}
-                    to={`/conferences/${el.id}`}
-                  ></Link>
-                  <Link
-                    aria-label="Подробнее о конференции"
-                    style={{
-                      position: "absolute",
-                      bottom: "0",
-                      left: "0",
-                      right: "0",
-                      top: "50px",
-                    }}
-                    to={`/conferences/${el.id}`}
-                  ></Link>
-                </div>
-
-                <div className="conference__tags">
-                  <div>
-                    {el.themes.split(",").map((tag, index) => (
-                      <small key={index}>{tag}</small>
+                    (el.register === true && el.finished === false && (
+                      <span>Идет регистрация</span>
                     ))}
-                  </div>
-                  <Link to={`/conferences/${el.id}`}>
-                    <div className="conference__title">{el.conf_name}</div>
-                  </Link>
+                  <img
+                    title={
+                      el.follow === false
+                        ? "добавить в избранное"
+                        : "удалить из избранного"
+                    }
+                    src={el.follow === false ? hearts : following}
+                    alt="follow"
+                    onClick={() => {
+                      handleFave(el.id);
+                      dispatch(handleFollow(el.id));
+                    }}
+                    width="25"
+                    height="24"
+                  />
                 </div>
-              </div>{" "}
-            </LazyLoad>
+                <div className="conference__bg-bottom">
+                  {el.conf_date_end === null && el.conf_date_begin === null
+                    ? "дата уточняется"
+                    : el.conf_date_end !== null
+                    ? new Date(el.conf_date_begin)
+                        .toLocaleDateString("ru", options)
+                        .slice(0, -3) +
+                      " - " +
+                      new Date(el.conf_date_end)
+                        .toLocaleDateString("ru", options)
+                        .slice(0, -3)
+                    : new Date(el.conf_date_begin)
+                        .toLocaleDateString("ru", options)
+                        .slice(0, -3)}
+                </div>
+                <Link
+                  aria-label="Подробнее о конференции"
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    right: "50px",
+                    top: "0",
+                  }}
+                  to={`/conferences/${el.id}`}
+                ></Link>
+                <Link
+                  aria-label="Подробнее о конференции"
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    right: "0",
+                    top: "50px",
+                  }}
+                  to={`/conferences/${el.id}`}
+                ></Link>
+              </div>
+
+              <div className="conference__tags">
+                <div>
+                  {el.themes.split(",").map((tag, index) => (
+                    <small key={index}>{tag}</small>
+                  ))}
+                </div>
+                <Link to={`/conferences/${el.id}`}>
+                  <div className="conference__title">{el.conf_name}</div>
+                </Link>
+              </div>
+            </div>
           ))}
       </div>
       {data !== "prev1" &&
