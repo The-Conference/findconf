@@ -37,9 +37,11 @@ services:
     container_name: app_nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./www:/usr/share/nginx/html
       - ./nginx_conf:/etc/nginx/conf.d/
+      - /etc/letsencrypt/live/test.theconf.ru/:/etc/ssl/private/:ro
     depends_on:
       - django
     restart: always
