@@ -51,6 +51,7 @@ const AllConferences = ({ data, keywords, id }) => {
   }
   if (data === "search-results") {
     value = searchParams.get("q");
+
     let newValue = value
       .trim()
       .split(" ")

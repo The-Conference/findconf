@@ -28,13 +28,13 @@ const SearchFilter = () => {
   useOnClickOutside(ref, () => setPopup(false));
 
   const filterBySearch = (event) => {
-    let newValue = event.target.value.trim().split(" ").join("|");
+    let newValue = event.target.value
+      .trim()
+      .replace(/[+/)/(/*/^/$/-/-/%/|/?/]/gi, "")
+      .split(" ")
+      .join("|");
     let regexp = new RegExp(newValue, "gi");
-    setValue(
-      event.target.value
-        .trim()
-        .replace(/[+/)/(/*/^/$/|/%/]/gi, " characterREPLACEMENT")
-    );
+    setValue(newValue);
 
     var updatedList = [...search];
     updatedList = updatedList.filter((item) => {
@@ -54,8 +54,10 @@ const SearchFilter = () => {
     }
   };
   const handleNavigation = () => {
-    nav({ pathname: "/search", search: `?q=${value}` });
-    window.location.reload();
+    if (value.length > 1) {
+      nav({ pathname: "/search", search: `?q=${value}` });
+      window.location.reload();
+    }
   };
 
   useEffect(() => {
