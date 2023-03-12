@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
@@ -9,13 +8,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
 const Header = React.lazy(() => import("./Components/Header/Header"));
-
-const FullConference = React.lazy(() =>
-  import("./Components/FullConference/FullConference")
-);
+const App = React.lazy(() => import("./App"));
 const AllConferences = React.lazy(() =>
   import("./Components/Conference/AllConferences")
 );
+const FullConference = React.lazy(() =>
+  import("./Components/FullConference/FullConference")
+);
+
 const Footer = React.lazy(() => import("./Components/Footer/Footer"));
 const EmptyResult = React.lazy(() =>
   import("./Components/EmptyResult/EmptyResult")
