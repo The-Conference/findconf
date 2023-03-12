@@ -34,7 +34,7 @@
       tags:
         - volumes
 
-    - name: copy nginx default.conf
+    - name: copy nginx default.conf (test server)
       copy:
         src: "../docker_config/nginx/default.conf"
         dest: "{{ dev_path }}/nginx_conf/"
@@ -43,6 +43,20 @@
         mode: "0664"
       tags:
         - conf_nginx
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy nginx default.conf (prod server)
+      copy:
+        src: "../docker_config/nginx/prod/default.conf"
+        dest: "{{ dev_path }}/nginx_conf/"
+        owner: root
+        group: root
+        mode: "0664"
+      tags:
+        - conf_nginx
+      when:
+        - inventory_hostname in groups ["prod"]
 
     - name: copy pgsql folder
       copy:
