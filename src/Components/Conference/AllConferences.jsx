@@ -12,6 +12,7 @@ import {
   handleFollow,
   fetchFilteredConferences,
   paginate,
+  addMore,
 } from "../../store/postData";
 import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
@@ -19,13 +20,14 @@ import EmptyResult from "../EmptyResult/EmptyResult";
 import EmptyFave from "../EmptyResult/emptyFave";
 import { getDatesInRange } from "../../utils/getDatesRange";
 import Pagination from "../Pagination/Pagination";
+
 const AllConferences = ({ data, keywords, id }) => {
   const { conferences, isLoading, currentPage, conferencesPerPage } =
     useSelector((state) => state.conferences);
   const [searchParams] = useSearchParams();
+
   const dispatch = useDispatch();
-  const { date } = useParams();
-  const { periods } = useParams();
+  const { periods, date } = useParams();
   const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
   const [fave, setFave] = useState(Favourite);
 
@@ -213,7 +215,6 @@ const AllConferences = ({ data, keywords, id }) => {
 
         {data === "prev1" && (
           <a href="/collection1">
-            {" "}
             <p>
               История <span>&gt;</span>
             </p>
@@ -222,7 +223,6 @@ const AllConferences = ({ data, keywords, id }) => {
         {data === "prev2" && (
           <a href="/collection2">
             <p>
-              {" "}
               Филология <span>&gt;</span>
             </p>
           </a>
@@ -380,9 +380,10 @@ const AllConferences = ({ data, keywords, id }) => {
         data !== "prev4" &&
         result.length > 20 && (
           <Pagination
-            conferencesPerPage={conferencesPerPage}
+            currentConference={currentConference}
             totalConferences={result.length}
             paginate={paginate}
+            addMore={addMore}
           />
         )}
     </section>

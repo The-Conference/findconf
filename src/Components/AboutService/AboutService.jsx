@@ -2,7 +2,7 @@ import React from "react";
 import step from "../../assets/Step.svg";
 import "./about.scss";
 import { developers, founders } from "../../utils/Founders/FOUNDERS";
-import LazyLoad from "react-lazyload";
+
 const AboutService = () => {
   return (
     <div className="about">
@@ -63,9 +63,7 @@ const AboutService = () => {
           {founders.map((el, index) => (
             <div key={index} className="about__staff-founders">
               <div className="about__staff-founders-pic">
-                <LazyLoad height={200} offset={100}>
-                  <img src={el.pic} alt="фото" width={300} height={300} />
-                </LazyLoad>
+                <img src={el.pic} alt="фото" width={300} height={300} />
               </div>
               <div className="role">{el.role}</div>
 
@@ -78,9 +76,7 @@ const AboutService = () => {
           {developers.map((el, index) => (
             <div key={index} className="about__staff-founders">
               <div className="about__staff-founders-pic">
-                <LazyLoad height={200} offset={100}>
-                  <img src={el.pic} alt="фото" width={300} height={300} />
-                </LazyLoad>
+                <img src={el.pic} alt="фото" width={300} height={300} />
               </div>
               <div className="role">{el.role}</div>
               <p>{el.name}</p>

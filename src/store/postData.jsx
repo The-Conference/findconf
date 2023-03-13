@@ -26,9 +26,11 @@ export const postData = createSlice({
     startLoading: (state) => {
       state.isLoading = true;
     },
+    addMore: (state, action) => {
+      state.conferencesPerPage = state.conferencesPerPage + action.payload;
+    },
     paginate: (state, action) => {
       state.currentPage = action.payload;
-      window.scrollTo(0, 0);
     },
     hasError: (state, action) => {
       state.error = action.payload;
@@ -601,6 +603,7 @@ export const {
   reset,
   hasError,
   paginate,
+  addMore,
 } = postData.actions;
 
 export const fetchAllConferences = () => async (dispatch) => {
