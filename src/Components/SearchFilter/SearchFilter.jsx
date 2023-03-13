@@ -34,7 +34,7 @@ const SearchFilter = () => {
       .split(" ")
       .join("|");
     let regexp = new RegExp(newValue, "gi");
-    setValue(newValue);
+    setValue(event.target.value);
 
     var updatedList = [...search];
     updatedList = updatedList.filter((item) => {

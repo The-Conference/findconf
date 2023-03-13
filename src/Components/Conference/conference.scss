@@ -100,29 +100,64 @@
 
   &__type {
     font-size: 32px;
-    font-weight: 600;
     margin-bottom: 20px;
+    font-family: "Manrope semibold";
+    .back {
+      display: flex;
+      align-items: center;
+      &:hover {
+        color: #4074fb;
+        p {
+          &:hover {
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+    .similar {
+      display: flex;
+      align-items: center;
+      &:hover {
+        color: #4074fb;
+      }
+    }
+    a {
+      display: flex;
+      align-items: center;
+      &:hover {
+        color: #4074fb;
+      }
+    }
+    p {
+      -webkit-transition: all 0.4s ease-in-out;
+      &:hover {
+        padding-right: 10px;
+      }
+    }
     @media screen and (max-width: 700px) {
       font-size: 25px;
     }
     @media screen and (max-width: 450px) {
       font-size: 16px;
     }
+    span {
+      font-size: 25px;
+      vertical-align: middle;
+      margin-left: 10px;
+      margin-top: 3px;
+
+      @media screen and (max-width: 700px) {
+        font-size: 15px;
+      }
+    }
     .backarrow {
+      padding-right: 20px;
       font-size: 30px;
       @media screen and (max-width: 700px) {
         font-size: 25px;
       }
       @media screen and (max-width: 450px) {
         font-size: 16px;
-      }
-    }
-    span {
-      font-size: 23px;
-      vertical-align: middle;
-      margin-left: 10px;
-      @media screen and (max-width: 700px) {
-        font-size: 15px;
       }
     }
   }
@@ -177,6 +212,10 @@
       }
       img {
         cursor: pointer;
+        -webkit-transition: all 0.2s ease-in-out;
+        &:hover {
+          transform: scale(1.1);
+        }
         @media (max-width: 544px) {
           transform: scale(0.9);
         }

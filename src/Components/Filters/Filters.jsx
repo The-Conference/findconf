@@ -22,12 +22,11 @@ const Filters = () => {
     <>
       <div className="filter">
         <button
-          style={{
-            backgroundColor: data.some((el) => el.applied === true)
-              ? "#2c60e7"
-              : "#0000381A",
-          }}
-          className="filter__delete-button"
+          className={
+            data.some((el) => el.applied === true)
+              ? "filter__delete-button applied-hover"
+              : "filter__delete-button nonapplied-hover"
+          }
           onClick={() => {
             dispatch(handleDeleteColor());
             dispatch(deleteAllFilters());
@@ -46,12 +45,11 @@ const Filters = () => {
                 dispatch(saveFilter(item.name));
                 dispatch(fetchFilteredConferences());
               }}
-              className="filter__container-button"
-              style={{
-                backgroundColor:
-                  item.applied === true ? "#2c60e7" : "#0000381A",
-                color: item.applied === true ? "white" : "#00002E",
-              }}
+              className={
+                item.applied === true
+                  ? "filter__container-button applied-hover"
+                  : "filter__container-button nonapplied-hover"
+              }
               key={item.id}
             >
               <div>{item.name}</div>
@@ -79,6 +77,7 @@ const Filters = () => {
             <img src={white} alt="" />
           )) || <img src={grey} alt="" />}
         </button>
+
         <div className="filter-adaptive__container-button">
           <span
             onClick={() => setMenu(!menu)}
@@ -97,6 +96,9 @@ const Filters = () => {
             {menu &&
               data.map((item) => (
                 <li
+                  className={
+                    item.applied === true ? "applied-hover" : "nonapplied-hover"
+                  }
                   onClick={() => {
                     dispatch(handleColor(item.id));
                     dispatch(saveFilter(item.name));

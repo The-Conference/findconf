@@ -25,10 +25,6 @@ const FullConference = () => {
   const [contacts, setContacts] = useState(false);
   let content;
   let full = conferences.find(({ id }) => id === +confId);
-  const data = full.conf_desc;
-  const sanitizedData = () => ({
-    __html: DOMPurify.sanitize(data),
-  });
 
   const handleFave = (id) => {
     if (fave.includes(id)) {
@@ -79,7 +75,11 @@ const FullConference = () => {
               <span>Идет регистрация</span>
             ))}
           <img
-            title="добавить в избранное"
+            title={
+              full.follow === false
+                ? "добавить в избранное"
+                : "удалить из избранного"
+            }
             src={full.follow === false ? follow : following}
             alt="follow"
             onClick={() => {
@@ -167,19 +167,13 @@ const FullConference = () => {
         </div>
         <div className="full-conference__tabs">
           <button
-            style={{
-              color: !desc ? "#2C60E7" : "white",
-              backgroundColor: !desc ? "#EBEFFF" : "#2C60E7",
-            }}
+            className={!desc ? "button-passive" : "button-active"}
             onClick={handleDesc}
           >
             Описание
           </button>
           <button
-            style={{
-              color: !contacts ? "#2C60E7" : "white",
-              backgroundColor: !contacts ? "#EBEFFF" : "#2C60E7",
-            }}
+            className={!contacts ? "button-passive" : "button-active"}
             onClick={handleContacts}
           >
             Контакты
@@ -198,7 +192,9 @@ const FullConference = () => {
                 <pre>
                   <div
                     className="full-conference__desc-parsed"
-                    dangerouslySetInnerHTML={sanitizedData()}
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(full.conf_desc),
+                    }}
                   />
 
                   <div>

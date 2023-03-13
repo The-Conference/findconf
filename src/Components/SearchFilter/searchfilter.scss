@@ -90,6 +90,7 @@
         justify-content: center;
         align-items: center;
         background-color: white;
+
         @media (max-width: 675px) {
           font-size: 13px;
         }
@@ -119,6 +120,11 @@
           background-color: #ebefff;
           border-radius: 8px;
           margin: 10px;
+          -webkit-transition: all 0.2s ease-in-out;
+          &:hover {
+            background-color: #2c60e7;
+            color: white;
+          }
         }
       }
     }

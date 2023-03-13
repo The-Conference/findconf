@@ -43,6 +43,12 @@
   }
 
   &__nav {
+    a {
+      -webkit-transition: all 0.2s ease-in-out;
+      &:hover {
+        color: #4074fb;
+      }
+    }
     @media screen and (max-width: 1300px) {
       display: none;
     }

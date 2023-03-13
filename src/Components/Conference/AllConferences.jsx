@@ -186,75 +186,73 @@ const AllConferences = ({ data, keywords, id }) => {
     >
       <div className="conference__type">
         {data === "all" && (
-          <p>
-            <span className="backarrow">&lt;</span> Все конференции
-          </p>
+          <div className="back">
+            <span className="backarrow">&lt;</span> <p>Все конференции</p>
+          </div>
         )}
 
         {data === "favourites" && (
-          <p>
-            <span className="backarrow">&lt;</span> Избранное
-          </p>
+          <div className="back">
+            <span className="backarrow">&lt;</span> <p>Избранное</p>
+          </div>
         )}
         {data === "search-results" && (
-          <p>
-            <span className="backarrow">&lt;</span> Результаты по запросу "
-            {value}"
-          </p>
+          <div className="back">
+            <span className="backarrow">&lt;</span>{" "}
+            <p>Результаты по запросу "{value}"</p>
+          </div>
         )}
         {data === "collection1" && (
-          <p>
-            <span className="backarrow">&lt;</span> История
-          </p>
+          <div className="back">
+            <span className="backarrow">&lt;</span> <p>История</p>
+          </div>
         )}
         {data === "collection2" && (
-          <p>
-            <span className="backarrow">&lt;</span> Филология
-          </p>
+          <div className="back">
+            <span className="backarrow">&lt;</span> <p>Филология</p>
+          </div>
         )}
 
         {data === "prev1" && (
           <a href="/collection1">
-            <p>
-              История <span>&gt;</span>
-            </p>
+            <p>История</p>
+            <span>&gt;</span>
           </a>
         )}
         {data === "prev2" && (
           <a href="/collection2">
-            <p>
-              Филология <span>&gt;</span>
-            </p>
+            <p>Филология</p>
+            <span>&gt;</span>
           </a>
         )}
         {data === "prev3" && (
           <a href="/all">
-            <p>
-              Все конференции <span>&gt;</span>
-            </p>
+            <p>Все конференции</p>
+            <span>&gt;</span>
           </a>
         )}
         {data === "prev4" && result.length > 0 && (
-          <p>
-            Похожие конференции <span>&gt;</span>
-          </p>
+          <div className="similar">
+            <p>Похожие конференции</p>
+            <span>&gt;</span>
+          </div>
         )}
         {data === "date" && (
-          <p>
-            <span className="backarrow">&lt;</span> Конференции на{" "}
+          <div className="back">
+            <span className="backarrow">&lt;</span> <p>Конференции на</p>
             <span>{date}</span>
-          </p>
+          </div>
         )}
         {data === "periods" && (
-          <p>
-            <span className="backarrow">&lt;</span> Конференции
+          <div className="back">
+            <span className="backarrow">&lt;</span> <p>Конференции</p>
             <span>
               c {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
             </span>{" "}
             <span>
               по {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
             </span>
-          </p>
+          </div>
         )}
       </div>
       {data !== "prev1" &&
