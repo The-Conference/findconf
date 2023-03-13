@@ -610,11 +610,9 @@ export const fetchAllConferences = () => async (dispatch) => {
   dispatch(startLoading());
 
   try {
-    await api.get("/api/").then((response) =>
-      setTimeout(() => {
-        dispatch(fetchConferences(response.data));
-      }, 200)
-    );
+    await api
+      .get("/api/")
+      .then((response) => dispatch(fetchConferences(response.data)));
   } catch (e) {
     dispatch(hasError(e.message));
   }
@@ -625,11 +623,9 @@ export const fetchFilteredConferences = () => async (dispatch) => {
   dispatch(paginate(1));
 
   try {
-    await api.get(`/api/`).then((response) =>
-      setTimeout(() => {
-        dispatch(handleFilter(response.data));
-      }, 200)
-    );
+    await api
+      .get(`/api/`)
+      .then((response) => dispatch(handleFilter(response.data)));
   } catch (e) {
     dispatch(hasError(e.message));
   }

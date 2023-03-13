@@ -170,8 +170,15 @@ const AllConferences = ({ data, keywords, id }) => {
     dispatch(handleSave(fave));
   }, [dispatch, fave]);
   useEffect(() => {
-    dispatch(fetchFilteredConferences());
-  }, [dispatch]);
+    if (
+      data !== "prev1" &&
+      data !== "prev2" &&
+      data !== "prev3" &&
+      data !== "prev4"
+    ) {
+      dispatch(fetchFilteredConferences());
+    }
+  }, []);
 
   return (
     <section
