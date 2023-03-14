@@ -20,6 +20,7 @@ services:
     volumes:
       - ./nginx_conf:/etc/nginx/conf.d/
       - ./django/app:/app/
+      - /etc/letsencrypt/live/test.theconf.ru/:/etc/ssl/private/:ro
     ports:
       - "8000:8000"
     env_file:
