@@ -81,14 +81,11 @@ const Filters = () => {
         <div className="filter-adaptive__container-button">
           <span
             onClick={() => setMenu(!menu)}
-            style={{
-              backgroundColor: data.some((item) => item.applied === true)
-                ? "#2c60e7"
-                : "#0000381A",
-              color: data.some((item) => item.applied === true)
-                ? "white"
-                : "#00002E",
-            }}
+            className={
+              data.some((el) => el.applied === true)
+                ? "filter__delete-button applied-hover"
+                : "filter__delete-button nonapplied-hover"
+            }
           >
             Фильтры
           </span>
@@ -104,11 +101,6 @@ const Filters = () => {
                     dispatch(saveFilter(item.name));
                     dispatch(fetchFilteredConferences());
                     setMenu(!menu);
-                  }}
-                  style={{
-                    backgroundColor:
-                      item.applied === true ? "#2c60e7" : "#0000381A",
-                    color: item.applied === true ? "white" : "#00002E",
                   }}
                   key={item.id}
                 >
