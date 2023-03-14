@@ -48,7 +48,7 @@
 
     - name: copy nginx default.conf (prod server)
       copy:
-        src: "../docker_config/nginx/prod/default.conf"
+        src: "../docker_config/nginx-prod/default.conf"
         dest: "{{ dev_path }}/nginx_conf/"
         owner: root
         group: root
@@ -64,12 +64,23 @@
         dest: "{{ dev_path }}/"
         decrypt: true
 
-    - name: copy django folder
+    - name: copy django folder (test)
       copy:
         src: "../docker_config/django"
         dest: "{{ dev_path }}/"
       tags:
         - conf_back
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy django folder (prod)
+      copy:
+        src: "../docker_config/django-prod"
+        dest: "{{ dev_path }}/"
+      tags:
+        - conf_back
+      when:
+        - inventory_hostname in groups ["prod"]
 
     - name: download django app archive from github
       get_url:
@@ -101,12 +112,23 @@
       tags:
         - conf_back
 
-    - name: copy settings.py to django
+    - name: copy settings.py to django (test)
       copy:
         src: "../docker_config/django/settings.py"
         dest: "{{ dev_path }}/django/app/Conferences/"
       tags:
         - conf_back
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy settings.py to django (prod)
+      copy:
+        src: "../docker_config/django-prod/settings.py"
+        dest: "{{ dev_path }}/django/app/Conferences/"
+      tags:
+        - conf_back
+      when:
+        - inventory_hostname in groups ["prod"]
 
     - name: remove temp files from /root
       file:
@@ -129,21 +151,46 @@
       copy:
         src: "../.metadata/.env"
         dest: "/root/"
+      tags:
+        - conf_back
 
-    - name: download frontend archive from github
+    - name: download frontend archive from github (test)
       get_url:
         url: "https://github.com/The-Conference/findconf/archive/refs/heads/frontend.zip"
         dest: "/root"
       tags:
         - update_front
+      when:
+        - inventory_hostname in groups ["test"]
 
-    - name: unzip frontend
+    - name: download frontend archive from github (prod)
+      get_url:
+        url: "https://github.com/The-Conference/findconf/archive/refs/heads/frontend-for-prod.zip"
+        dest: "/root"
+      tags:
+        - update_front
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: unzip frontend (test)
       unarchive:
         src: "/root/findconf-frontend.zip"
         dest: "/root"
         remote_src: true
       tags:
         - update_front
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: unzip frontend (prod)
+      unarchive:
+        src: "/root/findconf-frontend-for-prod.zip"
+        dest: "/root"
+        remote_src: true
+      tags:
+        - update_front
+      when:
+        - inventory_hostname in groups ["prod"]
 
     - name: remove old version from www
       shell:
@@ -151,7 +198,7 @@
       tags:
         - update_front
 
-    - name: copy front build to www dir
+    - name: copy front build to www dir (test)
       copy:
         src: "/root/findconf-frontend/build/"
         dest: "{{ dev_path }}/www/"
@@ -161,8 +208,23 @@
         remote_src: true
       tags:
         - update_front
+      when:
+        - inventory_hostname in groups ["test"]
 
-    - name: remove temp files from /root
+    - name: copy front build to www dir (prod)
+      copy:
+        src: "/root/findconf-frontend-for-prod/build/"
+        dest: "{{ dev_path }}/www/"
+        owner: root
+        group: webadmin
+        mode: "u=rwx,g=rwx,o=rx"
+        remote_src: true
+      tags:
+        - update_front
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: remove temp files from /root (test)
       file:
         path: "{{ item }}"
         state: absent
@@ -171,3 +233,17 @@
         - "/root/findconf-frontend"
       tags:
         - update_front
+      when:
+        - inventory_hostname in groups ["test"]
+    
+    - name: remove temp files from /root (prod)
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/root/findconf-frontend-for-prod.zip"
+        - "/root/findconf-frontend-for-prod"
+      tags:
+        - update_front
+      when:
+        - inventory_hostname in groups ["prod"]
