@@ -51,7 +51,7 @@
   &__tags {
     padding: 10px 16px 10px 16px;
     @media (max-width: 544px) {
-      padding: 0 10px 0 10px;
+      padding: 5px 10px 0 10px;
     }
     div {
       small {
@@ -120,8 +120,8 @@
     @media screen and (max-width: 700px) {
       font-size: 25px;
     }
-    @media screen and (max-width: 450px) {
-      font-size: 16px;
+    @media screen and (max-width: 536px) {
+      font-size: 18px;
     }
     span {
       font-size: 25px;

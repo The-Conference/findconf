@@ -38,7 +38,7 @@ const DatePicker = (props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.buttonWrapper} style={buttonzIndex}>
+      <div className={styles.buttonWrapper}>
         <span
           role="button"
           className={styles.calendar}

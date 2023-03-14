@@ -47,6 +47,7 @@
 
     flex-direction: column;
     align-self: flex-start;
+    -webkit-transition: all 0.4s ease-in-out;
     @media screen and (max-width: 720px) {
       align-self: center;
     }
@@ -59,6 +60,7 @@
       font-weight: 500;
       line-height: 20.8px;
       padding: 10px;
+
       @media screen and (max-width: 1024px) {
         font-size: 14px;
         line-height: 15.8px;

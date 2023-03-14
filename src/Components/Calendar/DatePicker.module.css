@@ -162,6 +162,7 @@
 .calendar img {
   max-width: 90%;
 }
+
 @media (max-width: 841px) {
   .calendar {
     width: 40px;

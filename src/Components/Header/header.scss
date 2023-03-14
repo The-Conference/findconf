@@ -36,6 +36,7 @@
       font-family: "Manrope semibold";
       letter-spacing: 4.7px;
       margin-left: 13px;
+      white-space: nowrap;
       @media screen and (max-width: 967px) {
         display: none;
       }
@@ -84,7 +85,11 @@
       width: 40px;
       height: 40px;
       border-radius: 7px;
+      &:hover {
+        background-color: #d4d4d479;
+      }
     }
+
     button {
       width: 134px;
       height: 40px;

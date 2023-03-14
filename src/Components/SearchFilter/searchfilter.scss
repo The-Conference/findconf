@@ -6,17 +6,18 @@
   display: flex;
   flex-direction: column;
   z-index: 2;
+
   .input {
     display: flex;
 
     input {
       width: 100%;
-
       &::placeholder {
         text-align: center;
         color: #00002e4d;
         font-size: 16px;
         font-weight: 500;
+
         @media (max-width: 607px) {
           font-size: 13px;
         }
@@ -29,6 +30,9 @@
 
   .dropdown-filter {
     position: relative;
+    @media screen and (max-width: 600px) {
+      position: static;
+    }
 
     ul {
       position: absolute;
@@ -43,14 +47,11 @@
       border-radius: 7px;
       cursor: pointer;
       @media (max-width: 600px) {
-        display: none;
+        left: 0;
+        top: 15%;
+        max-height: 500px;
       }
-      @media (max-width: 841px) {
-        max-height: 230px;
-      }
-      @media (max-width: 498px) {
-        max-height: 200px;
-      }
+
       a {
         color: #00003880;
         @media (max-width: 675px) {
@@ -60,6 +61,7 @@
       .conf {
         text-align: justify;
         font-family: "Manrope semibold";
+
         &:hover {
           background-color: #0000380d;
         }
