@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import CalendarFilter from "./CalendarFilter";
 import { addDays } from "date-fns";
 import React, { useState } from "react";
+
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from "./MonthView";
-
+import CalendarFilter from "./CalendarFilter";
 import calendar from "../../assets/calendar.svg";
 import white from "../../assets/calwhite.svg";
 
@@ -20,13 +20,11 @@ const DatePicker = (props) => {
   };
 
   const startDate = props.startDate || new Date();
-  const lastDate = addDays(startDate, props.days || 90);
+  const lastDate = addDays(startDate, props.days || 100);
 
-  let buttonzIndex = { zIndex: 2 };
   let Component = DateView;
 
   if (props.type === "month") {
-    buttonzIndex = { zIndex: 5 };
     Component = MonthView;
   }
   const prev = (event) => {
@@ -38,7 +36,7 @@ const DatePicker = (props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.buttonWrapper}>
+      <div className={styles.buttonWrapper + " " + styles.buttonzIndex}>
         <span
           role="button"
           className={styles.calendar}

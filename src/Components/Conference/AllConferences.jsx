@@ -178,7 +178,7 @@ const AllConferences = ({ data, keywords, id }) => {
     ) {
       dispatch(fetchFilteredConferences());
     }
-  }, []);
+  }, [dispatch, data]);
 
   return (
     <section
