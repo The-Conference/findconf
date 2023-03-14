@@ -22,7 +22,7 @@ export const LoaderTemplateTwo = () => {
 
 export const LoaderTemplateHeader = () => {
   return (
-    <div>
+    <div style={{ padding: "0 20px" }}>
       <LoaderHeader />
       <Loader />
       <Loader />

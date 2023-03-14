@@ -40,7 +40,7 @@
       font-size: 14px;
     }
     @media (max-width: 400px) {
-      font-size: 11px;
+      font-size: 12px;
       margin: 0 0 10px 0;
     }
 
@@ -66,27 +66,15 @@
           @media screen and (max-width: 1000px) {
             font-size: 14px;
           }
-          @media screen and (max-width: 1000px) {
-            font-size: 10px;
-          }
-          @media (max-width: 810px) {
-            font-size: 13px;
-          }
-          @media (max-width: 544px) {
-            font-size: 10px;
+          @media screen and (max-width: 440px) {
+            font-size: 12px;
           }
         }
         @media screen and (max-width: 1000px) {
-          font-size: 11px;
+          font-size: 14px;
         }
-        @media screen and (max-width: 900px) {
-          font-size: 10px;
-        }
-        @media (max-width: 810px) {
-          font-size: 13px;
-        }
-        @media (max-width: 544px) {
-          font-size: 10px;
+        @media screen and (max-width: 440px) {
+          font-size: 12px;
         }
       }
     }
