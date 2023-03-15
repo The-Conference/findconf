@@ -12,8 +12,11 @@
     gap: 20px;
     padding: 65px 0 65px 0;
   }
+  @media screen and (max-width: 700px) {
+    position: relative;
+  }
   @media (max-width: 460px) {
-    padding: 45px 0 45px 0;
+    padding: 45px 0 15px 0;
   }
   // @media (max-width: 860px) {
   //   gap: 20px;
