@@ -327,6 +327,7 @@ const AllConferences = ({ data, keywords, id }) => {
                     height="24"
                   />
                 </div>
+                <div className="conference__bg-middle">#здесьтэг</div>
                 <div className="conference__bg-bottom">
                   {el.conf_date_end === null && el.conf_date_begin === null
                     ? "дата уточняется"
