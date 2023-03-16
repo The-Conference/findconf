@@ -1,5 +1,5 @@
 - name: predeploy docker compose
-  hosts: test
+  hosts: prod
   vars:
     - dev_path: /usr/data
   gather_facts: false
@@ -28,9 +28,11 @@
       with_items:
         - www
         - nginx_conf
+        - certbot
         - pg_data
         - pgsql
         - redis_data
+        - django
       tags:
         - volumes
 
@@ -66,8 +68,11 @@
 
     - name: copy django folder (test)
       copy:
-        src: "../docker_config/django"
-        dest: "{{ dev_path }}/"
+        src: "../docker_config/django/{{ item }}"
+        dest: "{{ dev_path }}/django/"
+      loop:
+        - "Dockerfile"
+        - "run.sh"
       tags:
         - conf_back
       when:
@@ -75,8 +80,11 @@
 
     - name: copy django folder (prod)
       copy:
-        src: "../docker_config/django-prod"
-        dest: "{{ dev_path }}/"
+        src: "../docker_config/django-prod/{{ item }}"
+        dest: "{{ dev_path }}/django/"
+      loop:
+        - "Dockerfile"
+        - "run.sh"
       tags:
         - conf_back
       when:
@@ -146,13 +154,6 @@
         dest: "{{ dev_path }}/"
       tags:
         - compose
-
-    - name: copy env. file
-      copy:
-        src: "../.metadata/.env"
-        dest: "/root/"
-      tags:
-        - conf_back
 
     - name: download frontend archive from github (test)
       get_url:
@@ -247,3 +248,52 @@
         - update_front
       when:
         - inventory_hostname in groups ["prod"]
+
+    - name: copy certbot scripts to test
+      copy:
+        src: "../scripts-test/certbot.sh"
+        dest: "/usr/local/bin/certbot.sh"
+        owner: root
+        group: root
+        mode: "u=rwx,g=rx,o=r"
+      tags:
+        - scripts
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy certbot scripts to prod
+      copy:
+        src: "../scripts-prod/certbot.sh"
+        dest: "/usr/local/bin/certbot.sh"
+        owner: root
+        group: root
+        mode: "u=rwx,g=rx,o=r"
+      tags:
+        - scripts
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: add certbot.sh to crontab (test)
+      lineinfile:
+        path: "/etc/crontab"
+        state: present
+        search_string: '01 23    * * 6   root    /usr/local/bin/certbot.sh'
+        line: '01 23    * * 6   root    /usr/local/bin/certbot.sh'
+      tags:
+        - scripts
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: add certbot.sh to crontab (prod)
+      lineinfile:
+        path: "/etc/crontab"
+        state: present
+        search_string: '01 22    * * 6   root    /usr/local/bin/certbot.sh'
+        line: '01 22    * * 6   root    /usr/local/bin/certbot.sh'
+      tags:
+        - scripts
+      when:
+        - inventory_hostname in groups ["prod"]
+  
+
+    
