@@ -160,35 +160,63 @@
 
   &__bg {
     height: 214px;
-    background-color: #00002e;
+    background-image: url(../../assets/bgCard.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
     border-radius: 16px;
     padding: 16px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    @media screen and (max-width: 1003px) and (min-width: 985px) {
+    @media screen and (max-width: 1212px) {
       height: 190px;
     }
-    @media screen and (max-width: 986px) and (min-width: 809px) {
+    @media screen and (max-width: 1059px) {
+      height: 180px;
+    }
+    @media screen and (max-width: 1018px) {
+      height: 170px;
+    }
+    @media screen and (max-width: 961px) {
+      height: 160px;
+    }
+    @media screen and (max-width: 900px) {
       height: 150px;
     }
-    @media (max-width: 810px) {
-      height: 190px;
+    @media (max-width: 847px) {
+      height: 140px;
     }
-    @media (max-width: 544px) {
+    @media (max-width: 809px) {
+      height: 225px;
+    }
+    @media (max-width: 646px) {
+      height: 200px;
+    }
+    @media (max-width: 575px) {
+      height: 180px;
+      padding: 14px;
+    }
+    @media (max-width: 514px) {
       height: 150px;
+      padding: 13px;
     }
-    @media (max-width: 466px) {
+    @media (max-width: 432px) {
       height: 130px;
+      padding: 8px;
     }
-
+    @media (max-width: 377px) {
+      height: 115px;
+    }
     &-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       @media (max-width: 966px) {
         font-size: 15px;
+      }
+      @media (max-width: 847px) {
+        font-size: 14px;
       }
       @media (max-width: 544px) {
         font-size: 13px;
@@ -199,14 +227,28 @@
         &:hover {
           transform: scale(1.1);
         }
-        @media (max-width: 544px) {
+        @media (max-width: 938px) {
           transform: scale(0.9);
         }
+        @media (max-width: 847px) {
+          transform: scale(0.8);
+        }
+        @media (max-width: 445px) {
+          transform: scale(0.7);
+        }
+      }
+    }
+    &-middle {
+      color: white;
+      text-transform: capitalize;
+      font-size: 23px;
+      @media (max-width: 486px) {
+        font-size: 18px;
       }
     }
     &-bottom {
       color: white;
-      background-color: #ffffff1a;
+      background-color: rgba(255, 255, 255, 0.1);
       font-size: 12px;
       font-weight: 500;
       padding: 7px 14px;
