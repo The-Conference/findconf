@@ -1,9 +1,8 @@
 import React from "react";
 import "./main.scss";
-import { LoaderTemplateHeader } from "../../utils/Loader/LoaderTemplate";
 import { Suspense } from "react";
 // import GreetingForAuth from "./Greeting/GreetingForAuth";
-
+import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
 const Calendar = React.lazy(() => import("../Calendar/Calendar"));
 const Greeting = React.lazy(() => import("../Greeting/Greeting"));
 const AllConferences = React.lazy(() => import("../Conference/AllConferences"));
@@ -11,7 +10,7 @@ const AllConferences = React.lazy(() => import("../Conference/AllConferences"));
 const Main = () => {
   return (
     <div className="main">
-      <Suspense fallback={<LoaderTemplateHeader />}>
+      <Suspense fallback={<LoaderTemplateTwo />}>
         {/* <LoaderTemplateHeader /> */}
         <Greeting />
         {/* <GreetingForAuth /> */}
