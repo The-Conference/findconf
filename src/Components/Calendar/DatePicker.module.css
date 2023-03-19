@@ -64,6 +64,7 @@
   scrollbar-width: none;
   margin: 2px 0 2px -40px;
   -webkit-overflow-scrolling: touch;
+  z-index: -1;
 }
 @media (max-width: 1000px) {
   .dateListScrollable {
