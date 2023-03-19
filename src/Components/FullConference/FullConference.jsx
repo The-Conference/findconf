@@ -4,7 +4,6 @@ import NotFound from "../404/404";
 import {
   handleSave,
   handleFollow,
-  fetchAllConferences,
   fetchFilteredConferences,
 } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
@@ -243,7 +242,6 @@ const FullConference = () => {
     content = <NotFound />;
   }
   useEffect(() => {
-    dispatch(fetchAllConferences());
     dispatch(fetchFilteredConferences());
     window.scrollTo(0, 0);
     dispatch(handleSave(fave));

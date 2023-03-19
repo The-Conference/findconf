@@ -6,6 +6,7 @@ import Fromm from "../Founders/pics/Fromm.webp";
 import Novikov from "../Founders/pics/Novikov.webp";
 import Makover from "../Founders/pics/Makover.webp";
 import Vorobiova from "../Founders/pics/Vorobiova.webp";
+import Rubaeva from "../Founders/pics/Rubaeva.webp";
 const founders = [
   { role: "Project Manager", name: "Иван Иванов", pic: profPic },
   { role: "Project Manager", name: "Иван Иванов", pic: profPic },
@@ -20,7 +21,7 @@ const developers = [
   { role: "DevOps", name: "Сергей Ершов", pic: Ershov },
   { role: "Backend", name: "Вячеслав Новиков", pic: Novikov },
   { role: "Backend", name: "Андрей Маковер", pic: Makover },
-
+  { role: "Content manager", name: "Анастасия Рубаева", pic: Rubaeva },
   { role: "Frontend", name: "Андрей Мощенко", pic: Mosh },
 ];
 
