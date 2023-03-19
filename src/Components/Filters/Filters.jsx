@@ -21,22 +21,26 @@ const Filters = () => {
   return (
     <>
       <div className="filter">
-        <button
-          className={
-            data.some((el) => el.applied === true)
-              ? "filter__delete-button applied-hover"
-              : "filter__delete-button nonapplied-hover"
-          }
-          onClick={() => {
-            dispatch(handleDeleteColor());
-            dispatch(deleteAllFilters());
-            dispatch(fetchFilteredConferences());
-          }}
-        >
-          {(data.some((el) => el.applied === true) && (
-            <img src={white} alt="удалить фильтры" width="14" height="14" />
-          )) || <img src={grey} alt="удалить фильтры" width="14" height="14" />}
-        </button>
+        {data.some((el) => el.applied === true) && (
+          <button
+            className={
+              data.some((el) => el.applied === true)
+                ? "filter__delete-button applied-hover"
+                : "filter__delete-button nonapplied-hover"
+            }
+            onClick={() => {
+              dispatch(handleDeleteColor());
+              dispatch(deleteAllFilters());
+              dispatch(fetchFilteredConferences());
+            }}
+          >
+            {(data.some((el) => el.applied === true) && (
+              <img src={white} alt="удалить фильтры" width="14" height="14" />
+            )) || (
+              <img src={grey} alt="удалить фильтры" width="14" height="14" />
+            )}
+          </button>
+        )}
         {data.map((item) => (
           <div className="filter__container" key={item.id}>
             <div

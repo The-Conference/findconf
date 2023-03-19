@@ -194,13 +194,17 @@ const AllConferences = ({ data, keywords, id }) => {
       <div className="conference__type">
         {data === "all" && (
           <div className="back">
-            <span className="backarrow">&lt;</span> <p>Все конференции</p>
+            <Link to="/">
+              <span className="backarrow">&lt;</span> <p>Все конференции</p>
+            </Link>
           </div>
         )}
 
         {data === "favourites" && (
           <div className="back">
-            <span className="backarrow">&lt;</span> <p>Избранное</p>
+            <Link to="/">
+              <span className="backarrow">&lt;</span> <p>Избранное</p>
+            </Link>
           </div>
         )}
         {data === "search-results" && (
@@ -211,12 +215,17 @@ const AllConferences = ({ data, keywords, id }) => {
         )}
         {data === "collection1" && (
           <div className="back">
-            <span className="backarrow">&lt;</span> <p>История</p>
+            <Link to="/">
+              {" "}
+              <span className="backarrow">&lt;</span> <p>История</p>
+            </Link>
           </div>
         )}
         {data === "collection2" && (
           <div className="back">
-            <span className="backarrow">&lt;</span> <p>Филология</p>
+            <Link to="/">
+              <span className="backarrow">&lt;</span> <p>Филология</p>
+            </Link>
           </div>
         )}
 
@@ -246,19 +255,23 @@ const AllConferences = ({ data, keywords, id }) => {
         )}
         {data === "date" && (
           <div className="back">
-            <span className="backarrow">&lt;</span> <p>Конференции на</p>
-            <span>{date}</span>
+            <Link to="/">
+              <span className="backarrow">&lt;</span> <p>Конференции на </p>
+              <span>{date}</span>
+            </Link>
           </div>
         )}
         {data === "periods" && (
           <div className="back">
-            <span className="backarrow">&lt;</span> <p>Конференции</p>
-            <span>
-              c {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
-            </span>{" "}
-            <span>
-              по {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
-            </span>
+            <Link to="/">
+              <span className="backarrow">&lt;</span> <p>Конференции</p>
+              <span>
+                c {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
+              </span>{" "}
+              <span>
+                по {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
+              </span>
+            </Link>
           </div>
         )}
       </div>
@@ -328,7 +341,9 @@ const AllConferences = ({ data, keywords, id }) => {
                   />
                 </div>
                 <div className="conference__bg-middle">
-                  #{el.tags.map((el) => el.name)}
+                  {el.tags.map((el) => el.name).length > 0 ? (
+                    <div>#{el.tags.map((el) => el.name)}</div>
+                  ) : null}
                 </div>
                 <div className="conference__bg-bottom">
                   {el.conf_date_end === null && el.conf_date_begin === null

@@ -27,6 +27,8 @@
   }
   &__title {
     padding: 16px 0;
+    line-height: 31.2px;
+    font-family: "Manrope semibold";
     h1 {
       font-size: 26px;
       font-weight: 700;
@@ -78,7 +80,7 @@
   }
 
   &__tabs {
-    margin: 16px 0;
+    margin: 16px 0 32px 0;
     button {
       padding: 5px 19px;
       margin-right: 16px;
@@ -119,7 +121,6 @@
       div {
         margin-top: 20px;
         a {
-          font-weight: bold;
           background-color: #2c60e7;
           color: white;
           border-radius: 7px;
@@ -137,11 +138,20 @@
     }
   }
   &__contacts {
+    pre {
+      font-family: "Manrope";
+    }
     div {
+      padding-bottom: 28px;
+      p {
+        padding-bottom: 16px;
+        line-height: 20.8px;
+      }
+
       span {
         font-size: 22px;
         font-family: "Manrope semibold";
-        padding-bottom: 10px;
+        padding: 0 0 16px 0;
       }
     }
     .details {
