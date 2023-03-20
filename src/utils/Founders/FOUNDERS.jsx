@@ -7,8 +7,10 @@ import Makover from "../Founders/pics/Makover.webp";
 import Vorobiova from "../Founders/pics/Vorobiova.webp";
 import Rubaeva from "../Founders/pics/Rubaeva.webp";
 import Semenova from "../Founders/pics/Semenova.webp";
+import Krainov from "../Founders/pics/Krainov.webp";
 const founders = [
   { role: "Project Manager", name: "Татьяна Семёнова", pic: Semenova },
+  { role: "Project Mentor", name: "Кирилл Крайнов", pic: Krainov },
 ];
 
 const developers = [
