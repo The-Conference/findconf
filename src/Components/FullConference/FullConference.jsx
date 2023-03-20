@@ -211,29 +211,35 @@ const FullConference = () => {
         )}
         {!desc && contacts && (
           <div className="full-conference__contacts">
-            <div>
-              <span>Адрес </span>
-              <br /> {full.conf_address}
-            </div>
-            <div>
-              <span>Контактная информация </span>
-              <br /> <span className="details">{full.contacts}</span>
-            </div>
-            <div>
-              <span>Полезные ссылки </span>
-              <br />
-              {full.conf_card_href.length > 0 && (
-                <a rel="noreferrer" target="_blank" href={full.conf_card_href}>
-                  Ссылка на источник
-                </a>
-              )}
-              <br />
-              {full.reg_href.length > 0 && (
-                <a rel="noreferrer" target="_blank" href={full.reg_href}>
-                  Регистрация
-                </a>
-              )}
-            </div>
+            <pre>
+              <div>
+                <span>Адрес </span>
+                <br /> <p>{full.conf_address}</p>
+              </div>
+              <div>
+                <span>Контактная информация </span>
+                <br /> <p>{full.contacts}</p>
+              </div>
+              <div>
+                <span>Полезные ссылки </span>
+                <br />
+                {full.conf_card_href.length > 0 && (
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href={full.conf_card_href}
+                  >
+                    Ссылка на источник
+                  </a>
+                )}
+                <br />
+                {full.reg_href.length > 0 && (
+                  <a rel="noreferrer" target="_blank" href={full.reg_href}>
+                    Регистрация
+                  </a>
+                )}
+              </div>
+            </pre>
           </div>
         )}
       </div>

@@ -14,7 +14,7 @@ const SearchFilter = () => {
 
   const [filteredList, setFilteredList] = useState(search);
   const [value, setValue] = useState("");
-
+  const [focus, setFocus] = useState(false);
   let lighted = value
     .trim()
     .split(" ")
@@ -62,20 +62,25 @@ const SearchFilter = () => {
   };
   const handleFocus = () => {
     dispatch(fetchResults());
+    setFocus(!focus);
   };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <form className="search" onSubmit={(e) => handleValue(e)}>
+    <form
+      className="search"
+      onSubmit={(e) => handleValue(e)}
+      style={{ border: focus === true ? "2px solid #4074fb" : "none" }}
+    >
       <div className="input">
         <input
           onFocus={handleFocus}
           maxLength={100}
           type="search"
           placeholder="Тема конференции, организатор, тематика"
-          className="search-box"
+          className={focus === true ? "input-focused" : "search-box"}
           onChange={(e) => {
             filterBySearch(e);
           }}

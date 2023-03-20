@@ -58,12 +58,12 @@ abbr[title] {
 
 .calender-filter {
   position: absolute;
-  top: 10vh;
+  top: 25vh;
   left: 15vw;
 }
 @media (max-width: 725px) {
   .calender-filter {
-    top: 8vh;
+    top: 19vh;
     left: 0;
     right: 0;
   }

@@ -19,7 +19,7 @@
     font-size: 18px;
     font-family: "Manrope semibold";
     line-height: 21.6px;
-    margin: 16px 0;
+    margin: 8px 0 32px 0;
     height: 65px;
     overflow: hidden;
     display: -webkit-box;
@@ -43,15 +43,11 @@
       font-size: 12px;
       margin: 0 0 10px 0;
     }
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
   &__tags {
-    padding: 10px 16px 10px 16px;
+    padding: 8px 16px 0 16px;
     @media (max-width: 544px) {
-      padding: 5px 10px 0 10px;
+      padding: 0 10px 0 10px;
     }
     div {
       small {
@@ -62,12 +58,13 @@
         &:not(:last-of-type):after {
           content: "\2022";
           padding: 0 1.5px 0 2.5px;
-          font-size: 18px;
+          font-size: 13px;
+          color: #00003833;
           @media screen and (max-width: 1000px) {
-            font-size: 14px;
+            font-size: 12px;
           }
           @media screen and (max-width: 440px) {
-            font-size: 12px;
+            font-size: 10px;
           }
         }
         @media screen and (max-width: 1000px) {
@@ -90,10 +87,13 @@
 
       &:hover {
         color: #4074fb;
-        p {
-          &:hover {
-            padding-left: 10px;
-          }
+      }
+
+      &:nth-child(1) {
+        padding-left: 20px;
+        -webkit-transition: all 0.4s ease-in-out;
+        &:hover {
+          padding-left: 0;
         }
       }
     }
@@ -126,15 +126,16 @@
     span {
       font-size: 25px;
       vertical-align: middle;
-      margin-left: 10px;
       margin-top: 3px;
+
+      margin-left: 8px;
 
       @media screen and (max-width: 700px) {
         font-size: 15px;
       }
     }
     .backarrow {
-      padding-right: 20px;
+      padding: 0 14px 0 0;
       font-size: 30px;
       @media screen and (max-width: 700px) {
         font-size: 25px;
@@ -159,7 +160,7 @@
   }
 
   &__bg {
-    height: 214px;
+    height: 206px;
     background-image: url(../../assets/bgCard.svg);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -170,9 +171,7 @@
     justify-content: space-between;
     position: relative;
     -webkit-transition: all 0.4s ease-in-out;
-    &:hover {
-      background-size: 101%;
-    }
+
     @media screen and (max-width: 1212px) {
       height: 190px;
     }
@@ -216,15 +215,8 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      @media (max-width: 966px) {
-        font-size: 15px;
-      }
-      @media (max-width: 847px) {
-        font-size: 14px;
-      }
-      @media (max-width: 544px) {
-        font-size: 13px;
-      }
+      font-size: 12px;
+
       img {
         cursor: pointer;
         -webkit-transition: all 0.2s ease-in-out;
@@ -252,7 +244,6 @@
     }
     &-bottom {
       color: white;
-      margin-bottom: 5px;
       background-color: rgba(255, 255, 255, 0.1);
       font-size: 12px;
       font-weight: 500;
@@ -269,9 +260,8 @@
     }
     span {
       color: white;
-      height: 34px;
       background-color: #37d175;
-      padding: 7px 14px;
+      padding: 6px 14px;
       border-radius: 6px;
       @media (max-width: 544px) {
         padding: 5px;
