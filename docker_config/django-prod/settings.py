@@ -32,7 +32,7 @@ BASE_DIR = '/app'
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['127.0.0.1', '51.250.87.75', '51.250.91.147', 'test.theconf.ru', 'theconf.ru']
 
