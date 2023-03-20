@@ -10,6 +10,7 @@ import Semenova from "../Founders/pics/Semenova.webp";
 import Krainov from "../Founders/pics/Krainov.webp";
 import Peregudov from "../Founders/pics/Peregudov.webp";
 import Ivanova from "../Founders/pics/Ivanova.webp";
+import Sen from "../Founders/pics/Sen.webp";
 const founders = [
   { role: "Project Manager", name: "Сергей Перегудов", pic: Peregudov },
   { role: "Project Manager", name: "Татьяна Семёнова", pic: Semenova },
@@ -26,6 +27,7 @@ const developers = [
   { role: "Content Manager", name: "Анастасия Рубаева", pic: Rubaeva },
   { role: "Frontend", name: "Андрей Мощенко", pic: Mosh },
   { role: "QA Tester", name: "Юлия Иванова", pic: Ivanova },
+  { role: "QA Tester", name: "Денис Сен", pic: Sen },
 ];
 
 export { founders, developers };

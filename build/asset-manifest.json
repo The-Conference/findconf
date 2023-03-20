@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.e8d01b64.css",
-    "main.js": "/static/js/main.c34205ac.js",
+    "main.js": "/static/js/main.924b258b.js",
     "static/css/377.b07d9b08.chunk.css": "/static/css/377.b07d9b08.chunk.css",
     "static/js/377.1a5b1165.chunk.js": "/static/js/377.1a5b1165.chunk.js",
     "static/css/883.7505c306.chunk.css": "/static/css/883.7505c306.chunk.css",
@@ -31,6 +31,7 @@
     "static/media/Vorobiova.webp": "/static/media/Vorobiova.9f00bdbc6d1307d0b6d6.webp",
     "static/media/Rubaeva.webp": "/static/media/Rubaeva.4ee4d9d674d306853a43.webp",
     "static/media/Levin.webp": "/static/media/Levin.a5279c49e0804206482d.webp",
+    "static/media/Sen.webp": "/static/media/Sen.206ec2d7831ea18df568.webp",
     "static/media/Makover.webp": "/static/media/Makover.dbd4784fad622de580e8.webp",
     "static/media/Ivanova.webp": "/static/media/Ivanova.0806f22248e8227a6e86.webp",
     "static/media/Manrope-ExtraBold.ttf": "/static/media/Manrope-ExtraBold.b0ac9f1b582da5d98892.ttf",
@@ -61,7 +62,7 @@
     "static/media/logo.svg": "/static/media/logo.bc8ca2730e7b651170857d9a9c2a41bc.svg",
     "static/media/Step.svg": "/static/media/Step.c669cfce5c04389161edb5a3a701b754.svg",
     "main.e8d01b64.css.map": "/static/css/main.e8d01b64.css.map",
-    "main.c34205ac.js.map": "/static/js/main.c34205ac.js.map",
+    "main.924b258b.js.map": "/static/js/main.924b258b.js.map",
     "377.b07d9b08.chunk.css.map": "/static/css/377.b07d9b08.chunk.css.map",
     "377.1a5b1165.chunk.js.map": "/static/js/377.1a5b1165.chunk.js.map",
     "883.7505c306.chunk.css.map": "/static/css/883.7505c306.chunk.css.map",
@@ -87,6 +88,6 @@
   },
   "entrypoints": [
     "static/css/main.e8d01b64.css",
-    "static/js/main.c34205ac.js"
+    "static/js/main.924b258b.js"
   ]
 }
