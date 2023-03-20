@@ -18,7 +18,7 @@ const founders = [
 ];
 
 const developers = [
-  { role: "UX/UI", name: "Марк Fromm", pic: Fromm },
+  { role: "UX/UI", name: "Марк Игнатьев", pic: Fromm },
   { role: "Graphic Design", name: "Дарья Воробьева", pic: Vorobiova },
   { role: "Backend", name: "Кирилл Левин", pic: Levin },
   { role: "DevOps", name: "Сергей Ершов", pic: Ershov },
@@ -27,7 +27,7 @@ const developers = [
   { role: "Content Manager", name: "Анастасия Рубаева", pic: Rubaeva },
   { role: "Frontend", name: "Андрей Мощенко", pic: Mosh },
   { role: "QA Tester", name: "Юлия Иванова", pic: Ivanova },
-  { role: "QA Tester", name: "Денис Сен", pic: Sen },
+  { role: "QA Tester", name: "Денис Сеногноев", pic: Sen },
 ];
 
 export { founders, developers };
