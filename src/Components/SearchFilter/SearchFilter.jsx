@@ -62,7 +62,7 @@ const SearchFilter = () => {
   };
   const handleFocus = () => {
     dispatch(fetchResults());
-    setFocus(!focus);
+    setFocus(true);
   };
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,11 +72,12 @@ const SearchFilter = () => {
     <form
       className="search"
       onSubmit={(e) => handleValue(e)}
-      style={{ border: focus === true ? "2px solid #4074fb" : "none" }}
+      style={{ border: focus ? "2px solid #4074fb" : "none" }}
     >
       <div className="input">
         <input
           onFocus={handleFocus}
+          onBlur={() => setFocus(false)}
           maxLength={100}
           type="search"
           placeholder="Тема конференции, организатор, тематика"
