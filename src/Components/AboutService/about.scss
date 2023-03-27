@@ -81,8 +81,20 @@
       max-width: 273px;
       padding: 16px;
     }
-    .last {
-      left: -37%;
+
+    ul {
+      width: 100%;
+      li {
+        margin-left: 20px;
+        &::before {
+          content: "\2022";
+          color: #2c60e7;
+          font-weight: bold;
+          display: inline-block;
+          width: 1em;
+          margin-left: -1em;
+        }
+      }
     }
   }
   &__staff {
