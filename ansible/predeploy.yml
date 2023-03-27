@@ -66,6 +66,13 @@
         dest: "{{ dev_path }}/"
         decrypt: true
 
+    - name: copy env_file for docker-compose
+      copy:
+        src: "../.metadata/.env"
+        dest: "/root/.env"
+      tags:
+        - conf_back
+
     - name: copy django folder (test)
       copy:
         src: "../docker_config/django/{{ item }}"
