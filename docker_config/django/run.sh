@@ -12,5 +12,3 @@ gunicorn --certfile=/etc/letsencrypt/live/test.theconf.ru/cert.pem --keyfile=/et
 
 exec "$@"
 
-sleep 30
-celery -A Conferences worker -l INFO -B
