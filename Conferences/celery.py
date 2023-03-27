@@ -12,7 +12,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'running_parsers': {
-        'task': 'Conference_data.tasks.parser14',
-        'schedule': crontab(minute='*/5'),
+        'task': 'Conference_data.tasks.parser1',
+        'schedule': crontab(minute=10, hour='*/3'),
     },
 }

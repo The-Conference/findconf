@@ -27,10 +27,13 @@ def save_conferences(lst):
                 conference["conf_date_begin"] = None
             if conference["conf_date_end"] == '':
                 conference["conf_date_end"] = None
+            if not conference["conf_date_begin"]:
+                conference["conf_date_begin"] = '2023-01-01'
             Conference.objects.create(
+                generate_conf_id=False,
                 conf_id=conference["conf_id"],
-                hash=conference["hash"],
-                un_name=conference["un_name"],
+                hash=conference["hash"][:450],
+                un_name=conference["un_name"][:450],
                 local=conference["local"],
                 reg_date_begin=datetime.strptime(conference["reg_date_begin"], '%Y-%m-%d') \
                 if conference["reg_date_begin"] is not None else None,
@@ -40,15 +43,15 @@ def save_conferences(lst):
                 if conference["conf_date_begin"] is not None else None,
                 conf_date_end=datetime.strptime(conference["conf_date_end"], '%Y-%m-%d') \
                 if conference["conf_date_end"] is not None else None,
-                conf_card_href=conference["conf_card_href"],
-                reg_href=conference["reg_href"],
+                conf_card_href=conference["conf_card_href"][:450],
+                reg_href=conference["reg_href"][:450],
                 conf_name=conference["conf_name"],
                 conf_s_desc=conference["conf_s_desc"],
                 conf_desc=conference["conf_desc"],
                 org_name=conference["org_name"],
                 themes=conference["themes"],
                 online=conference["online"],
-                conf_href=conference["conf_href"],
+                conf_href=conference["conf_href"][:450],
                 offline=conference["offline"],
                 conf_address=conference["conf_address"],
                 contacts=conference["contacts"],

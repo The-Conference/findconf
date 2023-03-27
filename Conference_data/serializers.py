@@ -1,4 +1,5 @@
 from django.utils import timezone
+from datetime import datetime
 from rest_framework import serializers
 
 from django.utils.html import linebreaks
@@ -21,13 +22,16 @@ class ConferenceSerializer(serializers.ModelSerializer):
     def get_conf_status(self, obj):
         current_date = timezone.now().date()
         if obj.conf_date_begin is None or obj.conf_date_end is None:
-            return "Неизвестно (уточнить у организатора)"
-        elif obj.conf_date_begin <= current_date <= obj.conf_date_end:
-            return "Конференция началась"
-        elif (obj.conf_date_begin - current_date).days == 2:
-            return "Конференция скоро начнётся"
+            return "Уточнить у организатора"
         else:
-            return None if obj.conf_date_begin > current_date else "Конференция окончена"
+            conf_date_begin = datetime.strptime(obj.conf_date_begin, '%Y-%m-%d').date()
+            conf_date_end = datetime.strptime(obj.conf_date_end, '%Y-%m-%d').date() if obj.conf_date_end else None
+            if conf_date_begin <= current_date <= conf_date_end:
+                return "Конференция идёт"
+            elif (conf_date_begin - current_date).days == 14:
+                return "Конференция скоро начнётся"
+            else:
+                return None if conf_date_begin > current_date else "Конференция окончена"
 
     def get_conf_s_desc(self, obj):
         formatted_text = linebreaks(obj.conf_s_desc)
