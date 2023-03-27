@@ -21,6 +21,8 @@ services:
       - ./nginx_conf:/etc/nginx/conf.d/
       - ./django/app:/app/
       - /etc/letsencrypt:/etc/letsencrypt:ro
+    env_file:
+      /root/.env
     expose:
       - "8000"
     restart: always
