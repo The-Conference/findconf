@@ -231,25 +231,25 @@ const AllConferences = ({ data, keywords, id }) => {
 
         {data === "prev1" && (
           <a href="/collection1">
-            <p>История</p>
+            <p className="forward">История</p>
             <span>&gt;</span>
           </a>
         )}
         {data === "prev2" && (
           <a href="/collection2">
-            <p>Филология</p>
+            <p className="forward">Филология</p>
             <span>&gt;</span>
           </a>
         )}
         {data === "prev3" && (
           <a href="/all">
-            <p>Все конференции</p>
+            <p className="forward">Все конференции</p>
             <span>&gt;</span>
           </a>
         )}
         {data === "prev4" && result.length > 0 && (
           <div className="similar">
-            <p>Похожие конференции</p>
+            <p className="forward">Похожие конференции</p>
             <span>&gt;</span>
           </div>
         )}
@@ -264,13 +264,12 @@ const AllConferences = ({ data, keywords, id }) => {
         {data === "periods" && (
           <div className="back">
             <Link to="/">
-              <span className="backarrow">&lt;</span> <p>Конференции</p>
-              <span>
-                c {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
-              </span>{" "}
-              <span>
+              <span className="backarrow">&lt;</span>{" "}
+              <p>
+                Конференции c{" "}
+                {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
                 по {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
-              </span>
+              </p>
             </Link>
           </div>
         )}
@@ -303,27 +302,27 @@ const AllConferences = ({ data, keywords, id }) => {
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
                 <div className="conference__bg-top">
-                  {(el.register === false && el.finished === false && (
-                    <span
-                      style={{
-                        backgroundColor: "#939393",
-                      }}
-                    >
-                      Регистрация закончена
-                    </span>
-                  )) ||
-                    (el.register === false && el.finished === true && (
-                      <span
-                        style={{
-                          backgroundColor: "#939393",
-                        }}
-                      >
-                        Конференция завершена
-                      </span>
-                    )) ||
-                    (el.register === true && el.finished === false && (
-                      <span>Идет регистрация</span>
-                    ))}
+                  <span
+                    className={
+                      el.conf_status === "Ожидается регистрация" ||
+                      el.conf_status === "Регистрация скоро начнется" ||
+                      el.conf_status === "Регистрация началась" ||
+                      el.conf_status === "Регистрация идёт" ||
+                      el.conf_status === "Регистрация окончена"
+                        ? "yellow-status"
+                        : el.conf_status === "Конференция запланирована" ||
+                          el.conf_status === "Конференция скоро начнется" ||
+                          el.conf_status === "Конференция идёт"
+                        ? "green-status"
+                        : el.conf_status === "Конференция приостановлена"
+                        ? "orange-status"
+                        : el.conf_status === "Конференция окончена"
+                        ? "grey-status"
+                        : "red-status"
+                    }
+                  >
+                    {el.conf_status || "статус уточняется"}
+                  </span>
                   <img
                     title={
                       el.follow === false
@@ -348,7 +347,7 @@ const AllConferences = ({ data, keywords, id }) => {
                 <div className="conference__bg-bottom">
                   {el.conf_date_end === null && el.conf_date_begin === null
                     ? "дата уточняется"
-                    : el.conf_date_end !== null
+                    : el.conf_date_end !== el.conf_date_begin
                     ? new Date(el.conf_date_begin)
                         .toLocaleDateString("ru", options)
                         .slice(0, -3) +

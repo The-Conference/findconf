@@ -52,27 +52,27 @@ const FullConference = () => {
     content = (
       <div className="full-conference__container">
         <div className="full-conference__container-top">
-          {(full.register === false && full.finished === false && (
-            <span
-              style={{
-                backgroundColor: "#939393",
-              }}
-            >
-              Регистрация закончена
-            </span>
-          )) ||
-            (full.register === false && full.finished === true && (
-              <span
-                style={{
-                  backgroundColor: "#939393",
-                }}
-              >
-                Конференция завершена
-              </span>
-            )) ||
-            (full.register === true && full.finished === false && (
-              <span>Идет регистрация</span>
-            ))}
+          <span
+            className={
+              full.conf_status === "Ожидается регистрация" ||
+              full.conf_status === "Регистрация скоро начнется" ||
+              full.conf_status === "Регистрация началась" ||
+              full.conf_status === "Регистрация идёт" ||
+              full.conf_status === "Регистрация окончена"
+                ? "yellow-status"
+                : full.conf_status === "Конференция запланирована" ||
+                  full.conf_status === "Конференция скоро начнется" ||
+                  full.conf_status === "Конференция идёт"
+                ? "green-status"
+                : full.conf_status === "Конференция приостановлена"
+                ? "orange-status"
+                : full.conf_status === "Конференция окончена"
+                ? "grey-status"
+                : "red-status"
+            }
+          >
+            {full.conf_status || "статус уточняется"}
+          </span>
           <img
             title={
               full.follow === false
@@ -100,7 +100,7 @@ const FullConference = () => {
               <span>Дата проведения:</span>
               {full.conf_date_end === null && full.conf_date_begin === null
                 ? "дата уточняется"
-                : full.conf_date_end !== null
+                : full.conf_date_end !== full.conf_date_begin
                 ? new Date(full.conf_date_begin)
                     .toLocaleDateString("ru", options)
                     .slice(0, -3) +
@@ -148,7 +148,7 @@ const FullConference = () => {
             <div>
               <span>Публикация:</span>
               <span className="online">
-                {full.rinc ? "ринц" : "без публикации"}
+                {full.rinc ? "РИНЦ" : "без публикации"}
               </span>
             </div>
           </div>
@@ -221,7 +221,7 @@ const FullConference = () => {
                 <br /> <p>{full.contacts}</p>
               </div>
               <div>
-                <span>Полезные ссылки </span>
+                <p className="useful-links">Полезные ссылки </p>
                 <br />
                 {full.conf_card_href.length > 0 && (
                   <a

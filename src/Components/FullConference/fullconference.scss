@@ -16,8 +16,6 @@
         }
       }
       span {
-        color: white;
-        background-color: #37d175;
         height: 32px;
         padding: 6px 14px;
         border-radius: 6px;
@@ -117,7 +115,9 @@
           list-style-type: disc;
         }
       }
-
+      ol {
+        margin-left: 20px;
+      }
       div {
         margin-top: 20px;
         a {
@@ -140,15 +140,17 @@
   &__contacts {
     pre {
       font-family: "Manrope";
+      white-space: pre-wrap;
     }
     div {
       padding-bottom: 28px;
 
       p {
-        padding-bottom: 16px;
         line-height: 30.8px;
       }
-
+      a {
+        line-height: 30.8px;
+      }
       span {
         font-size: 22px;
         font-family: "Manrope semibold";
@@ -164,5 +166,9 @@
   .offline,
   .both {
     color: black;
+  }
+  .useful-links {
+    font-size: 22px;
+    font-family: "Manrope semibold";
   }
 }

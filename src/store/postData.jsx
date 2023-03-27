@@ -61,7 +61,7 @@ export const postData = createSlice({
       if (action.payload === "ринц") {
         state.filters.filter.rinc = !state.filters.filter.rinc;
       }
-      if (action.payload === "идет регистрация") {
+      if (action.payload === "регистрация началась") {
         state.filters.filter.register = !state.filters.filter.register;
       }
       if (action.payload === "ближайшие") {
@@ -82,23 +82,10 @@ export const postData = createSlice({
 
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
       let data = action.payload;
-      let month = new Date().getMonth() + 1;
-      let day = new Date().getDate();
+
       for (let item of data) {
         item.follow =
           followed.includes(item.id) && followed.length > 0 ? true : false;
-        item.register =
-          new Date(item.reg_date_end).getMonth() + 1 < month ||
-          (new Date(item.reg_date_end).getMonth() + 1 === month &&
-            new Date(item.reg_date_end).getDate() < day)
-            ? false
-            : true;
-        item.finished =
-          new Date(item.conf_date_end).getMonth() + 1 < month ||
-          (new Date(item.conf_date_end).getMonth() + 1 === month &&
-            new Date(item.conf_date_end).getDate() < day)
-            ? true
-            : false;
       }
       state.conferences = data;
     },
@@ -108,23 +95,10 @@ export const postData = createSlice({
 
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
       let data = action.payload;
-      let month = new Date().getMonth() + 1;
-      let day = new Date().getDate();
+
       for (let item of data) {
         item.follow =
           followed.includes(item.id) && followed.length > 0 ? true : false;
-        item.register =
-          new Date(item.reg_date_end).getMonth() + 1 < month ||
-          (new Date(item.reg_date_end).getMonth() + 1 === month &&
-            new Date(item.reg_date_end).getDate() < day)
-            ? false
-            : true;
-        item.finished =
-          new Date(item.conf_date_end).getMonth() + 1 < month ||
-          (new Date(item.conf_date_end).getMonth() + 1 === month &&
-            new Date(item.conf_date_end).getDate() < day)
-            ? true
-            : false;
       }
       if (
         state.filters.filter.online === false &&
@@ -213,7 +187,9 @@ export const postData = createSlice({
         state.filters.filter.register === true &&
         state.filters.filter.nearest === false
       ) {
-        state.conferences = data.filter((el) => el.register === true);
+        state.conferences = data.filter(
+          (el) => el.conf_status === "регистрация началась"
+        );
       }
       if (
         state.filters.filter.online === false &&
@@ -223,7 +199,7 @@ export const postData = createSlice({
         state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
-          (el) => el.register === true && el.rinc === true
+          (el) => el.conf_status === "Регистрация Началась" && el.rinc === true
         );
       }
       if (
@@ -234,7 +210,8 @@ export const postData = createSlice({
         state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
-          (el) => el.register === true && el.offline === true
+          (el) =>
+            el.conf_status === "Регистрация Началась" && el.offline === true
         );
       }
       if (
@@ -245,7 +222,8 @@ export const postData = createSlice({
         state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
-          (el) => el.register === true && el.online === true
+          (el) =>
+            el.conf_status === "Регистрация Началась" && el.online === true
         );
       }
       if (
@@ -257,7 +235,9 @@ export const postData = createSlice({
       ) {
         state.conferences = data.filter(
           (el) =>
-            el.register === true && el.online === true && el.offline === true
+            el.conf_status === "Регистрация Началась" &&
+            el.online === true &&
+            el.offline === true
         );
       }
       if (
@@ -268,7 +248,10 @@ export const postData = createSlice({
         state.filters.filter.nearest === false
       ) {
         state.conferences = data.filter(
-          (el) => el.register === true && el.online === true && el.rinc === true
+          (el) =>
+            el.conf_status === "Регистрация Началась" &&
+            el.online === true &&
+            el.rinc === true
         );
       }
       if (
@@ -280,7 +263,9 @@ export const postData = createSlice({
       ) {
         state.conferences = data.filter(
           (el) =>
-            el.register === true && el.offline === true && el.rinc === true
+            el.conf_status === "Регистрация Началась" &&
+            el.offline === true &&
+            el.rinc === true
         );
       }
       if (
@@ -292,7 +277,7 @@ export const postData = createSlice({
       ) {
         state.conferences = data.filter(
           (el) =>
-            el.register === true &&
+            el.conf_status === "Регистрация Началась" &&
             el.online === true &&
             el.rinc === true &&
             el.offline === true
@@ -305,13 +290,15 @@ export const postData = createSlice({
         state.filters.filter.register === false &&
         state.filters.filter.nearest === true
       ) {
-        state.conferences = data.sort((a, b) =>
-          dateToYMD(new Date(a.conf_date_begin)) >
-          dateToYMD(new Date(b.conf_date_begin)) >
-          0
-            ? 1
-            : -1
-        );
+        state.conferences = data
+          .sort((a, b) =>
+            dateToYMD(new Date(a.conf_date_begin)) >
+            dateToYMD(new Date(b.conf_date_begin)) >
+            0
+              ? 1
+              : -1
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === false &&
@@ -328,7 +315,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === false &&
@@ -345,7 +333,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === false &&
@@ -362,7 +351,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -379,7 +369,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -396,7 +387,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -413,7 +405,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -423,14 +416,18 @@ export const postData = createSlice({
         state.filters.filter.nearest === true
       ) {
         state.conferences = data
-          .filter((el) => el.online === true && el.register === true)
+          .filter(
+            (el) =>
+              el.online === true && el.conf_status === "Регистрация Началась"
+          )
           .sort((a, b) =>
             dateToYMD(new Date(a.conf_date_begin)) >
             dateToYMD(new Date(b.conf_date_begin)) >
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === false &&
@@ -447,7 +444,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === false &&
@@ -464,7 +462,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === false &&
@@ -474,14 +473,18 @@ export const postData = createSlice({
         state.filters.filter.nearest === true
       ) {
         state.conferences = data
-          .filter((el) => el.register === true && el.rinc === true)
+          .filter(
+            (el) =>
+              el.conf_status === "Регистрация Началась" && el.rinc === true
+          )
           .sort((a, b) =>
             dateToYMD(new Date(a.conf_date_begin)) >
             dateToYMD(new Date(b.conf_date_begin)) >
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -501,7 +504,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -513,7 +517,9 @@ export const postData = createSlice({
         state.conferences = data
           .filter(
             (el) =>
-              el.online === true && el.register === true && el.rinc === true
+              el.online === true &&
+              el.conf_status === "Регистрация Началась" &&
+              el.rinc === true
           )
           .sort((a, b) =>
             dateToYMD(new Date(a.conf_date_begin)) >
@@ -521,7 +527,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === false &&
@@ -533,7 +540,9 @@ export const postData = createSlice({
         state.conferences = data
           .filter(
             (el) =>
-              el.register === true && el.offline === true && el.rinc === true
+              el.conf_status === "Регистрация Началась" &&
+              el.offline === true &&
+              el.rinc === true
           )
           .sort((a, b) =>
             dateToYMD(new Date(a.conf_date_begin)) >
@@ -541,7 +550,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -556,7 +566,7 @@ export const postData = createSlice({
               el.online === true &&
               el.offline === true &&
               el.rinc === true &&
-              el.register === true
+              el.conf_status === "Регистрация Началась"
           )
           .sort((a, b) =>
             dateToYMD(new Date(a.conf_date_begin)) >
@@ -564,7 +574,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       if (
         state.filters.filter.online === true &&
@@ -576,7 +587,9 @@ export const postData = createSlice({
         state.conferences = data
           .filter(
             (el) =>
-              el.online === true && el.offline === true && el.register === true
+              el.online === true &&
+              el.offline === true &&
+              el.conf_status === "Регистрация Началась"
           )
           .sort((a, b) =>
             dateToYMD(new Date(a.conf_date_begin)) >
@@ -584,7 +597,8 @@ export const postData = createSlice({
             0
               ? 1
               : -1
-          );
+          )
+          .filter((el) => el.conf_status !== "Конференция окончена");
       }
       state.isLoading = false;
     },

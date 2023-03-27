@@ -15,7 +15,7 @@ const FILTERS = [
     applied: false,
   },
   {
-    name: "идет регистрация",
+    name: "регистрация началась",
     id: 4,
     applied: false,
   },
