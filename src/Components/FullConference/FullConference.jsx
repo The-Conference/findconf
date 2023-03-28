@@ -223,7 +223,7 @@ const FullConference = () => {
               <div>
                 <p className="useful-links">Полезные ссылки </p>
                 <br />
-                {full.conf_card_href.length > 0 && (
+                {full.conf_card_href && (
                   <a
                     rel="noreferrer"
                     target="_blank"
@@ -233,7 +233,7 @@ const FullConference = () => {
                   </a>
                 )}
                 <br />
-                {full.reg_href.length > 0 && (
+                {full.reg_href && (
                   <a rel="noreferrer" target="_blank" href={full.reg_href}>
                     Регистрация
                   </a>
