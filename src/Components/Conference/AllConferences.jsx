@@ -91,10 +91,10 @@ const AllConferences = ({ data, keywords, id }) => {
     searchRes: match,
     date: conferences.filter((el) => confs.includes(el.id)),
     collection1: conferences.filter(
-      (el) => el.themes.toLowerCase().indexOf("история".toLowerCase()) !== -1
+      (el) => el.conf_status !== "Конференция окончена"
     ),
     collection2: conferences.filter(
-      (el) => el.themes.toLowerCase().indexOf("филология".toLowerCase()) !== -1
+      (el) => el.conf_status === "Конференция окончена"
     ),
 
     periods: conferences.filter(
@@ -103,15 +103,10 @@ const AllConferences = ({ data, keywords, id }) => {
         range.includes(new Date(el.conf_date_end).toLocaleDateString())
     ),
     prev1: conferences
-      .filter(
-        (el) => el.themes.toLowerCase().indexOf("история".toLowerCase()) !== -1
-      )
+      .filter((el) => el.conf_status !== "Конференция окончена")
       .slice(0, 2),
     prev2: conferences
-      .filter(
-        (el) =>
-          el.themes.toLowerCase().indexOf("филология".toLowerCase()) !== -1
-      )
+      .filter((el) => el.conf_status === "Конференция окончена")
       .slice(0, 2),
     prev3: conferences.slice(0, 2),
     prev4: recsPrev.filter((el) => el.id !== id).slice(0, 2),
@@ -217,27 +212,29 @@ const AllConferences = ({ data, keywords, id }) => {
           <div className="back">
             <Link to="/">
               {" "}
-              <span className="backarrow">&lt;</span> <p>История</p>
+              <span className="backarrow">&lt;</span>{" "}
+              <p>Предстоящие конференции</p>
             </Link>
           </div>
         )}
         {data === "collection2" && (
           <div className="back">
             <Link to="/">
-              <span className="backarrow">&lt;</span> <p>Филология</p>
+              <span className="backarrow">&lt;</span>{" "}
+              <p>Прошедшие конференции</p>
             </Link>
           </div>
         )}
 
         {data === "prev1" && (
           <a href="/collection1">
-            <p className="forward">История</p>
+            <p className="forward">Предстоящие конференции</p>
             <span>&gt;</span>
           </a>
         )}
         {data === "prev2" && (
           <a href="/collection2">
-            <p className="forward">Филология</p>
+            <p className="forward">Прошедшие конференции</p>
             <span>&gt;</span>
           </a>
         )}
