@@ -12,22 +12,57 @@ import Peregudov from "../Founders/pics/Peregudov.webp";
 import Ivanova from "../Founders/pics/Ivanova.webp";
 import Sen from "../Founders/pics/Sen.webp";
 const founders = [
-  { role: "Project Manager", name: "Сергей Перегудов", pic: Peregudov },
-  { role: "Project Manager", name: "Татьяна Семёнова", pic: Semenova },
-  { role: "Project Mentor", name: "Кирилл Крайнов", pic: Krainov },
+  {
+    role: "Project Manager",
+    name: "Сергей Перегудов",
+    pic: Peregudov,
+    tg: "PeregudovS",
+  },
+  {
+    role: "Project Manager",
+    name: "Татьяна Семёнова",
+    pic: Semenova,
+    tg: "Tat_sw",
+  },
+  {
+    role: "Project Mentor",
+    name: "Кирилл Крайнов",
+    pic: Krainov,
+    tg: "timanovsky",
+  },
 ];
 
 const developers = [
-  { role: "UX/UI", name: "Марк Игнатьев", pic: Fromm },
-  { role: "Graphic Design", name: "Дарья Воробьева", pic: Vorobiova },
-  { role: "Backend", name: "Кирилл Левин", pic: Levin },
-  { role: "DevOps", name: "Сергей Ершов", pic: Ershov },
-  { role: "Backend", name: "Вячеслав Новиков", pic: Novikov },
-  { role: "Backend", name: "Андрей Маковер", pic: Makover },
-  { role: "Content Manager", name: "Анастасия Рубаева", pic: Rubaeva },
-  { role: "Frontend", name: "Андрей Мощенко", pic: Mosh },
-  { role: "QA Tester", name: "Юлия Иванова", pic: Ivanova },
-  { role: "QA Tester", name: "Денис Сеногноев", pic: Sen },
+  { role: "UX/UI", name: "Марк Игнатьев", pic: Fromm, tg: "m_fromm" },
+  {
+    role: "Graphic Design",
+    name: "Дарья Воробьева",
+    pic: Vorobiova,
+    tg: "darvor",
+  },
+  { role: "Backend", name: "Кирилл Левин", pic: Levin, tg: "levin_kirill" },
+  { role: "DevOps", name: "Сергей Ершов", pic: Ershov, tg: "Mr_GetSam" },
+  {
+    role: "Backend",
+    name: "Вячеслав Новиков",
+    pic: Novikov,
+    tg: "VanavaraNovikov",
+  },
+  { role: "Backend", name: "Андрей Маковер", pic: Makover, tg: "SanderAMC" },
+  {
+    role: "Content Manager",
+    name: "Анастасия Рубаева",
+    pic: Rubaeva,
+    tg: "Rubaeva_35",
+  },
+  { role: "Frontend", name: "Андрей Мощенко", pic: Mosh, tg: "Andrew_Mosh" },
+  {
+    role: "QA Tester",
+    name: "Юлия Иванова",
+    pic: Ivanova,
+    tg: "ivanovajulika",
+  },
+  { role: "QA Tester", name: "Денис Сеногноев", pic: Sen, tg: "Bran_MakMorn" },
 ];
 
 export { founders, developers };

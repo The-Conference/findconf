@@ -190,6 +190,12 @@
         cursor: pointer;
         padding-right: 19px;
         -webkit-transition: all 0.3s ease-in-out;
+        a {
+          -webkit-transition: all 0.3s ease-in-out;
+          &:hover {
+            color: #4074fb;
+          }
+        }
         &:hover {
           color: #4074fb;
           stroke: #4074fb;
