@@ -80,6 +80,7 @@
       loop:
         - "Dockerfile"
         - "run.sh"
+        - "parcer.sh"
       tags:
         - conf_back
       when:
@@ -92,6 +93,7 @@
       loop:
         - "Dockerfile"
         - "run.sh"
+        - "parcer.sh"
       tags:
         - conf_back
       when:
