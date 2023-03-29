@@ -7,5 +7,5 @@ FROM python:3.10-buster
   COPY ./app/requirements.txt ./
   RUN pip install -r requirements.txt
   COPY ./app /app
-  COPY ./run.sh /start/
-  RUN chmod +x /start/run.sh
+  COPY ./run.sh ./parcer.sh /start/
+  RUN chmod +x /start/*
