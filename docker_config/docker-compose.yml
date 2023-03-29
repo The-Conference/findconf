@@ -33,6 +33,23 @@ services:
       - frontend
       - backend
 
+  celery:
+    build: ./django
+    container_name: app_celery
+    entrypoint: /start/parcer.sh
+    volumes:
+      - ./django/app:/app/
+    env_file:
+      /root/.env
+    restart: always
+    depends_on:
+      - db
+      - redis
+      - django
+    networks:
+      - frontend
+      - backend
+
   nginx:
     image: nginx:latest
     container_name: app_nginx
