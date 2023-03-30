@@ -31,7 +31,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
             elif (conf_date_begin - current_date).days <= 14 and current_date < conf_date_begin:
                 return "Конференция скоро начнётся"
             else:
-                return None if conf_date_begin > current_date else "Конференция окончена"
+                return "Конференция запланирована" if conf_date_begin > current_date else "Конференция окончена"
 
     def get_conf_s_desc(self, obj):
         formatted_text = linebreaks(obj.conf_s_desc)
