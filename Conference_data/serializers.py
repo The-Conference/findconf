@@ -24,11 +24,11 @@ class ConferenceSerializer(serializers.ModelSerializer):
         if obj.conf_date_begin is None or obj.conf_date_end is None:
             return "Уточнить у организатора"
         else:
-            conf_date_begin = datetime.strptime(obj.conf_date_begin, '%Y-%m-%d').date()
-            conf_date_end = datetime.strptime(obj.conf_date_end, '%Y-%m-%d').date() if obj.conf_date_end else None
+            conf_date_begin = obj.conf_date_begin
+            conf_date_end = obj.conf_date_end if obj.conf_date_end else None
             if conf_date_begin <= current_date <= conf_date_end:
                 return "Конференция идёт"
-            elif (conf_date_begin - current_date).days == 14:
+            elif (conf_date_begin - current_date).days <= 14:
                 return "Конференция скоро начнётся"
             else:
                 return None if conf_date_begin > current_date else "Конференция окончена"
