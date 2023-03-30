@@ -22,7 +22,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
     def get_conf_status(self, obj):
         current_date = timezone.now().date()
         if obj.conf_date_begin is None or obj.conf_date_end is None:
-            return "Уточнить у организатора"
+            return "Дата уточняется"
         else:
             conf_date_begin = obj.conf_date_begin
             conf_date_end = obj.conf_date_end if obj.conf_date_end else None
