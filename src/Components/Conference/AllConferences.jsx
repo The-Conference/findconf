@@ -302,13 +302,13 @@ const AllConferences = ({ data, keywords, id }) => {
                   <span
                     className={
                       el.conf_status === "Ожидается регистрация" ||
-                      el.conf_status === "Регистрация скоро начнется" ||
+                      el.conf_status === "Регистрация скоро начнётся" ||
                       el.conf_status === "Регистрация началась" ||
                       el.conf_status === "Регистрация идёт" ||
                       el.conf_status === "Регистрация окончена"
                         ? "yellow-status"
                         : el.conf_status === "Конференция запланирована" ||
-                          el.conf_status === "Конференция скоро начнется" ||
+                          el.conf_status === "Конференция скоро начнётся" ||
                           el.conf_status === "Конференция идёт"
                         ? "green-status"
                         : el.conf_status === "Конференция приостановлена"
@@ -318,7 +318,7 @@ const AllConferences = ({ data, keywords, id }) => {
                         : "red-status"
                     }
                   >
-                    {el.conf_status || "статус уточняется"}
+                    {el.conf_status || "Статус уточняется"}
                   </span>
                   <img
                     title={
@@ -342,8 +342,14 @@ const AllConferences = ({ data, keywords, id }) => {
                   ) : null}
                 </div>
                 <div className="conference__bg-bottom">
-                  {el.conf_date_end === null && el.conf_date_begin === null
-                    ? "дата уточняется"
+                  {el.conf_date_end === null
+                    ? new Date(el.conf_date_begin)
+                        .toLocaleDateString("ru", options)
+                        .slice(0, -3)
+                    : el.conf_date_begin === null
+                    ? new Date(el.conf_date_end)
+                        .toLocaleDateString("ru", options)
+                        .slice(0, -3)
                     : el.conf_date_end !== el.conf_date_begin
                     ? new Date(el.conf_date_begin)
                         .toLocaleDateString("ru", options)
