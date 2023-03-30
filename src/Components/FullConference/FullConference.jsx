@@ -71,7 +71,7 @@ const FullConference = () => {
                 : "red-status"
             }
           >
-            {full.conf_status || "Статус уточняется"}
+            {full.conf_status || "Дата уточняется"}
           </span>
           <img
             title={
