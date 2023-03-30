@@ -129,6 +129,7 @@ const FullConference = () => {
               {full.reg_date_begin === null && full.reg_date_end === null && (
                 <span className="online">дата уточняется</span>
               )}
+
               {(full.reg_date_begin === null && full.reg_date_end !== null && (
                 <span className="online">
                   {" "}
@@ -138,6 +139,13 @@ const FullConference = () => {
                     .slice(0, -3)}{" "}
                 </span>
               )) ||
+                (full.reg_date_begin === full.reg_date_end && (
+                  <span className="online">
+                    {new Date(full.reg_date_end)
+                      .toLocaleDateString("ru", options)
+                      .slice(0, -3)}
+                  </span>
+                )) ||
                 (full.reg_date_begin !== null && full.reg_date_end !== null && (
                   <span className="online">
                     {" "}
