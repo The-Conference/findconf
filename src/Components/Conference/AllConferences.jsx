@@ -318,7 +318,7 @@ const AllConferences = ({ data, keywords, id }) => {
                         : "red-status"
                     }
                   >
-                    {el.conf_status || "Статус уточняется"}
+                    {el.conf_status || "Дата уточняется"}
                   </span>
                   <img
                     title={
