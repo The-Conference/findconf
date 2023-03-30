@@ -55,13 +55,13 @@ const FullConference = () => {
           <span
             className={
               full.conf_status === "Ожидается регистрация" ||
-              full.conf_status === "Регистрация скоро начнется" ||
+              full.conf_status === "Регистрация скоро начнётся" ||
               full.conf_status === "Регистрация началась" ||
               full.conf_status === "Регистрация идёт" ||
               full.conf_status === "Регистрация окончена"
                 ? "yellow-status"
                 : full.conf_status === "Конференция запланирована" ||
-                  full.conf_status === "Конференция скоро начнется" ||
+                  full.conf_status === "Конференция скоро начнётся" ||
                   full.conf_status === "Конференция идёт"
                 ? "green-status"
                 : full.conf_status === "Конференция приостановлена"
@@ -71,7 +71,7 @@ const FullConference = () => {
                 : "red-status"
             }
           >
-            {full.conf_status || "статус уточняется"}
+            {full.conf_status || "Статус уточняется"}
           </span>
           <img
             title={
@@ -98,8 +98,14 @@ const FullConference = () => {
           <div className="full-conference__card-flex">
             <div>
               <span>Дата проведения:</span>
-              {full.conf_date_end === null && full.conf_date_begin === null
-                ? "дата уточняется"
+              {full.conf_date_end === null
+                ? new Date(full.conf_date_begin)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)
+                : full.conf_date_begin === null
+                ? new Date(full.conf_date_end)
+                    .toLocaleDateString("ru", options)
+                    .slice(0, -3)
                 : full.conf_date_end !== full.conf_date_begin
                 ? new Date(full.conf_date_begin)
                     .toLocaleDateString("ru", options)
