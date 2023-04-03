@@ -70,13 +70,8 @@ const AboutService = () => {
               </div>
               <div className="role">{el.role}</div>
               <div className="name">
-                <a
-                  href={`https://t.me/${el.tg}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p>{el.name}</p>
-                </a>
+                <p>{el.name}</p>
+
                 <svg
                   width="6"
                   height="10"
@@ -102,13 +97,8 @@ const AboutService = () => {
               </div>
               <div className="role">{el.role}</div>
               <div className="name">
-                <a
-                  href={`https://t.me/${el.tg}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p>{el.name}</p>
-                </a>
+                <p>{el.name}</p>
+
                 <svg
                   width="6"
                   height="10"
