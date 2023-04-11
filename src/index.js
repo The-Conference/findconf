@@ -4,6 +4,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import ReactGA from "react-ga";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
@@ -146,6 +147,7 @@ const router = createBrowserRouter([
     ),
   },
 ]);
+ReactGA.initialize("G-GXZRLD9TBV");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
