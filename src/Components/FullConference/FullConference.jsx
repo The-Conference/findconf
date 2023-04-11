@@ -14,6 +14,7 @@ import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { options } from "../../utils/options";
 import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
+
 const FullConference = () => {
   const { confId } = useParams();
   const { conferences } = useSelector((state) => state.conferences);

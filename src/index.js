@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import ReactGA from "react-ga";
+import { GAListener } from "./GAListener";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
@@ -153,7 +154,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Suspense fallback={<LoaderTemplateHeader />}>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <GAListener>
+        <RouterProvider router={router} />
+      </GAListener>
     </Provider>
   </Suspense>
 );

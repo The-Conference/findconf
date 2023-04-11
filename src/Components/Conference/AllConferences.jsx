@@ -362,7 +362,7 @@ const AllConferences = ({ data, keywords, id }) => {
                         .toLocaleDateString("ru", options)
                         .slice(0, -3)}
                 </div>
-                <Link
+                <a
                   aria-label="Подробнее о конференции"
                   style={{
                     position: "absolute",
@@ -371,9 +371,11 @@ const AllConferences = ({ data, keywords, id }) => {
                     right: "50px",
                     top: "0",
                   }}
-                  to={`/conferences/${el.id}`}
-                ></Link>
-                <Link
+                  href={`/conferences/${el.id}`}
+                >
+                  <span></span>
+                </a>
+                <a
                   aria-label="Подробнее о конференции"
                   style={{
                     position: "absolute",
@@ -382,8 +384,10 @@ const AllConferences = ({ data, keywords, id }) => {
                     right: "0",
                     top: "50px",
                   }}
-                  to={`/conferences/${el.id}`}
-                ></Link>
+                  href={`/conferences/${el.id}`}
+                >
+                  <span></span>
+                </a>
               </div>
 
               <div className="conference__tags">
@@ -392,9 +396,9 @@ const AllConferences = ({ data, keywords, id }) => {
                     <small key={index}>{tag}</small>
                   ))}
                 </div>
-                <Link to={`/conferences/${el.id}`}>
+                <a href={`/conferences/${el.id}`}>
                   <div className="conference__title">{el.conf_name}</div>
-                </Link>
+                </a>
               </div>
             </div>
           ))}
