@@ -43,6 +43,8 @@ class Conference(models.Model):
 
     generate_conf_id = models.BooleanField(default=False)
 
+    test = models.BooleanField(default=False)
+
     def save(self, *args, **kwargs):
         if not self.pk and self.generate_conf_id:
             self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
