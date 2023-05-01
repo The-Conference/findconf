@@ -11,6 +11,7 @@ import Krainov from "../Founders/pics/Krainov.webp";
 import Peregudov from "../Founders/pics/Peregudov.webp";
 import Ivanova from "../Founders/pics/Ivanova.webp";
 import Sen from "../Founders/pics/Sen.webp";
+import Bolibok from "../Founders/pics/Bolibok.webp";
 const founders = [
   {
     role: "Project Manager",
@@ -56,6 +57,7 @@ const developers = [
     tg: "Rubaeva_35",
   },
   { role: "Frontend", name: "Андрей Мощенко", pic: Mosh, tg: "Andrew_Mosh" },
+  { role: "Frontend", name: "Алексей Болибок", pic: Bolibok, tg: "Insamo" },
   {
     role: "QA Tester",
     name: "Юлия Иванова",
