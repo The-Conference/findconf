@@ -84,9 +84,16 @@
     .back {
       display: flex;
       align-items: center;
-
+      position: relative;
+      padding-left: 10px;
+      -webkit-transition: all 0.4s ease-in-out;
       &:hover {
         color: #4074fb;
+        padding-left: 0;
+      }
+      p {
+        position: absolute;
+        left: 40px;
       }
     }
     .similar {
@@ -120,8 +127,6 @@
       vertical-align: middle;
       margin-top: 3px;
 
-      margin-left: 8px;
-
       @media screen and (max-width: 700px) {
         font-size: 15px;
       }
@@ -129,6 +134,7 @@
     .backarrow {
       padding: 0 14px 0 0;
       font-size: 30px;
+
       @media screen and (max-width: 700px) {
         font-size: 25px;
       }

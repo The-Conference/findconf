@@ -42,11 +42,9 @@ const SearchFilter = () => {
       return (
         regexp.test(item.org_name) ||
         regexp.test(item.conf_name) ||
-        regexp.test(item.themes)
-
-        // item.org_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        // item.conf_name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        // item.themes.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        regexp.test(item.themes) ||
+        regexp.test("онлайн") ||
+        regexp.test("офлайн")
       );
     });
     setFilteredList(updatedList);
@@ -127,6 +125,26 @@ const SearchFilter = () => {
                             />
                           </small>
                         ))}
+                        {item.online === true && (
+                          <small key={index}>
+                            <Highlighter
+                              highlightClassName="highlight"
+                              searchWords={lighted}
+                              autoEscape={false}
+                              textToHighlight={"онлайн"}
+                            />
+                          </small>
+                        )}
+                        {item.offline === true && (
+                          <small key={index}>
+                            <Highlighter
+                              highlightClassName="highlight"
+                              searchWords={lighted}
+                              autoEscape={false}
+                              textToHighlight={"офлайн"}
+                            />
+                          </small>
+                        )}
                       </div>
                     </div>
                   </Link>
