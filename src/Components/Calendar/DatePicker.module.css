@@ -19,10 +19,11 @@
   background: linear-gradient(270deg, #f7f7f9, #ffffff80 70%, #fff0);
   right: 45px;
   content: "";
-  height: 100%;
+  bottom: 0;
+  height: 85px;
   position: absolute;
   transition: 0.2s;
-  width: 50px;
+  width: 58px;
 }
 .buttonzIndex::after {
   display: none;
