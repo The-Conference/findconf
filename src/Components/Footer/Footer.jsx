@@ -1,10 +1,10 @@
 import React from "react";
-import "./footer.scss";
+import styles from "./footer.module.scss";
 import logo from "../../assets/logo.svg";
 const Footer = () => {
   return (
     <footer>
-      <div className="footer">
+      <div className={styles.footer}>
         <a href="/">
           <img src={logo} alt="logo" width="20" height="19" />
         </a>
