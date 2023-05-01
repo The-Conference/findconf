@@ -253,8 +253,10 @@ const AllConferences = ({ data, keywords, id }) => {
         {data === "date" && (
           <div className="back">
             <Link to="/">
-              <span className="backarrow">&lt;</span> <p>Конференции на </p>
-              <span>{date}</span>
+              <span className="backarrow">&lt;</span>{" "}
+              <p>
+                Конференции на <span>{date}</span>
+              </p>
             </Link>
           </div>
         )}
