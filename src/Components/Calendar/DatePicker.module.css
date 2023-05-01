@@ -13,7 +13,31 @@
   display: flex;
   align-items: center;
   background-color: #f7f7f9;
+  position: relative;
 }
+.buttonWrapper::after {
+  background: linear-gradient(270deg, #f7f7f9, #ffffff80 70%, #fff0);
+  right: 45px;
+  content: "";
+  height: 100%;
+  position: absolute;
+  transition: 0.2s;
+  width: 50px;
+}
+.buttonzIndex::after {
+  display: none;
+}
+@media (max-width: 841px) {
+  .buttonWrapper::after {
+    right: 20px;
+  }
+}
+@media (max-width: 380px) {
+  .buttonWrapper::after {
+    display: none;
+  }
+}
+
 .buttonzIndex {
   z-index: 2;
 }
@@ -22,6 +46,26 @@
     z-index: 1;
   }
 }
+.blur::after {
+  display: block;
+  left: 79px;
+  height: 85px;
+  bottom: 0;
+  width: 67px;
+  z-index: -1;
+}
+@media (max-width: 841px) {
+  .blur::after {
+    left: 42px;
+    height: 60px;
+  }
+}
+@media (max-width: 380px) {
+  .blur::after {
+    display: none;
+  }
+}
+
 .button {
   border: none;
   text-decoration: none;
@@ -35,6 +79,11 @@
   justify-content: flex-end;
   padding: 16px 10px 18px 10px;
   margin: 15px 0 0 15px;
+}
+
+.button:disabled,
+button[disabled] {
+  cursor: not-allowed;
 }
 
 @media (max-width: 380px) {
@@ -126,6 +175,7 @@
   display: flex;
   z-index: 1;
   margin: 8px 0;
+  cursor: initial;
 }
 
 @media (max-width: 1000px) {
