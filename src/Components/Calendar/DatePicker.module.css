@@ -3,6 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px 30px 20px;
+  position: relative;
 }
 @media (max-width: 841px) {
   .container {
@@ -13,24 +14,26 @@
   display: flex;
   align-items: center;
   background-color: #f7f7f9;
-  position: relative;
 }
 .buttonWrapper::after {
   background: linear-gradient(270deg, #f7f7f9, #ffffff80 70%, #fff0);
-  right: 45px;
+  right: 54px;
   content: "";
-  bottom: 0;
-  height: 85px;
+  height: 61px;
+  bottom: 49px;
   position: absolute;
   transition: 0.2s;
-  width: 58px;
+  width: 42px;
 }
 .buttonzIndex::after {
   display: none;
 }
 @media (max-width: 841px) {
   .buttonWrapper::after {
-    right: 20px;
+    right: 54px;
+    bottom: 20px;
+    height: 53px;
+    width: 32px;
   }
 }
 @media (max-width: 380px) {
@@ -48,17 +51,24 @@
   }
 }
 .blur::after {
+  background: linear-gradient(90deg, #f7f7f9, #ffffff80 70%, #fff0);
   display: block;
-  left: 79px;
-  height: 85px;
-  bottom: 0;
-  width: 67px;
-  z-index: -1;
+  left: 124px;
+  height: 61px;
+  bottom: 49px;
+  width: 42px;
+}
+@media (max-width: 900px) {
+  .blur::after {
+    left: 111px;
+  }
 }
 @media (max-width: 841px) {
   .blur::after {
-    left: 42px;
-    height: 60px;
+    left: 96px;
+    height: 53px;
+    bottom: 20px;
+    width: 32px;
   }
 }
 @media (max-width: 380px) {
