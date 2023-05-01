@@ -11,12 +11,15 @@ import white from "../../assets/calwhite.svg";
 
 const DatePicker = (props) => {
   const [showCalendar, setShowCalendar] = useState(false);
+  const [count, setCount] = useState(0);
 
   const next = (event) => {
     event.preventDefault();
     const e = document.getElementById("container");
-    const width = e ? e.getBoundingClientRect().width : null;
-    e.scrollLeft += width - 60;
+    const widthRight = e ? e.getBoundingClientRect().width - 60 : null;
+
+    e.scrollLeft += widthRight - 65;
+    setCount(count + 1);
   };
 
   const startDate = props.startDate || new Date();
@@ -30,13 +33,23 @@ const DatePicker = (props) => {
   const prev = (event) => {
     event.preventDefault();
     const e = document.getElementById("container");
-    const width = e ? e.getBoundingClientRect().width : null;
-    e.scrollLeft -= width - 60;
+    const widthLeft = e ? e.getBoundingClientRect().width : null;
+
+    e.scrollLeft -= widthLeft - 65;
+    setCount(count - 1);
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.buttonWrapper + " " + styles.buttonzIndex}>
+      <div
+        className={
+          styles.buttonWrapper +
+          " " +
+          styles.buttonzIndex +
+          " " +
+          `${count !== 0 ? styles.blur : ""}`
+        }
+      >
         <span
           role="button"
           className={styles.calendar}
@@ -53,7 +66,11 @@ const DatePicker = (props) => {
             showCalendar={showCalendar}
           />
         )}
-        <button className={styles.button} onClick={prev}>
+        <button
+          disabled={count === 0 ? true : false}
+          className={styles.button}
+          onClick={prev}
+        >
           &lt;
         </button>
       </div>
