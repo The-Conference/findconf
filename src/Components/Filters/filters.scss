@@ -4,6 +4,7 @@
   padding: 20px 0;
   max-width: 1200px;
   text-transform: capitalize;
+  font-size: 12px;
   @media screen and (max-width: 722px) {
     display: none;
   }
@@ -14,8 +15,7 @@
     border-radius: 8px;
 
     cursor: pointer;
-    padding: 15px 15px 5px 15px;
-    align-self: baseline;
+    padding: 11px;
   }
   &__container-button {
     padding: 10px 20px;
@@ -33,18 +33,17 @@
   display: none;
   position: relative;
   cursor: pointer;
-
   @media screen and (max-width: 722px) {
     display: flex;
     gap: 8px;
     padding: 0 0 20px 0;
     align-items: center;
   }
+
   &__delete-button {
     border-radius: 8px;
     cursor: pointer;
-    padding: 10px 10px 2px 10px;
-    align-self: baseline;
+    padding: 11px;
   }
   &__container-button {
     span {
@@ -71,15 +70,23 @@
   }
 }
 .applied-hover {
+  display: flex;
+  gap: 13px;
   background-color: #2c60e7;
   color: white;
   -webkit-transition: all 0.2s ease-in-out;
+
   &:hover {
     background-color: #4074fb;
     color: white;
   }
+  svg {
+    fill: white;
+  }
 }
 .nonapplied-hover {
+  display: flex;
+  gap: 13px;
   background-color: #0000381a;
   color: #00002e;
   -webkit-transition: all 0.2s ease-in-out;
