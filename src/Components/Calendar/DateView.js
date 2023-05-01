@@ -19,6 +19,8 @@ const DateView = ({
   primaryColor,
   labelFormat,
   marked,
+  count,
+  setCount,
 }) => {
   const { conferences } = useSelector((state) => state.conferences);
   const firstSection = { marginLeft: "40px" };
@@ -147,9 +149,20 @@ const DateView = ({
       );
       days = [];
     }
-
+    const handleScroll = () => {
+      const e = document.getElementById("container");
+      if (e.scrollLeft > 6) {
+        setCount(1);
+      } else {
+        setCount(0);
+      }
+    };
     return (
-      <div id={"container"} className={styles.dateListScrollable}>
+      <div
+        id={"container"}
+        className={styles.dateListScrollable}
+        onScroll={handleScroll}
+      >
         {months}
       </div>
     );
