@@ -17,7 +17,7 @@
 }
 .buttonWrapper::after {
   background: linear-gradient(270deg, #f7f7f9, #ffffff80 70%, #fff0);
-  right: 54px;
+  right: 68px;
   content: "";
   height: 61px;
   bottom: 49px;
@@ -27,6 +27,11 @@
 }
 .buttonzIndex::after {
   display: none;
+}
+@media (max-width: 900px) {
+  .buttonWrapper::after {
+    right: 55px;
+  }
 }
 @media (max-width: 841px) {
   .buttonWrapper::after {
