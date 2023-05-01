@@ -395,6 +395,8 @@ const AllConferences = ({ data, keywords, id }) => {
                   {el.themes.split(",").map((tag, index) => (
                     <small key={index}>{tag}</small>
                   ))}
+                  {el.online === true && <small>онлайн</small>}
+                  {el.offline === true && <small>офлайн</small>}
                 </div>
                 <a href={`/conferences/${el.id}`}>
                   <div className="conference__title">{el.conf_name}</div>

@@ -87,6 +87,7 @@
       position: relative;
       padding-left: 10px;
       -webkit-transition: all 0.4s ease-in-out;
+
       &:hover {
         color: #4074fb;
         padding-left: 0;
@@ -138,7 +139,7 @@
       @media screen and (max-width: 700px) {
         font-size: 25px;
       }
-      @media screen and (max-width: 450px) {
+      @media screen and (max-width: 536px) {
         font-size: 16px;
       }
     }
