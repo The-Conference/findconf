@@ -14,8 +14,7 @@ jobs:
 
       - name: backup priveus version of frontend
         run: |
-          export NOW=$(date +'%Y-%m-%dT%H:%M:%S')
-          echo "$NOW" >> $GITHUB_ENV
+          echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
           echo "current date and time is $NOW"
           sudo cp -R /usr/data/www /usr/data/www-$NOW
           echo "previous version backup is done"
@@ -27,8 +26,7 @@ jobs:
 
       - name: check site http code
         run: | 
-          export HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)
-          echo "$HTTP_CODE" >> $GITHUB_ENV
+          echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
           echo "http status code is $HTTP_CODE"
 
       - name: print success message if http status code is 200
