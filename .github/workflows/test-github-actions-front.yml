@@ -1,0 +1,39 @@
+
+name: 'Update frontend content and test new release (on test server)'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - frontend
+      
+jobs:
+  update_and_test_front:
+    runs-on: 
+      labels: test
+    steps:
+
+      - name: backup priveus version of frontend
+        uses: actions/checkout@v3
+      - run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      - run: echo "current date and time is $NOW"
+      - run: cp -R /usr/data/www /usr/data/www-$NOW
+      - run: echo "previous version backup is done"
+
+      - name: execute script for update frontend with new version
+        run: /usr/local/bin/front_update.sh && echo "frontend updated"
+
+      - name: check site http code
+        run: echo "http_code=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
+      - run: echo "http status code is $http_code"
+
+      - name: delete backup if http status code is 200
+        run: "front updated successful!"
+        if: ${{ $http_code == 200 }}
+
+      - name: restart privious version if http status code isn't 200
+        run: rm -rf /usr/data/www/* && cp -R /usr/data/www-$NOW/* /usr/data/www && echo "front updated failed! Backup was restored"
+        if: ${{ $http_code != 200 }}
+
+      - name: clean up backup
+        run: rm -rf /usr/data/www-$NOW && echo "clean up completed"
