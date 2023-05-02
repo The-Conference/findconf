@@ -14,7 +14,8 @@ import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { options } from "../../utils/options";
 import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
-
+import share from "../../assets/share.svg";
+import ShareButton from "../ShareButton/ShareButton";
 const FullConference = () => {
   const { confId } = useParams();
   const { conferences } = useSelector((state) => state.conferences);
@@ -25,7 +26,7 @@ const FullConference = () => {
   const [contacts, setContacts] = useState(false);
   let content;
   let full = conferences.find(({ id }) => id === +confId);
-
+  const [social, setSocial] = useState(false);
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
@@ -74,21 +75,34 @@ const FullConference = () => {
           >
             {full.conf_status || "Дата уточняется"}
           </span>
-          <img
-            title={
-              full.follow === false
-                ? "добавить в избранное"
-                : "удалить из избранного"
-            }
-            src={full.follow === false ? follow : following}
-            alt="follow"
-            onClick={() => {
-              handleFave(full.id);
-              dispatch(handleFollow(full.id));
-            }}
-            width="32"
-            height="32"
-          />
+          <div className="social">
+            <img
+              title={
+                full.follow === false
+                  ? "добавить в избранное"
+                  : "удалить из избранного"
+              }
+              src={full.follow === false ? follow : following}
+              alt="follow"
+              onClick={() => {
+                handleFave(full.id);
+                dispatch(handleFollow(full.id));
+              }}
+              width="32"
+              height="32"
+            />
+            <img
+              className="share"
+              src={share}
+              alt="share"
+              onClick={() => setSocial(!social)}
+            />
+            {social && (
+              <div className="share-popup">
+                <ShareButton />
+              </div>
+            )}
+          </div>
         </div>
         <div className="full-conference__title">
           <h1>{full.conf_name}</h1>

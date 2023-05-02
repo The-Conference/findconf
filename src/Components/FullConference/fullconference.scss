@@ -1,20 +1,37 @@
 .full-conference {
   min-height: 100vh;
   padding: 30px 20px 75px 20px;
+
   &__container {
     max-width: 800px;
     margin: 0 auto;
+
     &-top {
       display: flex;
       justify-content: space-between;
-      img {
-        cursor: pointer;
-        -webkit-transition: all 0.2s ease-in-out;
-        &:hover {
-          background-color: #0000380d;
-          border-radius: 5px;
+      position: relative;
+      .social {
+        display: flex;
+        gap: 15px;
+        .share {
+          padding: 10px 6px;
+        }
+        .share-popup {
+          position: absolute;
+          top: 50px;
+          right: 0;
+        }
+        img,
+        .share {
+          cursor: pointer;
+          -webkit-transition: all 0.2s ease-in-out;
+          &:hover {
+            background-color: #0000380d;
+            border-radius: 5px;
+          }
         }
       }
+
       span {
         height: 32px;
         padding: 6px 14px;

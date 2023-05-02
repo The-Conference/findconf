@@ -62,6 +62,7 @@
   height: 61px;
   bottom: 49px;
   width: 42px;
+  z-index: -1;
 }
 @media (max-width: 900px) {
   .blur::after {
