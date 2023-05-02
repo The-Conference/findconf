@@ -14,7 +14,7 @@ import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { options } from "../../utils/options";
 import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
-import share from "../../assets/share.svg";
+
 import ShareButton from "../ShareButton/ShareButton";
 const FullConference = () => {
   const { confId } = useParams();
@@ -24,9 +24,10 @@ const FullConference = () => {
   const dispatch = useDispatch();
   const [desc, setDesc] = useState(true);
   const [contacts, setContacts] = useState(false);
+
   let content;
   let full = conferences.find(({ id }) => id === +confId);
-  const [social, setSocial] = useState(false);
+
   const handleFave = (id) => {
     if (fave.includes(id)) {
       setFave(fave.filter((el) => el !== id));
@@ -91,17 +92,7 @@ const FullConference = () => {
               width="32"
               height="32"
             />
-            <img
-              className="share"
-              src={share}
-              alt="share"
-              onClick={() => setSocial(!social)}
-            />
-            {social && (
-              <div className="share-popup">
-                <ShareButton />
-              </div>
-            )}
+            <ShareButton />
           </div>
         </div>
         <div className="full-conference__title">

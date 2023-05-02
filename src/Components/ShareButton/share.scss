@@ -3,11 +3,24 @@
   padding: 15px;
   box-shadow: 0px 8px 24px rgba(0, 0, 46, 0.12);
   border-radius: 10px;
-  h1 {
-    font-size: 22px;
-    font-family: "Manrope medium";
-    padding-bottom: 10px;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      font-size: 22px;
+      font-family: "Manrope medium";
+      padding-bottom: 10px;
+    }
+    svg {
+      padding-bottom: 8px;
+      cursor: pointer;
+    }
   }
+
   img {
     z-index: 2;
   }
