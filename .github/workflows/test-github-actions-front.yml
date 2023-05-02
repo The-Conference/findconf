@@ -13,10 +13,11 @@ jobs:
     steps:
 
       - name: backup priveus version of frontend
-        run: | 
-          echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-          echo "current date and time is env.NOW"
-          sudo cp -R /usr/data/www /usr/data/www-env.NOW
+        run: |
+          export NOW=$(date +'%Y-%m-%dT%H:%M:%S')
+          echo "$NOW" >> $GITHUB_ENV
+          echo "current date and time is $NOW"
+          sudo cp -R /usr/data/www /usr/data/www-$NOW
           echo "previous version backup is done"
 
       - name: execute script for update frontend with new version
@@ -26,21 +27,22 @@ jobs:
 
       - name: check site http code
         run: | 
-          echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
-          echo "http status code is env.HTTP_CODE"
+          export HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)
+          echo "$HTTP_CODE" >> $GITHUB_ENV
+          echo "http status code is $HTTP_CODE"
 
-      - name: delete backup if http status code is 200
+      - name: print success message if http status code is 200
         run: "front updated successful!"
         if: ${{ env.HTTP_CODE == 200 }}
 
-      - name: restart privious version if http status code isn't 200
+      - name: restore privious version if http status code isn't 200
         run: |
           sudo rm -rf /usr/data/www/* 
-          sudo cp -R /usr/data/www-env.NOW/* /usr/data/www 
+          sudo cp -R /usr/data/www-$NOW/* /usr/data/www 
           echo "front updated failed! Backup was restored"
         if: ${{ env.HTTP_CODE != 200 }}
 
       - name: clean up backup
         run: |
-          sudo rm -rf /usr/data/www-env.NOW 
+          sudo rm -rf /usr/data/www-$NOW 
           echo "clean up completed"
