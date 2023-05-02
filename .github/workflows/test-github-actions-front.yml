@@ -31,11 +31,16 @@ jobs:
 
       - name: delete backup if http status code is 200
         run: "front updated successful!"
-        if: ${{ $HTTP_CODE == 200 }}
+        if: ${{ env.HTTP_CODE == 200 }}
 
       - name: restart privious version if http status code isn't 200
         run: |
           rm -rf /usr/data/www/* 
           cp -R /usr/data/www-$NOW/* /usr/data/www 
           echo "front updated failed! Backup was restored"
-        if: ${{ $HTTP_CODE != 200 }}
+        if: ${{ env.HTTP_CODE != 200 }}
+
+      - name: clean up backup
+        run: |
+          rm -rf /usr/data/www-$NOW 
+          echo "clean up completed"
