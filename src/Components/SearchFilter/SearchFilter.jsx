@@ -5,7 +5,7 @@ import Highlighter from "react-highlight-words";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchResults } from "../../store/searchSlice";
 import useOnClickOutside from "../Hooks/useOnClickOutside";
-
+import { options } from "../../utils/options";
 const SearchFilter = () => {
   const nav = useNavigate();
   const ref = useRef();
@@ -115,6 +115,34 @@ const SearchFilter = () => {
                         />
                       </div>
                       <div>
+                        <small>
+                          <Highlighter
+                            highlightClassName="highlight"
+                            searchWords={lighted}
+                            autoEscape={false}
+                            textToHighlight={
+                              item.conf_date_end === null
+                                ? new Date(item.conf_date_begin)
+                                    .toLocaleDateString("ru", options)
+                                    .slice(0, -3)
+                                : item.conf_date_begin === null
+                                ? new Date(item.conf_date_end)
+                                    .toLocaleDateString("ru", options)
+                                    .slice(0, -3)
+                                : item.conf_date_end !== item.conf_date_begin
+                                ? new Date(item.conf_date_begin)
+                                    .toLocaleDateString("ru", options)
+                                    .slice(0, -3) +
+                                  " - " +
+                                  new Date(item.conf_date_end)
+                                    .toLocaleDateString("ru", options)
+                                    .slice(0, -3)
+                                : new Date(item.conf_date_begin)
+                                    .toLocaleDateString("ru", options)
+                                    .slice(0, -3)
+                            }
+                          />
+                        </small>
                         {item.themes.split(",").map((tag, index) => (
                           <small key={index}>
                             <Highlighter

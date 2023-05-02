@@ -78,9 +78,8 @@
         }
       }
       .conf {
-        text-align: justify;
         font-family: "Manrope semibold";
-
+        word-break: break-all;
         &:hover {
           background-color: #0000380d;
         }
@@ -96,10 +95,11 @@
         }
         small {
           padding: 0;
+
           &:not(:last-of-type):after {
             content: "\2022";
             padding-left: 3.5px;
-            font-size: 15px;
+            font-size: 12px;
           }
         }
       }
