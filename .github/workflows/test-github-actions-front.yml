@@ -33,7 +33,7 @@ jobs:
         run: |
           echo 'http status code is ${{ env.HTTP_CODE }}'
           echo 'front updated successful!'
-        if: ${{ env.HTTP_CODE == 200 }}
+        if: ${{ env.HTTP_CODE != 200 }}
 
       - name: restore privious version if http status code isn't 200
         run: |
@@ -42,7 +42,7 @@ jobs:
           sudo rm -rf /usr/data/www/* 
           sudo cp -R /usr/data/www-${{ env.NOW }}/* /usr/data/www 
           echo 'Backup was restored'
-        if: ${{ env.HTTP_CODE != 200 }}
+        if: ${{ env.HTTP_CODE == 200 }}
 
       - name: clean up backup
         run: |
