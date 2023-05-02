@@ -12,36 +12,40 @@ jobs:
       labels: test
     steps:
 
+      - name: get current date-time and set it to env var
+        run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+
       - name: backup priveus version of frontend
         run: |
-          echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
-          echo "current date and time is ${{ env.NOW }}"
+          echo 'current date and time is ${{ env.NOW }}'
           sudo cp -R /usr/data/www /usr/data/www-${{ env.NOW }}
-          echo "previous version backup is done"
+          echo 'previous version backup is done'
 
       - name: execute script for update frontend with new version
         run: |
           sudo /usr/local/bin/front_update.sh
-          echo "frontend updated"
+          echo 'frontend updated'
 
       - name: check site http code
-        run: |
-          echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
-          echo "http status code is ${{ env.HTTP_CODE }}"
+        run: echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
 
       - name: print success message if http status code is 200
-        run: echo "front updated successful!"
+        run: |
+          echo 'http status code is ${{ env.HTTP_CODE }}'
+          echo 'front updated successful!'
         if: ${{ env.HTTP_CODE == 200 }}
 
       - name: restore privious version if http status code isn't 200
         run: |
+          echo 'http status code is ${{ env.HTTP_CODE }}'
+          echo 'front updated failed! Restoring backup'
           sudo rm -rf /usr/data/www/* 
           sudo cp -R /usr/data/www-${{ env.NOW }}/* /usr/data/www 
-          echo "front updated failed! Backup was restored"
+          echo 'Backup was restored'
         if: ${{ env.HTTP_CODE != 200 }}
 
       - name: clean up backup
         run: |
-          echo "start cleaning up directory /usr/data/www-${{ env.NOW }}"
+          echo 'start cleaning up directory /usr/data/www-${{ env.NOW }}'
           sudo rm -rf /usr/data/www-${{ env.NOW }} 
-          echo "clean up completed"
+          echo 'clean up completed'
