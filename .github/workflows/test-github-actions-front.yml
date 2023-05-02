@@ -1,4 +1,3 @@
-
 name: 'Update frontend content and test new release (on test server)'
 
 on:
@@ -13,35 +12,40 @@ jobs:
       labels: test
     steps:
 
+      - name: get current date-time and set it to env var
+        run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+
       - name: backup priveus version of frontend
-        run: | 
-          echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-          echo "current date and time is $NOW"
-          cp -R /usr/data/www /usr/data/www-$NOW
-          echo "previous version backup is done"
+        run: |
+          echo 'current date and time is ${{ env.NOW }}'
+          sudo cp -R /usr/data/www /usr/data/www-${{ env.NOW }}
+          echo 'previous version backup is done'
 
       - name: execute script for update frontend with new version
         run: |
-          /usr/local/bin/front_update.sh
-          echo "frontend updated"
+          sudo /usr/local/bin/front_update.sh
+          echo 'frontend updated'
 
       - name: check site http code
-        run: | 
-          echo "http_code=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
-          echo "http status code is $http_code"
+        run: echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
 
-      - name: delete backup if http status code is 200
-        run: "front updated successful!"
-        if: ${{ $http_code == 200 }}
-
-      - name: restart privious version if http status code isn't 200
+      - name: print success message if http status code is 200
         run: |
-          rm -rf /usr/data/www/* 
-          cp -R /usr/data/www-$NOW/* /usr/data/www 
-          echo "front updated failed! Backup was restored"
-        if: ${{ $http_code != 200 }}
+          echo 'http status code is ${{ env.HTTP_CODE }}'
+          echo 'front updated successful!'
+        if: ${{ env.HTTP_CODE == 200 }}
+
+      - name: restore privious version if http status code isn't 200
+        run: |
+          echo 'http status code is ${{ env.HTTP_CODE }}'
+          echo 'front updated failed! Restoring backup'
+          sudo rm -rf /usr/data/www/* 
+          sudo cp -R /usr/data/www-${{ env.NOW }}/* /usr/data/www 
+          echo 'Backup was restored'
+        if: ${{ env.HTTP_CODE != 200 }}
 
       - name: clean up backup
         run: |
-          rm -rf /usr/data/www-$NOW 
-          echo "clean up completed"
+          echo 'start cleaning up directory /usr/data/www-${{ env.NOW }}'
+          sudo rm -rf /usr/data/www-${{ env.NOW }} 
+          echo 'clean up completed'
