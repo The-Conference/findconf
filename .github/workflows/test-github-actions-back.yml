@@ -65,8 +65,8 @@ jobs:
         run: |
           sudo su && cd /usr/data && sudo docker-compose up -d
           echo "Container started"
-          sudo docker ps
           sleep 30
+          sudo docker ps
 
       - name: Check django container uptime
         run: echo "EXIT_CODE=$(sudo docker inspect --format='{{.State.ExitCode}}' app_django)" >> $GITHUB_ENV
