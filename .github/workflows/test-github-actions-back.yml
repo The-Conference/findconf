@@ -34,7 +34,7 @@ jobs:
       - name: Get archive of new version of backend and unzip it
         run: |
           sudo su && cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/backend.zip
-          sudo unzip $TMP_DIR/backend.zip
+          sudo unzip -o $TMP_DIR/backend.zip
           echo 'The new version of backend was got'
 
       - name: Stop containers and remove images of backend apps
