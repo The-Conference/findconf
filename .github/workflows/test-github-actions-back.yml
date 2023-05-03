@@ -1,0 +1,105 @@
+name: 'Update backend content and test new back-release (on test server)'
+
+env:
+  TMP_DIR: '/tmp/download'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - backend
+      
+jobs:
+  update_and_test_backend:
+    runs-on: 
+      labels: test
+    steps:
+
+      - name: get current date-time and set it to env var
+        run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
+
+      - name: check temp dir exist and create it if not
+        run: |
+          if [ ! -d ${{ env.TMP_DIR }} ]; then
+            sudo mkdir ${{ env.TMP_DIR }}
+            echo "${{ env.TMP_DIR }} was not found. Creaated"
+          fi
+
+      - name: backup priveus version of backend
+        run: |
+          echo 'current date and time is ${{ env.NOW }}'
+          sudo cp -R /usr/data/django/app /usr/data/django_app-${{ env.NOW }}
+          echo 'previous version backup is done'
+
+      - name: Get archive of new version of backend and unzip it
+        run: |
+          sudo cd ${{ env.TMP_DIR }} && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/backend.zip
+          sudo unzip ${{ emv.TMP_DIR }}/backend.zip
+          echo 'The new version of backend was got'
+
+      - name: Stop containers and remove images of backend apps
+        run: |
+          sudo cd /usr/data && sudo docker-compose down
+          sudo docker rmi $(docker images -q data-django:latest)
+          sudo docker rmi $(docker images -q data-celery:latest)
+          echo "Containers was stoped. Images was removed"
+
+      - name: Remove old version of backend
+        run: |
+          sudo rm -rf /usr/data/django/app/*
+          echo "clean up old version of app"
+
+      - name: Update backend with new version
+        run: |
+          sudo cp -R ${{ env.TMP_DIR }}/findconf-backend/* /usr/data/django/app
+          sudo cp -rf /root/.env /usr/data/django/app/Conferences/
+          sudo cp -rf /root/settings.py /usr/data/django/app/Conferences/
+          echo "all files was updated"
+
+      - name: Cleanup temp files
+        run: |
+          sudo rm -rf ${{ env.TMP_DIR }}/findconf-backend ${{ env. TMP_DIR }}/backend.zip
+          echo "Temp files was cleaned"
+
+      - name: Up all containers
+        run: |
+          sudo cd /usr/data && sudo docker-compose up -d
+          echo "Container started"
+          sudo docker ps
+          sleep 30
+
+      - name: Check django container uptime
+        run: echo "APP_UPTIME=$(sudo docker exec -ti app_django awk '{print $1}' /proc/uptime)" >> $GITHUB_ENV
+
+      - name: check site http code
+        run: echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30  https://test.theconf.ru/admin/Conference_data/conference/ -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
+
+      - name: print success message if http status code is 302 and app container uptime more then 20 seconds
+        run: |
+          echo 'app_django container uptime is ${{ env.APP_UPTIME }}. This is more then 20 sec'
+          echo 'http status code is ${{ env.HTTP_CODE }}'
+          echo 'Backend updated successful!'
+        if: ( ${{ env.HTTP_CODE == 302 }} && ${{ env.APP_UPTIME > 20 }} )
+
+      - name: restore privious version if http status code isn't 302 or uptime less then 20 sec
+        run: |
+          echo 'http status code is ${{ env.HTTP_CODE }}'
+          echo 'app_django container uptime is ${{ env.APP_UPTIME }}. This is less or equal 20 sec'
+          echo 'Backend updated failed! Restoring backup'
+          sudo cd /usr/data && sudo docker-compose down
+          sudo docker rmi $(docker images -q data-django:latest)
+          sudo docker rmi $(docker images -q data-celery:latest)
+          echo "Containers was stoped. Images was removed"
+          sudo rm -rf /usr/data/django/app/*
+          sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app 
+          echo 'Files was restored'
+          sudo cd /usr/data && sudo docker-compose up -d
+          docker ps
+          echo "Containers started"
+        if: ( ${{ env.HTTP_CODE != 302 }} || ${{ env.APP_UPTIME <= 20 }} )
+
+      - name: clean up backup
+        run: |
+          echo 'start cleaning up directory /usr/data/django_app-${{ env.NOW }}'
+          sudo rm -rf /usr/data/django_app-${{ env.NOW }} 
+          echo 'clean up completed'
