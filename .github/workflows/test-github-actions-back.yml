@@ -7,7 +7,7 @@ on:
       - 'backend'
       - 'dev/devops'
     paths:
-     - '/**'
+      - '.github/workflows/test-github-actions-back.yml'
 env:
   TMP_DIR: '/tmp/download'
       
