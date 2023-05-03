@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - frontend
+      - dev/devops
 
 env:
   TMP_DIR: '/tmp/download'
