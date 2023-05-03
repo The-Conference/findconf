@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - frontend
+
+env:
+  TMP_DIR: '/tmp/download'
       
 jobs:
   update_and_test_front:
@@ -15,16 +18,31 @@ jobs:
       - name: get current date-time and set it to env var
         run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
 
+      - name: check temp dir exist and create it if not
+        run: |
+          if [ ! -d $TMP_DIR ]; then
+            sudo mkdir $TMP_DIR
+            echo "$TMP_DIR was not found. Created"
+          fi
+
       - name: backup priveus version of frontend
         run: |
           echo 'current date and time is ${{ env.NOW }}'
           sudo cp -R /usr/data/www /usr/data/www-${{ env.NOW }}
           echo 'previous version backup is done'
 
-      - name: execute script for update frontend with new version
+      - name: Get archive of new version of frontend and unzip it
         run: |
-          sudo /usr/local/bin/front_update.sh
-          echo 'frontend updated'
+          sudo su && cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/frontend.zip
+          sudo unzip -o $TMP_DIR/frontend.zip
+          echo 'The new version of frontend was got'
+
+      - name: Update frontend with new version
+        run: |
+          sudo rm -rf /usr/data/www/*
+          sudo cp -R $TMP_DIR/findconf-frontend/build/* /usr/data/www
+          sudo rm -rf $TMP_DIR/findconf-frontend $TMP_DIR/frontend.zip
+          echo "all files was updated"
 
       - name: check site http code
         run: echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30 https://test.theconf.ru -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
