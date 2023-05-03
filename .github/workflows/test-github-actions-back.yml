@@ -1,8 +1,5 @@
 name: 'Update backend content and test new back-release (on test server)'
 
-env:
-  TMP_DIR: '/tmp/download'
-
 on:
   workflow_dispatch:
   push:
@@ -13,6 +10,8 @@ jobs:
   update_and_test_backend:
     runs-on: 
       labels: test
+    env:
+      TMP_DIR: '/tmp/download'
     steps:
 
       - name: get current date-time and set it to env var
