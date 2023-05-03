@@ -33,13 +33,13 @@ jobs:
 
       - name: Get archive of new version of backend and unzip it
         run: |
-          sudo cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/backend.zip
+          sudo su && cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/backend.zip
           sudo unzip $TMP_DIR/backend.zip
           echo 'The new version of backend was got'
 
       - name: Stop containers and remove images of backend apps
         run: |
-          sudo cd /usr/data && sudo docker-compose down
+          sudo su && cd /usr/data && sudo docker-compose down
           sudo docker rmi $(docker images -q data-django:latest)
           sudo docker rmi $(docker images -q data-celery:latest)
           echo "Containers was stoped. Images was removed"
@@ -63,7 +63,7 @@ jobs:
 
       - name: Up all containers
         run: |
-          sudo cd /usr/data && sudo docker-compose up -d
+          sudo su && cd /usr/data && sudo docker-compose up -d
           echo "Container started"
           sudo docker ps
           sleep 30
@@ -86,14 +86,14 @@ jobs:
           echo 'http status code is ${{ env.HTTP_CODE }}'
           echo 'app_django container uptime is ${{ env.APP_UPTIME }}. This is less or equal 20 sec'
           echo 'Backend updated failed! Restoring backup'
-          sudo cd /usr/data && sudo docker-compose down
+          sudo su && cd /usr/data && sudo docker-compose down
           sudo docker rmi $(docker images -q data-django:latest)
           sudo docker rmi $(docker images -q data-celery:latest)
           echo "Containers was stoped. Images was removed"
           sudo rm -rf /usr/data/django/app/*
           sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app 
           echo 'Files was restored'
-          sudo cd /usr/data && sudo docker-compose up -d
+          sudo su && cd /usr/data && sudo docker-compose up -d
           docker ps
           echo "Containers started"
         if: ( ${{ env.HTTP_CODE != 302 }} || ${{ env.APP_UPTIME <= 20 }} )
