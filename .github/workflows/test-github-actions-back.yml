@@ -4,10 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'backend'
-      - 'dev/devops'
-    paths:
-      - 'main/.github/workflows/test-github-actions-back.yml'
+      - 'backend/**'
+      - 'dev/devops/**'
 env:
   TMP_DIR: '/tmp/download'
       
