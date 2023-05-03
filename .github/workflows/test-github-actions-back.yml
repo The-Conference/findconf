@@ -69,22 +69,22 @@ jobs:
           sleep 30
 
       - name: Check django container uptime
-        run: echo "APP_UPTIME=$(sudo docker exec -ti app_django awk '{print $1}' /proc/uptime)" >> $GITHUB_ENV
+        run: echo "EXIT_CODE=$(sudo docker inspect --format='{{.State.ExitCode}}' app_django)" >> $GITHUB_ENV
 
       - name: check site http code
         run: echo "HTTP_CODE=$(curl -i -k --connect-timeout 20 -m 30  https://test.theconf.ru/admin/Conference_data/conference/ -o /dev/null -w '%{http_code}\n' -s)" >> $GITHUB_ENV
 
-      - name: print success message if http status code is 302 and app container uptime more then 20 seconds
+      - name: print success message if http status code is 302 and container exit code is 0
         run: |
-          echo 'app_django container uptime is ${{ env.APP_UPTIME }}. This is more then 20 sec'
+          echo 'app_django container exit code is ${{ env.EXIT_CODE }}'
           echo 'http status code is ${{ env.HTTP_CODE }}'
           echo 'Backend updated successful!'
-        if: ( ${{ env.HTTP_CODE == 302 }} && ${{ env.APP_UPTIME > 20 }} )
+        if: ( ${{ env.HTTP_CODE == 302 }} && ${{ env.EXIT_CODE == 0 }} )
 
-      - name: restore privious version if http status code isn't 302 or uptime less then 20 sec
+      - name: restore privious version if http status code isn't 302 or container exit code isn't 0
         run: |
           echo 'http status code is ${{ env.HTTP_CODE }}'
-          echo 'app_django container uptime is ${{ env.APP_UPTIME }}. This is less or equal 20 sec'
+          echo 'app_django container exit code is ${{ env.EXIT_CODE }}.'
           echo 'Backend updated failed! Restoring backup'
           sudo su && cd /usr/data && sudo docker-compose down
           sudo docker rmi $(sudo docker images -q data-django:latest)
@@ -94,9 +94,9 @@ jobs:
           sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app 
           echo 'Files was restored'
           sudo su && cd /usr/data && sudo docker-compose up -d
-          docker ps
+          sudo docker ps
           echo "Containers started"
-        if: ( ${{ env.HTTP_CODE != 302 }} || ${{ env.APP_UPTIME <= 20 }} )
+        if: ( ${{ env.HTTP_CODE != 302 }} || ${{ env.EXIT_CODE != 0 }} )
 
       - name: clean up backup
         run: |
