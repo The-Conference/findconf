@@ -40,8 +40,8 @@ jobs:
       - name: Stop containers and remove images of backend apps
         run: |
           sudo su && cd /usr/data && sudo docker-compose down
-          sudo docker rmi $(docker images -q data-django:latest)
-          sudo docker rmi $(docker images -q data-celery:latest)
+          sudo docker rmi $(sudo docker images -q data-django:latest)
+          sudo docker rmi $(sudo docker images -q data-celery:latest)
           echo "Containers was stoped. Images was removed"
 
       - name: Remove old version of backend
@@ -87,8 +87,8 @@ jobs:
           echo 'app_django container uptime is ${{ env.APP_UPTIME }}. This is less or equal 20 sec'
           echo 'Backend updated failed! Restoring backup'
           sudo su && cd /usr/data && sudo docker-compose down
-          sudo docker rmi $(docker images -q data-django:latest)
-          sudo docker rmi $(docker images -q data-celery:latest)
+          sudo docker rmi $(sudo docker images -q data-django:latest)
+          sudo docker rmi $(sudo docker images -q data-celery:latest)
           echo "Containers was stoped. Images was removed"
           sudo rm -rf /usr/data/django/app/*
           sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app 
