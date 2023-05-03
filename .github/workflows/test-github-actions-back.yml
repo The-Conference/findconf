@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'backend'
-      - 'dev/devops'
+      - 'backend/**'
+      - 'dev/devops/**'
 
 env:
   TMP_DIR: '/tmp/download'
