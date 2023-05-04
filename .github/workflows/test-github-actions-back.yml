@@ -14,8 +14,6 @@ jobs:
     runs-on: 
       labels: test
     steps:
-    
-      - uses: actions/checkout@v2
 
       - name: get current date-time and set it to env var
         run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
