@@ -3,7 +3,9 @@ name: 'Init pipeline for update backend on test server'
 on:
   push:
     branches:
-      - 'dev/devops'
+      - 'backend'
+    paths-ignore:
+      - '.github/**'
 
 jobs:
   checkout:
