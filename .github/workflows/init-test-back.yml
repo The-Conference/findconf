@@ -6,13 +6,5 @@ on:
       - 'dev/devops'
 
 jobs:
-  init:
-    runs-on: 
-      labels: test
-    steps:
-
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Run test-github-actions-back.yml
-        uses: The-Conference/findconf/.github/actions/test/back@main
+  checkout:
+    uses: The-Conference/findconf/.github/workflows/test-github-actions-back.yml@main
