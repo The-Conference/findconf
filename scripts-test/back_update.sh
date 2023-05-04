@@ -16,6 +16,7 @@ docker rmi $(docker images -q data-django:latest)
 docker rmi $(docker images -q data-celery:latest)
 rm -rf /usr/data/django/app/*
 cp -R $temp_dir/findconf-backend/* /usr/data/django/app
+rm -rf /usr/data/django/app/.github
 cp -rf /root/.env /usr/data/django/app/Conferences/
 cp -rf /root/settings.py /usr/data/django/app/Conferences/
 rm -rf $temp_dir/findconf-backend $temp_dir/backend.zip

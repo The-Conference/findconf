@@ -53,6 +53,7 @@ jobs:
       - name: Update backend with new version
         run: |
           sudo cp -R $TMP_DIR/findconf-backend/* /usr/data/django/app
+          sudo rm -rf /usr/data/django/app/.github
           sudo cp -rf /root/.env /usr/data/django/app/Conferences/
           sudo cp -rf /root/settings.py /usr/data/django/app/Conferences/
           echo "all files was updated"
