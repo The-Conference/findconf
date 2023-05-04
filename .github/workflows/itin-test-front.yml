@@ -1,0 +1,10 @@
+name: 'Init pipeline for update frontend on test server'
+
+on:
+  push:
+    branches:
+      - 'dev/devops'
+
+jobs:
+  checkout:
+    uses: The-Conference/findconf/.github/workflows/test-github-actions-front.yml@main
