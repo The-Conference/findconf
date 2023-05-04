@@ -80,6 +80,7 @@ jobs:
           echo 'app_django container exit code is ${{ env.EXIT_CODE }}'
           echo 'http status code is ${{ env.HTTP_CODE }}'
           echo 'Backend updated successful!'
+          echo "F_CODE=0" >> $GITHUB_ENV
         if: ${{ env.HTTP_CODE == 302 && env.EXIT_CODE == 0 }}
 
       - name: restore privious version if http status code isn't 302 or container exit code isn't 0
@@ -97,6 +98,7 @@ jobs:
           sudo su && cd /usr/data && sudo docker-compose up -d
           sudo docker ps
           echo "Containers started"
+          echo "F_CODE=1" >> $GITHUB_ENV
         if: ${{ env.HTTP_CODE != 302 || env.EXIT_CODE != 0 }}
 
       - name: clean up backup
@@ -104,3 +106,13 @@ jobs:
           echo 'start cleaning up directory /usr/data/django_app-${{ env.NOW }}'
           sudo rm -rf /usr/data/django_app-${{ env.NOW }} 
           echo 'clean up completed'
+          
+      - name: Job successful finished
+        run: echo 'Exit code is ${{ env.F_CODE }}. Job finished success!'
+        if: ${{ env.F_CODE == 0 }}
+
+      - name: Job finished failure
+        run: |
+          echo 'Exit code is ${{ env.F_CODE }}. Job failed!'
+          exit 1
+        if: ${{ env.F_CODE == 1 }}
