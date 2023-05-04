@@ -393,7 +393,7 @@ const AllConferences = ({ data, keywords, id }) => {
               </div>
 
               <div className="conference__tags">
-                <div>
+                <div className="conference__tags-container">
                   {el.themes.split(",").map((tag, index) => (
                     <small key={index}>{tag}</small>
                   ))}

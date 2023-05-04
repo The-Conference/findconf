@@ -79,7 +79,7 @@
       }
       .conf {
         font-family: "Manrope semibold";
-        word-break: break-all;
+
         &:hover {
           background-color: #0000380d;
         }
@@ -95,6 +95,7 @@
         }
         small {
           padding: 0;
+          word-break: break-all;
 
           &:not(:last-of-type):after {
             content: "\2022";

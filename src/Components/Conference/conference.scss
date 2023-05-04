@@ -49,11 +49,8 @@
     @media (max-width: 544px) {
       padding: 0 10px 0 10px;
     }
-    div {
-      word-break: break-all;
+    &-container {
       small {
-        white-space: pre-wrap;
-        align-self: flex-end;
         color: #0000384d;
         font-family: "Manrope bold";
         &:not(:last-of-type):after {
