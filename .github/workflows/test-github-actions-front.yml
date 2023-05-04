@@ -52,6 +52,7 @@ jobs:
         run: |
           echo 'http status code is ${{ env.HTTP_CODE }}'
           echo 'front updated successful!'
+          echo "F_CODE=0" >> $GITHUB_ENV
         if: ${{ env.HTTP_CODE == 200 }}
 
       - name: restore privious version if http status code isn't 200
@@ -61,6 +62,7 @@ jobs:
           sudo rm -rf /usr/data/www/* 
           sudo cp -R /usr/data/www-${{ env.NOW }}/* /usr/data/www 
           echo 'Backup was restored'
+          echo "F_CODE=1" >> $GITHUB_ENV
         if: ${{ env.HTTP_CODE != 200 }}
 
       - name: clean up backup
@@ -68,3 +70,13 @@ jobs:
           echo 'start cleaning up directory /usr/data/www-${{ env.NOW }}'
           sudo rm -rf /usr/data/www-${{ env.NOW }} 
           echo 'clean up completed'
+          
+      - name: Job successful finished
+        run: echo 'Exit code is ${{ env.F_CODE }}. Job finished success!'
+        if: ${{ env.F_CODE == 0 }}
+
+      - name: Job finished failure
+        run: |
+          echo 'Exit code is ${{ env.F_CODE }}. Job failed!'
+          exit 1
+        if: ${{ env.F_CODE == 1 }}
