@@ -3,7 +3,9 @@ name: 'Init pipeline for update frontend on test server'
 on:
   push:
     branches:
-      - 'dev/devops'
+      - 'frontend'
+    paths-ignore:
+      - '.github/**'
 
 jobs:
   checkout:
