@@ -2,6 +2,7 @@ name: 'Update backend content and test new back-release (on test server)'
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches:
       - backend
