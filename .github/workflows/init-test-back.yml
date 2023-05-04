@@ -10,6 +10,9 @@ jobs:
     runs-on: 
       labels: test
     steps:
-    
-      - name: Use local my-action
-        uses: ./.github/workflows/test-github-actions-back.yml@main
+
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Run test-github-actions-back.yml
+        uses: .github/workflows/test/back@main
