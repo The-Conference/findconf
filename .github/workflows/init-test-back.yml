@@ -1,0 +1,15 @@
+name: 'Init pipeline for update backend on test server'
+
+on:
+  push:
+    branches:
+      - 'dev/devops'
+
+jobs:
+  init:
+    runs-on: 
+      labels: test
+    steps:
+    
+      - name: Use local my-action
+        uses: ./.github/workflows/test-github-actions-back.yml@main
