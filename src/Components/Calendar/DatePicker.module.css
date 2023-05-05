@@ -58,7 +58,7 @@
 .blur::after {
   background: linear-gradient(90deg, #f7f7f9, #ffffff80 70%, #fff0);
   display: block;
-  left: 124px;
+  left: 120px;
   height: 61px;
   bottom: 49px;
   width: 42px;
@@ -75,6 +75,11 @@
     height: 53px;
     bottom: 20px;
     width: 32px;
+  }
+}
+@media (max-width: 500px) {
+  .blur::after {
+    left: 90px;
   }
 }
 @media (max-width: 380px) {
