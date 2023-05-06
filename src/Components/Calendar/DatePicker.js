@@ -15,11 +15,14 @@ const DatePicker = (props) => {
 
   const next = (event) => {
     event.preventDefault();
+    if (count === 5) {
+      setCount(5);
+    } else {
+      setCount(count + 1);
+    }
     const e = document.getElementById("container");
     const widthRight = e ? e.getBoundingClientRect().width - 60 : null;
-
     e.scrollLeft += widthRight - 65;
-    setCount(count + 1);
   };
 
   const startDate = props.startDate || new Date();
@@ -32,11 +35,14 @@ const DatePicker = (props) => {
   }
   const prev = (event) => {
     event.preventDefault();
+    if (count === 0) {
+      setCount(0);
+    } else {
+      setCount(count - 1);
+    }
     const e = document.getElementById("container");
     const widthLeft = e ? e.getBoundingClientRect().width : null;
-
     e.scrollLeft -= widthLeft - 65;
-    setCount(count - 1);
   };
 
   return (
@@ -67,14 +73,20 @@ const DatePicker = (props) => {
           />
         )}
         <button
-          disabled={count === 0 ? true : false}
+          // disabled={count === 0 ? true : false}
           className={styles.button}
           onClick={prev}
         >
           &lt;
         </button>
       </div>
-      <Component {...props} startDate={startDate} lastDate={lastDate} />
+      <Component
+        {...props}
+        startDate={startDate}
+        lastDate={lastDate}
+        count={count}
+        setCount={setCount}
+      />
       <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={next}>
           &gt;

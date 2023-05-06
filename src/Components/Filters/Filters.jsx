@@ -13,11 +13,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import white from "../../assets/whitecross.svg";
 import grey from "../../assets/greycross.svg";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectedFilter);
   const [menu, setMenu] = useState(false);
+  const [popup, setPopup] = useState(false);
+
   return (
     <>
       <div className="filter">
@@ -41,6 +45,7 @@ const Filters = () => {
             )}
           </div>
         )}
+
         {data.map((item) => (
           <div className="filter__container" key={item.id}>
             <div
@@ -48,6 +53,7 @@ const Filters = () => {
                 dispatch(handleColor(item.id));
                 dispatch(saveFilter(item.name));
                 dispatch(fetchFilteredConferences());
+                setPopup(!popup);
               }}
               className={
                 item.applied === true
@@ -72,18 +78,33 @@ const Filters = () => {
               )}
 
               <div>{item.name}</div>
-              <svg
-                width="10"
-                height="6"
-                viewBox={item.applied !== true ? "0 0 10 6" : "0 0 10 2"}
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              <Popup
+                trigger={
+                  <button>
+                    <svg
+                      width="10"
+                      height="6"
+                      viewBox={item.applied !== true ? "0 0 10 6" : "0 0 10 2"}
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.00002 5.75002C4.80802 5.75002 4.61599 5.67705 4.46999 5.53005L0.469994 1.53005C0.176994 1.23705 0.176994 0.762018 0.469994 0.469018C0.762994 0.176018 1.23803 0.176018 1.53103 0.469018L5.001 3.93899L8.47097 0.469018C8.76397 0.176018 9.23901 0.176018 9.53201 0.469018C9.82501 0.762018 9.82501 1.23705 9.53201 1.53005L5.53201 5.53005C5.38401 5.67705 5.19202 5.75002 5.00002 5.75002Z"
+                        fill={item.applied !== true ? "#00002E" : "white"}
+                      />
+                    </svg>
+                  </button>
+                }
+                position="right center"
               >
-                <path
-                  d="M5.00002 5.75002C4.80802 5.75002 4.61599 5.67705 4.46999 5.53005L0.469994 1.53005C0.176994 1.23705 0.176994 0.762018 0.469994 0.469018C0.762994 0.176018 1.23803 0.176018 1.53103 0.469018L5.001 3.93899L8.47097 0.469018C8.76397 0.176018 9.23901 0.176018 9.53201 0.469018C9.82501 0.762018 9.82501 1.23705 9.53201 1.53005L5.53201 5.53005C5.38401 5.67705 5.19202 5.75002 5.00002 5.75002Z"
-                  fill={item.applied !== true ? "#00002E" : "white"}
-                />
-              </svg>
+                <div>
+                  <ul>
+                    {item.data.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </Popup>
             </div>
           </div>
         ))}
