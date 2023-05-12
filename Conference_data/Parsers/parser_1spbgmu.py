@@ -92,6 +92,10 @@ async def parser_1spbgmu_pages(session, un_id, url, filter_date, n, page):
             conf_address = ''
             contacts = ''
             rinc = False
+            scopus = False
+            vak = False
+            wos = False
+
             for line in lines:
                 # print(line.text)
                 if conf_s_desc == '' and 'коллеги' in prev_text.lower():
@@ -129,6 +133,12 @@ async def parser_1spbgmu_pages(session, un_id, url, filter_date, n, page):
 
                 if not rinc:
                     rinc = True if 'ринц' in line.text.lower() else False
+                if not scopus:
+                    scopus = True if 'scopus' in line.text.lower() else False
+                if not vak:
+                    vak = True if 'ВАК' in line.text else False
+                if not wos:
+                    wos = True if 'wos' in line.text.lower() else False
 
                 prev_text = line.text
 
@@ -159,6 +169,9 @@ async def parser_1spbgmu_pages(session, un_id, url, filter_date, n, page):
                      'conf_address': conf_address,
                      'contacts': contacts.strip(),
                      'rinc': rinc,
+                     'scopus': scopus,
+                     'vak': vak,
+                     'wos': wos
                      }
                 )
     except asyncio.TimeoutError as e:

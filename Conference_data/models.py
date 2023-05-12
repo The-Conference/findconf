@@ -43,8 +43,9 @@ class Conference(models.Model):
 
     generate_conf_id = models.BooleanField(default=False)
 
-    test = models.BooleanField(default=False)
-    test2 = models.CharField(max_length=100, default='')
+    vak = models.BooleanField(default=False)
+    wos = models.BooleanField(default=False)
+    scopus = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.pk and self.generate_conf_id:
