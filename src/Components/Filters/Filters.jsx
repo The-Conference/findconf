@@ -28,13 +28,16 @@ const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectedFilter);
   const [dataFiltered, setData] = useState(data);
+  const [dataInitial, setDataInitial] = useState(data);
   const [menu, setMenu] = useState(false);
+
   const searchData = (pattern) => {
     const fuse = new Fuse(dataFiltered);
     const result = fuse.search(pattern);
     const matches = [];
+
     if (!result.length) {
-      setData(dataFiltered);
+      setData(dataInitial);
     } else {
       result.forEach(({ item }) => {
         matches.push(item);
@@ -74,8 +77,7 @@ const Filters = () => {
                 <div
                   onClick={() => {
                     setData(item.data);
-                    console.log(data[0]);
-                    console.log("test");
+                    setDataInitial(item.data);
                     dispatch(handleColor(item.id));
                     dispatch(saveFilter(item.name));
                     dispatch(fetchFilteredConferences());
