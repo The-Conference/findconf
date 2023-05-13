@@ -1,0 +1,12 @@
+name: 'Init pipeline for update backend on test server'
+
+on:
+  push:
+    branches:
+      - 'backend'
+    paths-ignore:
+      - '.github/**'
+
+jobs:
+  checkout:
+    uses: The-Conference/findconf/.github/workflows/test-github-actions-back.yml@main
