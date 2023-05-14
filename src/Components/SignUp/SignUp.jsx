@@ -1,11 +1,27 @@
 import React from "react";
 import "../Login/login.scss";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { registerUser } from "../../store/userSlice";
+import { useDispatch } from "react-redux";
 const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleNavigate = () => {
     navigate("/");
   };
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    dispatch(registerUser({ email, password }));
+    setEmail("");
+    setPassword("");
+    if (password.length > 0 && email.length > 0) {
+      navigate("/registered");
+    }
+  };
+
   return (
     <div className="login">
       <span className="login__close" onClick={handleNavigate}>
@@ -18,12 +34,22 @@ const SignUp = () => {
           Конференции уже ждут твоего участия
         </p>
       </div>
-      <form className="login__form" action="">
+      <form className="login__form" action="" onSubmit={handleSignUp}>
         {/* <label htmlFor="">email</label> */}
-        <input type="mail" placeholder="E-mail" />
+        <input
+          type="mail"
+          value={email}
+          placeholder="E-mail"
+          onChange={(e) => setEmail(e.target.value)}
+        />
         {/* <label htmlFor="">пароль</label> */}
-        <input type="password" placeholder="Пароль" />
-        <label htmlFor=""></label>{" "}
+        <input
+          type="password"
+          value={password}
+          placeholder="Пароль"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {/* <label htmlFor=""></label>{" "}
         <input type="password" placeholder="Подтвердить пароль" />
         <div className="login__form-agreement">
           <input type="checkbox" />
@@ -31,7 +57,7 @@ const SignUp = () => {
             Я принимаю условия
             <span>Пользовательского соглашения</span>
           </label>
-        </div>
+        </div> */}
         <button>Зарегистрироваться</button>
       </form>
       <button className="login__button-grey">Восстановить пароль</button>

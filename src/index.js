@@ -6,9 +6,14 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import ReactGA from "react-ga";
 import { GAListener } from "./GAListener";
+import SignUp from "./Components/SignUp/SignUp";
+import Login from "./Components/Login/Login";
+import Registered from "./Components/SignUp/Registered";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
+import ProtectedRoute from "./Components/SignUp/ProtectedRoute/ProtectedRoute";
 const Header = React.lazy(() => import("./Components/Header/Header"));
 const App = React.lazy(() => import("./App"));
 const AllConferences = React.lazy(() =>
@@ -135,6 +140,41 @@ const router = createBrowserRouter([
         <Footer />
       </>
     ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <>
+        <SignUp />
+      </>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <>
+        <Login />
+      </>
+    ),
+  },
+  {
+    path: "/registered",
+    element: (
+      <>
+        <Header />
+        <Registered />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <>
+        <ProtectedRoute />
+      </>
+    ),
+    redirectTo: "/login",
   },
 
   {

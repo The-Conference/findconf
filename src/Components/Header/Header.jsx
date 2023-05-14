@@ -1,11 +1,20 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./header.scss";
 import SearchFilter from "../SearchFilter/SearchFilter";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../store/authSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+  const isAuthenticated = useSelector((state) => state.auth.token !== null);
+  const handleLogOut = () => {
+    dispatch(logout());
+    nav("/");
+  };
   return (
     <header style={{ padding: "0 20px" }}>
       <div className="header">
@@ -20,6 +29,15 @@ const Header = () => {
           <ul>
             <li>
               <Link to="/about">О сервисе </Link>
+            </li>
+            <li>
+              {(!isAuthenticated && <Link to="/login">Войти </Link>) || (
+                <span onClick={handleLogOut}>Выйти</span>
+              )}
+            </li>
+            <li>
+              {(isAuthenticated && <Link to="/profile">Моя страница </Link>) ||
+                null}
             </li>
           </ul>
         </nav>

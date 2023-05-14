@@ -1,8 +1,23 @@
-import React from "react";
+import { useState } from "react";
 import "./login.scss";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/authSlice";
+
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(login({ email, password }));
+    setEmail("");
+    setPassword("");
+    navigate("/profile");
+  };
+
   const handleNavigate = () => {
     navigate("/");
   };
@@ -18,9 +33,19 @@ const Login = () => {
           Конференции уже ждут твоего участия
         </p>
       </div>
-      <form className="login__form" action="">
-        <input type="mail" placeholder="E-mail" />
-        <input type="password" placeholder="Пароль" />
+      <form className="login__form" action="" onSubmit={handleSubmit}>
+        <input
+          type="mail"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button>Войти</button>
       </form>
       <button className="login__button-grey">Восстановить пароль</button>
