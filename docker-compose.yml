@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    container_name: 'conf_db'
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASS:-changeme}
+      POSTGRES_DB: ${DB_NAME:-mydatabase}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:${DB_PORT:-5432}"
+
+
+  scrapy:
+    build:
+      context: .
+    restart: unless-stopped
+    tty: true
+    environment:
+      DEBUG: 'False'
+    container_name: 'conf_parsers'
+    volumes:
+      - ./:/usr/src/app/
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:

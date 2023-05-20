@@ -7,3 +7,4 @@
 **/.idea/
 **/.metadata/
 **/*.log
+/conf_parsers/data/
