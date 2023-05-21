@@ -17,8 +17,9 @@ import {
   StyledPopup,
   StyledPopupTitle,
   StyledPopupText,
-  StyledPopupLabel,
+  StyledPopupDiv,
   StyledPopupClose,
+  StyledPopupInput,
 } from "./styled";
 import "reactjs-popup/dist/index.css";
 import Fuse from "fuse.js";
@@ -146,10 +147,14 @@ const Filters = () => {
                   X
                 </StyledPopupClose>
                 {dataFiltered.map((item, n) => (
-                  <StyledPopupLabel key={n + 1}>
-                    <input type="checkbox" />
-                    <StyledPopupText>{item}</StyledPopupText>
-                  </StyledPopupLabel>
+                  <StyledPopupDiv key={n + 1}>
+                    <StyledPopupInput
+                      className="custom-checkbox"
+                      id={"color" + n}
+                      type="checkbox"
+                    />
+                    <StyledPopupText for={"color" + n}>{item}</StyledPopupText>
+                  </StyledPopupDiv>
                 ))}
               </div>
             )}
