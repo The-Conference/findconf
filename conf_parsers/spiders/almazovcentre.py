@@ -34,8 +34,8 @@ class AlmazovcentreSpider(scrapy.Spider):
                 new_item.add_value('reg_href', ref.get('href') if 'регистрация' in ref.text.lower() else None)
 
         if dates := find_date_in_string(conf_name):
-            new_item.add_value('conf_date_begin', dates[0].date())
-            new_item.add_value('conf_date_end', dates[1].date() if len(dates) > 1 else dates[0].date())
+            new_item.add_value('conf_date_begin', dates[0])
+            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
         lines = conf_block.find_all(['p', 'div'])
         for line in lines:
@@ -45,8 +45,8 @@ class AlmazovcentreSpider(scrapy.Spider):
             if ('заявк' in lowercase or 'принимаютс' in lowercase or 'участи' in lowercase
                 or 'регистрац' in lowercase or 'регистрир' in lowercase):
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('reg_date_begin', dates[0].date())
-                    new_item.add_value('reg_date_end', dates[1].date() if 1 < len(dates) else None)
+                    new_item.add_value('reg_date_begin', dates[0])
+                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
             if ('онлайн' in lowercase or 'трансляц' in lowercase or
                                'на платформе' in lowercase or 'дистанционном' in lowercase):

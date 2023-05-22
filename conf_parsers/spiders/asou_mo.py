@@ -30,8 +30,9 @@ class AsouMoSpider(scrapy.Spider):
         conf_name = conf_block.find('h1', class_='entry-title').text
         new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_s_desc', conf_block.find(
-            'div', class_='one-news__intro-description').find('p', class_='entry-content').text)
+        description = conf_block.find(
+            'div', class_='one-news__intro-description').find('p', class_='entry-content')
+        new_item.add_value('conf_s_desc', description.text)
         new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('=')[-1]}")
         new_item.add_value('conf_card_href', response.request.url)
         new_item.add_value('org_name', conf_block.find(
@@ -43,19 +44,21 @@ class AsouMoSpider(scrapy.Spider):
         lines = conf_block.find(
             'div', class_='one-news__purposes container container--news-one common-text').find_all(
             ['p', 'ul', 'h3'])
+        lines.extend(description)
         for line in list(lines):
             lowercase = line.text.lower()
 
             if ('заявк' in lowercase or 'принимаютс' in lowercase or 'участи' in lowercase
                     or 'регистрац' in lowercase or 'регистрир' in lowercase):
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('reg_date_begin', dates[0].date())
-                    new_item.add_value('reg_date_end', dates[1].date() if 1 < len(dates) else None)
+                    new_item.add_value('reg_date_begin', dates[0])
+                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
-            if 'состоится' in lowercase or 'открытие' in lowercase or 'проведен' in lowercase:
+            if 'состоится' in lowercase or 'открытие' in lowercase or 'проведен' in lowercase \
+                    or 'провод' in lowercase:
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('conf_date_begin', dates[0].date())
-                    new_item.add_value('conf_date_end', dates[1].date() if len(dates) > 1 else dates[0].date())
+                    new_item.add_value('conf_date_begin', dates[0])
+                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
             new_item.add_value('conf_desc', line.get_text(separator=" "))
 

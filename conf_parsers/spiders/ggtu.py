@@ -28,8 +28,8 @@ class GgtuSpider(scrapy.Spider):
 
             new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
             if dates := find_date_in_string(line.find_all('td')[-1].text):
-                conf_date_begin = dates[0].date()
-                conf_date_end = dates[1].date() if len(dates) > 1 else dates[0].date()
+                conf_date_begin = dates[0]
+                conf_date_end = dates[1] if len(dates) > 1 else dates[0]
 
             new_item.add_value('conf_card_href', self.allowed_domains[0] + line.find('a', href=True)['href'])
             new_item.add_value('conf_id', f"{self.name}_{''.join(line.find_all('td')[0].text.split())}"

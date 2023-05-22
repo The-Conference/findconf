@@ -36,14 +36,14 @@ class BashgmuSpider(scrapy.Spider):
 
             if 'состоится' in lowercase or 'открытие' in lowercase or 'проведен' in lowercase:
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('conf_date_begin', dates[0].date())
-                    new_item.add_value('conf_date_end', dates[1].date() if len(dates) > 1 else dates[0].date())
+                    new_item.add_value('conf_date_begin', dates[0])
+                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
             if ('заявк' in lowercase or 'принимаютс' in lowercase or 'регистрац' in lowercase or
                 'регистрир' in lowercase):
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('reg_date_begin', dates[0].date())
-                    new_item.add_value('reg_date_end', dates[1].date() if 1 < len(dates) else None)
+                    new_item.add_value('reg_date_begin', dates[0])
+                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
             if 'регистрац' in lowercase or 'зарегистр' in lowercase or 'участия' in lowercase or 'заявк' in lowercase:
                 new_item.add_value(

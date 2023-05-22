@@ -29,8 +29,8 @@ class A1spbgmuSpider(scrapy.Spider):
         prev_text = ''
         new_item.add_value('conf_card_href', url)
         if dates := find_date_in_string(conf_name):
-            new_item.add_value('conf_date_begin', dates[0].date())
-            new_item.add_value('conf_date_end', dates[1].date() if len(dates) > 1 else dates[0].date())
+            new_item.add_value('conf_date_begin', dates[0])
+            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
         for line in conf_block.find('div', itemprop='articleBody').find_all('p'):
             lowercase = line.text.lower()
@@ -58,8 +58,8 @@ class A1spbgmuSpider(scrapy.Spider):
 
             if 'заявки' in lowercase or 'принимаютс' in lowercase or 'регистрац' in lowercase:
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('reg_date_begin', dates[0].date())
-                    new_item.add_value('reg_date_end', dates[1].date() if 1 < len(dates) else None)
+                    new_item.add_value('reg_date_begin', dates[0])
+                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
             new_item.add_value('rinc', True if 'ринц' in lowercase else False)
             new_item.add_value('scopus', True if 'scopus' in lowercase else False)

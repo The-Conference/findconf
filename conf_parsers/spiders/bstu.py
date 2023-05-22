@@ -23,8 +23,8 @@ class BstuSpider(scrapy.Spider):
                     new_item.add_value('conf_card_href', response.urljoin(href))
                 dates_str = link.css("strong::text")[-1].get()
                 if dates := find_date_in_string(dates_str):
-                    new_item.add_value('conf_date_begin', dates[0].date())
-                    new_item.add_value('conf_date_end', dates[1].date() if len(dates) > 1 else dates[0].date())
+                    new_item.add_value('conf_date_begin', dates[0])
+                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
                 yield new_item.load_item()
 

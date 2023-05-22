@@ -4,6 +4,7 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import hashlib
 import datetime
+import logging
 
 from scrapy.exceptions import DropItem
 from sqlalchemy.exc import IntegrityError
@@ -56,6 +57,9 @@ class FillTheBlanksPipeline:
 class DropOldItemsPipeline:
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
+        if not adapter.get('conf_date_begin'):
+            logging.warning(adapter.get('conf_card_href'))
+            raise DropItem('Date not found')
         filter_date = spider.settings.get('FILTER_DATE')
         if adapter.get('conf_date_begin') < filter_date \
                 or adapter.get('conf_date_end') < filter_date:

@@ -35,14 +35,14 @@ class KaiSpider(scrapy.Spider):
             if ('заявк' in lowercase or 'принимаютс' in lowercase
                     or 'регистрац' in lowercase or 'регистрир' in lowercase):
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('reg_date_begin', dates[0].date())
-                    new_item.add_value('reg_date_end', dates[1].date() if 1 < len(dates) else None)
+                    new_item.add_value('reg_date_begin', dates[0])
+                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
             if 'состоится' in lowercase or 'открытие' in lowercase or 'проведен' in lowercase \
                     or 'дата' in lowercase:
                 if dates := find_date_in_string(lowercase):
-                    new_item.add_value('conf_date_begin', dates[0].date())
-                    new_item.add_value('conf_date_end', dates[1].date() if len(dates) > 1 else dates[0].date())
+                    new_item.add_value('conf_date_begin', dates[0])
+                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
             new_item.add_value('conf_desc', line.get_text(separator=" "))
 

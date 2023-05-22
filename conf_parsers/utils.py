@@ -1,4 +1,6 @@
-import datefinder
+import re
+import datetime
+from dateparser import parse
 
 
 def normalise_str(string):
@@ -7,54 +9,23 @@ def normalise_str(string):
         replace('\n', '').replace('\t', '')
 
 
-def find_date_in_string(str_):
-    # FIXME: '100-летие' ложное срабатывание
-    # FIXME: years
-    names = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-              'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-    names2 = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
-             'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
-    nums = ['january', 'february', 'march', 'april', 'may', 'june',
-            'july', 'august', 'september', 'october', 'november', 'december']
-    months = dict(zip(nums, names))
-    months2 = dict(zip(nums, names2))
-    str_ = str_.replace('–', '-')
-    words = str_.split()
-    dates = False
-    c_ = False
-    place_ = -1
-    if words[0].lower() == 'с':  # FIXME: no match index error
-        dates = True
-        c_ = True
-    for n, word in enumerate(words):
-        if not dates and '-' in word:
-            try:
-                s = int(word[:word.find('-')])
-                words[n] = words[n].replace('-', ' и ')
-                place_ = n
-                dates = True
-            except:
-                continue
-        if word in months.values():
-            words[n] = [key for key, value in months.items() if word in value][0]
-        elif word in months2.values():
-            words[n] = [key for key, value in months2.items() if word in value][0]
-    words = ' '.join(words)
-    words = words.split()
-    if dates and not c_:
-        try:
-            words.insert(place_ + 1, words[place_ + 3])
-            words.insert(place_ + 2, words[place_ + 5])
-        except:
-            # print('Нет месяца или года')
-            words = words
-    if dates and c_:
-        try:
-            words.insert(2, words[4])
-            words.insert(3, words[6])
-        except:
-            # print('Нет месяца или года')
-            words = words
-
-    str_ = ' '.join(words)
-    return list(datefinder.find_dates(str_.replace('-', ' и ')))  # FIXME: results > 2
+def find_date_in_string(string: str) -> list[datetime.date | None]:
+    string = normalise_str(string).replace('–', '-')
+    pattern = re.compile(
+        r'(?i)(?:\s+)?(\d+(?:-?\d+)?)\s?'
+        r'(январ[ьея]|феврал[ьея]|март[еа]?'
+        r'|апрел[ьея]|ма[йея]|ию[нл][яье]'
+        r'|август[еа]?|(?:сент|окт|но|дек)[ая]бр[яье]'
+        r'|\D\d\d\D)'
+        r'\s?(\d+)?'
+    )
+    dates = []
+    for date in re.finditer(pattern, string):
+        date_parts = date.groups()
+        if '-' in date_parts[0]:
+            remainder = ' '.join(filter(None, date_parts[1:]))
+            dates.extend([f'{i} {remainder}' for i in date_parts[0].split('-')])
+        else:
+            dates.append(date.group())
+    return [parse(date, settings={'DEFAULT_LANGUAGES': ['ru'], 'DATE_ORDER': 'DMY'}
+                  ).date() for date in dates]

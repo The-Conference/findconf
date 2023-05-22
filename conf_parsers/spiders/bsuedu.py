@@ -27,11 +27,11 @@ class BsueduSpider(scrapy.Spider):
             value = item.xpath("following-sibling::text()").get()
 
             if 'Дата начала' in text:
-                new_item.add_value('conf_date_begin', find_date_in_string(value)[0].date() or None)
+                new_item.add_value('conf_date_begin', find_date_in_string(value)[0] or None)
             if 'Дата окончания' in text:
-                new_item.add_value('conf_date_end', find_date_in_string(value)[0].date() or None)
+                new_item.add_value('conf_date_end', find_date_in_string(value)[0] or None)
             if 'Срок окончания приёма заявок' in text:
-                new_item.add_value('reg_date_end', find_date_in_string(value)[0].date() or None)
+                new_item.add_value('reg_date_end', find_date_in_string(value)[0] or None)
             if 'Место проведения' in text:
                 new_item.add_value('conf_address', value)
             if 'Организатор' in text:
