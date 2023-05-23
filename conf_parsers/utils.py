@@ -10,13 +10,14 @@ def normalise_str(string):
 
 
 def find_date_in_string(string: str) -> list[datetime.date | None]:
-    string = normalise_str(string).replace('–', '-')
+    string = normalise_str(string)
+    string = re.sub(r'\s?[пд]о\s?|–', '-', string)
     pattern = re.compile(
         r'(?i)(?:\s+)?(\d+(?:-?\d+)?)\s?'
         r'(январ[ьея]|феврал[ьея]|март[еа]?'
         r'|апрел[ьея]|ма[йея]|ию[нл][яье]'
         r'|август[еа]?|(?:сент|окт|но|дек)[ая]бр[яье]'
-        r'|\D\d\d\D)'
+        r'|\W\d\d\W)'
         r'\s?(\d+)?'
     )
     dates = []

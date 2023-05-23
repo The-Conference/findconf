@@ -34,7 +34,9 @@ class TestUtils(TestCase):
             '02-20/01/2023',
             '02-20\\01\\2023',
             '02-20-01-2023',
-            'с 2 января 2023 до 20 января 2023'
+            'с 2 января 2023 до 20 января 2023',
+            'c 2 по 20 января 2023 г',
+            'c2до20января2023г',
         ]
         for case in cases:
             self.assertEqual([date(2023, 1, 2), date(2023, 1, 20)], find_date_in_string(case))
@@ -45,7 +47,8 @@ class TestUtils(TestCase):
             'тест – 2023',
             'до 35 лет',
             '2020-2021',
-            '2023'
+            '2023',
+            'https://forms.yandex.ru/u/63c563285056901e70f9180d/'
         ]
         for case in cases:
             self.assertEqual([], find_date_in_string(case))
