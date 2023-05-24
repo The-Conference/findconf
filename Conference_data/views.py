@@ -1,5 +1,6 @@
 from rest_framework import generics
 from django.shortcuts import get_object_or_404
+from Conference_crm.permissions.permissions import ReadOnlyOrAdminPermission
 
 from .models import Conference
 from .serializers import ConferenceSerializer
@@ -7,6 +8,7 @@ from .serializers import ConferenceSerializer
 
 class ConferenceList(generics.ListCreateAPIView):
     serializer_class = ConferenceSerializer
+    permission_classes = [ReadOnlyOrAdminPermission]
 
     def get_queryset(self):
         offline = self.request.query_params.get('offline', None)
@@ -25,6 +27,7 @@ class ConferenceList(generics.ListCreateAPIView):
 
 class ConferenceDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ConferenceSerializer
+    permission_classes = [ReadOnlyOrAdminPermission]
 
     def get_queryset(self):
         return Conference.objects.filter(checked=True)
