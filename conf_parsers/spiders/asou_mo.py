@@ -2,7 +2,7 @@ import scrapy
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs
 
 
 class AsouMoSpider(scrapy.Spider):
@@ -45,50 +45,7 @@ class AsouMoSpider(scrapy.Spider):
             'div', class_='one-news__purposes container container--news-one common-text').find_all(
             ['p', 'ul', 'h3'])
         lines.extend(description)
-        for line in list(lines):
-            lowercase = line.text.lower()
-
-            if ('заявк' in lowercase or 'принимаютс' in lowercase or 'участи' in lowercase
-                    or 'регистрац' in lowercase or 'регистрир' in lowercase):
-                if dates := find_date_in_string(lowercase):
-                    new_item.add_value('reg_date_begin', dates[0])
-                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
-
-            if 'состоится' in lowercase or 'открытие' in lowercase or 'проведен' in lowercase \
-                    or 'провод' in lowercase:
-                if dates := find_date_in_string(lowercase):
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
-
-            new_item.add_value('conf_desc', line.get_text(separator=" "))
-
-            if 'регистрац' in lowercase or 'зарегистр' in lowercase or 'участия' in lowercase or 'заявк' in lowercase:
-                new_item.add_value(
-                    'reg_href', line.find('a').get('href')
-                    if line.find('a') and (
-                            'http:' in line.find('a').get('href') or 'https:' in line.find('a').get('href')) and (
-                               '.pdf' not in line.find('a').get('href') or
-                               '.doc' not in line.find('a').get('href') or
-                               '.xls' not in line.find('a').get('href')) else None)
-
-            if 'организатор' in lowercase:
-                new_item.add_value('org_name', line.get_text(separator=" "))
-
-            if 'онлайн' in lowercase or 'трансляц' in lowercase or 'ссылка' in lowercase:
-                new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else None)
-                new_item.add_value('online', True)
-
-            if 'место' in lowercase or 'адрес' in lowercase or 'очно' in lowercase:
-                new_item.add_value('conf_address', line.text)
-                new_item.add_value('offline', True)
-
-            # if ('тел.' in lowercase or 'контакт' in lowercase or 'mail' in lowercase
-            #         or 'почта' in lowercase or 'почты' in lowercase):
-            #     new_item.add_value('contacts', line.text)
-            #
-            # if line.find('a') and 'mailto' in line.find('a').get('href'):
-            #     new_item.add_value('contacts', line.find('a').text)
-
-            new_item.add_value('rinc', True if 'ринц' in lowercase else False)
+        for line in lines:
+            new_item = default_parser_bs(line, new_item)
 
         yield new_item.load_item()

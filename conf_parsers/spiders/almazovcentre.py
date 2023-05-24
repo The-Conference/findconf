@@ -2,6 +2,7 @@ import scrapy
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
+from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
@@ -39,34 +40,6 @@ class AlmazovcentreSpider(scrapy.Spider):
 
         lines = conf_block.find_all(['p', 'div'])
         for line in lines:
-            lowercase = line.text.lower()
-            new_item.add_value('conf_desc', line.get_text(separator=" "))
+            new_item = default_parser_bs(line, new_item)
 
-            if ('заявк' in lowercase or 'принимаютс' in lowercase or 'участи' in lowercase
-                or 'регистрац' in lowercase or 'регистрир' in lowercase):
-                if dates := find_date_in_string(lowercase):
-                    new_item.add_value('reg_date_begin', dates[0])
-                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
-
-            if ('онлайн' in lowercase or 'трансляц' in lowercase or
-                               'на платформе' in lowercase or 'дистанционном' in lowercase):
-                new_item.add_value('online', True)
-                new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else 'отсутствует')
-
-            if ('место' in lowercase or 'места' in lowercase or
-                                'ждем вас в' in lowercase or 'адрес' in lowercase):
-                new_item.add_value('offline', True)
-                new_item.add_value('conf_address', line.get_text(separator=" "))
-
-            if 'организатор' in lowercase:
-                new_item.add_value('org_name', line.get_text(separator=" "))
-
-            if ('тел.' in lowercase or 'контакт' in lowercase or 'mail' in lowercase
-                    or 'почта' in lowercase or 'почты' in lowercase):
-                new_item.add_value('contacts', line.text)
-
-            if line.find('a') and 'mailto' in line.find('a').get('href'):
-                new_item.add_value('contacts', line.find('a').text)
-
-            new_item.add_value('rinc', True if 'ринц' in lowercase else False)
         yield new_item.load_item()
