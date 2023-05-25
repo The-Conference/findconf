@@ -7,7 +7,7 @@ const authSlice = createSlice({
     loading: false,
     error: null,
     user: null,
-    token: localStorage.getItem("authToken") || null,
+    token: localStorage.getItem("auth_token") || null,
   },
   reducers: {
     loginStart: (state) => {
@@ -18,7 +18,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload.user;
       state.token = action.payload.token;
-      localStorage.setItem("authToken", action.payload.token);
+      localStorage.setItem("auth_token", action.payload.token);
     },
     loginFailure: (state, action) => {
       state.loading = false;
@@ -29,7 +29,7 @@ const authSlice = createSlice({
       state.error = null;
       state.user = null;
       state.token = null;
-      localStorage.removeItem("authToken");
+      localStorage.removeItem("auth_token");
     },
   },
 });
@@ -41,7 +41,7 @@ export const login = (userData) => async (dispatch) => {
   dispatch(loginStart());
 
   try {
-    const response = await axios.post("http://localhost:3000/login", userData);
+    const response = await axios.post("http://127.0.0.1:8000/api/auth-token/token/login/", userData);
     dispatch(loginSuccess(response.data));
     console.log(response.data);
   } catch (error) {

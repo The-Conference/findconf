@@ -31,7 +31,7 @@ export const registerUser = (userData) => async (dispatch) => {
   dispatch(registerStart());
 
   try {
-    const response = await axios.post("http://localhost:3000/signup", userData);
+    const response = await axios.post("http://127.0.0.1:8000/api/auth/users/", userData);
     dispatch(registerSuccess(response.data));
     console.log(response.data);
   } catch (error) {
