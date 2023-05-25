@@ -33,5 +33,5 @@ urlpatterns = [
     path('api/conf_auth/', include('rest_framework.urls')),
     path('api/auth/', include('djoser.urls')),
     path('api/auth-token/', include('djoser.urls.authtoken')),
-    # path('api/user/', include('Conference_crm.urls')),
+    path('api/user/', include('Conference_crm.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
