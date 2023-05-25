@@ -11,9 +11,9 @@ def normalise_str(string):
 
 def find_date_in_string(string: str) -> list[datetime.date | None]:
     string = normalise_str(string)
-    string = re.sub(r'\s?[пд]о\s?|–', '-', string)
+    string = re.sub(r'\s?([пд]о|–|-)\s?', '-', string)
     pattern = re.compile(
-        r'(?i)(?:\s+)?(\d+(?:-?\d+)?)\s?'
+        r'(?i)(\d+(?:-?\d+)?)\s?'
         r'(январ[ьея]|феврал[ьея]|март[еа]?'
         r'|апрел[ьея]|ма[йея]|ию[нл][яье]'
         r'|август[еа]?|(?:сент|окт|но|дек)[ая]бр[яье]'
@@ -23,10 +23,12 @@ def find_date_in_string(string: str) -> list[datetime.date | None]:
     dates = []
     for date in re.finditer(pattern, string):
         date_parts = date.groups()
-        if '-' in date_parts[0]:
+        if date_parts[0] and '-' in date_parts[0]:
             remainder = ' '.join(filter(None, date_parts[1:]))
             dates.extend([f'{i} {remainder}' for i in date_parts[0].split('-')])
         else:
             dates.append(date.group())
-    return [parse(date, settings={'DEFAULT_LANGUAGES': ['ru'], 'DATE_ORDER': 'DMY'}
-                  ).date() for date in dates]
+    result = [parse(date, settings={'DEFAULT_LANGUAGES': ['ru'],
+                                    'DATE_ORDER': 'DMY'}
+                    ) for date in dates]
+    return [i.date() for i in result if i is not None]
