@@ -1,4 +1,4 @@
-- name: predeploy docker compose
+- name: renewal settings.py
   hosts: test
   vars:
     - dev_path: /usr/data
