@@ -11,7 +11,8 @@ class MgsuSpider(scrapy.Spider):
     allowed_domains = ["mgsu.ru"]
     start_urls = ["https://mgsu.ru/news/announce/rss"]
     custom_settings = {
-        'DOWNLOAD_DELAY': 2
+        'DOWNLOAD_DELAY': 4,
+        'CONCURRENT_REQUESTS_PER_IP': 1,
     }
 
     def parse(self, response, **kwargs):

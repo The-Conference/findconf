@@ -8,7 +8,8 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
     lowercase = line.text.lower()
 
     new_item.add_value('conf_desc', line.get_text(separator=" "))
-    new_item.add_value('rinc', True if 'ринц' in lowercase else False)
+    if 'ринц' in lowercase:
+        new_item.add_value('rinc', True)
 
     if ('состоится' in lowercase
             or 'открытие' in lowercase

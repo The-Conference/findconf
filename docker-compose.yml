@@ -14,6 +14,13 @@ services:
     ports:
       - "${DB_PORT:-5432}:${DB_PORT:-5432}"
 
+  selenium:
+    container_name: 'selenium-chrome'
+    image: selenium/standalone-chrome:latest
+    shm_size: 2gb
+    ports:
+      - "7900:7900"
+      - "4444:4444"
 
   scrapy:
     build:
