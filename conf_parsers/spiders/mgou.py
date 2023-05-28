@@ -1,11 +1,7 @@
-import datetime
-import re
 import scrapy
 from bs4 import BeautifulSoup
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
-from dateparser import parse
+from ..utils import find_date_in_string, parse_vague_dates
 
 
 class MgouSpider(scrapy.Spider):
@@ -29,7 +25,7 @@ class MgouSpider(scrapy.Spider):
                     new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
                     dates = find_date_in_string(line.find_all('td')[2].text)
                     if not dates:
-                        dates = self.parse_vague_dates(line.find_all('td')[2].text)
+                        dates = parse_vague_dates(line.find_all('td')[2].text)
                     conf_date_begin = dates[0] if len(dates) > 0 else ''
                     conf_date_end = dates[1] if len(dates) > 1 else conf_date_begin
                     new_item.add_value('conf_date_begin', conf_date_begin)
@@ -50,19 +46,3 @@ class MgouSpider(scrapy.Spider):
                         new_item.add_value('online', True)
 
                     yield new_item.load_item()
-
-    def parse_vague_dates(self, string: str) -> list[datetime.date]:
-        # TODO handle this in date finder?
-        string = re.sub(r'[\u002D\u058A\u05BE\u1400\u1806'
-                        r'\u2010-\u2015\u2E17\u2E1A\u2E3A\u2E3B\u2E40'
-                        r'\u301C\u3030\u30A0\uFE31\uFE32\uFE58\uFE63\uFF0D]', ' ', string)
-        string = ' '.join(string.split()).split()
-        month1 = month2 = year = None
-        if len(string) == 2:
-            month1, year = string
-        elif len(string) == 3:
-            month1, month2, year = string
-        res = [f'01 {month1} {year}', f'{month2 or month1} {year}']
-        return [parse(r, settings={'DEFAULT_LANGUAGES': ['ru'],
-                                   'DATE_ORDER': 'DMY',
-                                   'PREFER_DAY_OF_MONTH': 'last'}).date() for r in res]
