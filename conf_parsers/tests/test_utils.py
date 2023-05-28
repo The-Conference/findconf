@@ -1,9 +1,9 @@
 from datetime import date, datetime
 from unittest import TestCase
-from conf_parsers.utils import find_date_in_string, parse_vague_dates
+from conf_parsers.utils import find_date_in_string, parse_vague_dates, normalize_string
 
 
-class TestUtils(TestCase):
+class TestDateFinder(TestCase):
     def test_datefinder_single_words(self):
         cases = [
             'c 02 января 2023 г',
@@ -38,7 +38,7 @@ class TestUtils(TestCase):
             '2 января 2023 – 20 января 2023',
             'c 2 по 20 января 2023 г',
             'c2до20января2023г',
-            '02 – 20 января 2023'
+            '02   –  20    января    2023'
         ]
         for case in cases:
             self.assertEqual([date(2023, 1, 2), date(2023, 1, 20)], find_date_in_string(case))
@@ -61,6 +61,8 @@ class TestUtils(TestCase):
         self.assertEqual([date(current_year, 5, 26), date(current_year, 5, 27)],
                          find_date_in_string('26-27 мая'))
 
+
+class TestVagueDateParser(TestCase):
     def test_vague_date_only_month(self):
         current_year = datetime.now().year
         self.assertEqual([date(current_year, 7, 1), date(current_year, 7, 31)],
@@ -78,3 +80,13 @@ class TestUtils(TestCase):
     def test_vague_date_month_year_range(self):
         self.assertEqual([date(2023, 7, 1), date(2023, 8, 31)],
                          parse_vague_dates('июль - август 2023'))
+
+
+class TestStringNormalizer(TestCase):
+    def test_normalize_string(self):
+        cases = [
+            ' test\n\t\t test\r\n ',
+            'test\xa0&nbsp;test',
+        ]
+        for case in cases:
+            self.assertEqual('test test', normalize_string(case))

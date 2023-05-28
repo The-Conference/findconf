@@ -5,7 +5,7 @@
 import scrapy
 from itemloaders.processors import TakeFirst, MapCompose, Join
 from scrapy.loader import ItemLoader
-from .utils import normalise_str
+from .utils import normalize_string
 
 
 class ConferenceItem(scrapy.Item):
@@ -40,13 +40,13 @@ class ConferenceItem(scrapy.Item):
 class ConferenceLoader(ItemLoader):
     default_output_processor = TakeFirst()
 
-    conf_s_desc_in = MapCompose(normalise_str)
+    conf_s_desc_in = MapCompose(normalize_string)
     conf_s_desc_out = Join(' ')
-    conf_desc_in = MapCompose(normalise_str)
+    conf_desc_in = MapCompose(normalize_string)
     conf_desc_out = Join(' ')
-    org_name_in = MapCompose(normalise_str)
-    conf_address_in = MapCompose(normalise_str)
+    org_name_in = MapCompose(normalize_string)
+    conf_address_in = MapCompose(normalize_string)
     conf_address_out = Join(' ')
-    contacts_in = MapCompose(normalise_str)
+    contacts_in = MapCompose(normalize_string)
     contacts_out = Join(' ')
-    conf_name_in = MapCompose(normalise_str)
+    conf_name_in = MapCompose(normalize_string)

@@ -3,17 +3,21 @@ import datetime
 from dateparser import parse
 
 
-def normalise_str(string):
-    string = ' '.join(string.split())
-    return string.strip().replace('&nbsp;', ' ').replace('\xa0', ' ').replace('\r', ''). \
-        replace('\n', '').replace('\t', '')
+def normalize_string(string: str) -> str:
+    # dash, hyphen, minus, etc.
+    string = re.sub(r'[\u002D\u058A\u05BE\u1400\u1806'
+                    r'\u2010-\u2015\u2E17\u2E1A\u2E3A\u2E3B\u2E40'
+                    r'\u301C\u3030\u30A0\uFE31\uFE32\uFE58\uFE63\uFF0D–-]', '-', string)
+    string = string.replace('&nbsp;', ' ').replace('\xa0', ' ')\
+        .replace('\r', '').replace('\n', '').replace('\t', '')
+    return ' '.join(string.split()).strip()
 
 
 def find_date_in_string(string: str) -> list[datetime.date]:
-    string = normalise_str(string)
-    string = re.sub(r'\s?([пд]о|–|-)\s?', '-', string)
+    string = normalize_string(string)
+    string = re.sub(r'[пд]о', '-', string)
     pattern = re.compile(
-        r'(?i)(\d+(?:-?\d+)?)\s?'
+        r'(?i)(\d+(?:\s?-\s?\d+)?)\s?'
         r'(январ[ьея]|феврал[ьея]|март[еа]?'
         r'|апрел[ьея]|ма[йея]|ию[нл][яье]'
         r'|август[еа]?|(?:сент|окт|но|дек)[ая]бр[яье]'
@@ -35,13 +39,9 @@ def find_date_in_string(string: str) -> list[datetime.date]:
 
 
 def parse_vague_dates(string: str) -> list[datetime.date]:
-    string = re.sub(r'[\u002D\u058A\u05BE\u1400\u1806'
-                    r'\u2010-\u2015\u2E17\u2E1A\u2E3A\u2E3B\u2E40'
-                    r'\u301C\u3030\u30A0\uFE31\uFE32\uFE58\uFE63\uFF0D]', '-', string)
-    string = normalise_str(string)
-
+    string = normalize_string(string)
     pattern = re.compile(
-        r'(?i)январь|февраль|март|апрель|май|июнь|июль|август?|(?:сент|окт|но|дек)[ая]брь'
+        r'(?i)январь|февраль|март|апрель|май|июнь|июль|август|(?:сент|окт|но|дек)[ая]брь'
         r'|\d{4}?'
     )
     matches = re.findall(pattern, string)
