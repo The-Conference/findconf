@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
@@ -6,19 +6,17 @@ from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
-class AlmazovcentreSpider(scrapy.Spider):
+class AlmazovcentreSpider(CrawlSpider):
     name = "almazovcentre"
     un_name = 'ФГБУ «НМИЦ им. В. А. Алмазова» Минздрава России'
     allowed_domains = ["www.almazovcentre.ru"]
     start_urls = ["http://www.almazovcentre.ru/?cat=5"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='a.entry-title', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='a.entry-title', restrict_text='онференц')
-        links = link_extractor.extract_links(response)
-        for link in links:
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem())
 
         soup = BeautifulSoup(response.text, 'lxml')

@@ -18,7 +18,7 @@ class MpguSpider(CrawlSpider):
         Rule(LinkExtractor(restrict_css='ul.pagination > li > a', restrict_text='>>')),
     )
 
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         soup = BeautifulSoup(response.text, 'lxml')

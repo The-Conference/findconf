@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
@@ -6,18 +6,17 @@ from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
-class GpmuSpider(scrapy.Spider):
+class GpmuSpider(CrawlSpider):
     name = "gpmu"
     un_name = 'Санкт-Петербургский государственный педиатрический медицинский университет'
     allowed_domains = ["gpmu.org"]
     start_urls = ["https://gpmu.org/science/conference/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='div.catinfo_item', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='div.catinfo_item', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         new_item.add_value('conf_id', f"{self.name}_{response.request.url}")

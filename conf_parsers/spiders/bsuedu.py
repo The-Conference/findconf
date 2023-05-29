@@ -1,21 +1,20 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
 
 
-class BsueduSpider(scrapy.Spider):
+class BsueduSpider(CrawlSpider):
     name = "bsuedu"
     un_name = 'Белгородский государственный национальный исследовательский университет'
     allowed_domains = ["www.bsuedu.ru"]
     start_urls = ["https://www.bsuedu.ru/bsu/science/meropr/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='td.mob_clear', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='td.mob_clear', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         new_item.add_xpath('conf_name', '//h1/text()')
         new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('=')[-1]}")

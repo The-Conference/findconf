@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
@@ -6,18 +6,17 @@ from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
-class MgppuSpider(scrapy.Spider):
+class MgppuSpider(CrawlSpider):
     name = "mgppu"
     un_name = 'Московский государственный психолого-педагогический университет'
     allowed_domains = ["mgppu.ru"]
     start_urls = ["https://mgppu.ru/events?searchStr=&eventtype_conference=y"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='a.new-link', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='a.new-link', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, meta={'desc': link.text}, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         dates = response.xpath("//time/text()").get()
         if dates := find_date_in_string(dates):

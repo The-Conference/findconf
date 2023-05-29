@@ -53,7 +53,7 @@ class LinguanetSpider(scrapy.Spider):
             if 'конфер' in line.get_text(separator=" ").lower():
                 yield scrapy.Request(conf_card_href, meta={'desc': conf_s_desc}, callback=self.parse_items)
 
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-1].split('=')[-1]}")

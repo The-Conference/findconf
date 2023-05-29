@@ -24,7 +24,7 @@ class MietSpider(scrapy.Spider):
         url = main_page.extract_links(response)[0].url
         yield scrapy.Request(url, callback=self.get_links)
 
-    def get_links(self, response, **kwargs):
+    def get_links(self, response):
         link_extractor = LinkExtractor(restrict_css='a.site-sidebar__item-link',
                                        restrict_text='^((?!Архив).)*$')
         links = [i.url for i in link_extractor.extract_links(response)]
@@ -32,7 +32,7 @@ class MietSpider(scrapy.Spider):
         for link in links:
             yield scrapy.Request(link, callback=self.parse_items)
 
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         soup = BeautifulSoup(response.text, 'lxml')

@@ -52,6 +52,7 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
 
     if ('место' in lowercase
             or 'адрес' in lowercase
+            or 'город' in lowercase
             or 'очно' in lowercase):
         new_item.add_value('conf_address', line.text)
         new_item.add_value('offline', True)

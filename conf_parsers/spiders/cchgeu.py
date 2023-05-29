@@ -1,22 +1,21 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
 
 
-class CchgeuSpider(scrapy.Spider):
+class CchgeuSpider(CrawlSpider):
     name = "cchgeu"
     un_name = 'Воронежский государственный технический университет'
     allowed_domains = ["cchgeu.ru"]
     start_urls = ["https://cchgeu.ru/science/info/konferentsii"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='a.name', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='a.name', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='middle')
@@ -43,33 +42,23 @@ class CchgeuSpider(scrapy.Spider):
             new_item.add_value('rinc', True if 'ринц' in lowercase else False)
 
             if ('состоится' in lowercase or 'открытие' in lowercase
-                or 'проведен' in lowercase or 'пройдет' in lowercase
-                or 'провод' in lowercase):
+                    or 'проведен' in lowercase or 'пройдет' in lowercase
+                    or 'провод' in lowercase):
                 if dates := find_date_in_string(line + prev):
                     new_item.add_value('conf_date_begin', dates[0])
                     new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
             if ('заявк' in lowercase or 'принимаютс' in lowercase or 'регистрац' in lowercase or
-                'регистрир' in lowercase):
+                    'регистрир' in lowercase):
                 if dates := find_date_in_string(line + prev):
                     new_item.add_value('reg_date_begin', dates[0])
                     new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
-            # if 'регистрац' in lowercase or 'зарегистр' in lowercase or 'заявк' in lowercase:
-            #     new_item.add_value(
-            #         'reg_href', line.find('a').get('href')
-            #         if line.find('a') and (
-            #                 'http:' in line.find('a').get('href') or 'https:' in line.find('a').get('href')) and (
-            #                    '.pdf' not in line.find('a').get('href') or
-            #                    '.doc' not in line.find('a').get('href') or
-            #                    '.xls' not in line.find('a').get('href')) else None)
-
             if 'организатор' in lowercase:
                 new_item.add_value('org_name', line)
 
-            # if 'онлайн' in lowercase or 'трансляц' in lowercase:
-            #     new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else None)
-            #     new_item.add_value('online', True)
+            if 'онлайн' in lowercase or 'трансляц' in lowercase:
+                new_item.add_value('online', True)
 
             if 'город' in lowercase or 'адрес' in lowercase or 'место проведен' in lowercase:
                 new_item.add_value('conf_address', line)

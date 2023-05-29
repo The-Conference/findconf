@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
@@ -6,25 +6,24 @@ from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
-class DonstuSpider(scrapy.Spider):
+class DonstuSpider(CrawlSpider):
     name = "donstu"
     un_name = 'Донской государственный технический университет'
     allowed_domains = ["donstu.ru"]
     start_urls = ["https://donstu.ru/events/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='div.event-box', allow='konfer'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='div.event-box', allow='forum')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         main_containers = soup.find('div', class_='event-container')
 
         conf_name = response.xpath("//div[@class='title']/text()").get()
         new_item.add_value('conf_name', conf_name)
-        conf_s_desc= response.xpath("//div[@class='desc']/text()").get()
+        conf_s_desc = response.xpath("//div[@class='desc']/text()").get()
         new_item.add_value('conf_s_desc', conf_s_desc)
         new_item.add_value('local', False if 'международн' in conf_name.lower()
                                              or 'международн' in conf_s_desc.lower() else True)

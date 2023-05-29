@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
@@ -6,18 +6,17 @@ from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
-class KbsuSpider(scrapy.Spider):
+class KbsuSpider(CrawlSpider):
     name = "kbsu"
     un_name = 'Кабардино-Балкарский государственный университет им. Х. М. Бербекова'
     allowed_domains = ["kbsu.ru"]
     start_urls = ["https://kbsu.ru/nauchnye-konferencii/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='td > a', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='td > a', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-2]}")

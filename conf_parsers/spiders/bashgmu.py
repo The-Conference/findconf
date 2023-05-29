@@ -1,23 +1,21 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
 
 
-class BashgmuSpider(scrapy.Spider):
+class BashgmuSpider(CrawlSpider):
     name = "bashgmu"
     un_name = 'Башкирский государственный медицинский университет'
     allowed_domains = ["bashgmu.ru"]
     start_urls = ["https://bashgmu.ru/science_and_innovation/konferentsii/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='p.grants-item', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='p.grants-item', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         main_containers = soup.find('div', class_='grants-detail')

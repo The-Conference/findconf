@@ -1,22 +1,21 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
 
 
-class GubkinSpider(scrapy.Spider):
+class GubkinSpider(CrawlSpider):
     name = "gubkin"
     un_name = 'Российский государственный университет нефти и газа ' \
               '(национальный исследовательский университет) имени И.М. Губкина'
     allowed_domains = ["conf.gubkin.ru"]
     start_urls = ["https://conf.gubkin.ru/conferences/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='td.name', restrict_text='онференц', attrs=('data-short',)),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='td.name', restrict_text='онференц', attrs=('data-short',))
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_name = response.xpath("string(//div[@class='modal-header'])").get()

@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
@@ -6,20 +6,19 @@ from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
-class KazangmuSpider(scrapy.Spider):
+class KazangmuSpider(CrawlSpider):
     name = "kazangmu"
     un_name = 'Казанский государственный медицинский университет'
     allowed_domains = ["kazangmu.ru"]
     start_urls = ["https://kazangmu.ru/science-and-innovation/konferentsii-v-rossii",
                   "https://kazangmu.ru/science-and-innovation/konferentsii-v-rossii?start=10",
                   "https://kazangmu.ru/science-and-innovation/konferentsii-v-rossii?start=20"]
+    rules = (
+        Rule(LinkExtractor(restrict_xpaths="//section[@id='content']//a", restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_xpaths="//section[@id='content']//a", restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-1].split('-')[0]}")
@@ -39,4 +38,3 @@ class KazangmuSpider(scrapy.Spider):
             new_item = default_parser_bs(line, new_item)
 
         yield new_item.load_item()
-

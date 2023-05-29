@@ -1,11 +1,11 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..parsing import default_parser_bs
 
 
-class AsouMoSpider(scrapy.Spider):
+class AsouMoSpider(CrawlSpider):
     name = "asou_mo"
     un_name = 'Академия социального управления'
     allowed_domains = ["asou-mo.ru"]
@@ -13,13 +13,12 @@ class AsouMoSpider(scrapy.Spider):
         "https://asou-mo.ru/events/announce/",
         # "https://asou-mo.ru/events/archive"
     ]
+    rules = (
+        Rule(LinkExtractor(restrict_css='a.hentry', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='a.hentry', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         soup = BeautifulSoup(response.text, 'lxml')

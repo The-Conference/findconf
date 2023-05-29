@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
@@ -6,19 +6,18 @@ from ..parsing import default_parser_bs
 from ..utils import find_date_in_string
 
 
-class MgpuSpider(scrapy.Spider):
+class MgpuSpider(CrawlSpider):
     name = "mgpu"
     un_name = 'Московский городской педагогический университет'
     allowed_domains = ["www.mgpu.ru"]
     start_urls = ["https://www.mgpu.ru/calendar/",
                   "https://www.mgpu.ru/calendar/?sf_paged=2"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='div.event-modal-content', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='div.event-modal-content', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, meta={'desc': link.text}, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         soup = BeautifulSoup(response.text, 'lxml')

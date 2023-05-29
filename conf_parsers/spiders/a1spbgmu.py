@@ -1,4 +1,4 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from urllib.parse import unquote
 from scrapy.linkextractors import LinkExtractor
@@ -6,24 +6,24 @@ from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
 
 
-class A1spbgmuSpider(scrapy.Spider):
+class A1spbgmuSpider(CrawlSpider):
     name = "1spbgmu"
     un_name = 'Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова'
     allowed_domains = ["www.1spbgmu.ru"]
     start_urls = ["https://www.1spbgmu.ru/nauka/konferentsii"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='td.list-title', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='td.list-title', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         url = unquote(response.request.url)
         new_item = ConferenceLoader(item=ConferenceItem())
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='item-page')
 
         conf_name = conf_block.find('div', class_='page-header').get_text(separator=" ")
+        new_item.add_value('conf_name', conf_name)
         new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         new_item.add_value('conf_id', f"{self.name}_{url.split('/')[-1]}")
         prev_text = ''
@@ -65,7 +65,6 @@ class A1spbgmuSpider(scrapy.Spider):
             new_item.add_value('scopus', True if 'scopus' in lowercase else False)
             new_item.add_value('vak', True if 'ВАК' in line.text else False)
             new_item.add_value('wos', True if 'wos' in lowercase else False)
-            new_item.add_value('conf_name', conf_name)
             prev_text = lowercase
 
         yield new_item.load_item()

@@ -1,22 +1,21 @@
-import scrapy
+from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..parsing import default_parser_bs
 
 
-class KaiSpider(scrapy.Spider):
+class KaiSpider(CrawlSpider):
     name = "kai"
     un_name = 'Казанский национальный исследовательский технический университет им. А.Н. Туполева'
     allowed_domains = ["kai.ru"]
     start_urls = ["https://kai.ru/science/events"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='a.item', restrict_text='онференц'),
+             callback="parse_items", follow=False),
+    )
 
-    def parse(self, response, **kwargs):
-        link_extractor = LinkExtractor(restrict_css='a.item', restrict_text='онференц')
-        for link in link_extractor.extract_links(response):
-            yield scrapy.Request(link.url, callback=self.parse_items)
-
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         soup = BeautifulSoup(response.text, 'lxml')
         new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('=')[-1]}")

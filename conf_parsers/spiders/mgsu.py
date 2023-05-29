@@ -23,7 +23,7 @@ class MgsuSpider(scrapy.Spider):
             if 'онференц' in title:
                 yield scrapy.Request(link, meta={'desc': desc}, callback=self.parse_items)
 
-    def parse_items(self, response, **kwargs):
+    def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         soup = BeautifulSoup(response.text, 'lxml')
