@@ -61,7 +61,7 @@ class LinguanetSpider(scrapy.Spider):
         new_item.add_xpath('conf_name', "//h1/text()")
         conf_s_desc = response.meta.get('desc')
         new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('local', False if 'международн' in conf_s_desc else True)
+        new_item.add_value('local', False if 'международн' in conf_s_desc.lower() else True)
 
         main_container = soup.find('div', class_='page col-xs-12 col-sm-9')
         main_container = main_container.find_all(['div', 'p'])

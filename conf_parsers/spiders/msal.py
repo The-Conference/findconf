@@ -28,7 +28,7 @@ class MsalSpider(CrawlSpider):
         new_item.add_value('conf_card_href', response.url)
         conf_name = response.xpath("//h1/text()").get()
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name else True)
+        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         for tag in response.css("div.text-sm.mt-2"):
             tag_txt = tag.xpath("string(.)").get().lower()
             if dates := find_date_in_string(tag_txt):

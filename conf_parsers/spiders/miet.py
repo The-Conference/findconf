@@ -41,7 +41,7 @@ class MietSpider(scrapy.Spider):
         conf_name = response.xpath("//h2/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name else True)
+        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
         main_container = soup.find('div', class_='info-content')
         lines = main_container.find_all(['p'])

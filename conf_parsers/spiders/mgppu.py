@@ -29,7 +29,7 @@ class MgppuSpider(CrawlSpider):
         conf_name = response.xpath("//h1/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name else True)
+        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
         conf_block = soup.find('div', class_='page container').find('div', class_='col-sm-12')
         lines = conf_block.find_all(['p', 'ul', 'ol'])

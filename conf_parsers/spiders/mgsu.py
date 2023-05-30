@@ -33,7 +33,7 @@ class MgsuSpider(scrapy.Spider):
         conf_name = response.xpath("//h2/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('local', False if 'международн' in conf_name else True)
+        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
         conf_block = soup.find('div', id='inner-content')
         lines = conf_block.find('div', class_='news-text').find_all(['div', 'p', 'li'])

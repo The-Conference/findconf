@@ -14,7 +14,7 @@ class MpeiSpider(scrapy.Spider):
             new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
             conf_name = card.css("div:not([class])::text").get()
             new_item.add_value('conf_name', conf_name)
-            new_item.add_value('local', False if 'международн' in conf_name else True)
+            new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
             new_item.add_value('conf_card_href', response.request.url)
             _dates = card.xpath("string(.//div[@class='event-date'])").get()
             dates = find_date_in_string(_dates)

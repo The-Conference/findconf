@@ -25,7 +25,7 @@ class KurskmedSpider(scrapy.Spider):
         new_item.add_value('conf_name', conf_name)
         conf_s_desc = response.meta.get('desc')
         new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('local', False if 'международн' in conf_s_desc else True)
+        new_item.add_value('local', False if 'международн' in conf_s_desc.lower() else True)
 
         main_block = soup.find('div', class_='detail_news clearfix')
         conf_block = main_block.find('div', class_='text_news')

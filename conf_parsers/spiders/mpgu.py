@@ -27,7 +27,7 @@ class MpguSpider(CrawlSpider):
         conf_name = response.xpath("//h1/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name else True)
+        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         dates = response.xpath("string(//h3)").get()
         if dates := find_date_in_string(dates):
             new_item.add_value('conf_date_begin', dates[0])
