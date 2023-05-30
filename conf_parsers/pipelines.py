@@ -37,9 +37,9 @@ class SaveToDBPipeline:
             try:
                 session.add(dt)
                 await session.flush()
-            except IntegrityError:
+            except IntegrityError as e:
                 await session.rollback()
-                raise DropItem('Duplicate item')
+                raise DropItem(e.orig)
             return item
 
 
