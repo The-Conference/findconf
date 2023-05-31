@@ -10,6 +10,12 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
     new_item.add_value('conf_desc', line.get_text(separator=" "))
     if 'ринц' in lowercase:
         new_item.add_value('rinc', True)
+    if 'scopus' in lowercase:
+        new_item.add_value('scopus', True)
+    if 'ВАК' in line.text:
+        new_item.add_value('vak', True)
+    if 'wos' in lowercase:
+        new_item.add_value('wos', True)
 
     if ('состоится' in lowercase
             or 'открытие' in lowercase
