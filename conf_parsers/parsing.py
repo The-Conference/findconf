@@ -45,6 +45,7 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
 
     if ('онлайн' in lowercase
             or 'трансляц' in lowercase
+            or 'гибридн' in lowercase
             or 'дистанц' in lowercase
             or 'ссылка' in lowercase):
         new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else None)

@@ -21,7 +21,8 @@ class TestDateFinder(TestCase):
             '02.01.2023',
             '02/01/2023',
             '02\\01\\2023',
-            '02-01-2023'
+            '02-01-2023',
+            '02.01.23'
         ]
         for case in cases:
             self.assertEqual([date(2023, 1, 2)], find_date_in_string(case))
@@ -57,7 +58,12 @@ class TestDateFinder(TestCase):
 
     def test_datefinder_no_year(self):
         current_year = datetime.now().year
-        self.assertEqual([date(current_year, 4, 26)], find_date_in_string('26 апреля'))
+        cases = [
+            '26 апреля',
+            '26 апреля в 10.00 в конференц –зале',  # OMG who does this
+        ]
+        for case in cases:
+            self.assertEqual([date(current_year, 4, 26)], find_date_in_string(case))
         self.assertEqual([date(current_year, 5, 26), date(current_year, 5, 27)],
                          find_date_in_string('26-27 мая'))
 
