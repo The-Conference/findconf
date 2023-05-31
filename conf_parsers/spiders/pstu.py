@@ -25,7 +25,7 @@ class PstuSpider(CrawlSpider):
         conf_name = response.xpath("//h1/text()").get()
         conf_s_desc = response.xpath("string(//p/strong)").get()
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_s_desc', conf_name)
+        new_item.add_value('conf_s_desc', conf_s_desc)
         new_item.add_value('local', False if 'международн' in conf_name.lower()
                                              or 'международн' in conf_s_desc.lower() else True)
 
