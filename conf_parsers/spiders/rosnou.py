@@ -31,5 +31,5 @@ class RosnouSpider(CrawlSpider):
             if not conf_s_desc:
                 conf_s_desc = line
             new_item = default_parser_bs(line, new_item)
-        new_item.add_value('conf_s_desc', conf_name)
+        new_item.add_value('conf_s_desc', conf_s_desc)
         yield new_item.load_item()

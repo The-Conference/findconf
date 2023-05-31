@@ -31,4 +31,3 @@ class RzgmuSpider(CrawlSpider):
         for line in lines:
             new_item = default_parser_bs(line, new_item)
         yield new_item.load_item()
-
