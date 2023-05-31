@@ -27,12 +27,10 @@ class AsouMoSpider(CrawlSpider):
             'div', class_='container__inner')
 
         conf_name = conf_block.find('h1', class_='entry-title').text
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         new_item.add_value('conf_name', conf_name)
         description = conf_block.find(
             'div', class_='one-news__intro-description').find('p', class_='entry-content')
         new_item.add_value('conf_s_desc', description.text)
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('=')[-1]}")
         new_item.add_value('conf_card_href', response.request.url)
         new_item.add_value('org_name', conf_block.find(
             'a', class_='one-news__institute-link author').get_text(separator=' '))

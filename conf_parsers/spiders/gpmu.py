@@ -18,17 +18,15 @@ class GpmuSpider(CrawlSpider):
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url}")
+
         new_item.add_value('conf_card_href', response.request.url)
-        conf_name = response.xpath("string(//h1)").get()
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_xpath('conf_name', "string(//h1)")
         table_date = response.xpath("string(//div[@id='content']//td)").get()
         if dates := find_date_in_string(table_date):
             new_item.add_value('conf_date_begin', dates[0])
             new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
+        soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', id='content')
         lines = conf_block.find_all(['p', 'ul', 'span', 'div'])
 

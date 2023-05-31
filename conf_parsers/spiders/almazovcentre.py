@@ -22,9 +22,7 @@ class AlmazovcentreSpider(CrawlSpider):
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='entry fix')
 
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('=')[-1]}")
         conf_name = soup.find('article').find('div', class_='title').find('a').text
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_card_href', response.request.url)
 

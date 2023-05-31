@@ -20,16 +20,15 @@ class KazangmuSpider(CrawlSpider):
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-1].split('-')[0]}")
+
         new_item.add_value('conf_card_href', response.request.url)
         conf_name = response.xpath("//h1/text()").get()
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         new_item.add_value('conf_name', conf_name)
         if dates := find_date_in_string(conf_name):
             new_item.add_value('conf_date_begin', dates[0])
             new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
+        soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('article', class_='item')
         lines = conf_block.find('div', class_='content clearfix').find_all(['p', 'div'])
 

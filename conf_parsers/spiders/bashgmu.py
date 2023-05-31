@@ -17,18 +17,16 @@ class BashgmuSpider(CrawlSpider):
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-        soup = BeautifulSoup(response.text, 'lxml')
-        main_containers = soup.find('div', class_='grants-detail')
 
         conf_name = response.xpath("//h3/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-2]}")
-        new_item.add_value('conf_card_href', response.request.url)
+        new_item.add_value('conf_card_href', response.url)
         new_item.add_value('online', True if 'онлайн' in conf_name.lower() or
                                              'он-лайн' in conf_name.lower() else False)
 
+        soup = BeautifulSoup(response.text, 'lxml')
+        main_containers = soup.find('div', class_='grants-detail')
         for line in main_containers.find_all(['h3', 'p']):
             new_item = default_parser_bs(line, new_item)
 

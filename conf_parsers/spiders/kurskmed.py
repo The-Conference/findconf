@@ -18,18 +18,14 @@ class KurskmedSpider(scrapy.Spider):
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-1]}")
-        new_item.add_value('conf_card_href', response.request.url)
-        conf_name = response.xpath("string(//div[@class='detail_title']/div[@class='detail_title'])").get()
-        new_item.add_value('conf_name', conf_name)
-        conf_s_desc = response.meta.get('desc')
-        new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('local', False if 'международн' in conf_s_desc.lower() else True)
 
+        new_item.add_value('conf_card_href', response.request.url)
+        new_item.add_xpath('conf_name', "string(//div[@class='detail_title']/div[@class='detail_title'])")
+        new_item.add_value('conf_s_desc', response.meta.get('desc'))
+
+        soup = BeautifulSoup(response.text, 'lxml')
         main_block = soup.find('div', class_='detail_news clearfix')
-        conf_block = main_block.find('div', class_='text_news')
-        lines = conf_block.find_all()
+        lines = main_block.find('div', class_='text_news').find_all()
 
         for line in lines:
             new_item = default_parser_bs(line, new_item)

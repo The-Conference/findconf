@@ -19,9 +19,7 @@ class GubkinSpider(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_name = response.xpath("string(//div[@class='modal-header'])").get()
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-1]}")
         new_item.add_value('conf_card_href', response.request.url)
         new_item.add_value('conf_s_desc', conf_name)
         new_item.add_css('conf_desc', "div.modal-body:not(.ul)::text")

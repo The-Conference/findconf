@@ -21,18 +21,16 @@ class MpguSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.url.split('/')[-2]}")
         new_item.add_value('conf_card_href', response.url)
         conf_name = response.xpath("//h1/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
         dates = response.xpath("string(//h3)").get()
         if dates := find_date_in_string(dates):
             new_item.add_value('conf_date_begin', dates[0])
             new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
 
+        soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='content')
         lines = conf_block.find_all(['p', 'ul', 'ol', 'h6'])
         for line in lines:

@@ -33,11 +33,6 @@ class MgouSpider(scrapy.Spider):
 
                     conf_name = line.find_all('td')[1].text
                     new_item.add_value('conf_name', conf_name)
-
-                    new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-                    new_item.add_value('conf_id',
-                                       f"{self.name}_{line.find_all('td')[0].text}_"
-                                       f"{conf_date_begin}_{conf_date_end}")
                     new_item.add_value('conf_s_desc', conf_name)
                     new_item.add_value('conf_desc', conf_name)
 

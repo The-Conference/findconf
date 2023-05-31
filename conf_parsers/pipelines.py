@@ -49,11 +49,16 @@ class FillTheBlanksPipeline:
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
-        conf_id = adapter.get('conf_id')
+        adapter['conf_id'] = f"{spider.name}" \
+                             f"_{adapter.get('conf_date_begin')}" \
+                             f"_{adapter.get('conf_date_end')}" \
+                             f"_{''.join(adapter.get('conf_name').split())[:25]}"
         adapter['un_name'] = spider.un_name
-        adapter['hash'] = hashlib.md5(bytes(conf_id, 'utf-8')).hexdigest()
+        adapter['hash'] = hashlib.md5(bytes(adapter['conf_id'], 'utf-8')).hexdigest()
         adapter['data'] = {key: val.strftime("%m/%d/%Y") if isinstance(val, datetime.date) else val
                            for key, val in item.items()}
+        text = f"{adapter.get('conf_name')} {adapter.get('conf_s_desc')}"
+        adapter['local'] = False if 'международн' in text.lower() else True
         return item
 
 

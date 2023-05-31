@@ -18,16 +18,11 @@ class DonstuSpider(CrawlSpider):
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-        soup = BeautifulSoup(response.text, 'lxml')
-        main_containers = soup.find('div', class_='event-container')
 
         conf_name = response.xpath("//div[@class='title']/text()").get()
         new_item.add_value('conf_name', conf_name)
         conf_s_desc = response.xpath("//div[@class='desc']/text()").get()
         new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('local', False if 'международн' in conf_name.lower()
-                                             or 'международн' in conf_s_desc.lower() else True)
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-2]}")
         new_item.add_value('conf_card_href', response.request.url)
         conf_date_begin = response.xpath("string(//div[@class='event-date'])").get()
         if dates := find_date_in_string(conf_date_begin):
@@ -41,6 +36,8 @@ class DonstuSpider(CrawlSpider):
         if offline:
             new_item.add_value('conf_address', conf_address)
 
+        soup = BeautifulSoup(response.text, 'lxml')
+        main_containers = soup.find('div', class_='event-container')
         lines = main_containers.find('div', class_='text-block')
         if lines.find('p'):
             lines = lines.find_all(['p', 'ul'])

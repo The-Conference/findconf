@@ -19,12 +19,10 @@ class RosnouSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_id', f"{self.name}_{response.url.split('/')[-2]}")
         new_item.add_value('conf_card_href', response.url)
         conf_name = response.css("div.content-header__title-inner::text").get()
         conf_s_desc = ''
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='stage -gap-grid-inner_y_medium')

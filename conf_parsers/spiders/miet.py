@@ -35,18 +35,15 @@ class MietSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.url.split('/')[-1]}")
         new_item.add_value('conf_card_href', response.url)
         conf_name = response.xpath("//h2/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
+        soup = BeautifulSoup(response.text, 'lxml')
         main_container = soup.find('div', class_='info-content')
         lines = main_container.find_all(['p'])
         for line in lines:
             new_item.add_value('conf_desc', line.get_text(separator=" "))
             new_item = default_parser_bs(line, new_item)
-        new_item.add_value('conf_s_desc', conf_name)
         yield new_item.load_item()

@@ -17,17 +17,14 @@ class A1spbgmuSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        url = unquote(response.request.url)
         new_item = ConferenceLoader(item=ConferenceItem())
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='item-page')
 
         conf_name = conf_block.find('div', class_='page-header').get_text(separator=" ")
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-        new_item.add_value('conf_id', f"{self.name}_{url.split('/')[-1]}")
         prev_text = ''
-        new_item.add_value('conf_card_href', url)
+        new_item.add_value('conf_card_href', unquote(response.url))
         if dates := find_date_in_string(conf_name):
             new_item.add_value('conf_date_begin', dates[0])
             new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
@@ -38,12 +35,12 @@ class A1spbgmuSpider(CrawlSpider):
             if 'коллеги' in prev_text.lower():
                 new_item.add_value('conf_s_desc', line.get_text(separator=" "))
             if 'регистрац' in lowercase:
-                new_item.add_value('reg_href', line.find('a').get('href') if line.find('a') else 'отсутствует')
+                new_item.add_value('reg_href', line.find('a').get('href') if line.find('a') else None)
             if 'организатор' in lowercase:
                 new_item.add_value('org_name', line.get_text(separator=" "))
             if 'онлайн' in lowercase or 'трансляц' in lowercase:
                 new_item.add_value('online', True)
-                new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else 'отсутствует')
+                new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else None)
             if 'место' in lowercase or 'адрес' in lowercase:
                 new_item.add_value('offline', True)
                 new_item.add_value('conf_address', line.get_text(separator=" "))

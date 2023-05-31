@@ -33,14 +33,11 @@ class PimunnSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.url.split('/')[-1]}")
         new_item.add_value('conf_card_href', response.url)
-        conf_name = response.meta.get('title')
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_value('conf_name', response.meta.get('title'))
         new_item.add_value('conf_s_desc', response.meta.get('descr'))
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
+        soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='t-redactor__text')
         new_item = default_parser_bs(conf_block, new_item)
         yield new_item.load_item()

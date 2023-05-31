@@ -28,8 +28,6 @@ class LinguanetSpider(scrapy.Spider):
                     continue
                 new_item.add_value('conf_s_desc', conf_name)
                 new_item.add_value('conf_desc', conf_name)
-                new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-                new_item.add_value('conf_id', f"{self.name}i{''.join(conf_name.split())}")
                 dates = find_date_in_string(conf_name)
                 if dates:
                     new_item.add_value('conf_date_begin', dates[0])
@@ -55,14 +53,12 @@ class LinguanetSpider(scrapy.Spider):
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('/')[-1].split('=')[-1]}")
+
         new_item.add_value('conf_card_href', response.request.url)
         new_item.add_xpath('conf_name', "//h1/text()")
-        conf_s_desc = response.meta.get('desc')
-        new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('local', False if 'международн' in conf_s_desc.lower() else True)
+        new_item.add_value('conf_s_desc', response.meta.get('desc'))
 
+        soup = BeautifulSoup(response.text, 'lxml')
         main_container = soup.find('div', class_='page col-xs-12 col-sm-9')
         main_container = main_container.find_all(['div', 'p'])
         for line in main_container:

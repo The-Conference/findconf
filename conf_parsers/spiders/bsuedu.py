@@ -17,7 +17,6 @@ class BsueduSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         new_item.add_xpath('conf_name', '//h1/text()')
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('=')[-1]}")
         new_item.add_value('conf_card_href', response.request.url)
 
         items = response.xpath('//span')

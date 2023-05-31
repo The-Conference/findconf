@@ -21,7 +21,6 @@ class MrsuSpider(scrapy.Spider):
                 link = conf_name_item.xpath('.//a/@href').get()
                 new_item.add_value('conf_card_href', response.urljoin(link))
                 new_item.add_value('conf_name', conf_name)
-                new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
                 for item in card.css("div.info__text"):
                     text = item.xpath('string(.)').get()
@@ -49,8 +48,6 @@ class MrsuSpider(scrapy.Spider):
                     new_item.add_value('conf_desc', conf_name)
                 new_item.add_value('conf_date_begin', conf_date_begin)
                 new_item.add_value('conf_date_end', conf_date_end if conf_date_end else conf_date_begin)
-                new_item.add_value('conf_id',
-                                   f"{self.name}_{''.join(conf_name.split())}_{conf_date_begin}_{conf_date_end}")
                 new_item.add_value('rinc', True if 'ринц' in conf_desc else False)
 
                 yield new_item.load_item()

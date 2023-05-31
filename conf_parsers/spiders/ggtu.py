@@ -26,14 +26,11 @@ class GgtuSpider(scrapy.Spider):
             if 'конфер' in line.find_all('td')[0].text.lower():
                 conf_name = line.find_all('td')[0].text
 
-            new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
             if dates := find_date_in_string(line.find_all('td')[-1].text):
                 conf_date_begin = dates[0]
                 conf_date_end = dates[1] if len(dates) > 1 else dates[0]
 
             new_item.add_value('conf_card_href', self.allowed_domains[0] + line.find('a', href=True)['href'])
-            new_item.add_value('conf_id', f"{self.name}_{''.join(line.find_all('td')[0].text.split())}"
-                                          f"_{conf_date_begin}_{conf_date_end}")
             new_item.add_value('conf_name', conf_name)
             new_item.add_value('conf_s_desc', conf_name)
             new_item.add_value('conf_desc', conf_name)

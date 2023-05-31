@@ -17,14 +17,12 @@ class KaiSpider(CrawlSpider):
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.request.url.split('=')[-1]}")
+
         new_item.add_value('conf_card_href', response.request.url)
-        conf_name = response.xpath("//div[@class='title']//h1/text()").get()
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_xpath('conf_name', "//div[@class='title']//h1/text()")
         new_item.add_xpath('conf_s_desc', "string(//div[@class='desc'])")
 
+        soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='journal-content-article').find('div', class_='section')
         lines = conf_block.find('div', class_='full_desc').find_all(['p', 'ul', 'ol'])
 

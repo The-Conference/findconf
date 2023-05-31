@@ -17,13 +17,10 @@ class PetrsuSpider(scrapy.Spider):
     def parse(self, response, **kwargs):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        conf_name = response.css('div#conf_name::text').get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_id', f"{self.name}_{''.join(conf_name.split())}")
+        new_item.add_css('conf_name', 'div#conf_name::text')
         new_item.add_value('conf_card_href', response.url)
         conf_s_desc = response.css('p::text').get()
         new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
         dates = response.xpath("string(//div[@id='conf_name'])").get()
         if dates := find_date_in_string(dates):

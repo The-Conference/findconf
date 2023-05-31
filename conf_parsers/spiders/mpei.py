@@ -12,10 +12,10 @@ class MpeiSpider(scrapy.Spider):
     def parse(self, response, **kwargs):
         for card in response.css("div.event-card"):
             new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+
             conf_name = card.css("div:not([class])::text").get()
             new_item.add_value('conf_name', conf_name)
-            new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-            new_item.add_value('conf_card_href', response.request.url)
+            new_item.add_value('conf_card_href', response.url)
             _dates = card.xpath("string(.//div[@class='event-date'])").get()
             dates = find_date_in_string(_dates)
             if not dates:
@@ -24,7 +24,6 @@ class MpeiSpider(scrapy.Spider):
             conf_date_end = dates[1] if len(dates) > 1 else dates[0]
             new_item.add_value('conf_date_begin', conf_date_begin)
             new_item.add_value('conf_date_end', conf_date_end)
-            new_item.add_value('conf_id', f"{self.name}_{conf_date_begin}_{conf_date_end}_{conf_name[:15]}")
             new_item.add_value('conf_desc', conf_name)
             new_item.add_value('conf_s_desc', conf_name)
 

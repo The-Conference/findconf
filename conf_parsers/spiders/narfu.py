@@ -19,14 +19,12 @@ class NarfuSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        new_item.add_value('conf_id', f"{self.name}_{response.url.split('=')[-1]}")
         new_item.add_value('conf_card_href', response.url)
         conf_name = response.xpath("//h5/text()").get()
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
 
+        soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='events')
         lines = conf_block.find_all(['p', 'li', 'h3'])
         for line in lines:
