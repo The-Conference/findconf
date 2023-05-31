@@ -14,6 +14,8 @@ from .models import ConferenceItemDB
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 
+from .utils import find_date_in_string
+
 
 class SaveToDBPipeline:
     @classmethod
@@ -44,7 +46,8 @@ class SaveToDBPipeline:
 
 
 class FillTheBlanksPipeline:
-    def process_item(self, item, spider):
+    @staticmethod
+    def process_item(item, spider):
         adapter = ItemAdapter(item)
         conf_id = adapter.get('conf_id')
         adapter['un_name'] = spider.un_name
@@ -55,8 +58,15 @@ class FillTheBlanksPipeline:
 
 
 class DropOldItemsPipeline:
-    def process_item(self, item, spider):
+    @staticmethod
+    def process_item(item, spider):
         adapter = ItemAdapter(item)
+        if not adapter.get('conf_date_begin'):
+            # look for dates in the short description
+            if dates := find_date_in_string(adapter.get('conf_s_desc')):
+                adapter['conf_date_begin'] = dates[0]
+                adapter['conf_date_end'] = dates[1] if len(dates) > 1 else dates[0]
+
         if not adapter.get('conf_date_begin'):
             logging.warning(adapter.get('conf_card_href'))
             raise DropItem('Date not found')
