@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'ckeditor',
     'Conference_data',
-    # 'Conference_crm',
+    'Conference_crm',
     'rest_framework.authtoken',
     'djoser',
 ]
@@ -208,4 +208,4 @@ DJOSER = {
 
 }
 
-# AUTH_USER_MODEL = 'Conference_crm.User'
+AUTH_USER_MODEL = 'Conference_crm.User'
