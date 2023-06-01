@@ -128,15 +128,15 @@ DB_PORT: str = os.getenv("DB_PORT", 5432)
 DB_NAME: str = os.getenv("DB_NAME", "mydatabase")
 
 if DEBUG:
-    FEEDS = {
-        'conf_parsers/data/%(name)s/%(name)s_%(time)s.json': {
-            'format': 'json',
-            'overwrite': True,
-            'indent': 4,
-            'store_empty': False,
-            'encoding': 'utf8',
-        }
-    }
+    # FEEDS = {
+    #     'conf_parsers/data/%(name)s/%(name)s_%(time)s.json': {
+    #         'format': 'json',
+    #         'overwrite': True,
+    #         'indent': 4,
+    #         'store_empty': False,
+    #         'encoding': 'utf8',
+    #     }
+    # }
     DATABASE_URL = "sqlite+aiosqlite:///my_db.sqlite3"
 else:
     DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
