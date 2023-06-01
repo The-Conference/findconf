@@ -33,8 +33,12 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
             or 'участия' in lowercase
             or 'регистр' in lowercase):
         if dates := find_date_in_string(lowercase):
-            new_item.add_value('reg_date_begin', dates[0])
-            new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
+            if ('до' in lowercase or 'оконч' in lowercase or 'срок' in lowercase)\
+                    and len(dates) == 1:
+                new_item.add_value('reg_date_end', dates[0])
+            else:
+                new_item.add_value('reg_date_begin', dates[0])
+                new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
         try:
             new_item.add_value(
                 'reg_href', line.find('a').get('href')
