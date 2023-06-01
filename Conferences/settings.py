@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'ckeditor',
     'Conference_data',
-    'Conference_crm',
+    # 'Conference_crm',
     'rest_framework.authtoken',
     'djoser',
 ]
@@ -108,12 +108,13 @@ WSGI_APPLICATION = 'Conferences.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydatabase',
-        'USER': 'postgres',
-        'PASSWORD': '909961',
+        'NAME': 'findconf',
+        'USER': 'findconf',
+        'PASSWORD': 'rbhuele',
         'HOST': 'localhost',
         'PORT': '5432',
     }
+    #909961
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'my_db.sqlite3',
@@ -196,7 +197,7 @@ CKEDITOR_CONFIGS = {
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'api/auth/users/activation/{uid}/{token}',  # Fix
+    'ACTIVATION_URL': 'api/auth/users/activation/{uid}/{token}', # Fix
     'SEND_ACTIVATION_EMAIL': False,
     'LOGIN_FIELD': 'email',
 
@@ -207,4 +208,4 @@ DJOSER = {
 
 }
 
-AUTH_USER_MODEL = 'Conference_crm.User'
+# AUTH_USER_MODEL = 'Conference_crm.User'

@@ -12,9 +12,6 @@ class CustomUserManager(UserManager):
         user.set_password(password)
         user.save()
 
-        custom_user = Group.objects.get(name="custom_user")
-        user.groups.add(custom_user)
-
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
