@@ -31,6 +31,14 @@ export const StyledPopupText = styled.label`
 
 export const StyledPopupDiv = styled.div`
   display: flex;
+  &:nth-last-child(1) {
+    z-index: 1;
+    position: relative;
+  }
+  &:nth-child(1) {
+    z-index: 1;
+    position: relative;
+  }
   &:hover {
     background: rgba(0, 0, 56, 0.1);
     padding: 0px 15px;
@@ -83,5 +91,52 @@ export const StyledPopupInput = styled.input`
   }
   &:not(:disabled):not(:checked) + label:hover::before {
     border-color: #2c60e7;
+  }
+`;
+
+export const StyledScroll = styled.div`
+  max-height: 235px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 5px;
+  &::-webkit-scrollbar {
+    width: 12px; /* ширина scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #dedee5; /* цвет дорожки */
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #2c60e7; /* цвет плашки */
+    border-radius: 20px; /* закругления плашки */
+    border: 3px solid #dedee5; /* padding вокруг плашки */
+  }
+  &:after {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      rgba(255, 255, 255, 0) 0%,
+      rgb(255, 255, 255) 40%,
+      rgb(255, 255, 255) 100%
+    );
+    content: "";
+    bottom: 0px;
+    height: 45px;
+    position: absolute;
+    transition: all 0.2s ease 0s;
+    width: 238px;
+  }
+  &:before {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 40%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    content: "";
+    height: 30px;
+    position: absolute;
+    transition: all 0.2s ease 0s;
+    width: 238px;
   }
 `;

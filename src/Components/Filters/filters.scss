@@ -3,6 +3,7 @@
   gap: 8px;
   padding: 20px 0;
   max-width: 1200px;
+  position: relative;
   text-transform: capitalize;
   font-size: 12px;
   @media screen and (max-width: 722px) {
@@ -27,6 +28,10 @@
     span {
       padding-right: 10px;
     }
+  }
+  &__container:nth-last-child(1) {
+    position: absolute;
+    right: 0;
   }
 }
 .filter-adaptive {
