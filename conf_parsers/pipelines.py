@@ -52,7 +52,7 @@ class FillTheBlanksPipeline:
         adapter['conf_id'] = f"{spider.name}" \
                              f"_{adapter.get('conf_date_begin')}" \
                              f"_{adapter.get('conf_date_end')}" \
-                             f"_{''.join(adapter.get('conf_name').split())[:20]}"
+                             f"_{''.join(adapter.get('conf_name').split())[-30:]}"
         adapter['un_name'] = spider.un_name
         adapter['hash'] = hashlib.md5(bytes(adapter['conf_id'], 'utf-8')).hexdigest()
         adapter['data'] = {key: val.strftime("%m/%d/%Y") if isinstance(val, datetime.date) else val

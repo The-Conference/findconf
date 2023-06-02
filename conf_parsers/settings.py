@@ -113,7 +113,7 @@ class PoliteLogFormatter(logformatter.LogFormatter):
             'msg': "Dropped: %(exception)s" + os.linesep + "%(item)s",
             'args': {
                 'exception': exception,
-                'item': item['conf_card_href'],
+                'item': item.get('conf_id'),
             }
         }
 
