@@ -13,30 +13,6 @@
   display: flex;
   align-items: center;
   background-color: #f7f7f9;
-  position: relative;
-}
-.buttonWrapper::after {
-  background: linear-gradient(270deg, #f7f7f9, #ffffff80 70%, #fff0);
-  right: 45px;
-  content: "";
-  bottom: 0;
-  height: 85px;
-  position: absolute;
-  transition: 0.2s;
-  width: 58px;
-}
-.buttonzIndex::after {
-  display: none;
-}
-@media (max-width: 841px) {
-  .buttonWrapper::after {
-    right: 20px;
-  }
-}
-@media (max-width: 380px) {
-  .buttonWrapper::after {
-    display: none;
-  }
 }
 
 .buttonzIndex {
@@ -47,27 +23,8 @@
     z-index: 1;
   }
 }
-.blur::after {
-  display: block;
-  left: 79px;
-  height: 85px;
-  bottom: 0;
-  width: 67px;
-  z-index: -1;
-}
-@media (max-width: 841px) {
-  .blur::after {
-    left: 42px;
-    height: 60px;
-  }
-}
-@media (max-width: 380px) {
-  .blur::after {
-    display: none;
-  }
-}
-
-.button {
+.buttonLeft,
+.buttonRight {
   border: none;
   text-decoration: none;
   cursor: pointer;
@@ -80,11 +37,39 @@
   justify-content: flex-end;
   padding: 16px 10px 18px 10px;
   margin: 15px 0 0 15px;
+  position: relative;
 }
 
-.button:disabled,
-button[disabled] {
-  cursor: not-allowed;
+.buttonLeft::before {
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(247 247 249) 42%,
+    rgb(247 247 249) 100%
+  );
+  content: "";
+  bottom: 0px;
+  height: 58px;
+  position: absolute;
+  transition: all 0.2s ease 0s;
+  width: 74px;
+  left: 20px;
+}
+
+.buttonRight::after {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(247 247 249) 42%,
+    rgb(247 247 249) 100%
+  );
+  content: "";
+  bottom: 0px;
+  height: 58px;
+  position: absolute;
+  transition: all 0.2s ease 0s;
+  width: 74px;
+  right: 20px;
 }
 
 @media (max-width: 380px) {
@@ -115,7 +100,6 @@ button[disabled] {
   scrollbar-width: none;
   margin: 2px 0 2px -40px;
   -webkit-overflow-scrolling: touch;
-  z-index: 0;
   scroll-behavior: smooth;
 }
 @media (max-width: 1000px) {
@@ -174,9 +158,12 @@ button[disabled] {
 }
 .daysContainer {
   display: flex;
-  z-index: 1;
   margin: 8px 0;
-  cursor: initial;
+}
+
+.daysContainer a:nth-child(1),
+.daysContainer a:nth-last-child(1) {
+  z-index: 10;
 }
 
 @media (max-width: 1000px) {

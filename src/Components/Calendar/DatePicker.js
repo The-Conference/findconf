@@ -11,18 +11,12 @@ import white from "../../assets/calwhite.svg";
 
 const DatePicker = (props) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const [count, setCount] = useState(0);
 
   const next = (event) => {
     event.preventDefault();
-    if (count === 5) {
-      setCount(5);
-    } else {
-      setCount(count + 1);
-    }
     const e = document.getElementById("container");
-    const widthRight = e ? e.getBoundingClientRect().width - 60 : null;
-    e.scrollLeft += widthRight - 65;
+    const width = e ? e.getBoundingClientRect().width : null;
+    e.scrollLeft += width - 60;
   };
 
   const startDate = props.startDate || new Date();
@@ -35,27 +29,14 @@ const DatePicker = (props) => {
   }
   const prev = (event) => {
     event.preventDefault();
-    if (count === 0) {
-      setCount(0);
-    } else {
-      setCount(count - 1);
-    }
     const e = document.getElementById("container");
-    const widthLeft = e ? e.getBoundingClientRect().width : null;
-    e.scrollLeft -= widthLeft - 65;
+    const width = e ? e.getBoundingClientRect().width : null;
+    e.scrollLeft -= width - 60;
   };
 
   return (
     <div className={styles.container}>
-      <div
-        className={
-          styles.buttonWrapper +
-          " " +
-          styles.buttonzIndex +
-          " " +
-          `${count !== 0 ? styles.blur : ""}`
-        }
-      >
+      <div className={styles.buttonWrapper + " " + styles.buttonzIndex}>
         <span
           role="button"
           className={styles.calendar}
@@ -72,23 +53,13 @@ const DatePicker = (props) => {
             showCalendar={showCalendar}
           />
         )}
-        <button
-          // disabled={count === 0 ? true : false}
-          className={styles.button}
-          onClick={prev}
-        >
+        <button className={styles.buttonLeft} onClick={prev}>
           &lt;
         </button>
       </div>
-      <Component
-        {...props}
-        startDate={startDate}
-        lastDate={lastDate}
-        count={count}
-        setCount={setCount}
-      />
+      <Component {...props} startDate={startDate} lastDate={lastDate} />
       <div className={styles.buttonWrapper}>
-        <button className={styles.button} onClick={next}>
+        <button className={styles.buttonRight} onClick={next}>
           &gt;
         </button>
       </div>
