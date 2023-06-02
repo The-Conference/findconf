@@ -22,7 +22,8 @@ class TestDateFinder(TestCase):
             '02/01/2023',
             '02\\01\\2023',
             '02-01-2023',
-            '02.01.23'
+            '02.01.23',
+            '02 1 2023',  # *sigh*
         ]
         for case in cases:
             self.assertEqual([date(2023, 1, 2)], find_date_in_string(case))
