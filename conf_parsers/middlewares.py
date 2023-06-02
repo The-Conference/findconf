@@ -112,7 +112,15 @@ class ConfParsersDownloaderMiddleware:
 
 
 class SeleniumMiddleware:
+    """
+    To route requests through Selenium, add this middleware to Spider's settings:
 
+        "DOWNLOADER_MIDDLEWARES": {
+            'conf_parsers.middlewares.SeleniumMiddleware': 543,
+        },
+
+    No further changes to code required.
+    """
     @classmethod
     def from_crawler(cls, crawler):
         middleware = cls()

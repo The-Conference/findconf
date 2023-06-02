@@ -13,16 +13,20 @@ class MietSpider(scrapy.Spider):
 
     custom_settings = {
         'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter',
-        "DOWNLOADER_MIDDLEWARES": {
-            'conf_parsers.middlewares.SeleniumMiddleware': 543,
-        },
+        'DOWNLOAD_HANDLERS': {
+            "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+            "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+        }
     }
+
+    def start_requests(self):
+        yield scrapy.Request(self.start_urls.pop(), callback=self.parse, meta={"playwright": True})
 
     def parse(self, response, **kwargs):
         main_page = LinkExtractor(restrict_css='div.header-menu__toggable-item__list-item',
                                   restrict_text='Конференции и семинары')
         url = main_page.extract_links(response)[0].url
-        yield scrapy.Request(url, callback=self.get_links)
+        yield scrapy.Request(url, callback=self.get_links, meta={"playwright": True})
 
     def get_links(self, response):
         link_extractor = LinkExtractor(restrict_css='a.site-sidebar__item-link',
@@ -30,7 +34,7 @@ class MietSpider(scrapy.Spider):
         links = [i.url for i in link_extractor.extract_links(response)]
         links.append(response.url)
         for link in links:
-            yield scrapy.Request(link, callback=self.parse_items)
+            yield scrapy.Request(link, callback=self.parse_items, meta={"playwright": True})
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)

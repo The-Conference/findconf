@@ -140,3 +140,5 @@ if DEBUG:
     DATABASE_URL = "sqlite+aiosqlite:///my_db.sqlite3"
 else:
     DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+PLAYWRIGHT_BROWSER_TYPE = "webkit"
