@@ -110,10 +110,10 @@ class PoliteLogFormatter(logformatter.LogFormatter):
     def dropped(self, item, exception, response, spider):
         return {
             'level': logging.INFO,
-            'msg': "Dropped: %(exception)s" + os.linesep + "%(item)s",
+            'msg': "Dropped: %(exception)s" + os.linesep + "conf_id: %(conf_id)s",
             'args': {
                 'exception': exception,
-                'item': item.get('conf_id'),
+                'conf_id': item.get('conf_id'),
             }
         }
 

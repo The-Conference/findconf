@@ -78,5 +78,5 @@ class DropOldItemsPipeline:
         filter_date = spider.settings.get('FILTER_DATE')
         if adapter.get('conf_date_begin') < filter_date \
                 or adapter.get('conf_date_end') < filter_date:
-            raise DropItem("Old item")
+            raise DropItem(f"Old item [{adapter.get('conf_date_begin')}]")
         return item
