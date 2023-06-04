@@ -202,31 +202,32 @@ const FullConference = () => {
         {desc && !contacts && (
           <div className="full-conference__desc">
             <h1>Условия участия</h1>
-            {(full.conf_desc.length === 0 && (
+            {(full.conf_desc !== null && full.conf_desc.length === 0 && (
               <a href={full.conf_card_href} rel="noreferrer" target="_blank">
                 Подробнее о конференции
               </a>
             )) ||
-              (full.conf_card_href.length > 0 && (
-                <pre>
-                  <div
-                    className="full-conference__desc-parsed"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(full.conf_desc),
-                    }}
-                  />
+              (full.conf_card_href !== null &&
+                full.conf_card_href.length > 0 && (
+                  <pre>
+                    <div
+                      className="full-conference__desc-parsed"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(full.conf_desc),
+                      }}
+                    />
 
-                  <div>
-                    <a
-                      href={full.conf_card_href}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      Подробнее о конференции
-                    </a>
-                  </div>
-                </pre>
-              ))}
+                    <div>
+                      <a
+                        href={full.conf_card_href}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        Подробнее о конференции
+                      </a>
+                    </div>
+                  </pre>
+                ))}
           </div>
         )}
         {!desc && contacts && (
