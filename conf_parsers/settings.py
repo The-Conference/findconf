@@ -109,7 +109,7 @@ RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 408, 429, 403]
 class PoliteLogFormatter(logformatter.LogFormatter):
     def dropped(self, item, exception, response, spider):
         return {
-            'level': logging.INFO,
+            'level': logging.DEBUG if DEBUG else logging.INFO,
             'msg': "Dropped: %(exception)s" + os.linesep + "conf_id: %(conf_id)s",
             'args': {
                 'exception': exception,
@@ -124,7 +124,7 @@ FILTER_DATE = date(date.today().year, 1, 1)
 DB_USER: str = os.getenv("DB_USER", "postgres")
 DB_PASS: str = os.getenv("DB_PASS", "changeme")
 DB_HOST: str = os.getenv("DB_HOST", "postgres")
-DB_PORT: str = os.getenv("DB_PORT", 5432)
+DB_PORT: str = os.getenv("DB_PORT", "5432")
 DB_NAME: str = os.getenv("DB_NAME", "mydatabase")
 
 if DEBUG:
@@ -137,8 +137,8 @@ if DEBUG:
     #         'encoding': 'utf8',
     #     }
     # }
-    DATABASE_URL = "sqlite+aiosqlite:///my_db.sqlite3"
+    DATABASE_URL = "sqlite:///my_db.sqlite3"
 else:
-    DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    DATABASE_URL = f"postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 PLAYWRIGHT_BROWSER_TYPE = "webkit"

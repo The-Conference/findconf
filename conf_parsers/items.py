@@ -5,6 +5,8 @@
 import scrapy
 from itemloaders.processors import TakeFirst, MapCompose, Join
 from scrapy.loader import ItemLoader
+from urllib.parse import unquote
+
 from .utils import normalize_string
 
 
@@ -50,3 +52,6 @@ class ConferenceLoader(ItemLoader):
     contacts_in = MapCompose(normalize_string)
     contacts_out = Join(' ')
     conf_name_in = MapCompose(normalize_string)
+    conf_card_href_in = MapCompose(unquote)
+    conf_href_in = MapCompose(unquote)
+    reg_href_in = MapCompose(unquote)

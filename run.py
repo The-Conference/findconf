@@ -1,10 +1,8 @@
 from scrapy.crawler import CrawlerProcess
-from scrapy.settings import Settings
-from conf_parsers import settings
+from scrapy.utils.project import get_project_settings
 
-setting = Settings()
-setting.setmodule(settings)
-process = CrawlerProcess(setting)
+settings = get_project_settings()
+process = CrawlerProcess(settings)
 
 for spider_name in process.spider_loader.list():
     process.crawl(spider_name)

@@ -1,6 +1,5 @@
 from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
-from urllib.parse import unquote
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
@@ -24,7 +23,7 @@ class A1spbgmuSpider(CrawlSpider):
         conf_name = conf_block.find('div', class_='page-header').get_text(separator=" ")
         new_item.add_value('conf_name', conf_name)
         prev_text = ''
-        new_item.add_value('conf_card_href', unquote(response.url))
+        new_item.add_value('conf_card_href', response.url)
         if dates := find_date_in_string(conf_name):
             new_item.add_value('conf_date_begin', dates[0])
             new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])

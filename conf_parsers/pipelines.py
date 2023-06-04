@@ -2,18 +2,21 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+
+# useful for handling different item types with a single interface
+from itemadapter import ItemAdapter
+
 import hashlib
 import datetime
 import logging
 
 from scrapy.exceptions import DropItem
+from sqlalchemy import create_engine
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.orm import Session
+
 from .models import ConferenceItemDB
-
-# useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
-
 from .utils import find_date_in_string
 
 
@@ -22,27 +25,36 @@ class SaveToDBPipeline:
     def from_crawler(cls, crawler):
         settings = crawler.settings
         db = settings.get('DATABASE_URL')
-        debug = settings.get('DEBUG')
-        return cls(db, debug)
+        return cls(db)
 
-    def __init__(self, db, debug):
-        if debug:
-            engine = create_async_engine(db, connect_args={"check_same_thread": False})
-        else:
-            engine = create_async_engine(db)
-        self.async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+    def __init__(self, db):
+        self.engine = create_engine(db)
+        self.items = []
 
-    async def process_item(self, item, spider):
-        session = self.async_session()
-        async with session.begin():
-            dt = ConferenceItemDB(**item)
+    def process_item(self, item, spider):
+        self.items.append(dict(item))
+        return item
+
+    def close_spider(self, spider):
+        insert_statement = insert(ConferenceItemDB).values(self.items).returning(ConferenceItemDB.conf_id)
+        insert_or_do_nothing = insert_statement.on_conflict_do_nothing(index_elements=[ConferenceItemDB.conf_id])
+        to_save = [i.get("conf_id") for i in self.items]
+        logging.debug(f'Saving to DB: {to_save}')
+
+        if to_save:
             try:
-                session.add(dt)
-                await session.flush()
-            except IntegrityError as e:
-                await session.rollback()
-                raise DropItem(e.orig)
-            return item
+                saved = self.session.execute(insert_or_do_nothing).fetchall()
+                self.session.commit()
+                saved = [i[0] for i in saved]
+                logging.info(f'Saved to DB: {saved}')
+                logging.info(f'Duplicate items: {set(to_save).symmetric_difference(saved)}')
+            except IntegrityError:
+                self.session.rollback()
+                raise
+        self.session.close()
+
+    def open_spider(self, spider):
+        self.session = Session(bind=self.engine)
 
 
 class FillTheBlanksPipeline:
@@ -52,7 +64,7 @@ class FillTheBlanksPipeline:
         adapter['conf_id'] = f"{spider.name}" \
                              f"_{adapter.get('conf_date_begin')}" \
                              f"_{adapter.get('conf_date_end')}" \
-                             f"_{''.join(adapter.get('conf_name').split())[-30:]}"
+                             f"_{''.join(adapter.get('conf_name').split())[:50]}"
         adapter['un_name'] = spider.un_name
         adapter['hash'] = hashlib.md5(bytes(adapter['conf_id'], 'utf-8')).hexdigest()
         adapter['data'] = {key: val.strftime("%m/%d/%Y") if isinstance(val, datetime.date) else val

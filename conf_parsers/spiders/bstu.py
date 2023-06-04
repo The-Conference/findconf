@@ -17,6 +17,7 @@ class BstuSpider(scrapy.Spider):
             if 'конференц' in conf_name.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
                 new_item.add_value('conf_name', conf_name)
+                new_item.add_value('conf_desc', conf_name)
                 href = link.css("a::attr(href)").get() or None
                 if href:
                     new_item.add_value('conf_card_href', response.urljoin(href))

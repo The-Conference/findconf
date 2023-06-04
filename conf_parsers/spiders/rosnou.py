@@ -21,15 +21,13 @@ class RosnouSpider(CrawlSpider):
 
         new_item.add_value('conf_card_href', response.url)
         conf_name = response.css("div.content-header__title-inner::text").get()
-        conf_s_desc = ''
+        conf_s_desc = response.xpath("string(//div[contains(@class, 'grid-item_widget-text')]/p)").get()
+        new_item.add_value('conf_s_desc', conf_s_desc)
         new_item.add_value('conf_name', conf_name)
 
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='stage -gap-grid-inner_y_medium')
         lines = conf_block.find_all(['p', 'li', 'ol'])
         for line in lines:
-            if not conf_s_desc:
-                conf_s_desc = line
             new_item = default_parser_bs(line, new_item)
-        new_item.add_value('conf_s_desc', conf_s_desc)
         yield new_item.load_item()
