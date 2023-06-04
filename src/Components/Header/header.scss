@@ -61,6 +61,11 @@
       gap: 32px;
       font-weight: 500;
       white-space: nowrap;
+      button {
+        &:hover {
+          color: #2c60e7;
+        }
+      }
     }
   }
   &__signin {

@@ -8,8 +8,6 @@ import ReactGA from "react-ga";
 import { GAListener } from "./GAListener";
 import SignUp from "./Components/SignUp/SignUp";
 import Login from "./Components/Login/Login";
-import Registered from "./Components/SignUp/Registered";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
@@ -154,16 +152,6 @@ const router = createBrowserRouter([
     element: (
       <>
         <Login />
-      </>
-    ),
-  },
-  {
-    path: "/registered",
-    element: (
-      <>
-        <Header />
-        <Registered />
-        <Footer />
       </>
     ),
   },

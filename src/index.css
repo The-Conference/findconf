@@ -145,3 +145,11 @@ body {
   height: 100%;
   background-color: #f7f7f9;
 }
+
+.red-border {
+  border: 2px solid #e95f3f;
+}
+.error-message {
+  text-align: center;
+  color: #e95f3f;
+}

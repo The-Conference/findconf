@@ -7,6 +7,7 @@ const userSlice = createSlice({
     loading: false,
     error: null,
     currentUser: null,
+    registered: false,
   },
   reducers: {
     registerStart: (state) => {
@@ -16,6 +17,7 @@ const userSlice = createSlice({
     registerSuccess: (state, action) => {
       state.loading = false;
       state.currentUser = action.payload;
+      state.registered = true;
     },
     registerFailure: (state, action) => {
       state.loading = false;
@@ -31,15 +33,14 @@ export const registerUser = (userData) => async (dispatch) => {
   dispatch(registerStart());
 
   try {
-    const response = await axios.post(
-      "https://test.theconf.ru/api/auth/users/",
-      userData
-    );
+    const response = await axios.post("http://localhost:3000/signup", userData);
     dispatch(registerSuccess(response.data));
     console.log(response.data);
   } catch (error) {
     dispatch(registerFailure(error.message));
+    console.log(error.message);
   }
 };
 
 export default userSlice.reducer;
+//"https://test.theconf.ru/api/auth/users/"

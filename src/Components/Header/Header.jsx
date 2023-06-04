@@ -31,13 +31,13 @@ const Header = () => {
               <Link to="/about">О сервисе </Link>
             </li>
             <li>
-              {(!isAuthenticated && <Link to="/login">Войти </Link>) || (
-                <span onClick={handleLogOut}>Выйти</span>
-              )}
-            </li>
-            <li>
               {(isAuthenticated && <Link to="/profile">Моя страница </Link>) ||
                 null}
+            </li>
+            <li>
+              {(!isAuthenticated && <Link to="/login">Войти </Link>) || (
+                <button onClick={handleLogOut}>Выйти</button>
+              )}
             </li>
           </ul>
         </nav>

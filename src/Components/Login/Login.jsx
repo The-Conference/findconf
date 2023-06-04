@@ -1,31 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./login.scss";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/authSlice";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const nav = useNavigate();
 
-  const handleSubmit = (event) => {
+  const isAuthenticated = useSelector((state) => state.auth.token !== null);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(login({ email, password }));
     setEmail("");
     setPassword("");
-    navigate("/profile");
+    setMessage("");
+    if (!isAuthenticated) {
+      setMessage("Неверный пароль или логин");
+    }
   };
+  useEffect(() => {
+    if (isAuthenticated) {
+      nav("/profile");
+    }
+  }, [isAuthenticated, nav]);
 
-  const handleNavigate = () => {
-    navigate("/");
-  };
   return (
     <div className="login">
-      <span className="login__close" onClick={handleNavigate}>
+      <Link to="/" className="login__close">
         x
-      </span>
+      </Link>
       <div className="login__welcome">
         <p className="login__welcome-black">Добро пожаловать</p>
         <p className="login__welcome-blue">в The Conference</p>{" "}
@@ -36,17 +46,20 @@ const Login = () => {
       <form className="login__form" action="" onSubmit={handleSubmit}>
         <input
           type="mail"
+          className={message.length > 0 ? "red-border" : null}
           placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
+          className={message.length > 0 ? "red-border" : null}
           placeholder="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <button>Войти</button>
+        <div className="error-message">{message}</div>
       </form>
       <button className="login__button-grey">Восстановить пароль</button>
       <div className="login__hr">
