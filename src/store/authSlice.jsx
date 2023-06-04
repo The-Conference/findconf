@@ -42,7 +42,7 @@ export const login = (userData) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      "http://test.theconf.ru/api/auth-token/token/login/",
+      "https://test.theconf.ru/api/auth-token/token/login/",
       userData
     );
     dispatch(loginSuccess(response.data));
