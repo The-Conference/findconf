@@ -31,7 +31,10 @@ export const registerUser = (userData) => async (dispatch) => {
   dispatch(registerStart());
 
   try {
-    const response = await axios.post("http://127.0.0.1:8000/api/auth/users/", userData);
+    const response = await axios.post(
+      "http://test.theconf.ru/api/auth/users/",
+      userData
+    );
     dispatch(registerSuccess(response.data));
     console.log(response.data);
   } catch (error) {

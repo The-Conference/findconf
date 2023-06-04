@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
 import { dynamicFilter } from "../utils/filterRefactored";
 
+
 const initialState = {
   filters: {
     searchValue: "",
@@ -100,7 +101,8 @@ export const postData = createSlice({
         item.follow =
           followed.includes(item.id) && followed.length > 0 ? true : false;
       }
-      dynamicFilter(state, data);
+      // dynamicFilter(state, data);
+      state.conferences=data
       state.isLoading = false;
     },
   },
@@ -144,5 +146,25 @@ export const fetchFilteredConferences = () => async (dispatch) => {
     dispatch(hasError(e.message));
   }
 };
+
+export const filteredContent = () => async (dispatch) => {
+  dispatch(startLoading());
+  dispatch(paginate(1));
+let online = '?offline=True'
+  try {
+    await api
+      .get(`/api/${online}`)
+      .then((response) => {
+        dispatch(handleFilter(response.data))
+        console.log(response.data);
+      } );
+     
+  } catch (e) {
+    dispatch(hasError(e.message));
+  }
+  
+};
+
+
 
 export const card = (state) => state;

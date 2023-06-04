@@ -9,6 +9,7 @@ import {
   saveFilter,
   deleteAllFilters,
   fetchFilteredConferences,
+  filteredContent
 } from "../../store/postData";
 import { useDispatch, useSelector } from "react-redux";
 import white from "../../assets/whitecross.svg";
@@ -31,7 +32,7 @@ const Filters = () => {
             onClick={() => {
               dispatch(handleDeleteColor());
               dispatch(deleteAllFilters());
-              dispatch(fetchFilteredConferences());
+              dispatch(filteredContent());
             }}
           >
             {(data.some((el) => el.applied === true) && (
@@ -47,7 +48,7 @@ const Filters = () => {
               onClick={() => {
                 dispatch(handleColor(item.id));
                 dispatch(saveFilter(item.name));
-                dispatch(fetchFilteredConferences());
+                dispatch(filteredContent());
               }}
               className={
                 item.applied === true
