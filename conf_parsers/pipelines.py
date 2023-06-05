@@ -8,7 +8,6 @@ from itemadapter import ItemAdapter
 
 import hashlib
 import datetime
-import logging
 
 from scrapy.exceptions import DropItem
 from sqlalchemy import create_engine
@@ -21,6 +20,9 @@ from .utils import find_date_in_string
 
 
 class SaveToDBPipeline:
+    """Use bulk insert to save items to PostgreSQL.
+    Items with duplicate conf_id are ignored.
+    Does not raise DropItem exceptions."""
     @classmethod
     def from_crawler(cls, crawler):
         settings = crawler.settings
@@ -39,15 +41,15 @@ class SaveToDBPipeline:
         insert_statement = insert(ConferenceItemDB).values(self.items).returning(ConferenceItemDB.conf_id)
         insert_or_do_nothing = insert_statement.on_conflict_do_nothing(index_elements=[ConferenceItemDB.conf_id])
         to_save = [i.get("conf_id") for i in self.items]
-        logging.debug(f'Saving to DB: {to_save}')
+        spider.logger.debug(f'Saving to DB: {to_save}')
 
         if to_save:
             try:
                 saved = self.session.execute(insert_or_do_nothing).fetchall()
                 self.session.commit()
                 saved = [i[0] for i in saved]
-                logging.info(f'Saved to DB: {saved}')
-                logging.info(f'Duplicate items: {set(to_save).symmetric_difference(saved)}')
+                spider.logger.info(f'Saved to DB: {saved or None}')
+                spider.logger.info(f'Duplicate items: {set(to_save).symmetric_difference(saved)}')
             except IntegrityError:
                 self.session.rollback()
                 raise
@@ -85,10 +87,9 @@ class DropOldItemsPipeline:
                 adapter['conf_date_end'] = dates[1] if len(dates) > 1 else dates[0]
 
         if not adapter.get('conf_date_begin'):
-            logging.warning(adapter.get('conf_card_href'))
+            spider.logger.warning(adapter.get('conf_card_href'))
             raise DropItem('Date not found')
         filter_date = spider.settings.get('FILTER_DATE')
-        if adapter.get('conf_date_begin') < filter_date \
-                or adapter.get('conf_date_end') < filter_date:
+        if adapter.get('conf_date_begin') < filter_date:
             raise DropItem(f"Old item [{adapter.get('conf_date_begin')}]")
         return item

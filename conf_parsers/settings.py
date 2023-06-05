@@ -8,9 +8,13 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import os
 from datetime import date
+from logging.handlers import RotatingFileHandler
+
 from scrapy import logformatter
 import logging
 from distutils.util import strtobool
+
+from scrapy.utils.log import configure_logging
 
 BOT_NAME = "conf_parsers"
 SPIDER_MODULES = ["conf_parsers.spiders"]
@@ -74,7 +78,8 @@ DEFAULT_REQUEST_HEADERS = {
 ITEM_PIPELINES = {
     "conf_parsers.pipelines.DropOldItemsPipeline": 10,
     "conf_parsers.pipelines.FillTheBlanksPipeline": 100,
-    "conf_parsers.pipelines.SaveToDBPipeline": 900,
+    # This pipeline must be the last
+    "conf_parsers.pipelines.SaveToDBPipeline": 999,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -119,6 +124,21 @@ class PoliteLogFormatter(logformatter.LogFormatter):
 
 
 LOG_FORMATTER = 'conf_parsers.settings.PoliteLogFormatter'
+rotating_log_handler = RotatingFileHandler(
+    filename='./logs/scrapy.log',
+    encoding="utf-8",
+    maxBytes=5 * 1000000,
+    backupCount=5,
+)
+
+configure_logging(install_root_handler=False)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(levelname)s: %(message)s",
+    handlers=[rotating_log_handler, ],
+)
+
+# Items older than this date will be dropped
 FILTER_DATE = date(date.today().year, 1, 1)
 
 DB_USER: str = os.getenv("DB_USER", "postgres")

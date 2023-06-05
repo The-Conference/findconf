@@ -2,41 +2,48 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
-import scrapy
+from scrapy import Item, Field
 from itemloaders.processors import TakeFirst, MapCompose, Join
 from scrapy.loader import ItemLoader
 from urllib.parse import unquote
+from pprint import pformat
 
 from .utils import normalize_string
 
 
-class ConferenceItem(scrapy.Item):
-    conf_id = scrapy.Field()
-    hash = scrapy.Field()
-    un_name = scrapy.Field()
-    local = scrapy.Field()
-    reg_date_begin = scrapy.Field()
-    reg_date_end = scrapy.Field()
-    conf_date_begin = scrapy.Field()
-    conf_date_end = scrapy.Field()
-    conf_card_href = scrapy.Field()
-    reg_href = scrapy.Field()
-    conf_name = scrapy.Field()
-    conf_s_desc = scrapy.Field()
-    conf_desc = scrapy.Field()
-    org_name = scrapy.Field()
-    themes = scrapy.Field()
-    online = scrapy.Field()
-    conf_href = scrapy.Field()
-    offline = scrapy.Field()
-    conf_address = scrapy.Field()
-    contacts = scrapy.Field()
-    rinc = scrapy.Field()
-    data = scrapy.Field()
-    checked = scrapy.Field()
-    vak = scrapy.Field()
-    wos = scrapy.Field()
-    scopus = scrapy.Field()
+class ConferenceItem(Item):
+    conf_id = Field()
+    hash = Field()
+    un_name = Field()
+    local = Field()
+    reg_date_begin = Field()
+    reg_date_end = Field()
+    conf_date_begin = Field()
+    conf_date_end = Field()
+    conf_card_href = Field()
+    reg_href = Field()
+    conf_name = Field()
+    conf_s_desc = Field()
+    conf_desc = Field()
+    org_name = Field()
+    themes = Field()
+    online = Field()
+    conf_href = Field()
+    offline = Field()
+    conf_address = Field()
+    contacts = Field()
+    rinc = Field()
+    data = Field()
+    checked = Field()
+    vak = Field()
+    wos = Field()
+    scopus = Field()
+
+    def __repr__(self):
+        return pformat({k: v for k, v in self.items() if k != 'data'},
+                       indent=2,
+                       compact=True,
+                       width=160)
 
 
 class ConferenceLoader(ItemLoader):

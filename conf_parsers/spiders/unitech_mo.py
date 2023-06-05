@@ -9,6 +9,7 @@ from ..items import ConferenceItem, ConferenceLoader
 from ..parsing import default_parser_bs
 from ..utils import find_date_in_string, parse_vague_dates
 
+
 class UnitechMo:
     un_name = 'Технологический университет имени дважды Героя Советского Союза, летчика-космонавта А.А. Леонова'
     allowed_domains = ["unitech-mo.ru"]
