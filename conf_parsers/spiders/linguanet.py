@@ -2,8 +2,7 @@ import datetime
 import scrapy
 from bs4 import BeautifulSoup
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs, get_dates
 
 
 class LinguanetSpider(scrapy.Spider):
@@ -28,12 +27,11 @@ class LinguanetSpider(scrapy.Spider):
                     continue
                 new_item.add_value('conf_s_desc', conf_name)
                 new_item.add_value('conf_desc', conf_name)
-                dates = find_date_in_string(conf_name)
-                if dates:
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
-                    if dates[0].year < datetime.datetime.now().year:
-                        break
+
+                new_item = get_dates(conf_name, new_item)
+                year = new_item.get_output_value('conf_date_begin')
+                if year and year.year < datetime.datetime.now().year:
+                    break
 
                 for i in line.find_all('a'):
                     if 'регистрац' in i.text.lower():

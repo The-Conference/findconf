@@ -6,8 +6,7 @@ from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string, parse_vague_dates
+from ..parsing import default_parser_bs, get_dates
 
 
 class UnitechMo:
@@ -64,13 +63,7 @@ class UnitechMoSpider2(scrapy.Spider, UnitechMo):
             if 'онференц' in title.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-                dates = find_date_in_string(date)
-                if not dates:
-                    dates = parse_vague_dates(month + year)
-                if dates:
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
-
+                new_item = get_dates(f'{date} {month} {year}', new_item, is_vague=True)
                 new_item.add_value('conf_address', re.split(r'(\d+)', date)[0])
                 new_item.add_value('conf_name', title)
                 new_item.add_value('conf_desc', title)
@@ -97,8 +90,6 @@ class UnitechMoSpider3(scrapy.Spider, UnitechMo):
                 date = line.xpath('./following-sibling::p')[0].get()
                 desc = line.xpath('./following-sibling::p//text()')[1].get()
                 new_item.add_value('conf_desc', desc)
-                if dates := find_date_in_string(date):
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+                new_item = get_dates(date, new_item)
 
                 yield new_item.load_item()

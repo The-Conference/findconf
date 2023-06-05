@@ -124,6 +124,7 @@ class PoliteLogFormatter(logformatter.LogFormatter):
 
 
 LOG_FORMATTER = 'conf_parsers.settings.PoliteLogFormatter'
+os.makedirs('logs', exist_ok=True)
 rotating_log_handler = RotatingFileHandler(
     filename='./logs/scrapy.log',
     encoding="utf-8",
@@ -162,3 +163,8 @@ else:
     DATABASE_URL = f"postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 PLAYWRIGHT_BROWSER_TYPE = "webkit"
+PLAYWRIGHT_LAUNCH_OPTIONS = {
+    "headless": True,
+    "timeout": 60 * 1000,
+}
+PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 60 * 1000

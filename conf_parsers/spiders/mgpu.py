@@ -2,8 +2,7 @@ from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs, get_dates
 
 
 class MgpuSpider(CrawlSpider):
@@ -25,9 +24,7 @@ class MgpuSpider(CrawlSpider):
         new_item.add_value('conf_name', conf_name)
         new_item.add_value('conf_s_desc', conf_name)
         dates = response.xpath("string(//div[@class='event-info-date'])").get()
-        if dates := find_date_in_string(dates):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+        new_item = get_dates(dates, new_item)
 
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='site-content')

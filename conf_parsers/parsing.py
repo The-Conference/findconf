@@ -1,7 +1,7 @@
 import re
 from bs4 import Tag
 from scrapy.loader import ItemLoader
-from .utils import find_date_in_string
+from .utils import find_date_in_string, parse_vague_dates
 
 
 def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
@@ -24,9 +24,7 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
             or 'пройд' in lowercase
             or 'проход' in lowercase
             or 'провод' in lowercase):
-        if dates := find_date_in_string(lowercase):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+        new_item = get_dates(lowercase, new_item)
 
     if ('заявк' in lowercase
             or 'принимаютс' in lowercase
@@ -77,4 +75,28 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
     if emails := re.search(r'\S+@\S+\.\S+', lowercase):
         new_item.add_value('contacts', emails.group(0))
 
+    return new_item
+
+
+def get_dates(string: str, new_item: ItemLoader, is_vague: bool = False) -> ItemLoader:
+    """
+    Search a string for dates; convert them to datetime format
+    and append to the supplied ItemLoader object.
+    See :class:`tests<conf_spiders.tests.test_utils.TestDateFinder>` for a list of supported date formats.
+
+    Args:
+        string: A string that may or may not contain dates.
+        new_item: An ItemLoader object to write dates to.
+        is_vague: Use this option to handle uncertain dates, e.g. just month.
+            Warning: use this only if the string is certain to contain a date,
+            otherwise false positives and/or unforseen errors may occur.
+
+    Returns:
+        ItemLoader object with dates appended (if found).
+    """
+    dates = find_date_in_string(string)
+    if not dates and is_vague:
+        dates = parse_vague_dates(string)
+    new_item.add_value('conf_date_begin', dates[0] if dates else None)
+    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else None)
     return new_item

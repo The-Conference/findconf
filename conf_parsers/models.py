@@ -17,7 +17,7 @@ class ConferenceItemDB(Base):
     reg_date_begin = Column(Date, nullable=True, default=null())
     reg_date_end = Column(Date, nullable=True, default=null())
     conf_date_begin = Column(Date)
-    conf_date_end = Column(Date)
+    conf_date_end = Column(Date, nullable=True, default=null())
     conf_card_href = Column(String(500), default=null())
     reg_href = Column(String(500), nullable=True, default=null())
     conf_name = Column(String)

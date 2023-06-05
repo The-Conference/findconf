@@ -1,7 +1,8 @@
 import scrapy
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string, parse_vague_dates
+from ..utils import find_date_in_string
+from ..parsing import get_dates
 
 
 class TyuiuSpider(scrapy.Spider):
@@ -23,13 +24,7 @@ class TyuiuSpider(scrapy.Spider):
             if 'онференц' in title.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-                dates = find_date_in_string(date)
-                if not dates:
-                    dates = parse_vague_dates(date)
-                if dates:
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
-
+                new_item = get_dates(date, new_item, is_vague=True)
                 new_item.add_value('conf_name', title)
                 new_item.add_value('conf_desc', title)
                 new_item.add_value('conf_s_desc', title)

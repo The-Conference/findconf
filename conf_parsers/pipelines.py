@@ -87,7 +87,8 @@ class DropOldItemsPipeline:
                 adapter['conf_date_end'] = dates[1] if len(dates) > 1 else dates[0]
 
         if not adapter.get('conf_date_begin'):
-            spider.logger.warning(adapter.get('conf_card_href'))
+            spider.logger.warning(f"Date not found {adapter.get('conf_card_href')}")
+            spider.logger.debug(item)
             raise DropItem('Date not found')
         filter_date = spider.settings.get('FILTER_DATE')
         if adapter.get('conf_date_begin') < filter_date:

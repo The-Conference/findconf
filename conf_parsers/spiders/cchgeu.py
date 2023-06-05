@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
+from ..parsing import get_dates
 
 
 class CchgeuSpider(CrawlSpider):
@@ -42,9 +43,7 @@ class CchgeuSpider(CrawlSpider):
             if ('состоится' in lowercase or 'открытие' in lowercase
                     or 'проведен' in lowercase or 'пройдет' in lowercase
                     or 'провод' in lowercase):
-                if dates := find_date_in_string(line + prev):
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+                new_item = get_dates(line + prev, new_item)
 
             if ('заявк' in lowercase or 'принимаютс' in lowercase or 'регистрац' in lowercase or
                     'регистрир' in lowercase):

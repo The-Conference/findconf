@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
+from ..parsing import get_dates
 
 
 class A1spbgmuSpider(CrawlSpider):
@@ -24,9 +25,7 @@ class A1spbgmuSpider(CrawlSpider):
         new_item.add_value('conf_name', conf_name)
         prev_text = ''
         new_item.add_value('conf_card_href', response.url)
-        if dates := find_date_in_string(conf_name):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+        new_item = get_dates(conf_name, new_item)
 
         for line in conf_block.find('div', itemprop='articleBody').find_all('p'):
             lowercase = line.text.lower()

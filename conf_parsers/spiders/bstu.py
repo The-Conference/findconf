@@ -1,6 +1,6 @@
 import scrapy
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string
+from ..parsing import get_dates
 
 
 class BstuSpider(scrapy.Spider):
@@ -22,9 +22,7 @@ class BstuSpider(scrapy.Spider):
                 if href:
                     new_item.add_value('conf_card_href', response.urljoin(href))
                 dates_str = link.css("strong::text")[-1].get()
-                if dates := find_date_in_string(dates_str):
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+                new_item = get_dates(dates_str, new_item)
 
                 yield new_item.load_item()
 

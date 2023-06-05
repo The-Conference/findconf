@@ -2,7 +2,7 @@ from scrapy.spiders import Rule, CrawlSpider
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string
+from ..parsing import get_dates
 
 
 class SzgmuSpider(CrawlSpider):
@@ -30,7 +30,6 @@ class SzgmuSpider(CrawlSpider):
                 new_item.add_value('conf_s_desc', conf_name)
                 new_item.add_value('conf_desc', conf_name)
                 dates_select = conf.xpath("string(//div[@class='meta-panel'])").get()
-                if dates := find_date_in_string(dates_select):
-                    new_item.add_value('conf_date_begin', dates[0])
-                    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+                new_item = get_dates(dates_select, new_item)
+
                 yield new_item.load_item()

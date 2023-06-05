@@ -2,7 +2,7 @@ import scrapy
 from bs4 import BeautifulSoup
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_bs, get_dates
 from ..utils import find_date_in_string
 
 
@@ -26,11 +26,8 @@ class UniDubnaSpider(scrapy.Spider):
         new_item.add_css('conf_name', "h1.title_one::text")
         conf_s_desc = response.xpath("string(//h5[@class='description info1'])").get()
         new_item.add_value('conf_s_desc', conf_s_desc)
-
         dates_select = response.xpath("string(//h4[@class='hero-text-small'])").get()
-        if dates := find_date_in_string(dates_select):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+        new_item = get_dates(dates_select, new_item)
 
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='main main-raised').find('div', class_='container')

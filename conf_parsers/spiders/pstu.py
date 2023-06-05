@@ -4,7 +4,6 @@ from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
 from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
 
 
 class PstuSpider(CrawlSpider):

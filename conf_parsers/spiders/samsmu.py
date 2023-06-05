@@ -3,8 +3,7 @@ from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs, get_dates
 
 
 class SamsmuSpider(scrapy.Spider):
@@ -51,7 +50,5 @@ class SamsmuSpider(scrapy.Spider):
             new_item = default_parser_bs(line, new_item)
 
         if not new_item.get_collected_values('conf_date_begin'):
-            if dates := find_date_in_string(response.meta.get('data')):
-                new_item.add_value('conf_date_begin', dates[0])
-                new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+            new_item = get_dates(response.meta.get('data'), new_item)
         yield new_item.load_item()

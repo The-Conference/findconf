@@ -1,6 +1,6 @@
 import scrapy
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string, parse_vague_dates
+from ..parsing import get_dates
 
 
 class MpeiSpider(scrapy.Spider):
@@ -17,13 +17,7 @@ class MpeiSpider(scrapy.Spider):
             new_item.add_value('conf_name', conf_name)
             new_item.add_value('conf_card_href', response.url)
             _dates = card.xpath("string(.//div[@class='event-date'])").get()
-            dates = find_date_in_string(_dates)
-            if not dates:
-                dates = parse_vague_dates(_dates)
-            conf_date_begin = dates[0] or ''
-            conf_date_end = dates[1] if len(dates) > 1 else dates[0]
-            new_item.add_value('conf_date_begin', conf_date_begin)
-            new_item.add_value('conf_date_end', conf_date_end)
+            new_item = get_dates(_dates, new_item, is_vague=True)
             new_item.add_value('conf_desc', conf_name)
             new_item.add_value('conf_s_desc', conf_name)
 

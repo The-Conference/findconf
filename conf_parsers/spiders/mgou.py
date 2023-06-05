@@ -1,7 +1,7 @@
 import scrapy
 from bs4 import BeautifulSoup
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string, parse_vague_dates
+from ..parsing import get_dates
 
 
 class MgouSpider(scrapy.Spider):
@@ -23,14 +23,8 @@ class MgouSpider(scrapy.Spider):
                     continue
                 if 'конфер' in line.find_all('td')[1].text.lower():
                     new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-                    dates = find_date_in_string(line.find_all('td')[2].text)
-                    if not dates:
-                        dates = parse_vague_dates(line.find_all('td')[2].text)
-                    conf_date_begin = dates[0] if len(dates) > 0 else ''
-                    conf_date_end = dates[1] if len(dates) > 1 else conf_date_begin
-                    new_item.add_value('conf_date_begin', conf_date_begin)
-                    new_item.add_value('conf_date_end', conf_date_end)
-
+                    dates = line.find_all('td')[2].text
+                    new_item = get_dates(dates, new_item, is_vague=True)
                     conf_name = line.find_all('td')[1].text
                     new_item.add_value('conf_name', conf_name)
                     new_item.add_value('conf_s_desc', conf_name)

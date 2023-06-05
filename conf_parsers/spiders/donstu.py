@@ -2,8 +2,7 @@ from scrapy.spiders import Rule, CrawlSpider
 from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs, get_dates
 
 
 class DonstuSpider(CrawlSpider):
@@ -25,9 +24,7 @@ class DonstuSpider(CrawlSpider):
         new_item.add_value('conf_s_desc', conf_s_desc)
         new_item.add_value('conf_card_href', response.request.url)
         conf_date_begin = response.xpath("string(//div[@class='event-date'])").get()
-        if dates := find_date_in_string(conf_date_begin):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+        new_item = get_dates(conf_date_begin, new_item)
         conf_address = response.xpath("string(//div[@class='event-location'])").get()
         online = True if 'онлайн' in conf_address.lower() else False
         offline = not online

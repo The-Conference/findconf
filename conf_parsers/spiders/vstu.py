@@ -5,8 +5,7 @@ from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs, get_dates
 
 
 class VstuSpider(CrawlSpider):
@@ -29,11 +28,8 @@ class VstuSpider(CrawlSpider):
         new_item.add_value('conf_card_href', response.url)
         new_item.add_css('conf_name', "h1::text")
         new_item.add_css('conf_s_desc', "h1::text")
-
         date = response.xpath("string(//div[@class='content-wrapper']//p)").get()
-        if dates := find_date_in_string(date):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+        new_item = get_dates(date, new_item)
 
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='content-wrapper').find('div', class_='unit-75')

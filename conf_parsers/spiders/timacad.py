@@ -3,8 +3,7 @@ from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs, get_dates
 
 
 class TimacadSpider(CrawlSpider):
@@ -24,9 +23,8 @@ class TimacadSpider(CrawlSpider):
         new_item.add_css('conf_name', "h1.news-inner__title::text")
         conf_s_desc = response.xpath("string(//p[@class='news-inner__description'])").get()
         new_item.add_value('conf_s_desc', conf_s_desc)
-        if dates := find_date_in_string(conf_s_desc):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+        date = response.css("span.news-inner__date::text").get()
+        new_item = get_dates(date, new_item)
 
         soup = BeautifulSoup(response.text, 'lxml')
         conf_block = soup.find('div', class_='news-inner')

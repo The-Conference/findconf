@@ -1,7 +1,7 @@
 import scrapy
 from bs4 import BeautifulSoup
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string
+from ..parsing import get_dates
 
 
 class GgtuSpider(scrapy.Spider):
@@ -26,10 +26,7 @@ class GgtuSpider(scrapy.Spider):
             if 'конфер' in line.find_all('td')[0].text.lower():
                 conf_name = line.find_all('td')[0].text
 
-            if dates := find_date_in_string(line.find_all('td')[-1].text):
-                conf_date_begin = dates[0]
-                conf_date_end = dates[1] if len(dates) > 1 else dates[0]
-
+            new_item = get_dates(line.find_all('td')[-1].text, new_item)
             new_item.add_value('conf_card_href', self.allowed_domains[0] + line.find('a', href=True)['href'])
             new_item.add_value('conf_name', conf_name)
             new_item.add_value('conf_s_desc', conf_name)

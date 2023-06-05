@@ -3,8 +3,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
-from ..utils import find_date_in_string
+from ..parsing import default_parser_bs, get_dates
 
 
 class MsalSpider(CrawlSpider):
@@ -28,9 +27,7 @@ class MsalSpider(CrawlSpider):
         new_item.add_css('conf_name', 'h1::text')
         for tag in response.css("div.text-sm.mt-2"):
             tag_txt = tag.xpath("string(.)").get().lower()
-            if dates := find_date_in_string(tag_txt):
-                new_item.add_value('conf_date_begin', dates[0])
-                new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else dates[0])
+            new_item = get_dates(tag_txt, new_item)
             if 'онлайн' in tag_txt or 'гибридн' in tag_txt:
                 new_item.add_value('online', True)
             elif 'оффлайн' in tag_txt or 'гибридн' in tag_txt:

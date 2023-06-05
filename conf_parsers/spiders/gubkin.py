@@ -2,6 +2,7 @@ from scrapy.spiders import Rule, CrawlSpider
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
 from ..utils import find_date_in_string
+from ..parsing import get_dates
 
 
 class GubkinSpider(CrawlSpider):
@@ -25,9 +26,7 @@ class GubkinSpider(CrawlSpider):
         new_item.add_css('conf_desc', "div.modal-body:not(.ul)::text")
 
         _dates = response.xpath("string(//li[@class='date-short'])").get()
-        if dates := find_date_in_string(_dates):
-            new_item.add_value('conf_date_begin', dates[0])
-            new_item.add_value('conf_date_end', dates[1] if 1 < len(dates) else dates[0])
+        new_item = get_dates(_dates, new_item)
 
         _dates = response.xpath("string(//li[@class='date-short'][2])").get()
         if dates := find_date_in_string(_dates):
