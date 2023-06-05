@@ -33,7 +33,10 @@ export const registerUser = (userData) => async (dispatch) => {
   dispatch(registerStart());
 
   try {
-    const response = await axios.post("http://localhost:3000/signup", userData);
+    const response = await axios.post(
+      "https://test.theconf.ru/api/auth/users/",
+      userData
+    );
     dispatch(registerSuccess(response.data));
     console.log(response.data);
   } catch (error) {
@@ -43,4 +46,4 @@ export const registerUser = (userData) => async (dispatch) => {
 };
 
 export default userSlice.reducer;
-//"https://test.theconf.ru/api/auth/users/"
+//"http://localhost:3000/signup"

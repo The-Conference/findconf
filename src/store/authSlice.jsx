@@ -41,7 +41,10 @@ export const login = (userData) => async (dispatch) => {
   dispatch(loginStart());
 
   try {
-    const response = await axios.post("http://localhost:3000/login", userData);
+    const response = await axios.post(
+      "https://test.theconf.ru/api/auth-token/token/login/",
+      userData
+    );
     dispatch(loginSuccess(response.data));
     console.log(response.data);
   } catch (error) {
@@ -51,4 +54,4 @@ export const login = (userData) => async (dispatch) => {
 
 export default authSlice.reducer;
 
-//"https://test.theconf.ru/api/auth-token/token/login/"
+//"http://localhost:3000/login"
