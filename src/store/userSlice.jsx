@@ -38,10 +38,8 @@ export const registerUser = (userData) => async (dispatch) => {
       userData
     );
     dispatch(registerSuccess(response.data));
-    console.log(response.data);
   } catch (error) {
-    dispatch(registerFailure(error.message));
-    console.log(error.message);
+    dispatch(registerFailure(error.response.data));
   }
 };
 

@@ -11,7 +11,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const { user } = useSelector((state) => state);
-  console.log(user.registered);
+  // console.log(user.error);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleNavigate = () => {
