@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 RUN playwright install webkit --with-deps
 COPY scrapy.cfg run.py ./
 COPY conf_parsers/ ./conf_parsers/
-CMD ["/bin/sh"]
+CMD tail -f /dev/null

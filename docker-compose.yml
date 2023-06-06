@@ -22,18 +22,38 @@ services:
 #      - "7900:7900"
 #      - "4444:4444"
 
+  ofelia:
+    image: mcuadros/ofelia:latest
+    restart: unless-stopped
+    depends_on:
+      - scrapy
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:r
+
   scrapy:
     build:
       context: .
     restart: unless-stopped
-    tty: true
     environment:
       DEBUG: 'False'
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASS: ${DB_PASS:-changeme}
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME:-mydatabase}
     container_name: 'conf_parsers'
     volumes:
       - ./:/usr/src/app/
     depends_on:
       - postgres
+    labels:
+      ofelia.enabled: "true"
+#      ofelia.job-exec.conf_parsers.schedule: "@every 60s"
+#      ofelia.job-exec.conf_parsers.no-overlap: "true"
+      ofelia.job-exec.conf_parsers.schedule: "@weekly"
+      ofelia.job-exec.conf_parsers.command: "python run.py"
+
 
 volumes:
   postgres:

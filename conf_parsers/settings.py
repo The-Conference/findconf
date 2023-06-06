@@ -128,14 +128,14 @@ os.makedirs('logs', exist_ok=True)
 rotating_log_handler = RotatingFileHandler(
     filename='./logs/scrapy.log',
     encoding="utf-8",
-    maxBytes=5 * 1000000,
+    maxBytes=2 * 1000000,
     backupCount=5,
 )
 
 configure_logging(install_root_handler=False)
 logging.basicConfig(
     level=logging.DEBUG,
-    format="%(levelname)s: %(message)s",
+    format="%(asctime)s %(levelname)s: %(message)s",
     handlers=[rotating_log_handler, ],
 )
 
@@ -165,6 +165,6 @@ else:
 PLAYWRIGHT_BROWSER_TYPE = "webkit"
 PLAYWRIGHT_LAUNCH_OPTIONS = {
     "headless": True,
-    "timeout": 60 * 1000,
+    "timeout": 0,
 }
 PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 60 * 1000
