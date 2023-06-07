@@ -139,9 +139,6 @@ logging.basicConfig(
     handlers=[rotating_log_handler, ],
 )
 
-# Items older than this date will be dropped
-FILTER_DATE = date(date.today().year, 1, 1)
-
 DB_USER: str = os.getenv("DB_USER", "postgres")
 DB_PASS: str = os.getenv("DB_PASS", "changeme")
 DB_HOST: str = os.getenv("DB_HOST", "postgres")
@@ -165,6 +162,11 @@ else:
 PLAYWRIGHT_BROWSER_TYPE = "webkit"
 PLAYWRIGHT_LAUNCH_OPTIONS = {
     "headless": True,
-    "timeout": 0,
+    "timeout": 600 * 1000,
 }
 PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 60 * 1000
+
+# Max page for pagination traversal
+DEPTH_LIMIT = 3
+# Items older than this date will be dropped
+FILTER_DATE = date(date.today().year, 1, 1)

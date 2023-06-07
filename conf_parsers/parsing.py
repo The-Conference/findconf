@@ -134,6 +134,7 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
     if ('место' in lowercase
             or 'адрес' in lowercase
             or 'город' in lowercase
+            or 'гибридн' in lowercase
             or 'очно' in lowercase):
         new_item.add_value('conf_address', line)
         new_item.add_value('offline', True)

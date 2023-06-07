@@ -1,8 +1,7 @@
 from scrapy.spiders import Rule, CrawlSpider
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 
 
 class KbsuSpider(CrawlSpider):
@@ -18,17 +17,12 @@ class KbsuSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.request.url)
-        conf_name = response.xpath("//h1/text()").get()
+        new_item.add_value('conf_card_href', response.url)
+        conf_name = response.meta.get('link_text')
         new_item.add_value('conf_name', conf_name)
-        new_item = get_dates(conf_name, new_item)
+        new_item = get_dates(response.xpath("//h1/text()").get(), new_item)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        main_container = soup.find('div', class_='single__content content')
-        lines = main_container.find_all(['p', 'ul', 'ol'])
-
-        for line in lines:
-            new_item.add_value('conf_s_desc', line.get_text(separator=" "))
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='single__content content ']//*[self::p or self::ul or self::ol]"):
+            new_item = default_parser_xpath(line, new_item)
 
         yield new_item.load_item()

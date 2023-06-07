@@ -11,7 +11,6 @@ class VolsuSpider(scrapy.Spider):
     allowed_domains = ["volsu.ru"]
     start_urls = ["https://volsu.ru/archive_ad.php"]
     custom_settings = {
-        "DEPTH_LIMIT": 3,
         'DOWNLOAD_HANDLERS': {
             "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
             "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",

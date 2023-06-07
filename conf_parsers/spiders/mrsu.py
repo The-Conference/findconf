@@ -12,9 +12,6 @@ class MrsuSpider(CrawlSpider):
     rules = (
         Rule(LinkExtractor(restrict_css='a.modern-page-next'), callback='parse_items', follow=True),
     )
-    custom_settings = {
-        "DEPTH_LIMIT": 3,
-    }
 
     def parse_start_url(self, response, **kwargs):
         return self.parse_items(response)

@@ -16,9 +16,6 @@ class SVfuSpider(CrawlSpider):
              callback="parse_items", follow=False),
         Rule(LinkExtractor(restrict_css='li.bx-pag-next')),
     )
-    custom_settings = {
-        "DEPTH_LIMIT": 3
-    }
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)

@@ -26,7 +26,7 @@ class MgsuSpider(scrapy.Spider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_s_desc = response.meta.get('desc')
-        new_item.add_value('conf_card_href', response.request.url)
+        new_item.add_value('conf_card_href', response.url)
         new_item.add_xpath('conf_name', "//h2/text()")
         new_item.add_value('conf_s_desc', conf_s_desc)
 
