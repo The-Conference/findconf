@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { registerUser } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Registered from "../SignUp/Registered";
-
+import close from "../../assets/close.svg";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,9 +65,12 @@ const SignUp = () => {
     <>
       {(user.registered === false && (
         <div className="login">
-          <span className="login__close" onClick={handleNavigate}>
-            x
-          </span>
+          <img
+            src={close}
+            className="login__close"
+            alt="close"
+            onClick={handleNavigate}
+          />
           <div className="login__welcome">
             <p className="login__welcome-black">Добро пожаловать</p>
             <p className="login__welcome-blue">в The Conference</p>{" "}

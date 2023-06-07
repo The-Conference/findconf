@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../store/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import close from "../../assets/close.svg";
 const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -18,12 +18,12 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(login({ email, password }));
-    if (!isAuthenticated) {
-      setMessage("Неверный пароль или логин");
-    }
     setEmail("");
     setPassword("");
     setMessage("");
+    if (!isAuthenticated) {
+      setMessage("Неверный пароль или логин");
+    }
   };
   useEffect(() => {
     if (isAuthenticated) {
@@ -34,7 +34,7 @@ const Login = () => {
   return (
     <div className="login">
       <Link to="/" className="login__close">
-        x
+        <img src={close} alt="close" />
       </Link>
       <div className="login__welcome">
         <p className="login__welcome-black">Добро пожаловать</p>
