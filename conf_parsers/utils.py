@@ -9,7 +9,7 @@ def normalize_string(string: str) -> str:
                     r'\u2010-\u2015\u2E17\u2E1A\u2E3A\u2E3B\u2E40'
                     r'\u301C\u3030\u30A0\uFE31\uFE32\uFE58\uFE63\uFF0D–-]', '-', string)
     string = string.replace('&nbsp;', ' ').replace('\xa0', ' ')\
-        .replace('\r', '').replace('\n', '').replace('\t', '').replace('\u200b', '')
+        .replace('\r', ' ').replace('\n', ' ').replace('\t', ' ').replace('\u200b', '')
     return ' '.join(string.split()).strip()
 
 

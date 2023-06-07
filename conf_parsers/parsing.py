@@ -8,6 +8,8 @@ import re
 from bs4 import Tag
 from scrapy import Selector
 from scrapy.loader import ItemLoader
+from w3lib.html import remove_tags, remove_tags_with_content
+
 from .utils import find_date_in_string, parse_vague_dates
 
 
@@ -57,8 +59,10 @@ def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader
     Returns:
         Populated ItemLoader object.
     """
-    line_text = selector.xpath("string(.)").get()
-    lowercase = line_text.casefold()
+    line = selector.get()
+    # remove inline <script>
+    clean_line = remove_tags(remove_tags_with_content(line, ('script',)))
+    lowercase = clean_line.casefold()
 
     if ('заявк' in lowercase
             or 'принимаютс' in lowercase
@@ -83,7 +87,7 @@ def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader
         new_item.add_value('conf_href', selector.xpath(".//a/@href").get())
         new_item.add_value('online', True)
 
-    return parse_plain_text(new_item, line_text, lowercase)
+    return parse_plain_text(new_item, clean_line, lowercase)
 
 
 def parse_plain_text(new_item: ItemLoader, line: str, lowercase: str = None) -> ItemLoader:

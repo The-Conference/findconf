@@ -48,7 +48,7 @@ class SaveToDBPipeline:
                 saved = self.session.execute(insert_or_do_nothing).fetchall()
                 self.session.commit()
                 saved = [i[0] for i in saved]
-                spider.logger.info(f'Saved to DB: {saved or None}')
+                spider.logger.info(f'Saved {len(saved)} items to DB: {saved}')
                 spider.logger.info(f'Duplicate items: {set(to_save).symmetric_difference(saved)}')
             except IntegrityError:
                 self.session.rollback()
