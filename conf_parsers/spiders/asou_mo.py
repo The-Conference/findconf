@@ -1,8 +1,7 @@
 from scrapy.spiders import Rule, CrawlSpider
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class AsouMoSpider(CrawlSpider):
@@ -21,28 +20,20 @@ class AsouMoSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find(
-            'section', class_='one-news one-news--event container container--bordered_overflow hentry').find(
-            'div', class_='container__inner')
-
-        conf_name = conf_block.find('h1', class_='entry-title').text
-        new_item.add_value('conf_name', conf_name)
-        description = conf_block.find(
-            'div', class_='one-news__intro-description').find('p', class_='entry-content')
-        new_item.add_value('conf_s_desc', description.text)
-        new_item.add_value('conf_card_href', response.request.url)
-        new_item.add_value('org_name', conf_block.find(
-            'a', class_='one-news__institute-link author').get_text(separator=' '))
-        new_item.add_xpath('conf_address', "//div[contains(@class, 'tabs__place-info--loc')]//p[2]/text()")
-        new_item.add_xpath('contacts', "//div[contains(@class, 'tabs__place-info--phone')]//p[2]/text()")
+        new_item.add_css('conf_name', "h1.entry-title::text")
+        conf_s_desc = response.xpath("//div[@class='one-news__intro-description']")
+        new_item.add_value('conf_s_desc', conf_s_desc.xpath("string(.)").get())
+        new_item.add_value('conf_card_href', response.url)
+        new_item.add_xpath('org_name', "string(//a[@class='one-news__institute-link author'])")
+        new_item.add_xpath('conf_address', "string(//div[contains(@class, 'tabs__place-info--loc')])")
+        new_item.add_xpath('contacts', "string(//div[contains(@class, 'tabs__place-info--phone')])")
         new_item.add_css('reg_href', 'a.button--register::attr(href)')
 
-        lines = conf_block.find(
-            'div', class_='one-news__purposes container container--news-one common-text').find_all(
-            ['p', 'ul', 'h3'])
-        lines.extend(description)
+        block = response.xpath(
+            "//div[@class='one-news__purposes container container--news-one common-text']")
+        lines = [conf_s_desc]
+        lines.extend(block.xpath("./*[self::p or self::ul or self::h3]"))
         for line in lines:
-            new_item = default_parser_bs(line, new_item)
+            new_item = default_parser_xpath(line, new_item)
 
         yield new_item.load_item()

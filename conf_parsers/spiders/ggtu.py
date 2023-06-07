@@ -1,7 +1,6 @@
 import scrapy
-from bs4 import BeautifulSoup
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import get_dates
+from ..parsing import get_dates, parse_plain_text
 
 
 class GgtuSpider(scrapy.Spider):
@@ -11,26 +10,16 @@ class GgtuSpider(scrapy.Spider):
     start_urls = ["https://www.ggtu.ru/index.php?option=com_content&view=article&id=9230&Itemid=810"]
 
     def parse(self, response, **kwargs):
-        soup = BeautifulSoup(response.text, 'lxml')
-        main_container = soup.find('div', class_='art-article').find('tbody')
-
-        for line in main_container.find_all('tr'):
-            conf_name = ''
-            conf_date_begin = None
-            conf_date_end = None
-            new_item = ConferenceLoader(item=ConferenceItem())
-            if 'мероприятие' in line.find('td').text.lower():
+        for row in response.xpath("//div[@class='art-article']//tr"):
+            try:
+                conf_name, date = [i.xpath("string(.)").get() for i in row.css('td')]
+            except ValueError:
                 continue
-            if line.find_all('td')[0].text == line.find_all('td')[-1].text:
-                continue
-            if 'конфер' in line.find_all('td')[0].text.lower():
-                conf_name = line.find_all('td')[0].text
+            if 'конфер' in conf_name.lower():
+                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-            new_item = get_dates(line.find_all('td')[-1].text, new_item)
-            new_item.add_value('conf_card_href', self.allowed_domains[0] + line.find('a', href=True)['href'])
-            new_item.add_value('conf_name', conf_name)
-            new_item.add_value('conf_s_desc', conf_name)
-            new_item.add_value('conf_desc', conf_name)
-            new_item.add_value('conf_date_begin', conf_date_begin)
-            new_item.add_value('conf_date_end', conf_date_end)
-            yield new_item.load_item()
+                new_item.add_value('conf_name', conf_name)
+                new_item.add_value('conf_card_href', response.url)
+                new_item = get_dates(date, new_item)
+                new_item = parse_plain_text(conf_name, new_item)
+                yield new_item.load_item()

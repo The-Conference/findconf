@@ -46,7 +46,7 @@ def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
         new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else None)
         new_item.add_value('online', True)
 
-    return parse_plain_text(new_item, line.get_text(separator=' '), lowercase)
+    return parse_plain_text(line.get_text(separator=' '), new_item, lowercase)
 
 
 def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader:
@@ -87,10 +87,10 @@ def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader
         new_item.add_value('conf_href', selector.xpath(".//a/@href").get())
         new_item.add_value('online', True)
 
-    return parse_plain_text(new_item, clean_line, lowercase)
+    return parse_plain_text(clean_line, new_item, lowercase)
 
 
-def parse_plain_text(new_item: ItemLoader, line: str, lowercase: str = None) -> ItemLoader:
+def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> ItemLoader:
     """Search plain text for various data markers, parse, and populate the supplied ItemLoader object
     with the results. Append every supplied line of text to the description field.
 

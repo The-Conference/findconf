@@ -17,7 +17,7 @@ class BsueduSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
         new_item.add_xpath('conf_name', '//h1/text()')
-        new_item.add_value('conf_card_href', response.request.url)
+        new_item.add_value('conf_card_href', response.url)
 
         items = response.xpath('//span')
         for item in items:
@@ -47,7 +47,6 @@ class BsueduSpider(CrawlSpider):
 
         text = response.xpath("string(//div[@class='news-detail'])").get()
         new_item.add_value('rinc', True if 'ринц' in text.lower() else False)
-        new_item.add_xpath('conf_s_desc', "//div[@class='news-detail']/p[position() < 5]/text()")
         new_item.add_xpath('conf_desc', "//div[@class='news-detail']/p[position() < 8]/text()")
 
         yield new_item.load_item()

@@ -1,8 +1,7 @@
 from scrapy.spiders import Rule, CrawlSpider
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 
 
 class DonstuSpider(CrawlSpider):
@@ -22,24 +21,17 @@ class DonstuSpider(CrawlSpider):
         new_item.add_value('conf_name', conf_name)
         conf_s_desc = response.xpath("//div[@class='desc']/text()").get()
         new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('conf_card_href', response.request.url)
+        new_item.add_value('conf_card_href', response.url)
         conf_date_begin = response.xpath("string(//div[@class='event-date'])").get()
         new_item = get_dates(conf_date_begin, new_item)
         conf_address = response.xpath("string(//div[@class='event-location'])").get()
+        new_item.add_value('conf_address', conf_address)
+
+        for line in response.xpath("//div[@class='text-block']/*[self::p or self::ul]"):
+            new_item = default_parser_xpath(line, new_item)
+
         online = True if 'онлайн' in conf_address.lower() else False
-        offline = not online
         new_item.add_value('online', online)
-        new_item.add_value('offline', offline)
-        if offline:
-            new_item.add_value('conf_address', conf_address)
-
-        soup = BeautifulSoup(response.text, 'lxml')
-        main_containers = soup.find('div', class_='event-container')
-        lines = main_containers.find('div', class_='text-block')
-        if lines.find('p'):
-            lines = lines.find_all(['p', 'ul'])
-
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        new_item.add_value('offline', not online)
 
         yield new_item.load_item()

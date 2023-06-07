@@ -80,7 +80,7 @@ class DropOldItemsPipeline:
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
-        if not adapter.get('conf_date_begin'):
+        if not adapter.get('conf_date_begin') and adapter.get('conf_s_desc'):
             # look for dates in the short description
             if dates := find_date_in_string(adapter.get('conf_s_desc')):
                 adapter['conf_date_begin'] = dates[0]

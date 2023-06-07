@@ -1,8 +1,7 @@
 from scrapy.spiders import Rule, CrawlSpider
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class BashgmuSpider(CrawlSpider):
@@ -18,16 +17,13 @@ class BashgmuSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        conf_name = response.xpath("//h3/text()").get()
+        conf_name = response.xpath("string(//h3)").get()
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_s_desc', conf_name)
         new_item.add_value('conf_card_href', response.url)
         new_item.add_value('online', True if 'онлайн' in conf_name.lower() or
                                              'он-лайн' in conf_name.lower() else False)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        main_containers = soup.find('div', class_='grants-detail')
-        for line in main_containers.find_all(['h3', 'p']):
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='grants-detail']/*[self::p or self::h3]"):
+            new_item = default_parser_xpath(line, new_item)
 
         yield new_item.load_item()

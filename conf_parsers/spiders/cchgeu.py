@@ -1,9 +1,7 @@
 from scrapy.spiders import Rule, CrawlSpider
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..utils import find_date_in_string
-from ..parsing import get_dates
+from ..parsing import get_dates, default_parser_xpath
 
 
 class CchgeuSpider(CrawlSpider):
@@ -21,45 +19,15 @@ class CchgeuSpider(CrawlSpider):
 
         conf_name = response.xpath("//h1/text()").get()
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_card_href', response.request.url)
+        new_item.add_value('conf_card_href', response.url)
         new_item.add_xpath('contacts', "//div[@class='news-detail']//a[contains(@href, 'mailto')]/@href")
-        new_item.add_value('conf_s_desc', conf_name)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='middle')
-        lines = conf_block.find('div', class_='news-detail')
+        text = response.xpath("//div[@class='news-detail']/div[not(@class or @style)]")
+        # no tags. Splitting text by <br>
+        for line in text.xpath("text()"):
+            new_item = default_parser_xpath(line, new_item)
 
-        out = []
-        for tag in lines:
-            out.append(tag.get_text(strip=True, separator='|'))
-        out = '|'.join(out).split('|')
-        # FIXME there are no blocks
-        prev = ''
-        for line in out:
-            lowercase = line.lower()
-            new_item.add_value('conf_desc', line)
-            new_item.add_value('rinc', True if 'ринц' in lowercase else False)
-
-            if ('состоится' in lowercase or 'открытие' in lowercase
-                    or 'проведен' in lowercase or 'пройдет' in lowercase
-                    or 'провод' in lowercase):
-                new_item = get_dates(line + prev, new_item)
-
-            if ('заявк' in lowercase or 'принимаютс' in lowercase or 'регистрац' in lowercase or
-                    'регистрир' in lowercase):
-                if dates := find_date_in_string(line + prev):
-                    new_item.add_value('reg_date_begin', dates[0])
-                    new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
-
-            if 'организатор' in lowercase:
-                new_item.add_value('org_name', line)
-
-            if 'онлайн' in lowercase or 'трансляц' in lowercase:
-                new_item.add_value('online', True)
-
-            if 'город' in lowercase or 'адрес' in lowercase or 'место проведен' in lowercase:
-                new_item.add_value('conf_address', line)
-                new_item.add_value('offline', True)
-            prev = lowercase
+        if not new_item.get_collected_values('conf_date_begin'):
+            new_item = get_dates(text.xpath("string(.)").get(), new_item)
 
         yield new_item.load_item()
