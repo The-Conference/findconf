@@ -153,3 +153,7 @@ body {
   text-align: center;
   color: #e95f3f;
 }
+.match {
+  color: green;
+  text-align: center;
+}

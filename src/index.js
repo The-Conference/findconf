@@ -11,7 +11,7 @@ import Login from "./Components/Login/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
-import ProtectedRoute from "./Components/SignUp/ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 const Header = React.lazy(() => import("./Components/Header/Header"));
 const App = React.lazy(() => import("./App"));
 const AllConferences = React.lazy(() =>

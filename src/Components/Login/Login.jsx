@@ -18,12 +18,12 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(login({ email, password }));
-    setEmail("");
-    setPassword("");
-    setMessage("");
     if (!isAuthenticated) {
       setMessage("Неверный пароль или логин");
     }
+    setEmail("");
+    setPassword("");
+    setMessage("");
   };
   useEffect(() => {
     if (isAuthenticated) {
