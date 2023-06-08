@@ -1,8 +1,7 @@
 import scrapy
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class MietSpider(scrapy.Spider):
@@ -40,14 +39,8 @@ class MietSpider(scrapy.Spider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         new_item.add_value('conf_card_href', response.url)
-        conf_name = response.xpath("//h2/text()").get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_s_desc', conf_name)
+        new_item.add_xpath('conf_name', "//h2/text()")
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        main_container = soup.find('div', class_='info-content')
-        lines = main_container.find_all(['p'])
-        for line in lines:
-            new_item.add_value('conf_desc', line.get_text(separator=" "))
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='info-content']//*[self::p]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

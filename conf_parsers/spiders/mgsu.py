@@ -1,7 +1,6 @@
 import scrapy
-from bs4 import BeautifulSoup
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class MgsuSpider(scrapy.Spider):
@@ -25,14 +24,10 @@ class MgsuSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        conf_s_desc = response.meta.get('desc')
         new_item.add_value('conf_card_href', response.url)
         new_item.add_xpath('conf_name', "//h2/text()")
-        new_item.add_value('conf_s_desc', conf_s_desc)
+        new_item.add_value('conf_s_desc', response.meta.get('desc'))
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', id='inner-content')
-        lines = conf_block.find('div', class_='news-text').find_all(['div', 'p', 'li'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='news-text']//*[self::p or self::div or self::li]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

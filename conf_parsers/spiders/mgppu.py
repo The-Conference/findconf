@@ -21,7 +21,6 @@ class MgppuSpider(CrawlSpider):
         new_item.add_value('conf_card_href', response.url)
         conf_name = response.xpath("//h1/text()").get()
         new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_s_desc', conf_name)
 
         for line in response.xpath("//article/*[self::p or self::ul]"):
             new_item = default_parser_xpath(line, new_item)

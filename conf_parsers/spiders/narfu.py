@@ -1,9 +1,8 @@
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class NarfuSpider(CrawlSpider):
@@ -20,13 +19,9 @@ class NarfuSpider(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         new_item.add_value('conf_card_href', response.url)
-        conf_name = response.xpath("//h5/text()").get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_s_desc', conf_name)
+        new_item.add_xpath('conf_name', "//h5/text()")
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='events')
-        lines = conf_block.find_all(['p', 'li', 'h3'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='events']//*[self::p or self::li or self::ul]"):
+            new_item = default_parser_xpath(line, new_item)
+        new_item.replace_xpath('conf_desc', "string(//div[@class='text_news'])")
         yield new_item.load_item()

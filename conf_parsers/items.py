@@ -3,7 +3,7 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 from scrapy import Item, Field
-from itemloaders.processors import TakeFirst, MapCompose, Join
+from itemloaders.processors import TakeFirst, MapCompose, Join, Compose
 from scrapy.loader import ItemLoader
 from urllib.parse import unquote
 from pprint import pformat
@@ -49,15 +49,12 @@ class ConferenceItem(Item):
 class ConferenceLoader(ItemLoader):
     default_output_processor = TakeFirst()
 
-    conf_s_desc_in = MapCompose(normalize_string)
-    conf_s_desc_out = Join(' ')
-    conf_desc_in = MapCompose(normalize_string)
-    conf_desc_out = Join(' ')
+    conf_s_desc_out = Compose(Join(), normalize_string)
+    conf_desc_out = Compose(Join(), normalize_string)
+    conf_address_out = Compose(Join(), normalize_string)
+    contacts_out = Compose(Join(), normalize_string)
+
     org_name_in = MapCompose(normalize_string)
-    conf_address_in = MapCompose(normalize_string)
-    conf_address_out = Join(' ')
-    contacts_in = MapCompose(normalize_string)
-    contacts_out = Join(' ')
     conf_name_in = MapCompose(normalize_string)
     conf_card_href_in = MapCompose(unquote)
     conf_href_in = MapCompose(unquote)

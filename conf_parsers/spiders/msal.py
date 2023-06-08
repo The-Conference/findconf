@@ -1,9 +1,8 @@
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 
 
 class MsalSpider(CrawlSpider):
@@ -33,13 +32,8 @@ class MsalSpider(CrawlSpider):
             elif 'оффлайн' in tag_txt or 'гибридн' in tag_txt:
                 new_item.add_value('offline', True)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', id='articleBody')
-        lines = conf_block.find_all('p')
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
-
+        for line in response.xpath("//div[@id='articleBody']//*[self::p]"):
+            new_item = default_parser_xpath(line, new_item)
         new_item.add_xpath('conf_desc', "string(//div[contains(@class, 'text-block')])")
-        new_item.add_css('conf_s_desc', 'div.text-block > p::text')
 
         yield new_item.load_item()

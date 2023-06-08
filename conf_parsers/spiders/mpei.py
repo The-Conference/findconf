@@ -19,7 +19,6 @@ class MpeiSpider(scrapy.Spider):
             _dates = card.xpath("string(.//div[@class='event-date'])").get()
             new_item = get_dates(_dates, new_item, is_vague=True)
             new_item.add_value('conf_desc', conf_name)
-            new_item.add_value('conf_s_desc', conf_name)
 
             for line in card.xpath(".//div[@class='event-info']"):
                 text = line.xpath("./text()").get()

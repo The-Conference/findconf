@@ -168,5 +168,5 @@ def get_dates(string: str, new_item: ItemLoader, is_vague: bool = False) -> Item
     if not dates and is_vague:
         dates = parse_vague_dates(string)
     new_item.add_value('conf_date_begin', dates[0] if dates else None)
-    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 else None)
+    new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 and dates[1] != dates[0] else None)
     return new_item

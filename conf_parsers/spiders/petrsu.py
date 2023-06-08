@@ -1,10 +1,9 @@
 import scrapy
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 
 
 class PetrsuSpider(scrapy.Spider):
@@ -23,11 +22,10 @@ class PetrsuSpider(scrapy.Spider):
         dates = response.xpath("string(//div[@id='conf_name'])").get()
         new_item = get_dates(dates, new_item)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', id='conf_desc')
-        lines = conf_block.find_all(['div', 'p', 'table'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@id='conf_desc']//*[self::p or self::div or self::table]"):
+            new_item = default_parser_xpath(line, new_item)
+        if href := new_item.get_output_value('reg_href'):
+            new_item.replace_value('reg_href', response.urljoin(href))
         yield new_item.load_item()
 
 
@@ -45,18 +43,9 @@ class PetrsuPagesSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        conf_name = response.xpath("//h1/text()").get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('local', False if 'международн' in conf_name.lower() else True)
-        new_item.add_value('conf_id', f"{self.name}_{''.join(conf_name.split())}")
+        new_item.add_xpath('conf_name', "//h1/text()")
         new_item.add_value('conf_card_href', response.url)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='col-sm-8 col-xs-12 page-content')
-        lines = conf_block.find_all(['p', 'ul'])
-        conf_s_desc = ''
-        for line in lines:
-            if not conf_s_desc:
-                new_item.add_value('conf_s_desc', line.text)
-            new_item = default_parser_bs(line, new_item)
+        for line in response.css("div.page-content").xpath(".//*[self::p or self::ul]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

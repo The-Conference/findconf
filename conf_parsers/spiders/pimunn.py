@@ -1,9 +1,8 @@
 from urllib.parse import urlencode
 import scrapy
-from bs4 import BeautifulSoup
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class PimunnSpider(scrapy.Spider):
@@ -37,7 +36,6 @@ class PimunnSpider(scrapy.Spider):
         new_item.add_value('conf_name', response.meta.get('title'))
         new_item.add_value('conf_s_desc', response.meta.get('descr'))
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='t-redactor__text')
-        new_item = default_parser_bs(conf_block, new_item)
+        conf_block = response.css("div.t-redactor__text")
+        new_item = default_parser_xpath(conf_block, new_item)
         yield new_item.load_item()
