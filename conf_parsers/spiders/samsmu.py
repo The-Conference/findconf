@@ -1,9 +1,8 @@
 import scrapy
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 
 
 class SamsmuSpider(scrapy.Spider):
@@ -40,14 +39,9 @@ class SamsmuSpider(scrapy.Spider):
 
         new_item.add_value('conf_card_href', response.url)
         new_item.add_xpath('conf_name', "string(//h1)")
-        conf_s_desc = response.xpath("string(//p[not(@class)])").get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('section', class_='pb-40 text_section').find('div', class_='row')
-        lines = conf_block.find_all('div', class_='col-xl-12 col-lg-12')[-1].find_all(['p'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='col-xl-12 col-lg-12']/*[self::p]"):
+            new_item = default_parser_xpath(line, new_item)
 
         if not new_item.get_collected_values('conf_date_begin'):
             new_item = get_dates(response.meta.get('data'), new_item)

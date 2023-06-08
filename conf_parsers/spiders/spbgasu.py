@@ -1,8 +1,7 @@
 import scrapy
-from bs4 import BeautifulSoup
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 
 
 class SpbgasuSpider(scrapy.Spider):
@@ -31,10 +30,7 @@ class SpbgasuSpider(scrapy.Spider):
         new_item.add_value('conf_s_desc', conf_s_desc)
         new_item = get_dates(conf_s_desc, new_item, is_vague=True)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('main')
-        lines = conf_block.find_all(['p', 'ul', 'h2', 'section'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//main/*[@class='app-section _small-gutter']"):
+            new_item = default_parser_xpath(line, new_item)
         new_item.replace_value('contacts', response.meta.get('contacts'))
         yield new_item.load_item()

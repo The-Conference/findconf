@@ -1,9 +1,8 @@
 import scrapy
-from bs4 import BeautifulSoup
 import html
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class SfuKrasSpider(scrapy.Spider):
@@ -25,17 +24,18 @@ class SfuKrasSpider(scrapy.Spider):
         new_item.add_xpath('conf_name', "string(//h2)")
         new_item.add_xpath('conf_s_desc', "string(//h4)")
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='confs-container')
-        lines = conf_block.find_all('div', class_='row')
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
-            if 'сайт' in line.text.lower():
-                new_item.add_value('conf_href', line.find('a').get('href'))
-            if 'mail' in line.text.lower():
-                encoded = str(line.find('script').text)
+        for line in response.xpath("//div[@class='confs-container']//*[self::div[@class='row']]"):
+            new_item = default_parser_xpath(line, new_item)
+            lower = line.xpath("string(.)").get().lower()
+            if 'сайт' in lower:
+                href = line.xpath(".//a/@href").get()
+                new_item.add_value('conf_href', href)
+            if 'mail' in lower:
+                encoded = line.xpath(".//script/text()").get()
                 if decoded := self.decode_email(encoded):
                     new_item.add_value('contacts', decoded)
+        if href := new_item.get_output_value('reg_href'):
+            new_item.replace_value('reg_href', response.urljoin(href))
         yield new_item.load_item()
 
     @staticmethod
