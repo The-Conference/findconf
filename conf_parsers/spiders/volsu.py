@@ -1,8 +1,7 @@
 import scrapy
-from bs4 import BeautifulSoup
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class VolsuSpider(scrapy.Spider):
@@ -38,9 +37,6 @@ class VolsuSpider(scrapy.Spider):
         conf_s_desc = response.xpath("string(//div[@class='news-detail']/p)").get()
         new_item.add_value('conf_s_desc', conf_s_desc)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='main__content')
-        lines = conf_block.find('div', class_='news-detail').find_all(['div', 'p', 'ul'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='news-detail']//*[self::p or self::div or self::ul]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

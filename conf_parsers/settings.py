@@ -8,13 +8,13 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import os
 from datetime import date
-from logging.handlers import RotatingFileHandler
-
-from scrapy import logformatter
-import logging
 from distutils.util import strtobool
 
+import logging
+from logging.handlers import RotatingFileHandler
+from scrapy import logformatter
 from scrapy.utils.log import configure_logging
+
 
 BOT_NAME = "conf_parsers"
 SPIDER_MODULES = ["conf_parsers.spiders"]
@@ -44,7 +44,7 @@ ROBOTSTXT_OBEY = False
 COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED = False
+TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
@@ -146,15 +146,6 @@ DB_PORT: str = os.getenv("DB_PORT", "5432")
 DB_NAME: str = os.getenv("DB_NAME", "mydatabase")
 
 if DEBUG:
-    # FEEDS = {
-    #     'conf_parsers/data/%(name)s/%(name)s_%(time)s.json': {
-    #         'format': 'json',
-    #         'overwrite': True,
-    #         'indent': 4,
-    #         'store_empty': False,
-    #         'encoding': 'utf8',
-    #     }
-    # }
     DATABASE_URL = "sqlite:///my_db.sqlite3"
 else:
     DATABASE_URL = f"postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
@@ -162,9 +153,9 @@ else:
 PLAYWRIGHT_BROWSER_TYPE = "webkit"
 PLAYWRIGHT_LAUNCH_OPTIONS = {
     "headless": True,
-    "timeout": 600 * 1000,
+    "timeout": 0,
 }
-PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 60 * 1000
+PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 0
 
 # Max page for pagination traversal
 DEPTH_LIMIT = 3

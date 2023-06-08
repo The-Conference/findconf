@@ -1,9 +1,8 @@
 from scrapy.spiders import Rule, CrawlSpider
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 
 
 class TusurSpider(CrawlSpider):
@@ -25,9 +24,6 @@ class TusurSpider(CrawlSpider):
         conf_s_desc = response.xpath("string(//div[@class='annotation-text'])").get()
         new_item.add_value('conf_s_desc', conf_s_desc)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='content index')
-        lines = conf_block.find('div', class_='news-item').find_all(['p', 'li'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='news-item']//*[self::p or self::ul or self::ol]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

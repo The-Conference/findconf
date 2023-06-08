@@ -27,7 +27,6 @@ class SzgmuSpider(CrawlSpider):
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
                 new_item.add_value('conf_card_href', response.url)
                 new_item.add_value('conf_name', conf_name)
-                new_item.add_value('conf_s_desc', conf_name)
                 new_item.add_value('conf_desc', conf_name)
                 dates_select = conf.xpath("string(//div[@class='meta-panel'])").get()
                 new_item = get_dates(dates_select, new_item)

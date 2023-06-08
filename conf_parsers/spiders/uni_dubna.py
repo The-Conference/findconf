@@ -1,8 +1,7 @@
 import scrapy
-from bs4 import BeautifulSoup
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 from ..utils import find_date_in_string
 
 
@@ -24,14 +23,10 @@ class UniDubnaSpider(scrapy.Spider):
 
         new_item.add_value('conf_card_href', response.url)
         new_item.add_css('conf_name', "h1.title_one::text")
-        conf_s_desc = response.xpath("string(//h5[@class='description info1'])").get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
+        new_item.add_xpath('conf_s_desc', "string(//h5[@class='description info1'])")
         dates_select = response.xpath("string(//h4[@class='hero-text-small'])").get()
         new_item = get_dates(dates_select, new_item)
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='main main-raised').find('div', class_='container')
-        lines = conf_block.find_all(['h2', 'h3', 'h5', 'p'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='container']//*[self::p or self::h3 or self::h5]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

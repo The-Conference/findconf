@@ -5,48 +5,11 @@ More accurate, site-specific rules can be added to spiders on top of these funct
 """
 
 import re
-from bs4 import Tag
 from scrapy import Selector
 from scrapy.loader import ItemLoader
 from w3lib.html import remove_tags, remove_tags_with_content
 
 from .utils import find_date_in_string, parse_vague_dates
-
-
-def default_parser_bs(line: Tag, new_item: ItemLoader) -> ItemLoader:
-    """Deprecation warning: this function will be replaced with xpath selectors below."""
-    lowercase = line.text.casefold()
-
-    if ('заявк' in lowercase
-            or 'принимаютс' in lowercase
-            or 'участия' in lowercase
-            or 'регистр' in lowercase):
-        if dates := find_date_in_string(lowercase):
-            if ('до' in lowercase or 'оконч' in lowercase or 'срок' in lowercase) and len(dates) == 1:
-                new_item.add_value('reg_date_end', dates[0])
-            else:
-                new_item.add_value('reg_date_begin', dates[0])
-                new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
-        try:
-            new_item.add_value(
-                'reg_href', line.find('a').get('href')
-                if line.find('a') and (
-                        'http:' in line.find('a').get('href') or 'https:' in line.find('a').get('href')) and (
-                           '.pdf' not in line.find('a').get('href') or
-                           '.doc' not in line.find('a').get('href') or
-                           '.xls' not in line.find('a').get('href')) else None)
-        except TypeError:
-            pass
-
-    if ('онлайн' in lowercase
-            or 'трансляц' in lowercase
-            or 'гибридн' in lowercase
-            or 'дистанц' in lowercase
-            or 'ссылка' in lowercase):
-        new_item.add_value('conf_href', line.find('a').get('href') if line.find('a') else None)
-        new_item.add_value('online', True)
-
-    return parse_plain_text(line.get_text(separator=' '), new_item, lowercase)
 
 
 def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader:
@@ -64,6 +27,7 @@ def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader
     clean_line = remove_tags(remove_tags_with_content(line, ('script',)))
     lowercase = clean_line.casefold()
 
+    link = selector.xpath(".//a/@href").get()
     if ('заявк' in lowercase
             or 'принимаютс' in lowercase
             or 'участия' in lowercase
@@ -75,16 +39,16 @@ def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader
                 new_item.add_value('reg_date_begin', dates[0])
                 new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
-        link = selector.xpath(".//a/@href").get()
         if link and ('.pdf' not in link or '.doc' not in link or '.xls' not in link):
             new_item.add_value('reg_href', link)
 
     if ('онлайн' in lowercase
             or 'трансляц' in lowercase
+            or 'подключит' in lowercase
             or 'гибридн' in lowercase
             or 'дистанц' in lowercase
             or 'ссылка' in lowercase):
-        new_item.add_value('conf_href', selector.xpath(".//a/@href").get())
+        new_item.add_value('conf_href', link)
         new_item.add_value('online', True)
 
     return parse_plain_text(clean_line, new_item, lowercase)

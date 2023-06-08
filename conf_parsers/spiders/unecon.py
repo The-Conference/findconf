@@ -1,10 +1,9 @@
 from urllib.parse import urlencode
 import scrapy
-from bs4 import BeautifulSoup
 from scrapy.exceptions import CloseSpider
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs
+from ..parsing import default_parser_xpath
 from ..utils import find_date_in_string
 
 
@@ -51,9 +50,6 @@ class UneconSpider(scrapy.Spider):
         new_item.add_value('conf_date_begin', conf_date_begin[0])
         new_item.add_value('conf_date_end', conf_date_end[0])
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='col-xl-8 offset-xl-2')
-        lines = conf_block.find('div', class_='post_content').find_all(['p'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='post_content']//*[self::p]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

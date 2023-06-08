@@ -1,13 +1,12 @@
 [tool.poetry]
 name = "conf-parsers"
-version = "0.1.0"
-description = ""
+version = "1.0.0"
+description = "The Conf parsing service"
 authors = ["Nyaaa <1457047+Nyaaa@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-beautifulsoup4 = "^4.12.2"
 scrapy = "^2.9.0"
 sqlalchemy = "^2.0.15"
 dateparser = "^1.1.8"

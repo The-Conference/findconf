@@ -2,11 +2,10 @@ import re
 import scrapy
 from scrapy.exceptions import CloseSpider
 from scrapy.spiders import Rule, CrawlSpider
-from bs4 import BeautifulSoup
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_bs, get_dates
+from ..parsing import default_parser_xpath, get_dates
 
 
 class UnitechMo:
@@ -33,11 +32,8 @@ class UnitechMoSpider(CrawlSpider, UnitechMo):
         new_item.add_css('conf_name', "h1::text")
         new_item.add_css('conf_s_desc', "div.col-md-12::text")
 
-        soup = BeautifulSoup(response.text, 'lxml')
-        conf_block = soup.find('div', class_='content-wrap').find('div', class_='col-md-12')
-        lines = conf_block.find_all(['p'])
-        for line in lines:
-            new_item = default_parser_bs(line, new_item)
+        for line in response.xpath("//div[@class='container']//div[@class='col-md-12']//*[self::p]"):
+            new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()
 
 
@@ -67,7 +63,6 @@ class UnitechMoSpider2(scrapy.Spider, UnitechMo):
                 new_item.add_value('conf_address', re.split(r'(\d+)', date)[0])
                 new_item.add_value('conf_name', title)
                 new_item.add_value('conf_desc', title)
-                new_item.add_value('conf_s_desc', title)
                 new_item.add_value('conf_card_href', response.url)
 
                 yield new_item.load_item()
@@ -86,7 +81,6 @@ class UnitechMoSpider3(scrapy.Spider, UnitechMo):
 
                 new_item.add_value('conf_card_href', response.url)
                 new_item.add_value('conf_name', title)
-                new_item.add_value('conf_s_desc', title)
                 date = line.xpath('./following-sibling::p')[0].get()
                 desc = line.xpath('./following-sibling::p//text()')[1].get()
                 new_item.add_value('conf_desc', desc)

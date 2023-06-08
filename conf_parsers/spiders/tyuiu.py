@@ -27,7 +27,6 @@ class TyuiuSpider(scrapy.Spider):
                 new_item = get_dates(date, new_item, is_vague=True)
                 new_item.add_value('conf_name', title)
                 new_item.add_value('conf_desc', title)
-                new_item.add_value('conf_s_desc', title)
                 new_item.add_value('conf_address', conf_address)
                 new_item.add_value('contacts', contacts)
                 new_item.add_value('conf_card_href', response.url)
