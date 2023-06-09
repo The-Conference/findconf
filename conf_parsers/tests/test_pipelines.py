@@ -10,12 +10,13 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from conf_parsers.items import ConferenceItem
-from conf_parsers.pipelines import DropOldItemsPipeline, SaveToDBPipeline
+from conf_parsers.pipelines import DropOldItemsPipeline, SaveToDBPipeline, FillTheBlanksPipeline
 from conf_parsers.models import Base, ConferenceItemDB
 
 
 class SampleSpider(scrapy.Spider):
     name = 'test_spider'
+    un_name = 'Test Spider 2000'
     settings = get_project_settings()
     settings['DATABASE_URL'] = "sqlite:///file:test_db?cache=shared&mode=memory&uri=true"
 
@@ -115,3 +116,15 @@ class TestSaveToDBPipeline(TestCase):
     def test_setup(self):
         pipeline_class = SaveToDBPipeline.from_crawler(self.spider)
         self.assertEqual(SampleSpider.settings.get('DATABASE_URL'), str(pipeline_class.engine.url))
+
+
+class TestFillTheBlanksPipeline(TestCase):
+    def test_all_ok(self):
+        item = ConferenceItem(
+            conf_date_begin=date(2022, 1, 2),
+            conf_name='test conf',
+        )
+        result = FillTheBlanksPipeline.process_item(item, SampleSpider)
+        self.assertEqual('test_spider_2022-01-02_None_testconf', result['conf_id'])
+        self.assertEqual(date(2022, 1, 2), result['conf_date_begin'])
+        self.assertEqual('f4cdb5994b1ee684cd4bce261d5aaf69', result['hash'])

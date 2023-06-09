@@ -60,6 +60,7 @@ class SaveToDBPipeline:
 
 
 class FillTheBlanksPipeline:
+    """Fill out fields that are derived from other fields."""
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
@@ -77,6 +78,9 @@ class FillTheBlanksPipeline:
 
 
 class DropOldItemsPipeline:
+    """Check parsed item against FILTER_DATE parameter;
+    attempt to fill the date if none is parsed;
+    drop item if check fails."""
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
