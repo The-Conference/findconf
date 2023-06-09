@@ -6,5 +6,6 @@
 **/terraform.tfvars
 **/.idea/
 **/.metadata/
-**/*.log
+**/*.log*
 /conf_parsers/data/
+*.sqlite3

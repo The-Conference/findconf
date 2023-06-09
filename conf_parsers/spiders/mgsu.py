@@ -5,7 +5,7 @@ from ..parsing import default_parser_xpath
 
 class MgsuSpider(scrapy.Spider):
     name = "mgsu"
-    un_name = 'Московский городской педагогический университет'
+    un_name = 'Московский государственный строительный университет'
     allowed_domains = ["mgsu.ru"]
     start_urls = ["https://mgsu.ru/news/announce/rss"]
     custom_settings = {

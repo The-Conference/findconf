@@ -5,7 +5,7 @@ from ..parsing import get_dates
 
 class MgouSpider(scrapy.Spider):
     name = "mgou"
-    un_name = 'Московский государственный областной педагогический университет'
+    un_name = 'Государственный университет просвещения'
     allowed_domains = ["mgou.ru"]
     start_urls = ["https://mgou.ru/ru/rubric/science/organizatsiya-nauchno-issledovatelskoj-deyatelnosti-mgou-2"]
 
