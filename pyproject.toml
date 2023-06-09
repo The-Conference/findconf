@@ -17,6 +17,17 @@ scrapy-playwright = "^0.0.26"
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.14.0"
 
+
+[tool.poetry.group.tests.dependencies]
+coverage = "^7.2.7"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+branch = true
+omit = ['settings.py']
+
+[tool.coverage.report]
+skip_covered = true

@@ -84,7 +84,7 @@ class DropOldItemsPipeline:
             # look for dates in the short description
             if dates := find_date_in_string(adapter.get('conf_s_desc')):
                 adapter['conf_date_begin'] = dates[0]
-                adapter['conf_date_end'] = dates[1] if len(dates) > 1 else dates[0]
+                adapter['conf_date_end'] = dates[1] if len(dates) > 1 else None
 
         if not adapter.get('conf_date_begin'):
             spider.logger.warning(f"Date not found {adapter.get('conf_card_href')}")

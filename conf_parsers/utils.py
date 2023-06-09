@@ -45,7 +45,7 @@ def parse_vague_dates(string: str) -> list[datetime.date]:
         r'|\d{4}?'
     )
     matches = re.findall(pattern, string)
-    month1 = month2 = year = ''
+    month2 = year = ''
     last = matches.pop()
     try:
         year = int(last)
@@ -56,7 +56,7 @@ def parse_vague_dates(string: str) -> list[datetime.date]:
         month1, month2 = matches
     elif len(matches) == 1:
         month1 = matches
-    elif not matches:
+    else:
         month1 = month2
 
     formatted = (f'01 {month1} {year}', f'{month2 or month1} {year}')

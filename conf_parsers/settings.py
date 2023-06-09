@@ -7,6 +7,7 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import os
+from pathlib import Path
 from datetime import date
 from distutils.util import strtobool
 
@@ -20,6 +21,7 @@ BOT_NAME = "conf_parsers"
 SPIDER_MODULES = ["conf_parsers.spiders"]
 NEWSPIDER_MODULE = "conf_parsers.spiders"
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
 DEBUG = strtobool(os.getenv("DEBUG", 'True'))
 LOG_LEVEL = 'INFO'
 
@@ -124,9 +126,9 @@ class PoliteLogFormatter(logformatter.LogFormatter):
 
 
 LOG_FORMATTER = 'conf_parsers.settings.PoliteLogFormatter'
-os.makedirs('logs', exist_ok=True)
+os.makedirs(ROOT_DIR.joinpath('logs'), exist_ok=True)
 rotating_log_handler = RotatingFileHandler(
-    filename='./logs/scrapy.log',
+    filename=ROOT_DIR.joinpath('logs', 'scrapy.log'),
     encoding="utf-8",
     maxBytes=2 * 1000000,
     backupCount=5,
