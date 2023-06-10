@@ -37,7 +37,6 @@ const Filters = () => {
   const handleAddParams = (q, value) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const currentValue = currentParams[q];
-
     let newParams;
     if (currentValue) {
       if (currentValue.includes(value)) {
@@ -75,7 +74,9 @@ const Filters = () => {
       setData(matches);
     }
   };
-
+  useEffect(() => {
+    dispatch(filteredContent());
+  }, [dispatch, searchParams]);
   return (
     <>
       <div className="filter">
@@ -190,7 +191,7 @@ const Filters = () => {
                         for={"color" + n}
                         onClick={() => {
                           // dispatch(handleColor(cardId));
-                          // dispatch(saveFilter(item.name));
+                          // dispatch(filteredContent());
                         }}
                       >
                         {cardId === 4 || cardId === 5 || cardId === 6

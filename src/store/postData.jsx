@@ -3,6 +3,7 @@ import { api } from "../api";
 
 const initialState = {
   conferences: [],
+  query: "",
   filters: {
     form: "",
     status: "",
@@ -49,6 +50,7 @@ export const postData = createSlice({
         JSON.stringify(action.payload)
       );
     },
+
     // saveFilter: (state, action) => {
     //   if (action.payload === "онлайн") {
     //     state.filters.filter.online = !state.filters.filter.online;
@@ -89,7 +91,6 @@ export const postData = createSlice({
     },
 
     handleFilter: (state, action) => {
-      state.filters = { ...state.filters, ...action.payload };
       state.conferences = [];
 
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
@@ -119,6 +120,7 @@ export const {
   hasError,
   paginate,
   addMore,
+  parseUrl,
 } = postData.actions;
 
 export const fetchAllConferences = () => async (dispatch) => {
@@ -149,9 +151,9 @@ export const fetchFilteredConferences = () => async (dispatch) => {
 export const filteredContent = () => async (dispatch) => {
   dispatch(startLoading());
   dispatch(paginate(1));
+
   const currentUrl = window.location.href;
-  console.log(currentUrl);
-  let query = "?offline=True";
+  let query = "?" + currentUrl.split("?")[1];
   try {
     await api.get(`/api/${query}`).then((response) => {
       dispatch(handleFilter(response.data));
@@ -161,9 +163,4 @@ export const filteredContent = () => async (dispatch) => {
     dispatch(hasError(e.message));
   }
 };
-
 export const card = (state) => state;
-
-// const url = 'https://www.wildberries.ru/catalog/zhenshchinam/odezhda/platya?sort=popular&page=1&xsubject=69%3B70&fdlvr=48&fsize=56091';
-// const query = url.split('?')[1];
-// console.log(query); //
