@@ -7,7 +7,6 @@
 from itemadapter import ItemAdapter
 
 import hashlib
-import datetime
 
 from scrapy.exceptions import DropItem
 from sqlalchemy import create_engine
@@ -70,8 +69,6 @@ class FillTheBlanksPipeline:
                              f"_{''.join(adapter.get('conf_name').split())[:50]}"
         adapter['un_name'] = spider.un_name
         adapter['hash'] = hashlib.md5(bytes(adapter['conf_id'], 'utf-8')).hexdigest()
-        adapter['data'] = {key: val.strftime("%m/%d/%Y") if isinstance(val, datetime.date) else val
-                           for key, val in item.items()}
         text = f"{adapter.get('conf_name')} {adapter.get('conf_s_desc')}"
         adapter['local'] = False if 'международн' in text.lower() else True
         return item

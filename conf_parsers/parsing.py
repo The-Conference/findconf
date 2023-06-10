@@ -92,9 +92,6 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
     if emails := re.search(r'\S+@\S+\.\S+', lowercase):
         new_item.add_value('contacts', emails.group(0))
 
-    if 'организатор' in lowercase:
-        new_item.add_value('org_name', line)
-
     if ('место' in lowercase
             or 'адрес' in lowercase
             or 'город' in lowercase

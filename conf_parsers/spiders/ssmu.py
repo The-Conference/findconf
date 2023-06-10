@@ -35,7 +35,6 @@ class SsmuSpider(scrapy.Spider):
                 new_item.add_value('conf_address', conf_address)
                 new_item.add_value('contacts', contacts)
                 new_item.add_value('conf_card_href', response.url)
-                new_item.add_value('org_name', row.xpath("./td[last()]/p[2]/text()").get())
 
                 if 'онлайн' in conf_address or 'гибридн' in conf_address:
                     new_item.add_value('online', True)

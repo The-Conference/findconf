@@ -31,7 +31,7 @@ class ConferenceItemDB(Base):
     conf_address = Column(String, nullable=True, default=null())
     contacts = Column(String, nullable=True, default=null())
     rinc = Column(Boolean, default=False)
-    data = Column(JSON, nullable=True)
+    data = Column(JSON, nullable=True, default=null())
     checked = Column(Boolean, default=False)
     generate_conf_id = Column(Boolean, default=False)
     vak = Column(Boolean, default=False)
