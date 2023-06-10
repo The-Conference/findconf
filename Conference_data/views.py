@@ -24,7 +24,7 @@ class ConferenceList(generics.ListCreateAPIView):
         scopus = self.request.query_params.getlist('scopus')
         tags = self.request.query_params.getlist('tags')
         conf_status = self.request.query_params.get('conf_status')
-        org_name = self.request.query_params.get('org_name')
+        un_name = self.request.query_params.get('un_name')
 
         boolean_mapping = {'true': True, 'false': False}
         conf_status_mapping = {
@@ -63,8 +63,8 @@ class ConferenceList(generics.ListCreateAPIView):
         if tags:
             queryset = queryset.filter(tags__name__in=tags)
 
-        if org_name:
-            queryset = queryset.filter(org_name__icontains=org_name)
+        if un_name:
+            queryset = queryset.filter(un_name__icontains=un_name)
 
         if conf_status:
             mapped_conf_status = conf_status_mapping.get(conf_status)
