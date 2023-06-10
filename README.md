@@ -8,8 +8,9 @@ Run single spider: `scrapy crawl %spider_name%`\
 Run all spiders: `python run.py`
 
 ## Development:
-Tests: `coverage run -m unittest discover`\
-Export requirements from Poetry: `poetry export -f requirements.txt --output requirements.txt --without dev`
+Tests: `python -m unittest discover`\
+Coverage: `coverage run -m unittest discover && coverage report`\
+Export requirements from Poetry: `poetry export -f requirements.txt --output requirements.txt --only main `
 
 ### Data flow:
     1. Sipder (scraping) -> items.ConferenceLoader

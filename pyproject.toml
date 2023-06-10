@@ -27,6 +27,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.coverage.run]
 branch = true
+include = ['conf_parsers/*']
 omit = ['settings.py']
 
 [tool.coverage.report]
