@@ -80,7 +80,7 @@ def parser1():
         '1spbgmu', 'https://www.1spbgmu.ru/nauka/konferentsii',
         datetime.strptime('2023.01.01', '%Y.%m.%d')
     ))
-    # parser2.apply_async()
+    parser2.apply_async()
 
 
 @shared_task
