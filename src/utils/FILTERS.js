@@ -1,6 +1,6 @@
 const FILTERS = [
   {
-    name: "Организатор",
+    name: "ВУЗ",
     id: 1,
     applied: false,
     data: [

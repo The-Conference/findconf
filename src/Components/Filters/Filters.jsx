@@ -26,7 +26,7 @@ import {
 import "reactjs-popup/dist/index.css";
 import Fuse from "fuse.js";
 import { SearchBar } from "./SearchBar";
-
+import cross from "../../assets/close.svg";
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectedFilter);
@@ -113,7 +113,7 @@ const Filters = () => {
                     <svg
                       width="10"
                       height="6"
-                      viewBox={item.applied !== true ? "0 0 10 6" : "0 0 10 2"}
+                      viewBox={item.applied !== true ? "0 0 10 6" : "0 0 10 5"}
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -146,7 +146,7 @@ const Filters = () => {
                     close();
                   }}
                 >
-                  X
+                  <img src={cross} alt="close" />
                 </StyledPopupClose>
                 <StyledScroll>
                   {dataFiltered.map((item, n) => (
