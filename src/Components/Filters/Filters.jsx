@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./filters.scss";
 import {
-  selectedFilter,
-  handleColor,
-  handleDeleteColor,
-} from "../../store/filterSlice";
-import {
   saveFilter,
-  deleteAllFilters,
   fetchFilteredConferences,
   filteredContent,
 } from "../../store/postData";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import white from "../../assets/whitecross.svg";
 import grey from "../../assets/greycross.svg";
 import {
@@ -26,13 +20,46 @@ import {
 import "reactjs-popup/dist/index.css";
 import Fuse from "fuse.js";
 import { SearchBar } from "./SearchBar";
-import cross from "../../assets/close.svg";
+import { FILTERS } from "../../utils/FILTERS";
+import { useSearchParams } from "react-router-dom";
+
 const Filters = () => {
   const dispatch = useDispatch();
-  const data = useSelector(selectedFilter);
+  const data = FILTERS;
   const [dataFiltered, setData] = useState(data);
   const [dataInitial, setDataInitial] = useState(data);
   const [menu, setMenu] = useState(false);
+  const [cardId, setCardId] = useState(0);
+
+  const [key, setKey] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleAddParams = (q, value) => {
+    const currentParams = Object.fromEntries(searchParams.entries());
+    const currentValue = currentParams[q];
+
+    let newParams;
+    if (currentValue) {
+      if (currentValue.includes(value)) {
+        const newValue = currentValue
+          .split(" ")
+          .filter((el) => el !== value)
+          .join(" ");
+        if (newValue === "") {
+          delete currentParams[q];
+          newParams = currentParams;
+        } else {
+          newParams = { ...currentParams, [q]: newValue };
+        }
+      } else {
+        newParams = { ...currentParams, [q]: `${currentValue} ${value}` };
+      }
+    } else {
+      newParams = { ...currentParams, [q]: value };
+    }
+
+    setSearchParams(new URLSearchParams(newParams));
+  };
 
   const searchData = (pattern) => {
     const fuse = new Fuse(dataFiltered);
@@ -60,9 +87,9 @@ const Filters = () => {
                 : "nonapplied-hover filter__delete-button "
             }
             onClick={() => {
-              dispatch(handleDeleteColor());
-              dispatch(deleteAllFilters());
-              dispatch(filteredContent());
+              // dispatch(handleDeleteColor());
+              // dispatch(deleteAllFilters());
+              // dispatch(filteredContent());
             }}
           >
             {(data.some((el) => el.applied === true) && (
@@ -81,9 +108,8 @@ const Filters = () => {
                   onClick={() => {
                     setData(item.data);
                     setDataInitial(item.data);
-                    dispatch(handleColor(item.id));
-                    dispatch(saveFilter(item.name));
-                    dispatch(fetchFilteredConferences());
+                    setCardId(item.id);
+                    setKey(item.key);
                   }}
                   className={
                     item.applied === true
@@ -131,7 +157,7 @@ const Filters = () => {
             {(close) => (
               <div>
                 <StyledPopupTitle>{item.name}</StyledPopupTitle>
-                {(item.name === "Организатор" || item.name === "Тематика") && (
+                {(item.name === "ВУЗ" || item.name === "Тематика") && (
                   <SearchBar
                     placeholder="Search"
                     onChange={(e) => searchData(e.target.value)}
@@ -140,13 +166,12 @@ const Filters = () => {
                 <StyledPopupClose
                   className="close"
                   onClick={() => {
-                    dispatch(handleDeleteColor());
-                    dispatch(deleteAllFilters());
-                    dispatch(fetchFilteredConferences());
+                    // dispatch(deleteAllFilters());
+                    // dispatch(fetchFilteredConferences());
                     close();
                   }}
                 >
-                  <img src={cross} alt="close" />
+                  <img src={grey} alt="close" />
                 </StyledPopupClose>
                 <StyledScroll>
                   {dataFiltered.map((item, n) => (
@@ -155,9 +180,22 @@ const Filters = () => {
                         className="custom-checkbox"
                         id={"color" + n}
                         type="checkbox"
+                        onChange={() => {
+                          cardId === 4 || cardId === 5 || cardId === 6
+                            ? handleAddParams(item.key, "true")
+                            : handleAddParams(key, item);
+                        }}
                       />
-                      <StyledPopupText for={"color" + n}>
-                        {item}
+                      <StyledPopupText
+                        for={"color" + n}
+                        onClick={() => {
+                          // dispatch(handleColor(cardId));
+                          // dispatch(saveFilter(item.name));
+                        }}
+                      >
+                        {cardId === 4 || cardId === 5 || cardId === 6
+                          ? item.name
+                          : item}
                       </StyledPopupText>
                     </StyledPopupDiv>
                   ))}
@@ -178,8 +216,8 @@ const Filters = () => {
             }}
             className="filter-adaptive__delete-button"
             onClick={() => {
-              dispatch(handleDeleteColor());
-              dispatch(deleteAllFilters());
+              // dispatch(handleDeleteColor());
+              // dispatch(deleteAllFilters());
               dispatch(fetchFilteredConferences());
               setMenu(false);
             }}
@@ -209,7 +247,7 @@ const Filters = () => {
                     item.applied === true ? "applied-hover" : "nonapplied-hover"
                   }
                   onClick={() => {
-                    dispatch(handleColor(item.id));
+                    // dispatch(handleColor(item.id));
                     dispatch(saveFilter(item.name));
                     dispatch(fetchFilteredConferences());
                     setMenu(!menu);

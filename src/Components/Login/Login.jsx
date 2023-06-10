@@ -25,7 +25,7 @@ const Login = () => {
       if (!isAuthenticated) {
         setMessage("Неверный пароль или логин");
       }
-    }, 2000);
+    }, 1000);
   };
   useEffect(() => {
     if (isAuthenticated) {

@@ -2,17 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
 
 const initialState = {
-  filters: {
-    searchValue: "",
-    filter: {
-      online: false,
-      offline: false,
-      rinc: false,
-      register: false,
-      nearest: false,
-    },
-  },
   conferences: [],
+  filters: {
+    form: "",
+    status: "",
+    publish: "",
+    city: "",
+    themes: "",
+    schools: "",
+    sort: "",
+  },
   isLoading: false,
   error: false,
   currentPage: 1,
@@ -50,32 +49,32 @@ export const postData = createSlice({
         JSON.stringify(action.payload)
       );
     },
-    saveFilter: (state, action) => {
-      if (action.payload === "онлайн") {
-        state.filters.filter.online = !state.filters.filter.online;
-      }
-      if (action.payload === "оффлайн") {
-        state.filters.filter.offline = !state.filters.filter.offline;
-      }
-      if (action.payload === "ринц") {
-        state.filters.filter.rinc = !state.filters.filter.rinc;
-      }
-      if (action.payload === "регистрация началась") {
-        state.filters.filter.register = !state.filters.filter.register;
-      }
-      if (action.payload === "ближайшие") {
-        state.filters.filter.nearest = !state.filters.filter.nearest;
-      }
-    },
-    deleteAllFilters: (state, action) => {
-      state.filters.filter = {
-        online: false,
-        offline: false,
-        rinc: false,
-        register: false,
-        nearest: false,
-      };
-    },
+    // saveFilter: (state, action) => {
+    //   if (action.payload === "онлайн") {
+    //     state.filters.filter.online = !state.filters.filter.online;
+    //   }
+    //   if (action.payload === "оффлайн") {
+    //     state.filters.filter.offline = !state.filters.filter.offline;
+    //   }
+    //   if (action.payload === "ринц") {
+    //     state.filters.filter.rinc = !state.filters.filter.rinc;
+    //   }
+    //   if (action.payload === "регистрация началась") {
+    //     state.filters.filter.register = !state.filters.filter.register;
+    //   }
+    //   if (action.payload === "ближайшие") {
+    //     state.filters.filter.nearest = !state.filters.filter.nearest;
+    //   }
+    // },
+    // deleteAllFilters: (state, action) => {
+    //   state.filters.filter = {
+    //     online: false,
+    //     offline: false,
+    //     rinc: false,
+    //     register: false,
+    //     nearest: false,
+    //   };
+    // },
     fetchConferences: (state, action) => {
       state.conferences = [];
 
@@ -90,6 +89,7 @@ export const postData = createSlice({
     },
 
     handleFilter: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
       state.conferences = [];
 
       let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
@@ -99,8 +99,9 @@ export const postData = createSlice({
         item.follow =
           followed.includes(item.id) && followed.length > 0 ? true : false;
       }
-      // dynamicFilter(state, data);
       state.conferences = data;
+      // dynamicFilter(state, data);
+
       state.isLoading = false;
     },
   },
@@ -148,9 +149,11 @@ export const fetchFilteredConferences = () => async (dispatch) => {
 export const filteredContent = () => async (dispatch) => {
   dispatch(startLoading());
   dispatch(paginate(1));
-  let online = "?offline=True";
+  const currentUrl = window.location.href;
+  console.log(currentUrl);
+  let query = "?offline=True";
   try {
-    await api.get(`/api/${online}`).then((response) => {
+    await api.get(`/api/${query}`).then((response) => {
       dispatch(handleFilter(response.data));
       console.log(response.data);
     });
@@ -160,3 +163,7 @@ export const filteredContent = () => async (dispatch) => {
 };
 
 export const card = (state) => state;
+
+// const url = 'https://www.wildberries.ru/catalog/zhenshchinam/odezhda/platya?sort=popular&page=1&xsubject=69%3B70&fdlvr=48&fsize=56091';
+// const query = url.split('?')[1];
+// console.log(query); //
