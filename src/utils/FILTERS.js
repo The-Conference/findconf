@@ -3,7 +3,6 @@ const FILTERS = [
     name: "ВУЗ",
     id: 1,
     applied: false,
-    key: "un_name",
     data: [
       "Рабочий и крестьянка",
       "Живущий в облаках",
@@ -13,13 +12,12 @@ const FILTERS = [
       "Ярославкий институт",
       "Минский институт",
       "Ростовский институт",
-    ],
+    ].map((item) => ({ name: item, key: "un_name", checked: false })),
   },
   {
     name: "Тематика",
     id: 2,
     applied: false,
-    key: "tags",
     data: [
       "Автоматика",
       "Промышленность",
@@ -29,7 +27,7 @@ const FILTERS = [
       "Экономика",
       "Развлечения",
       "Машиностроение",
-    ],
+    ].map((item) => ({ name: item, key: "tags", checked: false })),
   },
   // {
   //   name: "Город",
@@ -44,10 +42,10 @@ const FILTERS = [
     id: 4,
     applied: false,
     data: [
-      { name: "РИНЦ", key: "rinc" },
-      { name: "ВАК", key: "vak" },
-      { name: "Scopus", key: "scopus" },
-      { name: "WOS", key: "wos" },
+      { name: "РИНЦ", key: "rinc", checked: false },
+      { name: "ВАК", key: "vak", checked: false },
+      { name: "Scopus", key: "scopus", checked: false },
+      { name: "WOS", key: "wos", checked: false },
     ],
   },
   {
@@ -55,10 +53,18 @@ const FILTERS = [
     id: 5,
     applied: false,
     data: [
-      { name: "Конференция идёт", key: "started" },
-      { name: "Конференция скоро начнётся", key: "starting_soon" },
-      { name: "Конференция окончена", key: "finished" },
-      { name: "Неизвестно (уточнить у организатора)", key: "unknown" },
+      { name: "Конференция идёт", key: "started", checked: false },
+      {
+        name: "Конференция скоро начнётся",
+        key: "starting_soon",
+        checked: false,
+      },
+      { name: "Конференция окончена", key: "finished", checked: false },
+      {
+        name: "Неизвестно (уточнить у организатора)",
+        key: "unknown",
+        checked: false,
+      },
     ],
   },
 
@@ -67,17 +73,27 @@ const FILTERS = [
     id: 6,
     applied: false,
     data: [
-      { name: "Онлайн", key: "online" },
-      { name: "Офлайн", key: "offline" },
+      { name: "Онлайн", key: "online", checked: false },
+      { name: "Офлайн", key: "offline", checked: false },
     ],
   },
   {
     name: "Сортировка",
     id: 7,
     applied: false,
-    key: "sort",
-    data: ["По дате", "По статусу"],
+    data: ["По дате", "По статусу"].map((item) => ({
+      name: item,
+      key: "sort",
+      checked: false,
+    })),
   },
 ];
-
-export { FILTERS };
+const allKeys = [
+  { id: 1, keys: ["un_name"] },
+  { id: 2, keys: ["tags"] },
+  { id: 5, keys: ["started", "finished", "unknown", "starting_soon"] },
+  { id: 4, keys: ["rinc", "vak", "scopus", "wos"] },
+  { id: 6, keys: ["online", "offline"] },
+  { id: 7, keys: ["sort"] },
+];
+export { FILTERS, allKeys };

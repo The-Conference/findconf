@@ -7,16 +7,22 @@ export const filterSlice = createSlice({
   reducers: {
     handleColor: (state, action) => {
       return state.map((el) =>
-        el.id === action.payload ? { ...el, applied: !el.applied } : el
+        el.id === action.payload ? { ...el, applied: true } : el
       );
     },
-    handleDeleteColor: (state) => {
-      return state.forEach((el) => (el.applied = false));
+    handleDeleteColor: (state, action) => {
+      return state.map((el) =>
+        el.id === action.payload ? { ...el, applied: false } : el
+      );
+    },
+    handleDeleteAllColors: (state) => {
+      state.map((el) => (el.applied = false));
     },
   },
 });
 
-export const { handleColor, handleDeleteColor } = filterSlice.actions;
+export const { handleColor, handleDeleteColor, handleDeleteAllColors } =
+  filterSlice.actions;
 export const filter = (state) => state.filters;
 export const selectedFilter = (state) => state.filters;
 export default filterSlice.reducer;
