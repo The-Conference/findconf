@@ -79,10 +79,8 @@ const Filters = () => {
   }, [dispatch, searchParams]);
   const currentUrl = window.location.href;
   let query = currentUrl.split("?")[1];
-  let regexp = new RegExp("Автоматика", "gi");
-  console.log(regexp);
-  const decodedUrl = decodeURIComponent(query);
-  console.log(!query ? currentUrl : decodedUrl.includes("Автоматика"));
+  const decodedUrl = decodeURIComponent(query).split("+").join(" ");
+
   return (
     <>
       <div className="filter">
@@ -188,12 +186,17 @@ const Filters = () => {
                         id={"color" + n}
                         type="checkbox"
                         checked={
-                          decodedUrl.includes(item) === true
-                            ? true
-                            : cardId === 4 ||
-                              cardId === 5 ||
-                              (cardId === 6 &&
-                                decodedUrl.includes(item.key) === true)
+                          (cardId === 4 &&
+                            decodedUrl.includes(item.key) === true) ||
+                          (cardId === 5 &&
+                            decodedUrl.includes(item.key) === true) ||
+                          (cardId === 6 &&
+                            decodedUrl.includes(item.key) === true) ||
+                          (cardId !== 4 &&
+                            decodedUrl.includes(item) === true) ||
+                          (cardId !== 5 &&
+                            decodedUrl.includes(item) === true) ||
+                          (cardId !== 6 && decodedUrl.includes(item) === true)
                             ? true
                             : false
                         }
