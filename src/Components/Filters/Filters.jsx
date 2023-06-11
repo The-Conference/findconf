@@ -77,6 +77,12 @@ const Filters = () => {
   useEffect(() => {
     dispatch(filteredContent());
   }, [dispatch, searchParams]);
+  const currentUrl = window.location.href;
+  let query = currentUrl.split("?")[1];
+  let regexp = new RegExp("Автоматика", "gi");
+  console.log(regexp);
+  const decodedUrl = decodeURIComponent(query);
+  console.log(!query ? currentUrl : decodedUrl.includes("Автоматика"));
   return (
     <>
       <div className="filter">
@@ -181,6 +187,17 @@ const Filters = () => {
                         className="custom-checkbox"
                         id={"color" + n}
                         type="checkbox"
+                        checked={
+                          decodedUrl.includes(item) === true
+                            ? true
+                            : cardId === 4 ||
+                              cardId === 5 ||
+                              (cardId === 6 &&
+                                decodedUrl.includes(item.key) === true)
+                            ? true
+                            : false
+                        }
+                        // checked={query && item.test(decodedUrl) ? true : false}
                         onChange={() => {
                           cardId === 4 || cardId === 5 || cardId === 6
                             ? handleAddParams(item.key, "true")
