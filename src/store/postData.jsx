@@ -101,8 +101,6 @@ export const postData = createSlice({
           followed.includes(item.id) && followed.length > 0 ? true : false;
       }
       state.conferences = data;
-      // dynamicFilter(state, data);
-
       state.isLoading = false;
     },
   },
@@ -151,7 +149,6 @@ export const fetchFilteredConferences = () => async (dispatch) => {
 export const filteredContent = () => async (dispatch) => {
   dispatch(startLoading());
   dispatch(paginate(1));
-
   const currentUrl = window.location.href;
   let query = "?" + currentUrl.split("?")[1];
   try {

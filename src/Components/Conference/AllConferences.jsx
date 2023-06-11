@@ -169,7 +169,10 @@ const AllConferences = ({ data, keywords, id }) => {
       data !== "prev1" &&
       data !== "prev2" &&
       data !== "prev3" &&
-      data !== "prev4"
+      data !== "prev4" &&
+      data !== "all" &&
+      data !== "collection1" &&
+      data !== "collection2"
     ) {
       dispatch(fetchFilteredConferences());
     }

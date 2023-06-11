@@ -46,6 +46,9 @@ const SignUp = () => {
       if (user.error.email.includes("Enter a valid email address.")) {
         setMessage("Пожалуйста введите правильный адрес почты");
       }
+      if (user.error.email.includes("user with this email already exists.")) {
+        setMessage("Пользователь с таким email уже существует");
+      }
     }
     if (user.error && user.error.password) {
       if (
