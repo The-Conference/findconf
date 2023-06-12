@@ -154,7 +154,7 @@ export const filteredContent = () => async (dispatch) => {
   try {
     await api.get(`/api/${query}`).then((response) => {
       dispatch(handleFilter(response.data));
-      console.log(response.data);
+      // console.log(response.data);
     });
   } catch (e) {
     dispatch(hasError(e.message));

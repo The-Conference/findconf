@@ -31,7 +31,6 @@ import { useSearchParams } from "react-router-dom";
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.filters);
-  console.log(data);
   const [dataFiltered, setData] = useState(data);
   const [dataInitial, setDataInitial] = useState(data);
   const [menu, setMenu] = useState(false);
@@ -41,7 +40,7 @@ const Filters = () => {
   const handleAddParams = (q, value, id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const currentValue = currentParams[q];
-    console.log(currentValue);
+
     let newParams;
     if (currentValue) {
       if (currentValue.includes(value)) {
@@ -64,7 +63,11 @@ const Filters = () => {
   };
 
   const searchData = (pattern) => {
-    const fuse = new Fuse(dataFiltered);
+    const options = {
+      includeScore: true,
+      keys: ["name"],
+    };
+    const fuse = new Fuse(dataFiltered, options);
     const result = fuse.search(pattern);
     const matches = [];
 
@@ -80,11 +83,11 @@ const Filters = () => {
 
   useEffect(() => {
     const currentParams = Object.fromEntries(searchParams.entries());
-    console.log(currentParams);
+
     const all = allKeys.filter((item) =>
       item.keys.find((el) => currentParams.hasOwnProperty(el))
     );
-    console.log(all);
+
     if (all.length > 0) {
       all.forEach((elem) => dispatch(handleColor(elem.id)));
     }
