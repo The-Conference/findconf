@@ -2,19 +2,11 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-import logging
+
 from scrapy import signals
-from scrapy.utils.project import get_project_settings
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
-
-from scrapy.http import HtmlResponse
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
-settings = get_project_settings()
 
 
 class ConfParsersSpiderMiddleware:
@@ -109,49 +101,3 @@ class ConfParsersDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
-
-
-class SeleniumMiddleware:
-    """
-    To route requests through Selenium, add this middleware to Spider's settings:
-
-        "DOWNLOADER_MIDDLEWARES": {
-            'conf_parsers.middlewares.SeleniumMiddleware': 543,
-        },
-
-    No further changes to code required.
-    """
-    @classmethod
-    def from_crawler(cls, crawler):
-        middleware = cls()
-        crawler.signals.connect(middleware.spider_opened, signals.spider_opened)
-        crawler.signals.connect(middleware.spider_closed, signals.spider_closed)
-        return middleware
-
-    def process_request(self, request, spider):
-        logging.debug(f"Selenium processing request - {request.url}")
-        self.driver.get(request.url)
-        return HtmlResponse(
-            request.url,
-            body=self.driver.page_source,
-            encoding='utf-8',
-            request=request,
-        )
-
-    def spider_opened(self, spider):
-        options = webdriver.ChromeOptions()
-        caps = DesiredCapabilities().CHROME
-        caps["pageLoadStrategy"] = "eager"
-        options.add_argument("--headless")
-        options.add_argument("--disable-3d-apis")
-        if settings.get('DEBUG'):
-            self.driver = webdriver.Chrome(options=options,
-                                           desired_capabilities=caps,
-                                           executable_path=ChromeDriverManager().install())
-        else:
-            self.driver = webdriver.Remote(options=options,
-                                           desired_capabilities=caps,
-                                           command_executor="http://selenium:4444/wd/hub")
-
-    def spider_closed(self, spider):
-        self.driver.close()

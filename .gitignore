@@ -10,3 +10,4 @@
 /conf_parsers/data/
 *.sqlite3
 **/.coverage
+**/.env

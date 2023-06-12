@@ -177,6 +177,9 @@ cssselect==1.2.0 ; python_version >= "3.11" and python_version < "4.0" \
 dateparser==1.1.8 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:070b29b5bbf4b1ec2cd51c96ea040dc68a614de703910a91ad1abba18f9f379f \
     --hash=sha256:86b8b7517efcc558f085a142cdb7620f0921543fcabdb538c8a4c4001d8178e3
+django-environ==0.10.0 ; python_version >= "3.11" and python_version < "4" \
+    --hash=sha256:510f8c9c1d0a38b0815f91504270c29440a0cf44fab07f55942fa8d31bbb9be6 \
+    --hash=sha256:b3559a91439c9d774a9e0c1ced872364772c612cdf6dc919506a2b13f7a77225
 filelock==3.12.1 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:42f1e4ff2b497311213d61ad7aac5fed9050608e5309573f101eefa94143134a \
     --hash=sha256:82b1f7da46f0ae42abf1bc78e548667f484ac59d2bcec38c713cee7e2eb51e83

@@ -8,6 +8,7 @@ Run single spider: `scrapy crawl %spider_name%`\
 Run all spiders: `python run.py`
 
 ## Development:
+Enable dev settings: `export SCRAPY_SETTINGS_MODULE=settings_dev`\
 Tests: `python -m unittest discover`\
 Coverage: `coverage run -m unittest discover && coverage report`\
 Export requirements from Poetry: `poetry export -f requirements.txt --output requirements.txt --only main `

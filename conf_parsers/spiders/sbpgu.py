@@ -5,7 +5,7 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class SbpguSpider(CrawlSpider):
-    name = "sbpgu"
+    name = "spbgu"
     un_name = 'Санкт-Петербургский государственный университет'
     allowed_domains = ["spbu.ru"]
     start_urls = ["https://spbu.ru/topics/108"]
