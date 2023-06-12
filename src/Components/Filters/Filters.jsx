@@ -101,7 +101,9 @@ const Filters = () => {
   const deletAllFilters = () => {
     setSearchParams();
   };
-
+  // const deleteOneGroup = (id) => {
+  //   console.log(id);
+  // };
   return (
     <>
       <div className="filter">
@@ -142,8 +144,10 @@ const Filters = () => {
                   }
                   key={item.id}
                 >
-                  {item.applied === true && (
+                  {/* {item.applied === true && (
                     <svg
+                      onClick={() => deleteOneGroup(item.id)}
+                      className="del"
                       width="10"
                       height="10"
                       viewBox="0 0 10 10"
@@ -155,7 +159,7 @@ const Filters = () => {
                         fill="white"
                       />
                     </svg>
-                  )}
+                  )} */}
 
                   <div>{item.name}</div>
 
