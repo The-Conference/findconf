@@ -33,21 +33,35 @@ services:
       - frontend
       - backend
 
-  celery:
-    build: ./django
-    container_name: app_celery
-    entrypoint: /start/parcer.sh
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: app_ofelia
+    restart: always
+    depends_on:
+      - scrapy
+    command: daemon --docker
     volumes:
-      - ./django/app:/app/
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - backend
+
+  scrapy:
+    build: ./scrapy
+    container_name: app_parsers
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.conf_parsers.schedule: "@weekly"
+      ofelia.job-exec.conf_parsers.command: "python run.py"
+    restart: always
     env_file:
       /root/.env
-    restart: always
+    volumes:
+      - ./scrapy:/usr/src/app/
     depends_on:
       - db
       - redis
       - django
     networks:
-      - frontend
       - backend
 
   nginx:
