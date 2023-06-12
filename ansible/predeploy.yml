@@ -31,7 +31,6 @@
         - certbot
         - pg_data
         - pgsql
-        - redis_data
         - django
         - scrapy
       tags:
