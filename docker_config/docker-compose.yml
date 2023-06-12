@@ -59,7 +59,6 @@ services:
       - ./scrapy:/usr/src/app/
     depends_on:
       - db
-      - redis
       - django
     networks:
       - backend
@@ -80,15 +79,6 @@ services:
     restart: always
     networks:
       - frontend
-
-  redis:
-    image: redis:latest
-    container_name: app_redis
-    volumes:
-      - ./redis_data:/data
-    restart: always
-    networks:
-      - backend
 
 networks:
   frontend:
