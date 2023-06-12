@@ -1,0 +1,78 @@
+- name: renewal settings.py
+  hosts: test
+  vars:
+    - dev_path: /usr/data
+  gather_facts: false
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+  
+  tasks:
+
+    - name: copy settings.py to django (test)
+      copy:
+        src: "../docker_config/django/settings.py"
+        dest: "{{ dev_path }}/django/app/Conferences/"
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy settings.py to django (prod)
+      copy:
+        src: "../docker_config/django-prod/settings.py"
+        dest: "{{ dev_path }}/django/app/Conferences/"
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: copy settings.py to root (test)
+      copy:
+        src: "../docker_config/django/settings.py"
+        dest: "/root/"
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy settings.py to root (prod)
+      copy:
+        src: "../docker_config/django-prod/settings.py"
+        dest: "/root/"
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: creating /root/scrapy directory
+      file:
+        path: /root/scrapy
+        state: directory
+        owner: root
+        group: root
+        mode: "u=rwx,g=rx,o=rx"
+        recurse: true
+
+    - name: copy settings.py to scrapy (test)
+      copy:
+        src: "../docker_config/scrapy_test/settings.py"
+        dest: "{{ dev_path }}/scrapy/conf_parsers/"
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy settings.py to scrapy (prod)
+      copy:
+        src: "../docker_config/scrapy_prod/settings.py"
+        dest: "{{ dev_path }}/scrapy/conf_parsers/"
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: copy settings.py to root/scrapy (test)
+      copy:
+        src: "../docker_config/scrapy_test/settings.py"
+        dest: "/root/scrapy/"
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy settings.py to root/scrapy (prod)
+      copy:
+        src: "../docker_config/scrapy_prod/settings.py"
+        dest: "/root/scrapy/"
+      when:
+        - inventory_hostname in groups ["prod"]
+  
+
+    
