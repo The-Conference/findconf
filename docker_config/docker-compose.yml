@@ -28,7 +28,6 @@ services:
     restart: always
     depends_on:
       - db
-      - redis
     networks:
       - frontend
       - backend
