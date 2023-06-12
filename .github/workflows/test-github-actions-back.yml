@@ -42,8 +42,7 @@ jobs:
         run: |
           sudo su && cd /usr/data && sudo docker-compose down
           sudo docker rmi $(sudo docker images -q data-django:latest)
-          sudo docker rmi $(sudo docker images -q data-celery:latest)
-          echo "Containers was stoped. Images was removed"
+          echo "Container was stoped. Image was removed"
 
       - name: Remove old version of backend
         run: |
