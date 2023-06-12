@@ -13,7 +13,6 @@ cd $temp_dir && wget https://github.com/The-Conference/findconf/archive/refs/hea
 unzip $temp_dir/backend.zip
 cd /usr/data && docker-compose down
 docker rmi $(docker images -q data-django:latest)
-docker rmi $(docker images -q data-celery:latest)
 rm -rf /usr/data/django/app/*
 cp -R $temp_dir/findconf-backend/* /usr/data/django/app
 rm -rf /usr/data/django/app/.github
