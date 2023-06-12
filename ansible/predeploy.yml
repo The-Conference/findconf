@@ -1,5 +1,5 @@
 - name: predeploy docker compose
-  hosts: prod
+  hosts: test
   vars:
     - dev_path: /usr/data
   gather_facts: false
@@ -33,6 +33,7 @@
         - pgsql
         - redis_data
         - django
+        - scrapy
       tags:
         - volumes
 
@@ -156,6 +157,68 @@
         - "/root/findconf-backend"
       tags:
         - conf_back
+
+    - name: download parsers app archive from github
+      get_url:
+        url: "https://github.com/The-Conference/findconf/archive/refs/heads/scrapy-standalone.zip"
+        dest: "/root"
+      tags:
+        - parser
+
+    - name: unzip parsers app
+      unarchive:
+        src: "/root/findconf-scrapy-standalone.zip"
+        dest: "/root"
+        remote_src: true
+      tags:
+        - parser
+
+    - name: copy parser app to data dir
+      copy:
+        src: "/root/findconf-scrapy-standalone/"
+        dest: "{{ dev_path }}/scrapy"
+        remote_src: true
+      tags:
+        - parser
+
+    - name: copy settings.py to scrapy (test)
+      copy:
+        src: "../docker_config/scrapy_test/settings.py"
+        dest: "{{ dev_path }}/scrapy/conf_parsers/"
+      tags:
+        - parser
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy settings.py to scrapy (prod)
+      copy:
+        src: "../docker_config/scrapy_prod/settings.py"
+        dest: "{{ dev_path }}/scrapy/conf_parsers/"
+      tags:
+        - parser
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: remove useless files from parser_app dir
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ dev_path }}/scrapy/docker-compose.yml"
+        - "{{ dev_path }}/scrapy/.gitignore"
+        - "{{ dev_path }}/scrapy/README.md"
+      tags:
+        - parser
+
+    - name: remove temp files from /root (parser)
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/root/findconf-scrapy-standalone.zip"
+        - "/root/findconf-scrapy-standalone"
+      tags:
+        - parser
     
     - name: copy docker-compose.yml
       copy:
