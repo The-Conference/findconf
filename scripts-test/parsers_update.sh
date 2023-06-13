@@ -14,9 +14,9 @@ unzip $temp_dir/scrapy-standalone.zip
 cd /usr/data && docker-compose down
 docker rmi $(docker images -q data-scrapy:latest)
 rm -rf /usr/data/scrapy/*
-cp -R $temp_dir/scrapy-standalone/* /usr/data/scrapy
+cp -R $temp_dir/findconf-scrapy-standalone/* /usr/data/scrapy
 rm -rf /usr/data/scrapy/.gitignore /usr/data/scrapy/docker-compose.yml /usr/data/scrapy/README.md
 cp -rf /root/scrapy/settings.py /usr/data/scrapy/conf_parsers/
-rm -rf $temp_dir/scrapy-standalone.zip $temp_dir/scrapy-standalone
+rm -rf $temp_dir/scrapy-standalone.zip $temp_dir/findconf-scrapy-standalone
 
 cd /usr/data && docker-compose up -d
