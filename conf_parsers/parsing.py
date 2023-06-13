@@ -81,6 +81,7 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
         new_item.add_value('wos', True)
 
     if ('состоится' in lowercase
+            or 'состоятся' in lowercase
             or 'открытие' in lowercase
             or 'проведен' in lowercase
             or 'дата' in lowercase
