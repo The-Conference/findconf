@@ -49,9 +49,7 @@ class ConferenceItem(Item):
 
     def __repr__(self):
         return pformat({k: v for k, v in self.items() if k != 'data'},
-                       indent=2,
-                       compact=True,
-                       width=160)
+                       indent=2, compact=True, width=160)
 
 
 class ConferenceLoader(ItemLoader):
