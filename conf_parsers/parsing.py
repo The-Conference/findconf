@@ -28,7 +28,7 @@ def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader
     lowercase = clean_line.casefold()
 
     link = selector.xpath(".//a/@href").get()
-    if ('заявк' in lowercase
+    if ('заяв' in lowercase
             or 'принимаютс' in lowercase
             or 'участия' in lowercase
             or 'регистр' in lowercase):
