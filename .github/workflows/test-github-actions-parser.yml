@@ -51,7 +51,7 @@ jobs:
 
       - name: Update scrapy with new version
         run: |
-          sudo cp -R $TMP_DIR/findconf-scrapy-standalone/* /usr/data/scrapy/*
+          sudo cp -R $TMP_DIR/findconf-scrapy-standalone/* /usr/data/scrapy
           sudo rm -rf /usr/data/scrapy/.gitignore /usr/data/scrapy/docker-compose.yml /usr/data/scrapy/README.md
           sudo cp -rf /root/scrapy/settings.py /usr/data/scrapy/conf_parsers/
           echo "all files of scrapy project was updated"
