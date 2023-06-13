@@ -1,0 +1,15 @@
+name: 'Init pipeline for update parsers on test server'
+
+on:
+  push:
+    branches:
+      - 'scrapy-standalone'
+    paths-ignore:
+      - '.github/**'
+      - '**/.gitignore'
+      - '**/docker-compose.yml'
+      - '**/README.md'
+
+jobs:
+  checkout:
+    uses: The-Conference/findconf/.github/workflows/test-github-actions-parser.yml@main
