@@ -35,7 +35,7 @@ class SfuKrasSpider(scrapy.Spider):
                 if decoded := self.decode_email(encoded):
                     new_item.add_value('contacts', decoded)
         if href := new_item.get_output_value('reg_href'):
-            new_item.replace_value('reg_href', response.urljoin(href))
+            new_item.replace_value('reg_href', href)
         yield new_item.load_item()
 
     @staticmethod

@@ -25,7 +25,7 @@ class PetrsuSpider(scrapy.Spider):
         for line in response.xpath("//div[@id='conf_desc']//*[self::p or self::div or self::table]"):
             new_item = default_parser_xpath(line, new_item)
         if href := new_item.get_output_value('reg_href'):
-            new_item.replace_value('reg_href', response.urljoin(href))
+            new_item.replace_value('reg_href', href)
         yield new_item.load_item()
 
 

@@ -11,6 +11,14 @@ from pprint import pformat
 from .utils import normalize_string
 
 
+def absolute_url(url, loader_context):
+    return loader_context['selector'].urljoin(url)
+
+
+def fix_emails(url):
+    return url.replace('mailto:', '')
+
+
 class ConferenceItem(Item):
     conf_id = Field()
     hash = Field()
@@ -57,5 +65,5 @@ class ConferenceLoader(ItemLoader):
     org_name_in = MapCompose(normalize_string)
     conf_name_in = MapCompose(normalize_string)
     conf_card_href_in = MapCompose(unquote)
-    conf_href_in = MapCompose(unquote)
-    reg_href_in = MapCompose(unquote)
+    conf_href_in = MapCompose(unquote, absolute_url, fix_emails)
+    reg_href_in = MapCompose(unquote, absolute_url, fix_emails)
