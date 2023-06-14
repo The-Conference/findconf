@@ -32,17 +32,29 @@ jobs:
           sudo cp -R /usr/data/django/app /usr/data/django_app-${{ env.NOW }}
           echo 'previous version backup is done'
 
+      - name: backup priveus version of scrapy
+        run: |
+          echo 'current date and time is ${{ env.NOW }}'
+          sudo cp -R /usr/data/scrapy /usr/data/scrapy_app-${{ env.NOW }}
+          echo 'previous version backup of scrapy is done'
+
       - name: Get archive of new version of backend and unzip it
         run: |
           sudo su && cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/backend.zip
           sudo unzip -o $TMP_DIR/backend.zip
           echo 'The new version of backend was got'
 
-      - name: Stop containers and remove images of backend apps
+      - name: Get archive of new version of scrapy and unzip it
+        run: |
+          sudo su && cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/scrapy-standalone.zip
+          sudo unzip -o $TMP_DIR/scrapy-standalone.zip
+          echo 'The new version of scrapy was got'
+
+      - name: Stop containers and remove images of backend apps (django and scrapy)
         run: |
           sudo su && cd /usr/data && sudo docker-compose down
           sudo docker rmi $(sudo docker images -q data-django:latest)
-          sudo docker rmi $(sudo docker images -q data-celery:latest)
+          sudo docker rmi $(sudo docker images -q data-scrapy:latest)
           echo "Containers was stoped. Images was removed"
 
       - name: Remove old version of backend
@@ -50,7 +62,12 @@ jobs:
           sudo rm -rf /usr/data/django/app/*
           echo "clean up old version of app"
 
-      - name: Update backend with new version
+      - name: Remove old version of scrapy
+        run: |
+          sudo rm -rf /usr/data/scrapy/*
+          echo "clean up old version of scrapy app"
+
+      - name: Update django with new version
         run: |
           sudo cp -R $TMP_DIR/findconf-backend/* /usr/data/django/app
           sudo rm -rf /usr/data/django/app/.github
@@ -58,9 +75,16 @@ jobs:
           sudo cp -rf /root/settings.py /usr/data/django/app/Conferences/
           echo "all files was updated"
 
+      - name: Update scrapy with new version
+        run: |
+          sudo cp -R $TMP_DIR/findconf-scrapy-standalone/* /usr/data/scrapy
+          sudo rm -rf /usr/data/scrapy/.gitignore /usr/data/scrapy/docker-compose.yml /usr/data/scrapy/README.md
+          sudo cp -rf /root/scrapy/settings.py /usr/data/scrapy/conf_parsers/
+          echo "all files of scrapy project was updated"
+
       - name: Cleanup temp files
         run: |
-          sudo rm -rf $TMP_DIR/findconf-backend $TMP_DIR/backend.zip
+          sudo rm -rf $TMP_DIR/findconf-backend $TMP_DIR/backend.zip $TMP_DIR/findconf-scrapy-standalone $TMP_DIR/scrapy-standalone.zip
           echo "Temp files was cleaned"
 
       - name: Up all containers
@@ -73,6 +97,9 @@ jobs:
 
       - name: Check django container uptime
         run: echo "BACK_EXIT_CODE=$(sudo docker inspect --format='{{.State.ExitCode}}' app_django)" >> $GITHUB_ENV
+
+      - name: Check scrapy container uptime
+        run: echo "EXIT_CODE_PARSER=$(sudo docker inspect --format='{{.State.ExitCode}}' app_parsers)" >> $GITHUB_ENV
 
       - name: backup priveus version of frontend
         run: |
@@ -102,38 +129,48 @@ jobs:
       - name: print success message if back http status code is 302, front http status code is 200 and container exit code is 0
         run: |
           echo 'app_django container exit code is ${{ env.BACK_EXIT_CODE }}'
+          echo 'app_parsers container exit code is ${{ env.EXIT_CODE_PARSER }}'
           echo 'backend http status code is ${{ env.HTTP_BACK_CODE }}'
           echo 'frontend http status code is ${{ env.HTTP_FRONT_CODE }}'
           echo 'Release updated successful!'
           echo "EX_CODE=0" >> $GITHUB_ENV
-        if: ${{ env.HTTP_BACK_CODE == 302 && env.BACK_EXIT_CODE == 0 && env.HTTP_FRONT_CODE == 200 }}
+        if: ${{ env.HTTP_BACK_CODE == 302 && env.EXIT_CODE_PARSER == 0 && env.BACK_EXIT_CODE == 0 && env.HTTP_FRONT_CODE == 200 }}
 
       - name: restore privious version if back or front http status code isn't 302/200 or container exit code isn't 0
         run: |
           echo 'backend http status code is ${{ env.HTTP_BACK_CODE }}'
           echo 'frontend http status code is ${{ env.HTTP_FRONT_CODE }}'
           echo 'app_django container exit code is ${{ env.BACK_EXIT_CODE }}.'
+          echo 'app_parsers container exit code is ${{ env.EXIT_CODE_PARSER }}'
           echo 'Release updated failed! Restoring backup'
           sudo rm -rf /usr/data/www/* 
           sudo cp -R /usr/data/www-${{ env.NOW }}/* /usr/data/www 
           echo 'Frontend backup was restored. Restoring backend backup'
           sudo su && cd /usr/data && sudo docker-compose down
           sudo docker rmi $(sudo docker images -q data-django:latest)
-          sudo docker rmi $(sudo docker images -q data-celery:latest)
+          sudo docker rmi $(sudo docker images -q data-scrapy:latest)
           echo "Containers was stoped. Images was removed"
           sudo rm -rf /usr/data/django/app/*
-          sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app 
+          sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app
+          sudo rm -rf /usr/data/scrapy/*
+          sudo cp -R /usr/data/scrapy_app-${{ env.NOW }}/* /usr/data/scrapy 
           echo 'Backend files was restored'
           sudo su && cd /usr/data && sudo docker-compose up -d
           sudo docker ps
           echo "Containers started"
           echo "EX_CODE=1" >> $GITHUB_ENV
-        if: ${{ env.HTTP_BACK_CODE != 302 || env.BACK_EXIT_CODE != 0 || env.HTTP_FRONT_CODE != 200}}
+        if: ${{ env.HTTP_BACK_CODE != 302 || env.BACK_EXIT_CODE != 0 || env.EXIT_CODE_PARSER != 0 || env.HTTP_FRONT_CODE != 200}}
 
       - name: clean up backend backup
         run: |
           echo 'start cleaning up directory /usr/data/django_app-${{ env.NOW }}'
           sudo rm -rf /usr/data/django_app-${{ env.NOW }} 
+          echo 'clean up completed'
+      
+      - name: clean up scrapy backup
+        run: |
+          echo 'start cleaning up directory /usr/data/scrapy_app-${{ env.NOW }}'
+          sudo rm -rf /usr/data/scrapy_app-${{ env.NOW }} 
           echo 'clean up completed'
 
       - name: clean up frontend backup
