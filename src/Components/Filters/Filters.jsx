@@ -111,7 +111,6 @@ const Filters = () => {
     let newParams;
     paramsToRemove.forEach((param) => {
       if (currentParams.hasOwnProperty(param)) {
-        console.log(param);
         delete currentParams[param];
         newParams = currentParams;
         dispatch(handleDeleteColor(id));
