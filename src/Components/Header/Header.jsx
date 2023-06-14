@@ -28,12 +28,13 @@ const Header = () => {
         <nav className="header__nav">
           <ul>
             <li>
-              <Link to="/about">О сервисе </Link>
-            </li>
-            <li>
               {(isAuthenticated && <Link to="/profile">Моя страница </Link>) ||
                 null}
             </li>
+            <li>
+              <Link to="/about">О сервисе </Link>
+            </li>
+
             <li>
               {(!isAuthenticated && <Link to="/login">Войти </Link>) || (
                 <button onClick={handleLogOut}>Выйти</button>

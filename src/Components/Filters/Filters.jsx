@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import white from "../../assets/whitecross.svg";
 import grey from "../../assets/greycross.svg";
 import { allKeys } from "../../utils/FILTERS";
+import reset from "../../assets/reset.svg";
 import {
   StyledPopup,
   StyledPopupTitle,
@@ -104,9 +105,21 @@ const Filters = () => {
   const deletAllFilters = () => {
     setSearchParams();
   };
-  // const deleteOneGroup = (id) => {
-  //   console.log(id);
-  // };
+  const deleteOneGroup = (id) => {
+    const currentParams = Object.fromEntries(searchParams.entries());
+    let paramsToRemove = allKeys.filter((el) => el.id === id)[0].keys;
+    let newParams;
+    paramsToRemove.forEach((param) => {
+      if (currentParams.hasOwnProperty(param)) {
+        console.log(param);
+        delete currentParams[param];
+        newParams = currentParams;
+        dispatch(handleDeleteColor(id));
+      }
+    });
+
+    setSearchParams(new URLSearchParams(newParams));
+  };
   return (
     <>
       <div className="filter">
@@ -123,9 +136,21 @@ const Filters = () => {
             }}
           >
             {(query && (
-              <img src={white} alt="удалить фильтры" width="14" height="14" />
+              <img
+                src={white}
+                title="сбросить все фильтры"
+                alt="сбросить фильтры"
+                width="14"
+                height="14"
+              />
             )) || (
-              <img src={grey} alt="удалить фильтры" width="14" height="14" />
+              <img
+                src={grey}
+                title="сбросить все фильтры"
+                alt="сбросить фильтры"
+                width="14"
+                height="14"
+              />
             )}
           </div>
         )}
@@ -147,25 +172,7 @@ const Filters = () => {
                   }
                   key={item.id}
                 >
-                  {/* {item.applied === true && (
-                    <svg
-                      onClick={() => deleteOneGroup(item.id)}
-                      className="del"
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M9.35329 8.64666C9.54862 8.842 9.54862 9.15869 9.35329 9.35402C9.25595 9.45135 9.12796 9.50067 8.99996 9.50067C8.87195 9.50067 8.74396 9.45202 8.64662 9.35402L4.99995 5.70733L1.35329 9.35402C1.25595 9.45135 1.12795 9.50067 0.999955 9.50067C0.871955 9.50067 0.743955 9.45202 0.646622 9.35402C0.451289 9.15869 0.451289 8.842 0.646622 8.64666L4.29329 5.00002L0.646622 1.35337C0.451289 1.15804 0.451289 0.841345 0.646622 0.646012C0.841955 0.450678 1.15863 0.450678 1.35396 0.646012L5.00063 4.2927L8.64728 0.646012C8.84262 0.450678 9.15929 0.450678 9.35462 0.646012C9.54995 0.841345 9.54995 1.15804 9.35462 1.35337L5.70795 5.00002L9.35329 8.64666Z"
-                        fill="white"
-                      />
-                    </svg>
-                  )} */}
-
                   <div>{item.name}</div>
-
                   <button>
                     <svg
                       width="10"
@@ -200,6 +207,12 @@ const Filters = () => {
                     close();
                   }}
                 >
+                  <img
+                    onClick={() => deleteOneGroup(item.id)}
+                    src={reset}
+                    alt="сброс фильтров"
+                    title="сбросить фильтры"
+                  />
                   <img src={grey} alt="close" />
                 </StyledPopupClose>
                 <StyledScroll>
