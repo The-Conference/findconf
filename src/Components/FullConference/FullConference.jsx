@@ -175,7 +175,7 @@ const FullConference = () => {
           <hr />
           <div className="full-conference__card-block">
             <div>
-              <span>Организатор:</span> {full.org_name}
+              <span>Организатор:</span> {full.un_name}
             </div>
             <hr />
             <div>
