@@ -93,17 +93,18 @@ const SearchFilter = () => {
               (item, index) =>
                 index < 3 && (
                   <Link
-                    key={item.id}
+                    key={index}
                     to={`/conferences/${item.id}`}
                     onClick={() => setValue("")}
                   >
-                    <div className="conf">
+                    <div className="conf" key={index}>
                       <li>
                         <Highlighter
                           highlightClassName="highlight"
                           searchWords={lighted}
                           autoEscape={false}
                           textToHighlight={item.org_name}
+                          key={index}
                         />
                       </li>
                       <div>
@@ -112,11 +113,13 @@ const SearchFilter = () => {
                           searchWords={lighted}
                           autoEscape={false}
                           textToHighlight={item.conf_name}
+                          key={index}
                         />
                       </div>
                       <div>
                         <small>
                           <Highlighter
+                            key={index}
                             highlightClassName="highlight"
                             searchWords={lighted}
                             autoEscape={false}
@@ -145,33 +148,37 @@ const SearchFilter = () => {
                         </small>
                         {item.tags.map((elem) =>
                           elem.name.split(",").map((tag, index) => (
-                            <small key={index}>
+                            <small>
                               <Highlighter
                                 highlightClassName="highlight"
                                 searchWords={lighted}
                                 autoEscape={false}
                                 textToHighlight={tag}
+                                key={index}
                               />
                             </small>
                           ))
                         )}
+
                         {item.online === true && (
-                          <small key={index}>
+                          <small>
                             <Highlighter
                               highlightClassName="highlight"
                               searchWords={lighted}
                               autoEscape={false}
                               textToHighlight={"онлайн"}
+                              key={index}
                             />
                           </small>
                         )}
                         {item.offline === true && (
-                          <small key={index}>
+                          <small>
                             <Highlighter
                               highlightClassName="highlight"
                               searchWords={lighted}
                               autoEscape={false}
                               textToHighlight={"офлайн"}
+                              key={index}
                             />
                           </small>
                         )}

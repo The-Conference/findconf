@@ -40,7 +40,7 @@ const Filters = () => {
   const [menu, setMenu] = useState(false);
   const [cardId, setCardId] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [del, setDel] = useState(false);
   const handleAddParams = (q, value, id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const currentValue = currentParams[q];
@@ -84,6 +84,7 @@ const Filters = () => {
       setData(matches);
     }
   };
+
   const { search } = useSelector((state) => state);
 
   useEffect(() => {
@@ -113,11 +114,23 @@ const Filters = () => {
 
   useEffect(() => {
     const currentParams = Object.fromEntries(searchParams.entries());
+    if (
+      Object.keys(currentParams).length > 1 &&
+      currentParams.hasOwnProperty("search")
+    ) {
+      setDel(true);
+    } else if (
+      Object.keys(currentParams).length > 0 &&
+      !currentParams.hasOwnProperty("search")
+    ) {
+      setDel(true);
+    } else {
+      setDel(false);
+    }
 
     const all = allKeys.filter((item) =>
       item.keys.find((el) => currentParams.hasOwnProperty(el))
     );
-
     if (all.length > 0) {
       all.forEach((elem) => dispatch(handleColor(elem.id)));
     }
@@ -132,7 +145,12 @@ const Filters = () => {
   const decodedUrl = decodeURIComponent(query).split("+").join(" ");
 
   const deletAllFilters = () => {
-    setSearchParams();
+    const currentParams = Object.fromEntries(searchParams.entries());
+    if (currentParams.hasOwnProperty("search")) {
+      setSearchParams({ search: currentParams.search });
+    } else {
+      setSearchParams();
+    }
   };
   const deleteOneGroup = (id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
@@ -151,10 +169,10 @@ const Filters = () => {
   return (
     <>
       <div className="filter">
-        {query && (
+        {del && (
           <div
             className={
-              query
+              del
                 ? "applied-hover filter__delete-button "
                 : "nonapplied-hover filter__delete-button "
             }
@@ -164,7 +182,7 @@ const Filters = () => {
               dispatch(filteredContent);
             }}
           >
-            {(query && (
+            {(del && (
               <img
                 src={white}
                 title="сбросить все фильтры"
@@ -271,7 +289,6 @@ const Filters = () => {
                           cardId === 4 || cardId === 5 || cardId === 6
                             ? handleAddParams(item.key, "true", cardId)
                             : handleAddParams(item.key, item.name, cardId);
-                          // setKey(item.key);
                         }}
                       />
                       <StyledPopupText for={"color" + n}>

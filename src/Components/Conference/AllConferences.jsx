@@ -57,7 +57,6 @@ const AllConferences = ({ data, keywords, id }) => {
   }
   if (data === "search-results") {
     value = searchParams.get("search");
-
     if (value) {
       let newValue = value
         .trim()
@@ -68,9 +67,9 @@ const AllConferences = ({ data, keywords, id }) => {
       let regexp = new RegExp(newValue, "gi");
       match = conferences.filter((el) => {
         return (
-          regexp.test(el.org_name) ||
+          regexp.test(el.un_name) ||
           regexp.test(el.conf_name) ||
-          regexp.test(el.tags.map((item) => item.name))
+          regexp.test(el.tags.map((el) => el.name))
         );
       });
     }
@@ -408,7 +407,6 @@ const AllConferences = ({ data, keywords, id }) => {
                       .split(",")
                       .map((tag, index) => <small key={index}>{tag}</small>)
                   )}
-
                   {el.online === true && <small>онлайн</small>}
                   {el.offline === true && <small>офлайн</small>}
                 </div>
