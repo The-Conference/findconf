@@ -95,17 +95,20 @@ const Filters = () => {
         name: item,
         key: "un_name",
       }));
+    const tags = new Set();
 
-    const tags = search
-      .map((el) => el.themes && el.themes.trim())
-      .filter((item, index, arr) => item && arr.indexOf(item) === index)
-      .map((item) => ({
-        name: item,
-        key: "tags",
-      }));
+    search.forEach((el) => {
+      el.tags.forEach((elem) => {
+        if (elem.name) {
+          tags.add(elem.name);
+        }
+      });
+    });
+
+    const uniqueTags = [...tags].map((name) => ({ name, key: "tags" }));
 
     dispatch(handleData({ id: 1, data: universities }));
-    dispatch(handleData({ id: 2, data: tags }));
+    dispatch(handleData({ id: 2, data: uniqueTags }));
   }, [dispatch, search]);
 
   useEffect(() => {
@@ -271,7 +274,7 @@ const Filters = () => {
                         }}
                       />
                       <StyledPopupText for={"color" + n}>
-                        <div style={{ maxWidth: "220px" }}>{item.name}</div>
+                        <div style={{ maxWidth: "190px" }}>{item.name}</div>
                       </StyledPopupText>
                     </StyledPopupDiv>
                   ))}
