@@ -14,7 +14,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 import os
 from pathlib import Path
-import environ
+import environ 
 
 #Initialise environment variables
 env = environ.Env()
@@ -34,7 +34,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', '51.250.87.75', '51.250.91.147', 'test.theconf.ru', 'theconf.ru']
+ALLOWED_HOSTS = ['127.0.0.1', '158.160.98.199', '51.250.91.147', 'test.theconf.ru', 'theconf.ru']
 
 
 # Application definition
@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'ckeditor',
     'Conference_data',
+    'Conference_crm',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -67,9 +70,20 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
-    ]
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    ],
+
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    # ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+
+    ],
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -176,4 +190,20 @@ CKEDITOR_CONFIGS = {
         'removePlugins': 'elementspath',
     }
 }
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'api/auth/users/activation/{uid}/{token}',  # Fix
+    'SEND_ACTIVATION_EMAIL': False,
+    'LOGIN_FIELD': 'email',
+
+    'USER_AUTHENTICATION_RULES': [
+        'djoser.auth.TokenAuthenticationRule',
+        'djoser.auth.EmailAuthenticationRule'
+    ],
+
+}
+
+AUTH_USER_MODEL = 'Conference_crm.User'
 
