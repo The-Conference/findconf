@@ -180,7 +180,7 @@ const FullConference = () => {
             <hr />
             <div>
               <span>Тематика:</span>{" "}
-              <span className="online"> {full.themes}</span>
+              <span className="online"> {full.tags.map((el) => el.name)}</span>
             </div>
           </div>
         </div>
