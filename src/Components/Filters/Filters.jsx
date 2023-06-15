@@ -161,6 +161,7 @@ const Filters = () => {
             onClick={() => {
               deletAllFilters();
               dispatch(handleDeleteAllColors());
+              dispatch(filteredContent);
             }}
           >
             {(query && (

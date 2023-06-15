@@ -3,6 +3,7 @@ import { Link, useSearchParams, useParams } from "react-router-dom";
 import hearts from "../../assets/follow.svg";
 import following from "../../assets/following.svg";
 import "./conference.scss";
+import { filteredContent } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
@@ -48,26 +49,31 @@ const AllConferences = ({ data, keywords, id }) => {
 
     let regexp = new RegExp(newValue, "gi");
     recsPrev = conferences.filter((el) => {
-      return regexp.test(el.conf_name) || regexp.test(el.themes);
+      return (
+        regexp.test(el.conf_name) ||
+        regexp.test(el.tags.map((item) => item.name))
+      );
     });
   }
   if (data === "search-results") {
-    value = searchParams.get("q");
+    value = searchParams.get("search");
 
-    let newValue = value
-      .trim()
-      .split(" ")
-      .filter((el) => el.length > 2)
-      .join("|");
+    if (value) {
+      let newValue = value
+        .trim()
+        .split(" ")
+        .filter((el) => el.length > 2)
+        .join("|");
 
-    let regexp = new RegExp(newValue, "gi");
-    match = conferences.filter((el) => {
-      return (
-        regexp.test(el.org_name) ||
-        regexp.test(el.conf_name) ||
-        regexp.test(el.themes)
-      );
-    });
+      let regexp = new RegExp(newValue, "gi");
+      match = conferences.filter((el) => {
+        return (
+          regexp.test(el.org_name) ||
+          regexp.test(el.conf_name) ||
+          regexp.test(el.tags.map((item) => item.name))
+        );
+      });
+    }
   }
   if (data === "date") {
     let period = conferences.map((el) => {
@@ -174,7 +180,7 @@ const AllConferences = ({ data, keywords, id }) => {
       data !== "collection1" &&
       data !== "collection2"
     ) {
-      dispatch(fetchFilteredConferences());
+      dispatch(filteredContent());
     }
   }, [dispatch, data]);
 

@@ -42,7 +42,7 @@ const SearchFilter = () => {
       return (
         regexp.test(item.org_name) ||
         regexp.test(item.conf_name) ||
-        regexp.test(item.themes) ||
+        regexp.test(item.tags.map((el) => el.name)) ||
         regexp.test("онлайн") ||
         regexp.test("офлайн")
       );
@@ -54,7 +54,7 @@ const SearchFilter = () => {
   };
   const handleNavigation = () => {
     if (value.length > 1) {
-      nav({ pathname: "/search", search: `?q=${value}` });
+      nav({ pathname: "/search", search: `?search=${value}` });
       window.location.reload();
     }
   };
