@@ -1,4 +1,5 @@
-FROM python:3.10-buster
+FROM python:3.10-alpine
+  RUN /bin/sh -c "apk add --no-cache bash"
   ENV PYTHONDONTWRITEBYTECODE 1
   ENV PYTHONUNBUFFERED 1
   RUN mkdir /app /start
