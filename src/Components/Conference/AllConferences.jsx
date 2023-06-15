@@ -48,7 +48,10 @@ const AllConferences = ({ data, keywords, id }) => {
 
     let regexp = new RegExp(newValue, "gi");
     recsPrev = conferences.filter((el) => {
-      return regexp.test(el.conf_name) || regexp.test(el.themes);
+      return (
+        regexp.test(el.conf_name) ||
+        regexp.test(el.tags.map((item) => item.name))
+      );
     });
   }
   if (data === "search-results") {
@@ -63,9 +66,9 @@ const AllConferences = ({ data, keywords, id }) => {
     let regexp = new RegExp(newValue, "gi");
     match = conferences.filter((el) => {
       return (
-        regexp.test(el.org_name) ||
+        regexp.test(el.un_name) ||
         regexp.test(el.conf_name) ||
-        regexp.test(el.themes)
+        regexp.test(el.tags.map((el) => el.name))
       );
     });
   }
