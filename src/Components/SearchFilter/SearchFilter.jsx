@@ -143,16 +143,18 @@ const SearchFilter = () => {
                             }
                           />
                         </small>
-                        {item.themes.split(",").map((tag, index) => (
-                          <small key={index}>
-                            <Highlighter
-                              highlightClassName="highlight"
-                              searchWords={lighted}
-                              autoEscape={false}
-                              textToHighlight={tag}
-                            />
-                          </small>
-                        ))}
+                        {item.tags.map((elem) =>
+                          elem.name.split(",").map((tag, index) => (
+                            <small key={index}>
+                              <Highlighter
+                                highlightClassName="highlight"
+                                searchWords={lighted}
+                                autoEscape={false}
+                                textToHighlight={tag}
+                              />
+                            </small>
+                          ))
+                        )}
                         {item.online === true && (
                           <small key={index}>
                             <Highlighter
