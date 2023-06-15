@@ -5,10 +5,12 @@ import {
   fetchFilteredConferences,
   filteredContent,
 } from "../../store/postData";
+import { fetchResults } from "../../store/searchSlice";
 import {
   handleColor,
   handleDeleteColor,
   handleDeleteAllColors,
+  handleData,
 } from "../../store/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import white from "../../assets/whitecross.svg";
@@ -32,6 +34,7 @@ import { useSearchParams } from "react-router-dom";
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.filters);
+
   const [dataFiltered, setData] = useState(data);
   const [dataInitial, setDataInitial] = useState(data);
   const [menu, setMenu] = useState(false);
@@ -81,6 +84,29 @@ const Filters = () => {
       setData(matches);
     }
   };
+  const { search } = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(fetchResults());
+    const universities = search
+      .map((el) => el.un_name && el.un_name.trim())
+      .filter((item, index, arr) => item && arr.indexOf(item) === index)
+      .map((item) => ({
+        name: item,
+        key: "un_name",
+      }));
+
+    const tags = search
+      .map((el) => el.themes && el.themes.trim())
+      .filter((item, index, arr) => item && arr.indexOf(item) === index)
+      .map((item) => ({
+        name: item,
+        key: "tags",
+      }));
+
+    dispatch(handleData({ id: 1, data: universities }));
+    dispatch(handleData({ id: 2, data: tags }));
+  }, [dispatch, search]);
 
   useEffect(() => {
     const currentParams = Object.fromEntries(searchParams.entries());
@@ -245,7 +271,7 @@ const Filters = () => {
                         }}
                       />
                       <StyledPopupText for={"color" + n}>
-                        {item.name}
+                        <div style={{ maxWidth: "220px" }}>{item.name}</div>
                       </StyledPopupText>
                     </StyledPopupDiv>
                   ))}
