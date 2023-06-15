@@ -53,8 +53,8 @@ jobs:
       - name: Stop containers and remove images of backend apps (django and scrapy)
         run: |
           sudo su && cd /usr/data && sudo docker-compose down
-          sudo docker rmi $(sudo docker images -q data-django:latest)
-          sudo docker rmi $(sudo docker images -q data-scrapy:latest)
+          sudo docker rmi --force $(sudo docker images -q data-django:latest)
+          sudo docker rmi --force $(sudo docker images -q data-scrapy:latest)
           echo "Containers was stoped. Images was removed"
 
       - name: Remove old version of backend
@@ -147,8 +147,8 @@ jobs:
           sudo cp -R /usr/data/www-${{ env.NOW }}/* /usr/data/www 
           echo 'Frontend backup was restored. Restoring backend backup'
           sudo su && cd /usr/data && sudo docker-compose down
-          sudo docker rmi $(sudo docker images -q data-django:latest)
-          sudo docker rmi $(sudo docker images -q data-scrapy:latest)
+          sudo docker rmi --force $(sudo docker images -q data-django:latest)
+          sudo docker rmi --force $(sudo docker images -q data-scrapy:latest)
           echo "Containers was stoped. Images was removed"
           sudo rm -rf /usr/data/django/app/*
           sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app
