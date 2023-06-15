@@ -34,7 +34,7 @@ export const registerUser = (userData) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      "https://test.theconf.ru/api/auth/users/",
+      "https://theconf.ru/api/auth/users/",
       userData
     );
     dispatch(registerSuccess(response.data));

@@ -176,7 +176,7 @@ const router = createBrowserRouter([
     ),
   },
 ]);
-ReactGA.initialize("G-DQN3936RFH");
+ReactGA.initialize("G-1M5MYD5JB7");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
