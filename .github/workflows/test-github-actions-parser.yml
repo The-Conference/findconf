@@ -41,7 +41,7 @@ jobs:
       - name: Stop containers and remove images of scrapy apps
         run: |
           sudo su && cd /usr/data && sudo docker-compose down
-          sudo docker rmi $(sudo docker images -q data-scrapy:latest)
+          sudo docker rmi --force $(sudo docker images -q data-scrapy:latest)
           echo "Container app_scrapy was stoped. Image was removed"
 
       - name: Remove old version of scrapy
@@ -94,7 +94,7 @@ jobs:
           echo 'app_parsers container exit code is ${{ env.EXIT_CODE_PARSER }}'
           echo 'Scrapy updated failed! Restoring backup'
           sudo su && cd /usr/data && sudo docker-compose down
-          sudo docker rmi $(sudo docker images -q data-scrapy:latest)
+          sudo docker rmi --force $(sudo docker images -q data-scrapy:latest)
           echo "Container was stoped. Image was removed"
           sudo rm -rf /usr/data/scrapy/*
           sudo cp -R /usr/data/scrapy_app-${{ env.NOW }}/* /usr/data/scrapy
