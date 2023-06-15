@@ -18,11 +18,20 @@ export const filterSlice = createSlice({
     handleDeleteAllColors: (state) => {
       state.map((el) => (el.applied = false));
     },
+    handleData: (state, action) => {
+      return state.map((el) =>
+        el.id === action.payload.id ? { ...el, data: action.payload.data } : el
+      );
+    },
   },
 });
 
-export const { handleColor, handleDeleteColor, handleDeleteAllColors } =
-  filterSlice.actions;
+export const {
+  handleColor,
+  handleDeleteColor,
+  handleDeleteAllColors,
+  handleData,
+} = filterSlice.actions;
 export const filter = (state) => state.filters;
 export const selectedFilter = (state) => state.filters;
 export default filterSlice.reducer;
