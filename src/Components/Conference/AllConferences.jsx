@@ -397,9 +397,11 @@ const AllConferences = ({ data, keywords, id }) => {
 
               <div className="conference__tags">
                 <div className="conference__tags-container">
-                  {el.themes.split(",").map((tag, index) => (
-                    <small key={index}>{tag}</small>
-                  ))}
+                  {el.tags.map((elem) =>
+                    elem.name
+                      .split(",")
+                      .map((tag, index) => <small key={index}>{tag}</small>)
+                  )}
                   {el.online === true && <small>онлайн</small>}
                   {el.offline === true && <small>офлайн</small>}
                 </div>
