@@ -40,7 +40,8 @@ class TestDateFinder(TestCase):
             '2 января 2023 – 20 января 2023',
             'c 2 по 20 января 2023 г',
             'c2до20января2023г',
-            '02   –  20    января    2023'
+            '02   –  20    января    2023',
+            # '02.01-20.01.2023'  # unhandled edge case, see urfu.py
         ]
         for case in cases:
             self.assertEqual([date(2023, 1, 2), date(2023, 1, 20)], find_date_in_string(case))
