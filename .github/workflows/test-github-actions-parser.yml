@@ -39,6 +39,7 @@ jobs:
           echo 'The new version of scrapy was got'
 
       - name: Stop containers and remove images of scrapy apps
+        continue-on-error: true
         run: |
           sudo su && cd /usr/data && sudo docker-compose down
           sudo docker rmi --force $(sudo docker images -q data-scrapy:latest)
@@ -62,6 +63,7 @@ jobs:
           echo "Temp files was cleaned"
 
       - name: Up all containers
+        continue-on-error: true
         run: |
           sudo su && cd /usr/data && sudo docker-compose up -d
           echo "Container started"
