@@ -26,6 +26,6 @@ class ItmoSpider(CrawlSpider):
         new_item = get_dates(dates, new_item)
         new_item.add_css('conf_address', "div.summary li > a > p::text")
 
-        for line in response.xpath("//div[@class='content js-mediator-article']//*"):
+        for line in response.xpath("//div[@class='content js-mediator-article']/*"):
             new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()
