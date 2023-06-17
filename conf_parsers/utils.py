@@ -8,7 +8,7 @@ def normalize_string(string: str) -> str:
     string = re.sub(r'[\u002D\u058A\u05BE\u1400\u1806'
                     r'\u2010-\u2015\u2E17\u2E1A\u2E3A\u2E3B\u2E40'
                     r'\u301C\u3030\u30A0\uFE31\uFE32\uFE58\uFE63\uFF0D–-]', '-', string)
-    string = string.replace('&nbsp;', ' ').replace('\xa0', ' ')\
+    string = string.replace('&nbsp;', ' ').replace('\xa0', ' ') \
         .replace('\r', ' ').replace('\n', ' ').replace('\t', ' ').replace('\u200b', '')
     return ' '.join(string.split()).strip()
 
@@ -24,17 +24,24 @@ def find_date_in_string(string: str) -> list[datetime.date]:
         r'|\W(?!00)\d\d?\W)'
         r'\s?(\d+)?'
     )
+    year = None
     dates = []
     for date in re.finditer(pattern, string):
-        date_parts = date.groups()
-        if date_parts[0] and '-' in date_parts[0]:
-            remainder = ' '.join(filter(None, date_parts[1:]))
-            dates.extend([f'{i} {remainder}' for i in date_parts[0].split('-')])
+        day, month, year = date.groups()
+        if '-' in day:
+            day1, day2 = day.split('-')
+            dates.extend(({'day': day1, 'month': month, 'year': year},
+                          {'day': day2, 'month': month, 'year': year}))
         else:
-            dates.append(date.group())
-    result = [parse(date, settings={'DEFAULT_LANGUAGES': ['ru'],
-                                    'DATE_ORDER': 'DMY'}
-                    ) for date in dates]
+            dates.append({'day': day, 'month': month, 'year': year})
+
+    for d in dates:
+        if not d.get('year'):
+            d['year'] = year or str(datetime.datetime.now().year)
+    result = [parse(' '.join(_date.values()),
+                    settings={'DEFAULT_LANGUAGES': ['ru'],
+                              'DATE_ORDER': 'DMY'}
+                    ) for _date in dates]
     return [i.date() for i in result if i is not None]
 
 
