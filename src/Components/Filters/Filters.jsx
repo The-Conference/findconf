@@ -48,7 +48,7 @@ const Filters = () => {
     let newParams;
     if (currentValue) {
       if (currentValue.includes(value)) {
-        const newValue = currentValue.trim().replace(value, "");
+        const newValue = currentValue.replace(value, "").trim();
         if (newValue === "") {
           delete currentParams[q];
           newParams = currentParams;
