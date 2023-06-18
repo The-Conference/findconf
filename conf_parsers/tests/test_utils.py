@@ -11,6 +11,7 @@ class TestDateFinder(TestCase):
             '02 ЯНВАРЯ 2022 в 9:30',
             '2 ЯНВАРЬ 2022',
             'начало2января2022года',
+            'с 11:00 по 17:30, 2 Января 2022',
         ]
         for case in cases:
             self.assertEqual([date(2022, 1, 2)], find_date_in_string(case))
