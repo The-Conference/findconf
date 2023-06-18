@@ -100,3 +100,8 @@ class TestStringNormalizer(TestCase):
         ]
         for case in cases:
             self.assertEqual('test test', normalize_string(case))
+
+    def test_normalize_string_is_none(self):
+        with self.assertRaises(TypeError):
+            # noinspection PyTypeChecker
+            normalize_string(None)  # NOSONAR

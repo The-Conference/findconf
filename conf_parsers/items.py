@@ -12,10 +12,12 @@ from .utils import normalize_string
 
 
 def absolute_url(url, loader_context):
+    """Convert relative URLs to absolute."""
     return loader_context['selector'].urljoin(url)
 
 
 def fix_emails(url):
+    """Remove leftover tags."""
     return url.replace('mailto:', '')
 
 

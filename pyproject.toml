@@ -18,10 +18,9 @@ django-environ = "^0.10.0"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.14.0"
-
-
-[tool.poetry.group.tests.dependencies]
 coverage = "^7.2.7"
+pdoc = "^13.1.1"
+
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,10 +1,23 @@
+"""Internal low-level helper functions, used mainly by automated processes.
+Direct usage is possible, although higher-level functions should be considered first."""
+
 import re
 import datetime
 from dateparser import parse
 
 
 def normalize_string(string: str) -> str:
-    """Normalizes spaces and removes junk."""
+    """Normalizes spaces and removes junk.
+
+    Args:
+        string: Any string.
+
+    Returns:
+        Normalized string.
+
+    Raises:
+        TypeError: if input string is None.
+    """
     try:
         # dash, hyphen, minus, etc.
         string = re.sub(r'[\u002D\u058A\u05BE\u1400\u1806'
@@ -26,7 +39,7 @@ def find_date_in_string(string: str) -> list[datetime.date]:
     Since the input is natural language, edge cases may not be handled properly.
 
     Args:
-        string (str): Any string. It is, however, advisable to remove unnecessary data to increase detection rate.
+        string: Any string. It is, however, advisable to remove unnecessary data to increase detection rate.
 
     Returns:
         A list of 0, 1 or 2 date objects.
@@ -72,7 +85,7 @@ def parse_vague_dates(string: str) -> list[datetime.date]:
     Will likely generate inaccurate results if input contains other data.
 
     Args:
-        string (str): A string containing dates. See tests for supported formats.
+        string: A string containing dates. See tests for supported formats.
 
     Returns:
         A list of 0, 1 or 2 date objects.

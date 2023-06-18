@@ -1,3 +1,5 @@
+"""Pipelines are called automatically by Scrapy. No direct usage."""
+
 # Define your item pipelines here
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
@@ -77,7 +79,10 @@ class FillTheBlanksPipeline:
 class DropOldItemsPipeline:
     """Check parsed item against FILTER_DATE parameter;
     attempt to fill the date if none is parsed;
-    drop item if check fails."""
+    drop item if check fails.
+
+    Raises:
+        DropItem: if the date is not found or too old."""
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)

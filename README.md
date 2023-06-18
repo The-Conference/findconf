@@ -4,14 +4,20 @@
 ## Running:
 [Not compatible with Windows](https://github.com/scrapy-plugins/scrapy-playwright#lack-of-native-support-for-windows), use WSL instead.
 
-Run single spider: `scrapy crawl %spider_name%`\
+Run single spider: `scrapy crawl %spider_name%`
+
 Run all spiders: `python run.py`
 
 ## Development:
-Enable dev settings: `export SCRAPY_SETTINGS_MODULE=settings_dev`\
-Tests: `python -m unittest discover`\
-Coverage: `coverage run -m unittest discover && coverage report`\
+Enable dev settings: `export SCRAPY_SETTINGS_MODULE=settings_dev`
+
+Tests: `python -m unittest discover`
+
+Coverage: `coverage run -m unittest discover && coverage report`
+
 Export requirements from Poetry: `poetry export -f requirements.txt --output requirements.txt --only main `
+
+Build docs: `pdoc conf_parsers !conf_parsers.spiders !conf_parsers.tests --docformat google -o ./docs`
 
 ### Data flow:
     1. Sipder (scraping) -> items.ConferenceLoader

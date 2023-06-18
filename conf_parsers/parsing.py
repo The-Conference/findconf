@@ -16,8 +16,8 @@ def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader
     """Main starting point for generic data parsing & collection.
 
     Args:
-        selector (Selector): A selector item with text and tags, as it comes from the response.
-        new_item (ItemLoader): ItemLoader object to append discovered data to.
+        selector: A selector item with text and tags, as it comes from the response.
+        new_item: ItemLoader object to append discovered data to.
 
     Returns:
         Populated ItemLoader object.
@@ -114,7 +114,7 @@ def get_dates(string: str, new_item: ItemLoader, is_vague: bool = False) -> Item
     """Search a string for dates, convert them to datetime format,
     and append to the supplied ItemLoader object.
     See :class:`tests<conf_spiders.tests.test_utils.TestDateFinder>` for a list of supported date formats.
-    For a more general solution, see :func:`~conf_spiders.utils.find_date_in_string`.
+    For a more general solution, see :py:func:`conf_spiders.utils.find_date_in_string`.
 
     Args:
         string: A string that may or may not contain dates.
