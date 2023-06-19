@@ -151,8 +151,10 @@ export const filteredContent = () => async (dispatch) => {
   dispatch(paginate(1));
   const currentUrl = window.location.href;
   let query = "?" + currentUrl.split("?")[1];
+  let decodedUrl = decodeURIComponent(query).split("+").join("%20");
+  console.log(decodedUrl);
   try {
-    await api.get(`/api/${query}`).then((response) => {
+    await api.get(`/api/${decodedUrl}`).then((response) => {
       dispatch(handleFilter(response.data));
       // console.log(response.data);
     });
