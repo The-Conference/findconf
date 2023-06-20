@@ -13,22 +13,28 @@ from w3lib.html import remove_tags, remove_tags_with_content
 from .utils import find_date_in_string, parse_vague_dates
 
 
-def default_parser_xpath(selector: Selector, new_item: ItemLoader) -> ItemLoader:
+def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> ItemLoader:
     """Main starting point for generic data parsing & collection.
 
     Args:
         selector: A selector item with text and tags, as it comes from the response.
+            Can also accept plain text, but links won't be parsed.
         new_item: ItemLoader object to append discovered data to.
 
     Returns:
         Populated ItemLoader object.
     """
-    line = selector.get()
+    if isinstance(selector, Selector):
+        line = selector.get()
+        link = selector.xpath(".//a/@href").get()
+    else:
+        line = selector
+        link = None
+
     # remove inline <script>
     clean_line = remove_tags(remove_tags_with_content(line, ('script',)))
     lowercase = clean_line.casefold()
 
-    link = selector.xpath(".//a/@href").get()
     if ('заяв' in lowercase
             or 'принимаютс' in lowercase
             or 'участия' in lowercase

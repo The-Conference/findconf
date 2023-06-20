@@ -1,6 +1,5 @@
+import re
 import scrapy
-from scrapy.linkextractors import IGNORED_EXTENSIONS
-from scrapy_playwright.page import PageMethod
 
 from ..items import ConferenceItem, ConferenceLoader
 from ..parsing import default_parser_xpath, get_dates
@@ -10,38 +9,44 @@ class StankinSpider(scrapy.Spider):
     name = "stankin"
     un_name = 'Московский государственный технологический университет «СТАНКИН»'
     allowed_domains = ["stankin.ru"]
-    start_urls = ["https://stankin.ru/pages/id_82/page_259",
-                  "https://stankin.ru/pages/id_82/page_539"]
-    custom_settings = {
-        'DOWNLOAD_HANDLERS': {
-            "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-            "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-        }
-    }
+    api_url = "https://stankin.ru/api_entry.php"
+    base_url = "https://stankin.ru/pages/id_82/page_"
 
     def start_requests(self):
-        for url in self.start_urls:
-            yield scrapy.Request(url, callback=self.parse_links, meta={"playwright": True})
+        payload = {
+            "action": "getTemplateCategory",
+            "data": {"id": "82"}
+        }
+        yield scrapy.http.JsonRequest(self.api_url, data=payload, callback=self.parse_links)
 
     def parse_links(self, response):
-        for link in response.css("div.ql-editor > p"):
-            text = link.xpath("string(.)").get()
-            href = link.xpath(".//a/@href").get()
-            if 'конфер' in text.lower() and not href.lower().endswith(tuple(IGNORED_EXTENSIONS)):
-                yield scrapy.Request(response.urljoin(href), callback=self.parse_items,
-                                     meta={"playwright": True,
-                                           "playwright_page_methods":
-                                               [PageMethod("wait_for_selector", "div.ivnix-text-reader")],
-                                           "link_text": text})
+        for item in response.json().get("data").get("menu"):
+            name = item.get("name")
+            modals = item.get("modals")
+            pages = item.get("pages")
+            _id = 0
+            if modals:
+                _id = modals[0].get("id")
+            if pages:
+                _id = pages[0].get("id")
+            payload = {
+                "action": "getTemplateCategoryPage",
+                "data": {"id": _id}
+            }
+            yield scrapy.http.JsonRequest(self.api_url, data=payload, callback=self.parse_items,
+                                          meta={"name": name, "id": str(_id)})
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        data = response.json().get("data").get("delta").get("delta").get("ops")
+        text = [i.get("insert") for i in data if not isinstance(i.get("insert"), dict)]
+        text = " ".join(text)
+        if 'конфер' in text.lower():
+            new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+            new_item.add_value('conf_card_href', self.base_url + response.meta.get("id"))
+            new_item.add_value('conf_name', response.meta.get("name"))
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_value('conf_name', response.meta.get("link_text"))
-
-        for line in response.xpath("//div[@class='ql-container ql-snow']//*[self::p or self::li]"):
-            new_item = default_parser_xpath(line, new_item)
-        if not new_item.get_collected_values('conf_date_begin'):
-            new_item = get_dates(new_item.get_output_value('conf_desc'), new_item)
-        yield new_item.load_item()
+            for line in re.split(r"\s+\n", text):
+                new_item = default_parser_xpath(line, new_item)
+            if not new_item.get_collected_values('conf_date_begin'):
+                new_item = get_dates(new_item.get_output_value('conf_desc'), new_item)
+            yield new_item.load_item()
