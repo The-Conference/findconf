@@ -45,7 +45,7 @@ def find_date_in_string(string: str) -> list[datetime.date]:
         A list of 0, 1 or 2 date objects.
     """
     string = normalize_string(string)
-    string = re.sub(r'[пд]о', '-', string)
+    string = re.sub(r'[пд]о|\sи\s', '-', string)
     pattern = re.compile(
         r'(?i)(\d+(?:\s?-\s?\d+)?)\s?'
         r'(?:(январ[ьея]|феврал[ьея]|март[еа]?'

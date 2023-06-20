@@ -76,6 +76,8 @@ class RanepaSpiderIGSU(CrawlSpider):
         text_block = response.xpath("//div[@class='et_pb_text_inner']")
         for line in text_block.xpath("./*[self::p or self::ul or starts-with(name(),'h')]"):
             new_item = default_parser_xpath(line, new_item)
+        if not new_item.get_collected_values('conf_date_begin'):
+            new_item = get_dates(new_item.get_output_value('conf_desc'), new_item)
 
         yield new_item.load_item()
 

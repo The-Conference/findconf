@@ -7,6 +7,7 @@ More accurate, site-specific rules can be added to spiders on top of these funct
 import re
 from scrapy import Selector
 from scrapy.loader import ItemLoader
+# from scrapy.linkextractors import IGNORED_EXTENSIONS TODO
 from w3lib.html import remove_tags, remove_tags_with_content
 
 from .utils import find_date_in_string, parse_vague_dates
@@ -77,7 +78,7 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
         new_item.add_value('scopus', True)
     if 'ВАК' in line:
         new_item.add_value('vak', True)
-    if 'wos' in lowercase:
+    if 'wos' in lowercase or 'web of science' in lowercase:
         new_item.add_value('wos', True)
 
     if ('состоится' in lowercase
