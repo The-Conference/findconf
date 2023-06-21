@@ -40,7 +40,7 @@ jobs:
       - name: Stop containers and remove images of backend apps
         continue-on-error: true
         run: |
-          sudo su && cd /usr/data && sudo docker-compose down
+          sudo docker-compose -f /usr/data/docker-compose.yml down
           sudo docker rmi --force $(sudo docker images -q data-django:latest)
           echo "Container was stoped. Image was removed"
 
@@ -65,11 +65,11 @@ jobs:
       - name: Up all containers
         continue-on-error: true
         run: |
-          sudo su && cd /usr/data && sudo docker-compose up -d
+          sudo docker-compose -f /usr/data/docker-compose.yml up -d
           echo "Container started"
           sleep 60
           sudo docker ps
-          sudo su && cd /usr/data && sudo docker-compose logs
+          sudo docker-compose -f /usr/data/docker-compose.yml logs
 
       - name: Check django container uptime
         run: echo "EXIT_CODE=$(sudo docker inspect --format='{{.State.ExitCode}}' app_django)" >> $GITHUB_ENV
@@ -90,13 +90,13 @@ jobs:
           echo 'http status code is ${{ env.HTTP_CODE }}'
           echo 'app_django container exit code is ${{ env.EXIT_CODE }}.'
           echo 'Backend updated failed! Restoring backup'
-          sudo su && cd /usr/data && sudo docker-compose down
+          sudo docker-compose -f /usr/data/docker-compose.yml down
           sudo docker rmi --force $(sudo docker images -q data-django:latest)
           echo "Container was stoped. Image was removed"
           sudo rm -rf /usr/data/django/app/*
           sudo cp -R /usr/data/django_app-${{ env.NOW }}/* /usr/data/django/app 
           echo 'Files was restored'
-          sudo su && cd /usr/data && sudo docker-compose up -d
+          sudo docker-compose -f /usr/data/docker-compose.yml up -d
           sudo docker ps
           echo "Containers started"
           echo "F_CODE=1" >> $GITHUB_ENV
