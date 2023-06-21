@@ -36,8 +36,9 @@ class ConferenceAdminForm(forms.ModelForm):
 
 class ConferenceAdmin(admin.ModelAdmin):
     form = ConferenceAdminForm
-    list_display = ['conf_name', 'checked']
+    list_display = ['conf_name', 'conf_date_begin', 'checked']
     search_fields = ['conf_name']
+    list_filter = ['conf_date_begin', 'checked']
 
     def save_model(self, request, obj, form, change):
         obj.generate_conf_id = True
