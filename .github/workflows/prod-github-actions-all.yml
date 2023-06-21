@@ -11,7 +11,7 @@ env:
   TMP_DIR: '/tmp/download'
       
 jobs:
-  update_and_test_front:
+  update_and_test_prod_new_release:
     runs-on: 
       labels: prod
     steps:
