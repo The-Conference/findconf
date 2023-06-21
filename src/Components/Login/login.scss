@@ -84,6 +84,11 @@
       transform: translate(0, 12px) scale(0.8);
       color: #0a53e4;
     }
+    .confirm-password:focus-within .confirm-password {
+      transform: translate(0, 12px) scale(0.8);
+      color: #0a53e4;
+    }
+
     &:focus {
       box-shadow: 0 0 0 2px #79b1ff;
     }
@@ -108,7 +113,8 @@
       left: 30px;
     }
     .filled-email,
-    .filled-password {
+    .filled-password,
+    .filled-confirm-password {
       transform: translate(0, 12px) scale(0.8);
     }
   }

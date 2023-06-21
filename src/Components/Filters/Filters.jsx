@@ -225,7 +225,9 @@ const Filters = () => {
                 </div>
               </div>
             }
-            position="bottom left"
+            position={
+              item.name === "Сортировка" ? "bottom right" : "bottom left"
+            }
           >
             {(close) => (
               <div>
@@ -254,7 +256,6 @@ const Filters = () => {
                   {dataFiltered.map((item, n) => (
                     <StyledPopupDiv key={n + 1}>
                       <StyledPopupInput
-                        className="custom-checkbox"
                         id={"color" + n}
                         type="checkbox"
                         checked={
