@@ -111,15 +111,15 @@ jobs:
 
       - name: Get archive of new version of frontend and unzip it
         run: |
-          sudo su && cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/frontend-for-prod.zip
-          sudo unzip -o $TMP_DIR/frontend-for-prod.zip
+          sudo su && cd $TMP_DIR && sudo wget https://github.com/The-Conference/findconf/archive/refs/heads/frontend-4-prod.zip
+          sudo unzip -o $TMP_DIR/frontend-4-prod.zip
           echo 'The new version of frontend was got'
 
       - name: Update frontend with new version
         run: |
           sudo rm -rf /usr/data/www/*
-          sudo cp -R $TMP_DIR/findconf-frontend-for-prod/build/* /usr/data/www
-          sudo rm -rf $TMP_DIR/findconf-frontend-for-prod $TMP_DIR/frontend-for-prod.zip
+          sudo cp -R $TMP_DIR/findconf-frontend-4-prod/build/* /usr/data/www
+          sudo rm -rf $TMP_DIR/findconf-frontend-4-prod $TMP_DIR/frontend-4-prod.zip
           echo "all files was updated"
 
       - name: check frontend site http code
