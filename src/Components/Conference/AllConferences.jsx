@@ -11,7 +11,6 @@ import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
 import {
   handleSave,
   handleFollow,
-  fetchFilteredConferences,
   paginate,
   addMore,
 } from "../../store/postData";

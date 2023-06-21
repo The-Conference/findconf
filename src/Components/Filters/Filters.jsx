@@ -72,17 +72,8 @@ const Filters = () => {
       keys: ["name"],
     };
     const fuse = new Fuse(dataFiltered, options);
-    const result = fuse.search(pattern);
-    const matches = [];
-
-    if (!result.length) {
-      setData(dataInitial);
-    } else {
-      result.forEach(({ item }) => {
-        matches.push(item);
-      });
-      setData(matches);
-    }
+    const matches = fuse.search(pattern).map(({ item }) => item);
+    setData(matches.length ? matches : dataInitial);
   };
 
   const { search } = useSelector((state) => state);
@@ -146,24 +137,21 @@ const Filters = () => {
 
   const deletAllFilters = () => {
     const currentParams = Object.fromEntries(searchParams.entries());
-    if (currentParams.hasOwnProperty("search")) {
-      setSearchParams({ search: currentParams.search });
-    } else {
-      setSearchParams();
-    }
+    setSearchParams(
+      currentParams.hasOwnProperty("search")
+        ? { search: currentParams.search }
+        : undefined
+    );
   };
   const deleteOneGroup = (id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
-    let paramsToRemove = allKeys.filter((el) => el.id === id)[0].keys;
-    let newParams;
-    paramsToRemove.forEach((param) => {
-      if (currentParams.hasOwnProperty(param)) {
-        delete currentParams[param];
-        newParams = currentParams;
-        dispatch(handleDeleteColor(id));
-      }
-    });
-
+    const paramsToRemove = allKeys.find((el) => el.id === id)?.keys || [];
+    const newParams = Object.fromEntries(
+      Object.entries(currentParams).filter(
+        ([param]) => !paramsToRemove.includes(param)
+      )
+    );
+    dispatch(handleDeleteColor(id));
     setSearchParams(new URLSearchParams(newParams));
   };
   return (

@@ -7,16 +7,14 @@ import Footer from "../Footer/Footer";
 const ProtectedRoute = () => {
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
 
-  return (
+  return isAuthenticated ? (
     <>
-      {(isAuthenticated && (
-        <>
-          <Header />
-          <Profile />
-          <Footer />
-        </>
-      )) || <Login />}
+      <Header />
+      <Profile />
+      <Footer />
     </>
+  ) : (
+    <Login />
   );
 };
 

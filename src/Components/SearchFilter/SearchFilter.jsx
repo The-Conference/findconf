@@ -29,24 +29,18 @@ const SearchFilter = () => {
   useOnClickOutside(ref, () => setPopup(false));
 
   const filterBySearch = (event) => {
-    let newValue = event.target.value
-      .trim()
-      .replace(/[+/)/(/*/^/$/-/-/%/|/?/]/gi, "")
-      .split(" ")
-      .join("|");
-    let regexp = new RegExp(newValue, "gi");
-    setValue(event.target.value);
-
-    var updatedList = [...search];
-    updatedList = updatedList.filter((item) => {
-      return (
-        regexp.test(item.org_name) ||
-        regexp.test(item.conf_name) ||
-        regexp.test(item.tags.map((el) => el.name)) ||
-        regexp.test("онлайн") ||
-        regexp.test("офлайн")
-      );
-    });
+    const { value } = event.target;
+    const trimmedValue = value.trim().replace(/[+/)/(/*/^/$/-/-/%/|/?/]/gi, "");
+    const regex = new RegExp(trimmedValue.split(" ").join("|"), "gi");
+    setValue(value);
+    const updatedList = search.filter(
+      ({ org_name, conf_name, tags }) =>
+        regex.test(org_name) ||
+        regex.test(conf_name) ||
+        tags.some(({ name }) => regex.test(name)) ||
+        regex.test("онлайн") ||
+        regex.test("офлайн")
+    );
     setFilteredList(updatedList);
     if (value.length > 0) {
       setPopup(true);
