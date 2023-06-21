@@ -30,15 +30,17 @@ const SignUp = () => {
     setConfirmPassword(event.target.value);
     setPasswordsMatch(event.target.value === password);
   }
-
+  const clearForm = () => {
+    setEmail("");
+    setPassword("");
+    setMessage("");
+    setConfirmPassword("");
+  };
   const handleSignUp = (event) => {
     event.preventDefault();
     if (passwordsMatch) {
       dispatch(registerUser({ email, password }));
-      setEmail("");
-      setPassword("");
-      setMessage("");
-      setConfirmPassword("");
+      clearForm();
     }
   };
   useEffect(() => {

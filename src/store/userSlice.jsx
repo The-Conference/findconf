@@ -44,4 +44,3 @@ export const registerUser = (userData) => async (dispatch) => {
 };
 
 export default userSlice.reducer;
-//"http://localhost:3000/signup"

@@ -25,7 +25,7 @@ const Login = () => {
       if (!isAuthenticated) {
         setMessage("Неверный пароль или логин");
       }
-    }, 1000);
+    }, 2000);
   };
   useEffect(() => {
     if (isAuthenticated) {
@@ -45,21 +45,34 @@ const Login = () => {
           Конференции уже ждут твоего участия
         </p>
       </div>
-      <form className="login__form" action="" onSubmit={handleSubmit}>
-        <input
-          type="mail"
-          className={message.length > 0 ? "red-border" : null}
-          placeholder="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          className={message.length > 0 ? "red-border" : null}
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <form
+        autocomplete="new-password"
+        className="login__form"
+        action=""
+        onSubmit={handleSubmit}
+      >
+        <div className="mail">
+          <input
+            type="mail"
+            autocomplete="new-password"
+            className={message.length > 0 ? "red-border" : null}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label className={email ? "filled-email " : "email "}>Email</label>
+        </div>
+        <div className="password">
+          <input
+            type="password"
+            autocomplete="new-password"
+            className={message.length > 0 ? "red-border" : null}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <label className={password ? "filled-password " : "password "}>
+            Password
+          </label>
+        </div>
         <button>Войти</button>
         <div className="error-message">{message}</div>
       </form>

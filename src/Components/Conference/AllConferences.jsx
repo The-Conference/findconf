@@ -3,15 +3,14 @@ import { Link, useSearchParams, useParams } from "react-router-dom";
 import hearts from "../../assets/follow.svg";
 import following from "../../assets/following.svg";
 import "./conference.scss";
-import { useSelector, useDispatch } from "react-redux";
 import { filteredContent } from "../../store/postData";
+import { useSelector, useDispatch } from "react-redux";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
 
 import {
   handleSave,
   handleFollow,
-  fetchFilteredConferences,
   paginate,
   addMore,
 } from "../../store/postData";

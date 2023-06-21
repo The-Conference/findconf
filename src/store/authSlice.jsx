@@ -52,5 +52,3 @@ export const login = (userData) => async (dispatch) => {
 };
 
 export default authSlice.reducer;
-
-//"http://localhost:3000/login"

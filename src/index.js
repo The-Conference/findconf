@@ -12,29 +12,31 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
-const Header = React.lazy(() => import("./Components/Header/Header"));
-const App = React.lazy(() => import("./App"));
-const AllConferences = React.lazy(() =>
+
+const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
+const LazyApp = React.lazy(() => import("./App"));
+const LazyAllConferences = React.lazy(() =>
   import("./Components/Conference/AllConferences")
 );
-const FullConference = React.lazy(() =>
+const LazyFullConference = React.lazy(() =>
   import("./Components/FullConference/FullConference")
 );
-
-const Footer = React.lazy(() => import("./Components/Footer/Footer"));
-const EmptyResult = React.lazy(() =>
+const LazyFooter = React.lazy(() => import("./Components/Footer/Footer"));
+const LazyEmptyResult = React.lazy(() =>
   import("./Components/EmptyResult/EmptyResult")
 );
-const NotFound = React.lazy(() => import("./Components/404/404"));
+const LazyNotFound = React.lazy(() => import("./Components/404/404"));
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <>
-        <Header />
-        <App />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyApp />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -42,9 +44,11 @@ const router = createBrowserRouter([
     path: "/favourite/",
     element: (
       <>
-        <Header />
-        <AllConferences data={"favourites"} />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyAllConferences data={"favourites"} />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -52,9 +56,11 @@ const router = createBrowserRouter([
     path: "/all",
     element: (
       <>
-        <Header />
-        <AllConferences data={"all"} />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyAllConferences data={"all"} />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -63,9 +69,11 @@ const router = createBrowserRouter([
     path: "/conferences/:confId",
     element: (
       <>
-        <Header />
-        <FullConference />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyFullConference />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -73,9 +81,11 @@ const router = createBrowserRouter([
     path: "/search/",
     element: (
       <>
-        <Header />
-        <AllConferences data={"search-results"} />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyAllConferences data={"search-results"} />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -83,9 +93,11 @@ const router = createBrowserRouter([
     path: "/collection2/",
     element: (
       <>
-        <Header />
-        <AllConferences data={"collection2"} />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyAllConferences data={"collection2"} />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -93,9 +105,11 @@ const router = createBrowserRouter([
     path: "/collection1/",
     element: (
       <>
-        <Header />
-        <AllConferences data={"collection1"} />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyAllConferences data={"collection1"} />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -103,9 +117,11 @@ const router = createBrowserRouter([
     path: "/search/",
     element: (
       <>
-        <Header />
-        <EmptyResult />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyEmptyResult />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -113,19 +129,24 @@ const router = createBrowserRouter([
     path: "/about",
     element: (
       <>
-        <Header />
-        <AboutService />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <AboutService />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
+
   {
     path: "/date/:date",
     element: (
       <>
-        <Header />
-        <AllConferences data={"date"} />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyAllConferences data={"date"} />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -133,9 +154,11 @@ const router = createBrowserRouter([
     path: "/dates/:periods",
     element: (
       <>
-        <Header />
-        <AllConferences data={"periods"} />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyAllConferences data={"periods"} />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -169,9 +192,11 @@ const router = createBrowserRouter([
     path: "*",
     element: (
       <>
-        <Header />
-        <NotFound />
-        <Footer />
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <LazyNotFound />
+          <LazyFooter />
+        </Suspense>
       </>
     ),
   },
@@ -180,13 +205,11 @@ ReactGA.initialize("G-1M5MYD5JB7");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Suspense fallback={<LoaderTemplateHeader />}>
-    <Provider store={store}>
-      <GAListener>
-        <RouterProvider router={router} />
-      </GAListener>
-    </Provider>
-  </Suspense>
+  <Provider store={store}>
+    <GAListener>
+      <RouterProvider router={router} />
+    </GAListener>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
