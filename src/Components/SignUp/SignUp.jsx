@@ -30,17 +30,15 @@ const SignUp = () => {
     setConfirmPassword(event.target.value);
     setPasswordsMatch(event.target.value === password);
   }
-  const clearForm = () => {
-    setEmail("");
-    setPassword("");
-    setMessage("");
-    setConfirmPassword("");
-  };
+
   const handleSignUp = (event) => {
     event.preventDefault();
     if (passwordsMatch) {
       dispatch(registerUser({ email, password }));
-      clearForm();
+      setEmail("");
+      setPassword("");
+      setMessage("");
+      setConfirmPassword("");
     }
   };
   useEffect(() => {
@@ -85,28 +83,48 @@ const SignUp = () => {
           </div>
           <form className="login__form" action="" onSubmit={handleSignUp}>
             {/* <label htmlFor="">email</label> */}
-            <input
-              type="mail"
-              className={message.length > 0 ? "red-border" : null}
-              value={email}
-              placeholder="E-mail"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {/* <label htmlFor="">пароль</label> */}
-            <input
-              type="password"
-              value={password}
-              className={message.length > 0 ? "red-border" : null}
-              placeholder="Пароль"
-              onChange={handlePasswordChange}
-            />
-            <input
-              type="password"
-              value={confirmPassword}
-              className={message.length > 0 ? "red-border" : null}
-              placeholder="Подтвердить пароль"
-              onChange={handleConfirmPasswordChange}
-            />
+            <div className="mail">
+              <input
+                type="mail"
+                autocomplete="new-password"
+                className={message.length > 0 ? "red-border" : null}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label className={email ? "filled-email " : "email "}>
+                Email
+              </label>
+              {/* <label htmlFor="">пароль</label> */}
+            </div>
+            <div className="password">
+              <input
+                type="password"
+                autocomplete="new-password"
+                value={password}
+                className={message.length > 0 ? "red-border" : null}
+                onChange={handlePasswordChange}
+              />
+              <label className={password ? "filled-password " : "password "}>
+                Пароль
+              </label>
+            </div>
+            <div className="confirm-password">
+              <input
+                type="password"
+                value={confirmPassword}
+                className={message.length > 0 ? "red-border" : null}
+                onChange={handleConfirmPasswordChange}
+              />
+              <label
+                className={
+                  confirmPassword
+                    ? "filled-confirm-password"
+                    : "confirm-password "
+                }
+              >
+                Подтвердите пароль
+              </label>
+            </div>
             {/* <label htmlFor=""></label>{" "}
         <input type="password" placeholder="Подтвердить пароль" />
         <div className="login__form-agreement">
