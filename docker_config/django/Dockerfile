@@ -1,7 +1,8 @@
-FROM python:3.10-alpine
+FROM python:3.11-alpine
   RUN /bin/sh -c "apk add --no-cache bash"
   ENV PYTHONDONTWRITEBYTECODE 1
   ENV PYTHONUNBUFFERED 1
+  RUN apk update && apk add bash
   RUN mkdir /app /start
   WORKDIR /app
   RUN pip install --upgrade pip
