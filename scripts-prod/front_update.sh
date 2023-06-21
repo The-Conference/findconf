@@ -9,8 +9,8 @@ fi
 
 cp -R /usr/data/www /usr/data/www-$now-man
 
-cd $temp_dir && wget https://github.com/The-Conference/findconf/archive/refs/heads/frontend-for-prod.zip
-unzip $temp_dir/frontend-for-prod.zip
+cd $temp_dir && wget https://github.com/The-Conference/findconf/archive/refs/heads/frontend-4-prod.zip
+unzip $temp_dir/frontend-4-prod.zip
 rm -rf /usr/data/www/*
-cp -R $temp_dir/findconf-frontend-for-prod/build/* /usr/data/www
-rm -rf $temp_dir/findconf-frontend-for-prod $temp_dir/frontend-for-prod.zip
+cp -R $temp_dir/findconf-frontend-4-prod/build/* /usr/data/www
+rm -rf $temp_dir/findconf-frontend-4-prod $temp_dir/frontend-4-prod.zip
