@@ -19,7 +19,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
     conf_s_desc = serializers.SerializerMethodField()
     conf_desc = serializers.SerializerMethodField()
 
-    def get_conf_status(self, obj):
+    def get_conf_status(self, obj) -> str:
         current_date = timezone.now().date()
         if obj.conf_date_begin is None or obj.conf_date_end is None:
             return "Дата уточняется"
@@ -33,11 +33,11 @@ class ConferenceSerializer(serializers.ModelSerializer):
             else:
                 return "Конференция запланирована" if conf_date_begin > current_date else "Конференция окончена"
 
-    def get_conf_s_desc(self, obj):
+    def get_conf_s_desc(self, obj) -> str:
         formatted_text = linebreaks(obj.conf_s_desc)
         return formatted_text.replace('\n', '').replace('\t', '')
 
-    def get_conf_desc(self, obj):
+    def get_conf_desc(self, obj) -> str:
         formatted_text = linebreaks(obj.conf_desc)
         return formatted_text.replace('\n', '').replace('\t', '')
 
