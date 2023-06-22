@@ -61,6 +61,11 @@ class TestParsing(TestCase):
         self.assertEqual(['Контактное лицо: Иванов Иван Иванович', 'plaintext@example.com'],
                          self.new_item.get_collected_values('contacts'))
 
+    def test_parser_str_input(self):
+        new_item = ConferenceLoader(item=ConferenceItem(), selector=self.response)
+        new_item = default_parser_xpath('123@example.com', new_item)
+        self.assertEqual('123@example.com', new_item.get_output_value('contacts'))
+
 
 class TestGetDates(TestCase):
     def setUp(self) -> None:

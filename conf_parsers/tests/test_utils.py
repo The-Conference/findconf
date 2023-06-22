@@ -92,6 +92,9 @@ class TestVagueDateParser(TestCase):
         self.assertEqual([date(2023, 7, 1), date(2023, 8, 31)],
                          parse_vague_dates('июль - август 2023'))
 
+    def test_vague_date_no_match(self):
+        self.assertEqual([], parse_vague_dates('test'))
+
 
 class TestStringNormalizer(TestCase):
     def test_normalize_string(self):

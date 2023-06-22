@@ -96,6 +96,8 @@ def parse_vague_dates(string: str) -> list[datetime.date]:
         r'|\d{4}?'
     )
     matches = re.findall(pattern, string)
+    if not matches:
+        return list()
     month2 = year = ''
     last = matches.pop()
     try:
