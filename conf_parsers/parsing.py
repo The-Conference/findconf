@@ -46,7 +46,10 @@ def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> Item
                 new_item.add_value('reg_date_begin', dates[0])
                 new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
 
-        if link and ('.pdf' not in link or '.doc' not in link or '.xls' not in link):
+        if (link and '.pdf' not in link and
+                '.doc' not in link and
+                '.xls' not in link and
+                'mailto' not in link):
             new_item.add_value('reg_href', link)
 
     if ('онлайн' in lowercase
