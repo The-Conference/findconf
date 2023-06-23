@@ -5,7 +5,7 @@ from django import forms
 
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Conference, Tag
+from .models import Conference, Tag, Favorite
 
 
 class MyAdminSite(admin.AdminSite):
@@ -46,5 +46,5 @@ class ConferenceAdmin(admin.ModelAdmin):
 
 admin_site.register(Conference, ConferenceAdmin)
 admin_site.register(Tag)
-# admin.site.unregister(User)
+admin.site.register(Favorite)
 # admin.site.unregister(Group)
