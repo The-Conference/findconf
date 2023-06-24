@@ -3,14 +3,23 @@
 Intended for use with any given website, with the most abstract rules so that they apply anywhere.
 More accurate, site-specific rules can be added to spiders on top of these functions.
 """
-
+from itertools import zip_longest
 import re
+from collections.abc import Generator
+
 from scrapy import Selector
 from scrapy.loader import ItemLoader
 # from scrapy.linkextractors import IGNORED_EXTENSIONS TODO
 from w3lib.html import remove_tags, remove_tags_with_content
+import pdfplumber
+import logging
+from io import BytesIO
 
 from .utils import find_date_in_string, parse_vague_dates
+
+
+# pdfplumber logs are extremely verbose
+logging.getLogger("pdfminer").setLevel(logging.WARNING)
 
 
 def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> ItemLoader:
@@ -142,3 +151,32 @@ def get_dates(string: str, new_item: ItemLoader, is_vague: bool = False) -> Item
     new_item.add_value('conf_date_begin', dates[0] if dates else None)
     new_item.add_value('conf_date_end', dates[1] if len(dates) > 1 and dates[1] != dates[0] else None)
     return new_item
+
+
+def parse_pdf_table(file: bytes) -> Generator[list[str]]:
+    """Parse tables in PDF format.
+    Accuracy is reasonably high, but not 100% - some rows can be erroneously split by pdfplumber.
+
+    Args:
+        file: Bytes from response.body
+
+    Returns:
+        List of row contents, split by columns.
+    """
+    pdf = pdfplumber.open(BytesIO(file))
+    previous_row = None
+    for page in pdf.pages:
+        rows = page.extract_table()
+        page_len = len(rows) - 1
+        for i, row in enumerate(rows):
+            row = [j for j in row if j is not None]
+            if previous_row:
+                if row[0]:
+                    yield previous_row
+                else:
+                    row = list(map(' '.join, zip_longest(previous_row, row)))
+                previous_row = None
+            if i == page_len:
+                previous_row = row
+                continue
+            yield row

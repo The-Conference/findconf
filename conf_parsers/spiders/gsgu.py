@@ -1,14 +1,8 @@
 import scrapy
-import pdfplumber
-from io import BytesIO
 from urllib.parse import unquote
-import logging
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import get_dates
-
-# pdfplumber logs are extremely verbose
-logging.getLogger("pdfminer").setLevel(logging.WARNING)
+from ..parsing import get_dates, parse_pdf_table
 
 
 class GsguSpider(scrapy.Spider):
@@ -22,18 +16,15 @@ class GsguSpider(scrapy.Spider):
         yield scrapy.Request(url=response.urljoin(unquote(link)), callback=self.parse_pdf)
 
     def parse_pdf(self, response):
-        f = BytesIO(response.body)
-        pdf = pdfplumber.open(f)
-        for page in pdf.pages:
-            for row in page.extract_table():
-                try:
-                    n, conf_name, dates, _ = row
-                    float(n)
-                except ValueError:
-                    continue
-                if 'онференц' in conf_name.lower():
-                    new_item = ConferenceLoader(item=ConferenceItem())
-                    new_item.add_value('conf_name', conf_name)
-                    new_item.add_value('conf_desc', conf_name)
-                    new_item = get_dates(dates, new_item)
-                    yield new_item.load_item()
+        for row in parse_pdf_table(response.body):
+            try:
+                _, conf_name, dates, _ = row
+            except ValueError:
+                continue
+
+            if 'онференц' in conf_name.lower():
+                new_item = ConferenceLoader(item=ConferenceItem())
+                new_item.add_value('conf_name', conf_name)
+                new_item.add_value('conf_desc', conf_name)
+                new_item = get_dates(dates, new_item, is_vague=True)
+                yield new_item.load_item()
