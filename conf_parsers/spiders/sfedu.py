@@ -3,7 +3,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import Rule, CrawlSpider
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import default_parser_xpath, get_dates
+from ..parsing import default_parser_xpath
 
 
 class SfeduSpider(CrawlSpider):
