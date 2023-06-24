@@ -29,7 +29,7 @@ class TestDropOldItemsPipeline(TestCase):
         item = ConferenceItem(conf_date_begin=date(1970, 1, 1))
         with self.assertRaises(DropItem) as e:
             DropOldItemsPipeline.process_item(item, self.spider)
-        self.assertEqual(str(e.exception), 'Old item [1970-01-01]')
+        self.assertEqual('Old item [1970-01-01]', str(e.exception))
 
     def test_new(self):
         item = ConferenceItem(conf_date_begin=datetime.now().date())
@@ -39,7 +39,7 @@ class TestDropOldItemsPipeline(TestCase):
         item = ConferenceItem()
         with self.assertRaises(DropItem) as e:
             DropOldItemsPipeline.process_item(item, self.spider)
-        self.assertEqual(str(e.exception), 'Date not found')
+        self.assertEqual('Date not found', str(e.exception))
 
     def test_date_found_new(self):
         today = datetime.now().date()
@@ -52,7 +52,7 @@ class TestDropOldItemsPipeline(TestCase):
         item = ConferenceItem(conf_s_desc='test')
         with self.assertRaises(DropItem) as e:
             DropOldItemsPipeline.process_item(item, self.spider)
-        self.assertEqual(str(e.exception), 'Date not found')
+        self.assertEqual('Date not found', str(e.exception))
 
 
 class TestSaveToDBPipeline(TestCase):
@@ -96,8 +96,8 @@ class TestSaveToDBPipeline(TestCase):
 
         with self.assertLogs(level='INFO') as log:
             self.db.close_spider(self.spider)
-            self.assertEqual(log.output, ['INFO:test_spider:Saved 0 items to DB: []',
-                                          "INFO:test_spider:Duplicate items: {'test'}"])
+            self.assertEqual(['INFO:test_spider:Saved 0 items to DB: []',
+                              "INFO:test_spider:Duplicate items: {'test'}"], log.output)
         q = select(ConferenceItemDB)
         res = self.session.execute(q).scalars().all()
         self.assertEqual(1, len(res))
@@ -111,7 +111,7 @@ class TestSaveToDBPipeline(TestCase):
     def test_save_nothing(self):
         with self.assertLogs(level='DEBUG') as log:
             self.db.close_spider(self.spider)
-        self.assertEqual(log.output, ['DEBUG:test_spider:Saving to DB: []'])
+        self.assertEqual(['DEBUG:test_spider:Saving to DB: []'], log.output)
 
     def test_setup(self):
         pipeline_class = SaveToDBPipeline.from_crawler(self.spider)
@@ -119,12 +119,31 @@ class TestSaveToDBPipeline(TestCase):
 
 
 class TestFillTheBlanksPipeline(TestCase):
-    def test_all_ok(self):
+    def test_hash(self):
+        item = ConferenceItem(
+            conf_date_begin=date(2022, 1, 2),
+            conf_name='test conf',
+        )
+        result = FillTheBlanksPipeline.process_item(item, SampleSpider)
+        self.assertEqual('f4cdb5994b1ee684cd4bce261d5aaf69', result['hash'])
+
+    def test_conf_id_single(self):
+        """Do not change.
+        Changing conf_id format will result in duplicate entries in DB."""
         item = ConferenceItem(
             conf_date_begin=date(2022, 1, 2),
             conf_name='test conf',
         )
         result = FillTheBlanksPipeline.process_item(item, SampleSpider)
         self.assertEqual('test_spider_2022-01-02_None_testconf', result['conf_id'])
-        self.assertEqual(date(2022, 1, 2), result['conf_date_begin'])
-        self.assertEqual('f4cdb5994b1ee684cd4bce261d5aaf69', result['hash'])
+
+    def test_conf_id_double(self):
+        """Do not change.
+        Changing conf_id format will result in duplicate entries in DB."""
+        item = ConferenceItem(
+            conf_date_begin=date(2022, 1, 2),
+            conf_date_end=date(2022, 1, 3),
+            conf_name='test conf',
+        )
+        result = FillTheBlanksPipeline.process_item(item, SampleSpider)
+        self.assertEqual('test_spider_2022-01-02_2022-01-03_testconf', result['conf_id'])
