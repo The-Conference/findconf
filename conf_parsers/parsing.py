@@ -17,7 +17,6 @@ from io import BytesIO
 
 from .utils import find_date_in_string, parse_vague_dates
 
-
 # pdfplumber logs are extremely verbose
 logging.getLogger("pdfminer").setLevel(logging.WARNING)
 
@@ -164,19 +163,23 @@ def parse_pdf_table(file: bytes) -> Generator[list[str]]:
         List of row contents, split by columns.
     """
     pdf = pdfplumber.open(BytesIO(file))
-    previous_row = None
+    end_of_page = []
     for page in pdf.pages:
-        rows = page.extract_table()
+        rows = page.extract_table(
+            table_settings={"join_tolerance": 5,
+                            "snap_tolerance": 5,
+                            "intersection_tolerance": 0.5,  # very finicky
+                            })
         page_len = len(rows) - 1
         for i, row in enumerate(rows):
-            row = [j for j in row if j is not None]
-            if previous_row:
+            row = ['' if j is None else j for j in row]
+            if end_of_page:
                 if row[0]:
-                    yield previous_row
+                    yield end_of_page
                 else:
-                    row = list(map(' '.join, zip_longest(previous_row, row)))
-                previous_row = None
+                    row = list(map(' '.join, zip_longest(end_of_page, row, fillvalue='')))
+                end_of_page = []
             if i == page_len:
-                previous_row = row
+                end_of_page = row
                 continue
             yield row
