@@ -26,5 +26,6 @@ class GsguSpider(scrapy.Spider):
                 new_item = ConferenceLoader(item=ConferenceItem())
                 new_item.add_value('conf_name', conf_name)
                 new_item.add_value('conf_desc', conf_name)
+                new_item.add_value('conf_card_href', self.start_urls[0])
                 new_item = get_dates(dates, new_item, is_vague=True)
                 yield new_item.load_item()

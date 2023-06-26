@@ -162,14 +162,18 @@ def parse_pdf_table(file: bytes) -> Generator[list[str]]:
     Returns:
         List of row contents, split by columns.
     """
+
+    # Here be dragons
+    # These settings are extremely finicky, do test every PDF parser if you change anything.
+    settings = {"join_tolerance": 8,
+                "snap_tolerance": 8,
+                "intersection_tolerance": 0.5,
+                }
+
     pdf = pdfplumber.open(BytesIO(file))
     end_of_page = []
     for page in pdf.pages:
-        rows = page.extract_table(
-            table_settings={"join_tolerance": 5,
-                            "snap_tolerance": 5,
-                            "intersection_tolerance": 0.5,  # very finicky
-                            })
+        rows = page.extract_table(table_settings=settings)
         page_len = len(rows) - 1
         for i, row in enumerate(rows):
             row = ['' if j is None else j for j in row]
