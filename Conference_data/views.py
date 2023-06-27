@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.utils import timezone
+from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
 
 from rest_framework import generics
 from Conference_crm.permissions.permissions import ReadOnlyOrAdminPermission
@@ -11,6 +12,21 @@ from .models import Conference
 from .serializers import ConferenceSerializer
 
 
+@extend_schema_view(
+    get=extend_schema(
+        parameters=[
+            OpenApiParameter(name='offline', type=bool),
+            OpenApiParameter(name='online', type=bool),
+            OpenApiParameter(name='rinc', type=bool),
+            OpenApiParameter(name='vak', type=bool),
+            OpenApiParameter(name='wos', type=bool),
+            OpenApiParameter(name='scopus', type=bool),
+            OpenApiParameter(name='tags', type=str),
+            OpenApiParameter(name='conf_status', type=str),
+            OpenApiParameter(name='un_name', type=str),
+        ]
+    )
+)
 class ConferenceList(generics.ListCreateAPIView):
     serializer_class = ConferenceSerializer
     permission_classes = [ReadOnlyOrAdminPermission]

@@ -201,5 +201,6 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'The Conf',
     'DESCRIPTION': 'Conferences project',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVE_INCLUDE_SCHEMA': True,
+    'SCHEMA_PATH_PREFIX': '/api/',
 }
