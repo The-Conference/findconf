@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from rest_framework.reverse import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -45,11 +47,12 @@ class ConferenceListTests(APITestCase):
         self.client.force_authenticate(user=self.admin)
         response = self.client.post(self.URL, {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(len(response.data), 4)
+        self.assertEqual(len(response.data), 5)
         self.assertEqual(response.data.get('conf_id')[0].code, 'required')
         self.assertEqual(response.data.get('un_name')[0].code, 'required')
         self.assertEqual(response.data.get('conf_date_begin')[0].code, 'required')
         self.assertEqual(response.data.get('conf_name')[0].code, 'required')
+        self.assertEqual(response.data.get('conf_desc')[0].code, 'required')
 
     def test_list_post_201(self):
         self.client.force_authenticate(user=self.admin)
@@ -63,7 +66,12 @@ class ConferenceListTests(APITestCase):
         response = self.client.post(self.URL, TEST_CONF_FULL)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         for key, value in TEST_CONF_FULL.items():
-            self.assertEqual(response.data.get(key), value)
+            if '_desc' in key:
+                self.assertEqual(response.data.get(key), f'<p>{value}</p>')
+            elif key == 'tags':
+                self.assertEqual(response.data.get(key), [OrderedDict([('id', 1), ('name', 'tag01')])])
+            else:
+                self.assertEqual(response.data.get(key), value)
 
 
 class ConferenceDetailTests(APITestCase):
