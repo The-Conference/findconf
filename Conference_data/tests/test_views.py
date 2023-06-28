@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
 
-from .fixtures import TEST_CONF_DICT
+from .fixtures import TEST_CONF_DICT, TEST_CONF_FULL
 from ..models import Conference
 
 
@@ -13,9 +13,10 @@ class ConferenceListTests(APITestCase):
         cls.URL = reverse('conf-list')
         user = get_user_model()
         cls.user = user.objects.create_user(email='user@example.com', password='123')
-        cls.admin = user.objects.create_user(email='admin@example.com', password='123', is_superuser=True)
+        cls.admin = user.objects.create_superuser(email='admin@example.com', password='123')
 
     def setUp(self) -> None:
+        self.client.raise_request_exception = False
         Conference.objects.create(**TEST_CONF_DICT)
         self.test_conf_data = TEST_CONF_DICT.copy()
 
@@ -24,7 +25,6 @@ class ConferenceListTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(isinstance(response.data, list))
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('id'), 1)
 
     def test_list_post_401(self):
         response = self.client.post(self.URL)
@@ -56,26 +56,34 @@ class ConferenceListTests(APITestCase):
         self.test_conf_data['conf_id'] = 'test02'
         response = self.client.post(self.URL, self.test_conf_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data.get('id'), 2)
+        self.assertEqual(len(Conference.objects.all()), 2)
+
+    def test_list_post_all_fields_201(self):
+        self.client.force_authenticate(user=self.admin)
+        response = self.client.post(self.URL, TEST_CONF_FULL)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        for key, value in TEST_CONF_FULL.items():
+            self.assertEqual(response.data.get(key), value)
 
 
 class ConferenceDetailTests(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.URL = reverse('conf-detail', kwargs={'pk': 1})
         user = get_user_model()
         cls.user = user.objects.create_user(email='user@example.com', password='123')
-        cls.admin = user.objects.create_user(email='admin@example.com', password='123', is_superuser=True)
+        cls.admin = user.objects.create_superuser(email='admin@example.com', password='123')
 
     def setUp(self) -> None:
-        Conference.objects.create(**TEST_CONF_DICT)
+        self.client.raise_request_exception = False
+        self.conf = Conference.objects.create(**TEST_CONF_DICT)
         self.test_conf_data = TEST_CONF_DICT.copy()
+        self.URL = reverse('conf-detail', kwargs={'pk': self.conf.pk})
 
     def test_detail_get_200(self):
         response = self.client.get(self.URL)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(isinstance(response.data, dict))
-        self.assertEqual(response.data.get('id'), 1)
+        self.assertEqual(response.data.get('id'), self.conf.pk)
 
     def test_detail_get_404(self):
         response = self.client.get(reverse('conf-detail', kwargs={'pk': 10}))
