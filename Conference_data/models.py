@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from ckeditor.fields import RichTextField
+from django.utils.html import linebreaks
 
 
 class Tag(models.Model):
@@ -48,9 +49,17 @@ class Conference(models.Model):
     scopus = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
+        self.conf_s_desc = self.normalize(self.conf_s_desc)
+        self.conf_desc = self.normalize(self.conf_desc)
+
         if not self.pk and self.generate_conf_id:
             self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
         super().save(*args, **kwargs)
+
+    @staticmethod
+    def normalize(string: str) -> str:
+        formatted_text = linebreaks(string)
+        return formatted_text.replace('\n', '').replace('\t', '')
 
     @property
     def conf_status(self):
