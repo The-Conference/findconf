@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*&ftx+e*icp41065vd#55-%ee3ijqhidl1&o58uorh(if#5pb'  # 'django-insecure-_co5$38c_i%@)d8-2bw9y=@bm8k&x%5+k8oz=-ozf071dr%kyc'
+SECRET_KEY = '*&ftx+e*icp41065vd#55-%ee3ijqhidl1&o58uorh(if#5pb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,6 +77,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
 
     ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
@@ -111,7 +112,7 @@ DATABASES = {
     #     'NAME': 'findconf',
     #     'USER': 'findconf',
     #     'PASSWORD': 'rbhuele',
-    #     'HOST': 'postgres',
+    #     'HOST': 'localhost',
     #     'PORT': '5432',
     # }
     #909961
