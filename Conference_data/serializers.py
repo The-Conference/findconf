@@ -1,5 +1,4 @@
 from django.utils import timezone
-from datetime import datetime
 from rest_framework import serializers
 
 from django.utils.html import linebreaks
@@ -40,6 +39,32 @@ class ConferenceSerializer(serializers.ModelSerializer):
     def get_conf_desc(self, obj) -> str:
         formatted_text = linebreaks(obj.conf_desc)
         return formatted_text.replace('\n', '').replace('\t', '')
+
+    def create(self, validated_data):
+        tag_list = None
+        if 'tags' in validated_data:
+            tags_data = validated_data.pop('tags')
+            tag_list = self.get_new_tags(tags_data)
+
+        conf = Conference.objects.create(**validated_data)
+        if tag_list:
+            conf.tags.set(tag_list)
+        return conf
+
+    def update(self, instance, validated_data):
+        if 'tags' in validated_data:
+            tags_data = validated_data.pop('tags')
+            tag_list = self.get_new_tags(tags_data)
+            instance.tags.set(tag_list, clear=True)
+        return super().update(instance, validated_data)
+
+    @staticmethod
+    def get_new_tags(tag_data: list) -> list[Tag]:
+        tag_list = []
+        for tag_data in tag_data:
+            tag, _ = Tag.objects.get_or_create(**tag_data)
+            tag_list.append(tag)
+        return tag_list
 
     class Meta:
         model = Conference
