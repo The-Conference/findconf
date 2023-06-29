@@ -1,4 +1,3 @@
-from django.utils import timezone
 from rest_framework import serializers
 
 from .models import Conference, Tag
@@ -12,21 +11,6 @@ class TagSerializer(serializers.ModelSerializer):
 
 class ConferenceSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False)
-    conf_status = serializers.SerializerMethodField()
-
-    def get_conf_status(self, obj) -> str:
-        current_date = timezone.now().date()
-        if obj.conf_date_begin is None or obj.conf_date_end is None:
-            return "Дата уточняется"
-        else:
-            conf_date_begin = obj.conf_date_begin
-            conf_date_end = obj.conf_date_end if obj.conf_date_end else None
-            if conf_date_begin <= current_date <= conf_date_end:
-                return "Конференция идёт"
-            elif (conf_date_begin - current_date).days <= 14 and current_date < conf_date_begin:
-                return "Конференция скоро начнётся"
-            else:
-                return "Конференция запланирована" if conf_date_begin > current_date else "Конференция окончена"
 
     def create(self, validated_data):
         tag_list = None
