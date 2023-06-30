@@ -48,19 +48,26 @@ class ConferenceListTests(APITestCase):
         self.client.force_authenticate(user=self.admin)
         response = self.client.post(self.URL, {})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(len(response.data), 5)
-        self.assertEqual(response.data.get('conf_id')[0].code, 'required')
+        self.assertEqual(len(response.data), 4)
         self.assertEqual(response.data.get('un_name')[0].code, 'required')
         self.assertEqual(response.data.get('conf_date_begin')[0].code, 'required')
         self.assertEqual(response.data.get('conf_name')[0].code, 'required')
         self.assertEqual(response.data.get('conf_desc')[0].code, 'required')
 
-    def test_list_post_201(self):
+    def test_list_post_201_with_conf_id(self):
         self.client.force_authenticate(user=self.admin)
         self.test_conf_data['conf_id'] = 'test02'
         response = self.client.post(self.URL, self.test_conf_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data.get('conf_id'), 'test02')
         self.assertEqual(Conference.objects.all().count(), 2)
+
+    def test_list_post_201_without_conf_id(self):
+        self.client.force_authenticate(user=self.admin)
+        del self.test_conf_data['conf_id']
+        response = self.client.post(self.URL, self.test_conf_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data.get('conf_id'), 'test unitest name2021-09-01')
 
     def test_list_post_all_fields_201(self):
         self.client.force_authenticate(user=self.admin)

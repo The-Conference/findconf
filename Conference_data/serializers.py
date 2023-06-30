@@ -1,4 +1,5 @@
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
+from django.core.exceptions import ValidationError
 
 from .models import Conference, Tag
 
@@ -11,6 +12,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 class ConferenceSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False)
+    conf_id = serializers.CharField(required=False)
 
     def create(self, validated_data):
         tag_list = None
@@ -37,6 +39,12 @@ class ConferenceSerializer(serializers.ModelSerializer):
             tag, _ = Tag.objects.get_or_create(**tag_data)
             tag_list.append(tag)
         return tag_list
+
+    def save(self, **kwargs):
+        try:
+            super().save(**kwargs)
+        except ValidationError as e:
+            raise exceptions.ValidationError(e.error_dict)
 
     class Meta:
         model = Conference
