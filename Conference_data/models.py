@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 
 from ckeditor.fields import RichTextField
-from django.utils.html import linebreaks
 
 
 class Tag(models.Model):
@@ -49,6 +48,7 @@ class Conference(models.Model):
     scopus = models.BooleanField(default=False)
 
     def clean(self) -> None:
+        """Shows an error in admin."""
         self.validate_unique()
 
     def save(self, *args, **kwargs):
@@ -61,13 +61,14 @@ class Conference(models.Model):
 
     @staticmethod
     def normalize(string: str) -> str:
-        formatted_text = linebreaks(string)
-        return formatted_text.replace('\n', '').replace('\t', '')
+        if string:
+            string.replace('\n', '').replace('\t', '')
+        return string
 
     @property
-    def conf_status(self):
+    def conf_status(self) -> str:
         current_date = timezone.now().date()
-        if self.conf_date_begin is None or self.conf_date_end is None:
+        if self.conf_date_begin is None or self.conf_date_end is None:  # TODO: Delete?
             return "Дата уточняется"
         elif self.conf_date_begin <= current_date <= self.conf_date_end:
             return "Конференция идёт"
@@ -84,5 +85,3 @@ class Conference(models.Model):
 
     def __str__(self):
         return f'{self.un_name} - {self.conf_name}'
-
-
