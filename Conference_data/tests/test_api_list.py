@@ -29,6 +29,12 @@ class ConferenceListTests(APITestCase):
         self.assertTrue(isinstance(response.data, list))
         self.assertEqual(len(response.data), 1)
 
+    def test_list_get_200_no_unchecked_in_output(self):
+        self.client.post(self.URL, TEST_CONF_FULL)
+        response = self.client.get(self.URL)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+
     def test_list_post_401(self):
         response = self.client.post(self.URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -89,7 +95,7 @@ class ConferenceListFilterTests(APITestCase):
         del conf_b_data['tags']
         conf_b = Conference.objects.create(**conf_b_data)
         t1 = Tag.objects.create(name='tag_1')
-        t2 = Tag.objects.create(name='tag_2')
+        cls.t2 = t2 = Tag.objects.create(name='tag_2')
         conf_b.tags.add(t1, t2)
         cls.today = timezone.now().date()
 
@@ -139,11 +145,22 @@ class ConferenceListFilterTests(APITestCase):
         tag_names = [i['name'] for i in response.data[0].get('tags')]
         self.assertTrue('tag_1' in tag_names)
 
+    def test_list_filter_tags_multiple(self):
+        self.conf.tags.add(self.t2)
+        response = self.client.get(f'{self.URL}?tags=tag_1,tag_2')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+
     def test_list_filter_un_name(self):
         response = self.client.get(f'{self.URL}?un_name=test%20uni')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0].get('un_name'), 'test uni')
+
+    def test_list_filter_un_name_multiple(self):
+        response = self.client.get(f'{self.URL}?un_name=test%20uni,un_name')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
 
     def test_list_filter_conf_status_started(self):
         self.conf.conf_date_begin = self.today
@@ -152,4 +169,58 @@ class ConferenceListFilterTests(APITestCase):
         response = self.client.get(f'{self.URL}?conf_status=started')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-        # self.assertEqual(response.data[0].get('conf_status'), 'Конференция началась')
+        self.assertEqual(response.data[0].get('conf_status'), 'Конференция идёт')
+
+    def test_list_filter_conf_status_starting_soon(self):
+        self.conf.conf_date_begin = self.today + timezone.timedelta(days=1)
+        self.conf.conf_date_end = self.today + timezone.timedelta(days=2)
+        self.conf.save()
+        response = self.client.get(f'{self.URL}?conf_status=starting_soon')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0].get('conf_status'), 'Конференция скоро начнётся')
+
+    def test_list_filter_conf_status_finished(self):
+        self.conf.conf_date_begin = self.today - timezone.timedelta(days=2)
+        self.conf.conf_date_end = self.today - timezone.timedelta(days=2)
+        self.conf.save()
+        response = self.client.get(f'{self.URL}?conf_status=finished')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+        self.assertEqual(response.data[0].get('conf_status'), 'Конференция окончена')
+
+    def test_list_filter_conf_status_scheduled(self):
+        self.conf.conf_date_begin = self.today + timezone.timedelta(days=20)
+        self.conf.conf_date_end = self.today + timezone.timedelta(days=20)
+        self.conf.save()
+        response = self.client.get(f'{self.URL}?conf_status=scheduled')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0].get('conf_status'), 'Конференция запланирована')
+
+    def test_list_filter_conf_status_multiple(self):
+        self.conf.conf_date_begin = self.today
+        self.conf.conf_date_end = self.today + timezone.timedelta(days=1)
+        self.conf.save()
+        response = self.client.get(f'{self.URL}?conf_status=started,finished')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+
+    def test_list_filter_conf_status_nonexistent(self):
+        response = self.client.get(f'{self.URL}?conf_status=nn')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
+
+    def test_list_ordering_by_date_asc(self):
+        response = self.client.get(f'{self.URL}?ordering=conf_date_begin')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+        self.assertEqual(response.data[0]['conf_date_begin'], '2021-09-01')
+        self.assertEqual(response.data[1]['conf_date_begin'], '2023-06-28')
+
+    def test_list_ordering_by_date_desc(self):
+        response = self.client.get(f'{self.URL}?ordering=-conf_date_begin')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+        self.assertEqual(response.data[0]['conf_date_begin'], '2023-06-28')
+        self.assertEqual(response.data[1]['conf_date_begin'], '2021-09-01')

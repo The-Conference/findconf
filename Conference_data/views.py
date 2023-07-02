@@ -12,6 +12,9 @@ from .filters import ConferenceFilter
     get=extend_schema(
         parameters=[
             OpenApiParameter(name='ordering', enum=['conf_date_begin', '-conf_date_begin']),
+            OpenApiParameter(name='conf_status', enum=['started', 'starting_soon', 'finished', 'scheduled'],
+                             type={'type': 'array', 'minItems': 1, 'maxItems': 4, 'items': {'type': 'string'}},
+                             style='form', explode=False),
         ]
     )
 )
