@@ -79,7 +79,6 @@ const Filters = () => {
   const { search } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(fetchResults());
     const universities = search
       .map((el) => el.un_name && el.un_name.trim())
       .filter((item, index, arr) => item && arr.indexOf(item) === index)
@@ -129,6 +128,7 @@ const Filters = () => {
 
   useEffect(() => {
     dispatch(filteredContent());
+    dispatch(fetchResults());
   }, [dispatch, searchParams]);
 
   const currentUrl = window.location.href;

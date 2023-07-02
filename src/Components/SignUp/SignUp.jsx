@@ -125,15 +125,6 @@ const SignUp = () => {
                 Подтвердите пароль
               </label>
             </div>
-            {/* <label htmlFor=""></label>{" "}
-        <input type="password" placeholder="Подтвердить пароль" />
-        <div className="login__form-agreement">
-          <input type="checkbox" />
-          <label htmlFor="">
-            Я принимаю условия
-            <span>Пользовательского соглашения</span>
-          </label>
-        </div> */}
             <button>Зарегистрироваться</button>
             <p className={passwordsMatch ? "match" : "error-message"}>
               {passwordsMatch && confirmPassword.length > 0
