@@ -65,12 +65,12 @@ const FILTERS = [
       {
         name: "По возрастанию",
         key: "ordering",
-        query: "conf_date_begin",
+        query: "date_asc",
       },
       {
         name: "По убыванию",
         key: "ordering",
-        query: "-conf_date_begin",
+        query: "date_desc",
       },
     ],
   },
