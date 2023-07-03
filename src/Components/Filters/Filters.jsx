@@ -41,10 +41,11 @@ const Filters = () => {
   const [cardId, setCardId] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const [del, setDel] = useState(false);
+  const [allVals, setAllVals] = useState([]);
+  const [allKey, setAllKey] = useState([]);
   const handleAddParams = (q, value, id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const currentValue = currentParams[q];
-
     let newParams;
     if (currentValue) {
       if (currentValue.includes(value)) {
@@ -56,8 +57,10 @@ const Filters = () => {
         } else {
           newParams = { ...currentParams, [q]: newValue };
         }
+      } else if (id === 7) {
+        newParams = { ...currentParams, [q]: `${value}` };
       } else {
-        newParams = { ...currentParams, [q]: `${currentValue} ${value}` };
+        newParams = { ...currentParams, [q]: `${currentValue}${value}` };
       }
     } else {
       newParams = { ...currentParams, [q]: value };
@@ -71,6 +74,7 @@ const Filters = () => {
       includeScore: true,
       keys: ["name"],
     };
+
     const fuse = new Fuse(dataFiltered, options);
     const matches = fuse.search(pattern).map(({ item }) => item);
     setData(matches.length ? matches : dataInitial);
@@ -129,11 +133,27 @@ const Filters = () => {
   useEffect(() => {
     dispatch(filteredContent());
     dispatch(fetchResults());
-  }, [dispatch, searchParams]);
+    const currentParams = Object.fromEntries(searchParams.entries());
+    const allValues = [];
+    allValues.push(
+      currentParams.tags ? currentParams.tags.split(",") : currentParams.tags
+    );
+    allValues.push(
+      currentParams.un_name
+        ? currentParams.un_name.split(",")
+        : currentParams.un_name
+    );
+    allValues.push(
+      currentParams.ordering
+        ? currentParams.ordering.split(",")
+        : currentParams.ordering
+    );
+    let mergedArray = [].concat(...allValues);
 
-  const currentUrl = window.location.href;
-  let query = currentUrl.split("?")[1];
-  const decodedUrl = decodeURIComponent(query).split("+").join(" ");
+    const allKeys = Object.keys(currentParams);
+    setAllVals(mergedArray);
+    setAllKey(allKeys);
+  }, [dispatch, searchParams]);
 
   const deletAllFilters = () => {
     const currentParams = Object.fromEntries(searchParams.entries());
@@ -260,24 +280,28 @@ const Filters = () => {
                         type="checkbox"
                         checked={
                           (cardId === 4 &&
-                            decodedUrl.includes(item.key) === true) ||
+                            allKey.includes(item.key) === true) ||
                           (cardId === 5 &&
-                            decodedUrl.includes(item.key) === true) ||
+                            allKey.includes(item.key) === true) ||
                           (cardId === 6 &&
-                            decodedUrl.includes(item.key) === true) ||
-                          (cardId !== 4 &&
-                            decodedUrl.includes(item.name) === true) ||
-                          (cardId !== 5 &&
-                            decodedUrl.includes(item.name) === true) ||
-                          (cardId !== 6 &&
-                            decodedUrl.includes(item.name) === true)
+                            allKey.includes(item.key) === true) ||
+                          (cardId !== 4 && allVals.includes(item.name)) ||
+                          (cardId !== 5 && allVals.includes(item.name)) ||
+                          (cardId !== 6 && allVals.includes(item.name)) ||
+                          (cardId === 7 && allVals.includes(item.query))
                             ? true
                             : false
                         }
                         onChange={() => {
                           cardId === 4 || cardId === 5 || cardId === 6
                             ? handleAddParams(item.key, "true", cardId)
-                            : handleAddParams(item.key, item.name, cardId);
+                            : cardId === 7
+                            ? handleAddParams(item.key, item.query, cardId)
+                            : handleAddParams(
+                                item.key,
+                                item.name + ",",
+                                cardId
+                              );
                         }}
                       />
                       <StyledPopupText for={"color" + n}>

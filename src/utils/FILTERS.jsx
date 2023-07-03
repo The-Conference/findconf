@@ -61,10 +61,18 @@ const FILTERS = [
     name: "Сортировка",
     id: 7,
     applied: false,
-    data: ["По дате", "По статусу"].map((item) => ({
-      name: item,
-      key: "sort",
-    })),
+    data: [
+      {
+        name: "По возрастанию",
+        key: "ordering",
+        query: "conf_date_begin",
+      },
+      {
+        name: "По убыванию",
+        key: "ordering",
+        query: "-conf_date_begin",
+      },
+    ],
   },
 ];
 const allKeys = [
@@ -73,6 +81,6 @@ const allKeys = [
   { id: 5, keys: ["started", "finished", "unknown", "starting_soon"] },
   { id: 4, keys: ["rinc", "vak", "scopus", "wos"] },
   { id: 6, keys: ["online", "offline"] },
-  { id: 7, keys: ["sort"] },
+  { id: 7, keys: ["ordering"] },
 ];
 export { FILTERS, allKeys };

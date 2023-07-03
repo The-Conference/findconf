@@ -151,10 +151,13 @@ export const filteredContent = () => async (dispatch) => {
   dispatch(paginate(1));
   const currentUrl = window.location.href;
   let query = "?" + currentUrl.split("?")[1];
-  let decodedUrl = decodeURIComponent(query).split("+").join("%20");
-  console.log(decodedUrl);
+  let replacedUrl = decodeURIComponent(query)
+    .replace(/\+/g, "%20")
+    .replace(/%2C/g, ",");
+
+  // console.log(replacedUrl);
   try {
-    await api.get(`/api/${decodedUrl}`).then((response) => {
+    await api.get(`/api/${replacedUrl}`).then((response) => {
       dispatch(handleFilter(response.data));
       // console.log(response.data);
     });
