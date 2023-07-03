@@ -16,7 +16,7 @@ admin.site = admin_site
 
 class ConferenceAdminForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
-        queryset=Tag.objects.all(),
+        queryset=Tag.objects.all().order_by('name'),
         required=False,
         widget=FilteredSelectMultiple(verbose_name='Тэги', is_stacked=False),
     )
