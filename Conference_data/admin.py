@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django import forms
-
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from ckeditor.widgets import CKEditorWidget
 
 from .models import Conference, Tag
@@ -18,7 +18,7 @@ class ConferenceAdminForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(),
         required=False,
-        widget=forms.CheckboxSelectMultiple,
+        widget=FilteredSelectMultiple(verbose_name='Тэги', is_stacked=False),
     )
     conf_s_desc = forms.CharField(
         label='Краткое описание',
@@ -35,7 +35,7 @@ class ConferenceAdminForm(forms.ModelForm):
                   'conf_date_begin', 'conf_date_end', 'conf_card_href', 'reg_href',
                   'conf_name', 'conf_s_desc', 'conf_desc', 'org_name', 'themes',
                   'online', 'conf_href', 'offline', 'conf_address', 'contacts', 'rinc',
-                  'checked', 'tags', 'conf_id',)
+                  'vak', 'wos', 'scopus', 'checked', 'tags', 'conf_id',)
 
 
 class ConferenceAdmin(admin.ModelAdmin):
@@ -43,6 +43,34 @@ class ConferenceAdmin(admin.ModelAdmin):
     list_display = ['conf_name', 'conf_date_begin', 'checked']
     search_fields = ['conf_name']
     list_filter = ['conf_date_begin', 'checked']
+    fieldsets = (
+        (None, {
+            'fields': ('conf_name', 'un_name')
+        }),
+        ('Характеристики', {
+            'fields': [('local', 'online', 'offline', 'checked')],
+        }),
+        ('Даты', {
+            'fields': [('conf_date_begin', 'conf_date_end'), ('reg_date_begin', 'reg_date_end')],
+        }),
+        ('Тексты', {
+            'classes': ['wide', 'extrapretty'],
+            'fields': ('conf_s_desc', 'conf_desc', 'conf_address', 'contacts'),
+        }),
+        ('Ссылки', {
+            'fields': ('conf_card_href', 'reg_href', 'conf_href'),
+        }),
+        ('Системы цитирования', {
+            'fields': [('rinc', 'vak', 'wos', 'scopus')],
+        }),
+        ('Тэги', {
+            'fields': ('tags', ),
+        }),
+        ('Разное', {
+            'classes': ['collapse'],
+            'fields': ('org_name', 'themes', 'conf_id'),
+        }),
+    )
 
 
 admin_site.register(Conference, ConferenceAdmin)
