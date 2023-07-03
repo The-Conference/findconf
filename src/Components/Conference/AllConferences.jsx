@@ -347,7 +347,7 @@ const AllConferences = ({ data, keywords, id }) => {
                 </div>
                 <div className="conference__bg-middle">
                   {el.tags.map((el) => el.name).length > 0 ? (
-                    <div>#{el.tags.map((el) => el.name)}</div>
+                    <div>#{el.tags[0].name}</div>
                   ) : null}
                 </div>
                 <div className="conference__bg-bottom">

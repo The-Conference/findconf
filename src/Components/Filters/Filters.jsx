@@ -148,6 +148,11 @@ const Filters = () => {
         ? currentParams.ordering.split(",")
         : currentParams.ordering
     );
+    allValues.push(
+      currentParams.conf_status
+        ? currentParams.conf_status.split(",")
+        : currentParams.conf_status
+    );
     let mergedArray = [].concat(...allValues);
 
     const allKeys = Object.keys(currentParams);
@@ -281,22 +286,26 @@ const Filters = () => {
                         checked={
                           (cardId === 4 &&
                             allKey.includes(item.key) === true) ||
-                          (cardId === 5 &&
-                            allKey.includes(item.key) === true) ||
                           (cardId === 6 &&
                             allKey.includes(item.key) === true) ||
                           (cardId !== 4 && allVals.includes(item.name)) ||
-                          (cardId !== 5 && allVals.includes(item.name)) ||
+                          (cardId === 5 && allVals.includes(item.query)) ||
                           (cardId !== 6 && allVals.includes(item.name)) ||
                           (cardId === 7 && allVals.includes(item.query))
                             ? true
                             : false
                         }
                         onChange={() => {
-                          cardId === 4 || cardId === 5 || cardId === 6
+                          cardId === 4 || cardId === 6
                             ? handleAddParams(item.key, "true", cardId)
                             : cardId === 7
                             ? handleAddParams(item.key, item.query, cardId)
+                            : cardId === 5
+                            ? handleAddParams(
+                                item.key,
+                                item.query + ",",
+                                cardId
+                              )
                             : handleAddParams(
                                 item.key,
                                 item.name + ",",

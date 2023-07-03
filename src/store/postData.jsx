@@ -151,9 +151,10 @@ export const filteredContent = () => async (dispatch) => {
   dispatch(paginate(1));
   const currentUrl = window.location.href;
   let query = "?" + currentUrl.split("?")[1];
-  let replacedUrl = decodeURIComponent(query)
+  let replacedUrl = query
     .replace(/\+/g, "%20")
-    .replace(/%2C/g, ",");
+    .replace(/%2C/g, ",")
+    .slice(0, -1);
 
   // console.log(replacedUrl);
   try {

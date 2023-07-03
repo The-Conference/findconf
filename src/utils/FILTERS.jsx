@@ -35,15 +35,17 @@ const FILTERS = [
     id: 5,
     applied: false,
     data: [
-      { name: "Конференция идёт", key: "started" },
+      { name: "Конференция идёт", key: "conf_status", query: "started" },
       {
         name: "Конференция скоро начнётся",
-        key: "starting_soon",
+        key: "conf_status",
+        query: "starting_soon",
       },
-      { name: "Конференция окончена", key: "finished" },
+      { name: "Конференция окончена", key: "conf_status", query: "finished" },
       {
         name: "Неизвестно (уточнить у организатора)",
-        key: "unknown",
+        key: "conf_status",
+        query: "unknown",
       },
     ],
   },
@@ -78,7 +80,7 @@ const FILTERS = [
 const allKeys = [
   { id: 1, keys: ["un_name"] },
   { id: 2, keys: ["tags"] },
-  { id: 5, keys: ["started", "finished", "unknown", "starting_soon"] },
+  { id: 5, keys: ["conf_status"] },
   { id: 4, keys: ["rinc", "vak", "scopus", "wos"] },
   { id: 6, keys: ["online", "offline"] },
   { id: 7, keys: ["ordering"] },
