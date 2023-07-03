@@ -212,14 +212,14 @@ class ConferenceListFilterTests(APITestCase):
         self.assertEqual(len(response.data), 0)
 
     def test_list_ordering_by_date_asc(self):
-        response = self.client.get(f'{self.URL}?ordering=conf_date_begin')
+        response = self.client.get(f'{self.URL}?ordering=date_asc')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
         self.assertEqual(response.data[0]['conf_date_begin'], '2021-09-01')
         self.assertEqual(response.data[1]['conf_date_begin'], '2023-06-28')
 
     def test_list_ordering_by_date_desc(self):
-        response = self.client.get(f'{self.URL}?ordering=-conf_date_begin')
+        response = self.client.get(f'{self.URL}?ordering=date_desc')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 2)
         self.assertEqual(response.data[0]['conf_date_begin'], '2023-06-28')
