@@ -15,23 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.schemas import get_schema_view
-from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('Conference_data.urls')),
-    path('docs/', TemplateView.as_view(
-        template_name='documentation.html',
-        extra_context={'schema_url': 'openapi/'}
-    ), name='swagger-ui'),
-    path('docs/openapi/', get_schema_view(
-        title="Conferences project",
-    ), name='openapi-schema'),
     path('api/conf_auth/', include('rest_framework.urls')),
     path('api/auth/', include('djoser.urls')),
     path('api/auth-token/', include('djoser.urls.authtoken')),
     path('api/user/', include('Conference_crm.urls')),
+    path('docs/openapi/', SpectacularAPIView.as_view(), name='openapi-schema'),
+    path('docs/', SpectacularSwaggerView.as_view(url_name='openapi-schema'), name='swagger-ui'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

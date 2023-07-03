@@ -23,7 +23,7 @@ TEST_CONF_FULL = {
     "themes": "themes",
     "online": True,
     "conf_href": "http://example.com/",
-    "offline": True,
+    "offline": False,
     "conf_address": "conf_address",
     "contacts": "contacts",
     "rinc": True,

@@ -42,13 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_swagger',
+    'drf_spectacular',
     'corsheaders',
     'ckeditor',
     'Conference_data',
     'Conference_crm',
     'rest_framework.authtoken',
     'djoser',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,12 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
 
     ],
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+    ],
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -106,19 +112,19 @@ WSGI_APPLICATION = 'Conferences.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'findconf',
-        'USER': 'findconf',
-        'PASSWORD': 'rbhuele',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-    #909961
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'my_db.sqlite3',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'findconf',
+    #     'USER': 'findconf',
+    #     'PASSWORD': 'rbhuele',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
     # }
+    #909961
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'my_db.sqlite3',
+    }
     # 'default': {
     #     'ENGINE': env('DB_ENGINE'),
     #     'NAME': env('DB_NAME'),
@@ -196,3 +202,11 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'Conference_crm.User'
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'The Conf',
+    'DESCRIPTION': 'Conferences project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': True,
+    'SCHEMA_PATH_PREFIX': '/api/',
+}

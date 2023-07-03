@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.models import User, Group
-from django.contrib.admin import AdminSite
 from django import forms
 
 from ckeditor.widgets import CKEditorWidget
@@ -22,8 +20,14 @@ class ConferenceAdminForm(forms.ModelForm):
         required=False,
         widget=forms.CheckboxSelectMultiple,
     )
-    conf_s_desc = forms.CharField(label='Краткое описание', required=False, widget=CKEditorWidget(config_name='default'))
-    conf_desc = forms.CharField(label='Полное описание', widget=CKEditorWidget(config_name='default'))
+    conf_s_desc = forms.CharField(
+        label='Краткое описание',
+        required=False,
+        widget=CKEditorWidget(config_name='default'))
+    conf_desc = forms.CharField(
+        label='Полное описание',
+        widget=CKEditorWidget(config_name='default'))
+    conf_id = forms.CharField(disabled=True, required=False, help_text='Генерируется автоматически')
 
     class Meta:
         model = Conference
@@ -31,7 +35,7 @@ class ConferenceAdminForm(forms.ModelForm):
                   'conf_date_begin', 'conf_date_end', 'conf_card_href', 'reg_href',
                   'conf_name', 'conf_s_desc', 'conf_desc', 'org_name', 'themes',
                   'online', 'conf_href', 'offline', 'conf_address', 'contacts', 'rinc',
-                  'checked', 'tags',)
+                  'checked', 'tags', 'conf_id',)
 
 
 class ConferenceAdmin(admin.ModelAdmin):
@@ -40,12 +44,6 @@ class ConferenceAdmin(admin.ModelAdmin):
     search_fields = ['conf_name']
     list_filter = ['conf_date_begin', 'checked']
 
-    def save_model(self, request, obj, form, change):
-        obj.generate_conf_id = True
-        super().save_model(request, obj, form, change)
-
 
 admin_site.register(Conference, ConferenceAdmin)
 admin_site.register(Tag)
-# admin.site.unregister(User)
-# admin.site.unregister(Group)

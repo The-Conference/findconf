@@ -1,11 +1,11 @@
 from django.utils import timezone
 from django.test import TestCase
 
-from ..models import Conference
+from ..models import Conference, Tag
 from .fixtures import TEST_CONF_DICT
 
 
-class ConferenceListTests(TestCase):
+class ConferenceModelTests(TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.today = timezone.now().date()
@@ -17,7 +17,7 @@ class ConferenceListTests(TestCase):
         self.test_conf_data['conf_date_begin'] = self.today - timezone.timedelta(days=1)
         self.test_conf_data['conf_date_end'] = self.today + timezone.timedelta(days=1)
         conf = Conference(**self.test_conf_data)
-        self.assertEqual(conf.conf_status, 'Конференция началась')
+        self.assertEqual(conf.conf_status, 'Конференция идёт')
 
     def test_conf_status_ended(self):
         self.test_conf_data['conf_date_begin'] = self.today - timezone.timedelta(days=5)
@@ -33,4 +33,14 @@ class ConferenceListTests(TestCase):
     def test_conf_status_future(self):
         self.test_conf_data['conf_date_begin'] = self.today + timezone.timedelta(days=20)
         conf = Conference(**self.test_conf_data)
-        self.assertEqual(conf.conf_status, None)
+        self.assertEqual(conf.conf_status, 'Конференция запланирована')
+
+    def test_conf_str(self):
+        conf = Conference(**self.test_conf_data)
+        self.assertEqual(str(conf), 'test uni - test name')
+
+
+class TagModelTests(TestCase):
+    def test_tag_str(self):
+        tag = Tag(name='tag 01')
+        self.assertEqual(str(tag), 'tag 01')
