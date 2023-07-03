@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'Conference_crm',
     'rest_framework.authtoken',
     'djoser',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
 
+    ],
+
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
     ],
 }
 
@@ -201,6 +209,14 @@ DJOSER = {
         'djoser.auth.EmailAuthenticationRule'
     ],
 
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'The Conf',
+    'DESCRIPTION': 'Conferences project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': True,
+    'SCHEMA_PATH_PREFIX': '/api/',
 }
 
 AUTH_USER_MODEL = 'Conference_crm.User'
