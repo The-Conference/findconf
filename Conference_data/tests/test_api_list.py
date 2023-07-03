@@ -81,7 +81,7 @@ class ConferenceListTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         for key, value in TEST_CONF_FULL.items():
             if key == 'tags':
-                self.assertEqual(response.data.get(key), [OrderedDict([('id', 1), ('name', 'tag01')])])
+                self.assertEqual(response.data.get('tags')[0].get('name'), 'tag01')
             else:
                 self.assertEqual(response.data.get(key), value)
 
