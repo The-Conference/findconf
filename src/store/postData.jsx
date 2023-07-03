@@ -151,14 +151,14 @@ export const filteredContent = () => async (dispatch) => {
   dispatch(paginate(1));
   const currentUrl = window.location.href;
   let query = "?" + currentUrl.split("?")[1];
-  let replacedUrl = query
-    .replace(/\+/g, "%20")
-    .replace(/%2C/g, ",")
-    .slice(0, -1);
+  let replacedUrl = query.replace(/\+/g, "%20").replace(/%2C/g, ",");
 
-  // console.log(replacedUrl);
+  const readyUrl = query.includes("true")
+    ? replacedUrl
+    : replacedUrl.slice(0, -1);
+  console.log(readyUrl);
   try {
-    await api.get(`/api/${replacedUrl}`).then((response) => {
+    await api.get(`/api/${readyUrl}`).then((response) => {
       dispatch(handleFilter(response.data));
       // console.log(response.data);
     });
