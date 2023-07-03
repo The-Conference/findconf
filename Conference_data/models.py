@@ -48,14 +48,15 @@ class Conference(models.Model):
     scopus = models.BooleanField(default=False)
 
     def clean(self) -> None:
-        """Shows an error in admin."""
+        """Validate_unique is needed to show an error in admin,
+        otherwise it fails with error 500."""
+        if not self.conf_id:
+            self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
         self.validate_unique()
 
     def save(self, *args, **kwargs):
         self.conf_s_desc = self.normalize(self.conf_s_desc)
         self.conf_desc = self.normalize(self.conf_desc)
-        if not self.conf_id:
-            self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
         self.clean()
         super().save(*args, **kwargs)
 
