@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.d20cfdd5.css",
-    "main.js": "/static/js/main.9305445f.js",
+    "main.js": "/static/js/main.84cd3d5f.js",
     "static/css/883.7505c306.chunk.css": "/static/css/883.7505c306.chunk.css",
     "static/js/883.6a296911.chunk.js": "/static/js/883.6a296911.chunk.js",
     "static/css/757.0c00acb2.chunk.css": "/static/css/757.0c00acb2.chunk.css",
@@ -29,6 +29,7 @@
     "static/media/Rubaeva.webp": "/static/media/Rubaeva.4ee4d9d674d306853a43.webp",
     "static/media/Levin.webp": "/static/media/Levin.a5279c49e0804206482d.webp",
     "static/media/Sen.webp": "/static/media/Sen.206ec2d7831ea18df568.webp",
+    "static/media/Zapekin.webp": "/static/media/Zapekin.a3a68cae689221e71e5e.webp",
     "static/media/Makover.webp": "/static/media/Makover.dbd4784fad622de580e8.webp",
     "static/media/Ivanova.webp": "/static/media/Ivanova.0806f22248e8227a6e86.webp",
     "static/media/Artemiev.webp": "/static/media/Artemiev.f23464225986a42f4f6d.webp",
@@ -68,7 +69,7 @@
     "static/media/Step.svg": "/static/media/Step.c669cfce5c04389161edb5a3a701b754.svg",
     "static/media/Divider2.svg": "/static/media/Divider2.39823dde5a270c9a5a3c49312c86e824.svg",
     "main.d20cfdd5.css.map": "/static/css/main.d20cfdd5.css.map",
-    "main.9305445f.js.map": "/static/js/main.9305445f.js.map",
+    "main.84cd3d5f.js.map": "/static/js/main.84cd3d5f.js.map",
     "883.7505c306.chunk.css.map": "/static/css/883.7505c306.chunk.css.map",
     "883.6a296911.chunk.js.map": "/static/js/883.6a296911.chunk.js.map",
     "757.0c00acb2.chunk.css.map": "/static/css/757.0c00acb2.chunk.css.map",
@@ -90,6 +91,6 @@
   },
   "entrypoints": [
     "static/css/main.d20cfdd5.css",
-    "static/js/main.9305445f.js"
+    "static/js/main.84cd3d5f.js"
   ]
 }
