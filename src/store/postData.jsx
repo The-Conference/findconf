@@ -153,9 +153,12 @@ export const filteredContent = () => async (dispatch) => {
   let query = "?" + currentUrl.split("?")[1];
   let replacedUrl = query.replace(/\+/g, "%20").replace(/%2C/g, ",");
 
-  const readyUrl = query.includes("true")
-    ? replacedUrl
-    : replacedUrl.slice(0, -1);
+  const readyUrl =
+    query.includes("true") ||
+    query.includes("date_asc") ||
+    query.includes("date_desc")
+      ? replacedUrl
+      : replacedUrl.slice(0, -1);
   // console.log(readyUrl);
   try {
     await api.get(`/api/${readyUrl}`).then((response) => {
