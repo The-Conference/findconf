@@ -156,7 +156,8 @@ export const filteredContent = () => async (dispatch) => {
   const readyUrl =
     query.includes("true") ||
     query.includes("date_asc") ||
-    query.includes("date_desc")
+    query.includes("date_desc") ||
+    query.includes("undefined")
       ? replacedUrl
       : replacedUrl.slice(0, -1);
   // console.log(readyUrl);
