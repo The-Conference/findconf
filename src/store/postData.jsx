@@ -156,7 +156,7 @@ export const filteredContent = () => async (dispatch) => {
   const readyUrl = query.includes("true")
     ? replacedUrl
     : replacedUrl.slice(0, -1);
-  console.log(readyUrl);
+  // console.log(readyUrl);
   try {
     await api.get(`/api/${readyUrl}`).then((response) => {
       dispatch(handleFilter(response.data));

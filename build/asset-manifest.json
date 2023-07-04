@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.d20cfdd5.css",
-    "main.js": "/static/js/main.13d5bb88.js",
+    "main.js": "/static/js/main.9df3e2b6.js",
     "static/css/883.7505c306.chunk.css": "/static/css/883.7505c306.chunk.css",
     "static/js/883.6a296911.chunk.js": "/static/js/883.6a296911.chunk.js",
     "static/css/757.0c00acb2.chunk.css": "/static/css/757.0c00acb2.chunk.css",
@@ -31,6 +31,7 @@
     "static/media/Sen.webp": "/static/media/Sen.206ec2d7831ea18df568.webp",
     "static/media/Makover.webp": "/static/media/Makover.dbd4784fad622de580e8.webp",
     "static/media/Ivanova.webp": "/static/media/Ivanova.0806f22248e8227a6e86.webp",
+    "static/media/Artemiev.webp": "/static/media/Artemiev.f23464225986a42f4f6d.webp",
     "static/media/Manrope-ExtraBold.ttf": "/static/media/Manrope-ExtraBold.b0ac9f1b582da5d98892.ttf",
     "static/media/Manrope-SemiBold.ttf": "/static/media/Manrope-SemiBold.0a3797b8dd78c25ef6b4.ttf",
     "static/media/Manrope-Medium.ttf": "/static/media/Manrope-Medium.7e416a42443e06ed7d57.ttf",
@@ -67,7 +68,7 @@
     "static/media/Step.svg": "/static/media/Step.c669cfce5c04389161edb5a3a701b754.svg",
     "static/media/Divider2.svg": "/static/media/Divider2.39823dde5a270c9a5a3c49312c86e824.svg",
     "main.d20cfdd5.css.map": "/static/css/main.d20cfdd5.css.map",
-    "main.13d5bb88.js.map": "/static/js/main.13d5bb88.js.map",
+    "main.9df3e2b6.js.map": "/static/js/main.9df3e2b6.js.map",
     "883.7505c306.chunk.css.map": "/static/css/883.7505c306.chunk.css.map",
     "883.6a296911.chunk.js.map": "/static/js/883.6a296911.chunk.js.map",
     "757.0c00acb2.chunk.css.map": "/static/css/757.0c00acb2.chunk.css.map",
@@ -89,6 +90,6 @@
   },
   "entrypoints": [
     "static/css/main.d20cfdd5.css",
-    "static/js/main.13d5bb88.js"
+    "static/js/main.9df3e2b6.js"
   ]
 }

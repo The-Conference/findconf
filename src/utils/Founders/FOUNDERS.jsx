@@ -12,6 +12,7 @@ import Peregudov from "../Founders/pics/Peregudov.webp";
 import Ivanova from "../Founders/pics/Ivanova.webp";
 import Sen from "../Founders/pics/Sen.webp";
 import Bolibok from "../Founders/pics/Bolibok.webp";
+import Artemiev from "../Founders/pics/Artemiev.webp";
 const founders = [
   {
     role: "Project Manager",
@@ -41,13 +42,20 @@ const developers = [
     pic: Vorobiova,
     tg: "darvor",
   },
-  { role: "Backend", name: "Кирилл Левин", pic: Levin, tg: "levin_kirill" },
   { role: "DevOps", name: "Сергей Ершов", pic: Ershov, tg: "Mr_GetSam" },
+  { role: "Backend", name: "Кирилл Левин", pic: Levin, tg: "levin_kirill" },
+
   {
     role: "Backend",
     name: "Вячеслав Новиков",
     pic: Novikov,
     tg: "VanavaraNovikov",
+  },
+  {
+    role: "Backend",
+    name: "Владимир Артемьев",
+    pic: Artemiev,
+    tg: "",
   },
   { role: "Backend", name: "Андрей Маковер", pic: Makover, tg: "SanderAMC" },
   {
