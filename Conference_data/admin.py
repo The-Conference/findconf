@@ -54,7 +54,6 @@ class ConferenceAdmin(admin.ModelAdmin):
             'fields': [('conf_date_begin', 'conf_date_end'), ('reg_date_begin', 'reg_date_end')],
         }),
         ('Тексты', {
-            'classes': ['wide', 'extrapretty'],
             'fields': ('conf_s_desc', 'conf_desc', 'conf_address', 'contacts'),
         }),
         ('Ссылки', {
