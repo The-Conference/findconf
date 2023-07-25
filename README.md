@@ -15,7 +15,7 @@ Tests: `python -m unittest discover`
 
 Coverage: `coverage run -m unittest discover && coverage report`
 
-Export requirements from Poetry: `poetry export -f requirements.txt --output requirements.txt --only main `
+Export requirements from Poetry: `poetry export -f requirements.txt --output requirements.txt --only main`
 
 Build docs: `pdoc conf_parsers !conf_parsers.spiders !conf_parsers.tests --docformat google -o ./docs`
 

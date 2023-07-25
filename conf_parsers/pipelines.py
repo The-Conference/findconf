@@ -69,6 +69,8 @@ class FillTheBlanksPipeline:
                              f"_{adapter.get('conf_date_begin')}" \
                              f"_{adapter.get('conf_date_end')}" \
                              f"_{''.join(adapter.get('conf_name').split())[:50]}"
+        if not adapter.get('conf_date_end'):
+            adapter['conf_date_end'] = adapter.get('conf_date_begin')
         adapter['un_name'] = spider.un_name
         adapter['hash'] = hashlib.md5(bytes(adapter['conf_id'], 'utf-8')).hexdigest()
         text = f"{adapter.get('conf_name')} {adapter.get('conf_s_desc')}"
