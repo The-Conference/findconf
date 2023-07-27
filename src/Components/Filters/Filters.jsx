@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./filters.scss";
-import {
-  saveFilter,
-  fetchFilteredConferences,
-  filteredContent,
-} from "../../store/postData";
+import { filteredContent } from "../../store/postData";
 import { fetchResults } from "../../store/searchSlice";
 import {
   handleColor,
@@ -181,7 +177,10 @@ const Filters = () => {
   };
   return (
     <>
-      <div className="filter">
+      <button className="filterBtn" onClick={() => setMenu(!menu)}>
+        Фильтры
+      </button>
+      <div className={`filter ${menu ? "active" : ""}`}>
         {del && (
           <div
             className={
@@ -325,7 +324,7 @@ const Filters = () => {
         ))}
       </div>
 
-      <div className="filter-adaptive">
+      {/* <div className="filter-adaptive">
         {data.some((el) => el.applied === true) && (
           <button
             style={{
@@ -375,7 +374,7 @@ const Filters = () => {
               ))}
           </ul>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

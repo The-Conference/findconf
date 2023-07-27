@@ -6,7 +6,8 @@
   position: relative;
   text-transform: capitalize;
   font-size: 12px;
-  @media screen and (max-width: 722px) {
+  @media screen and (max-width: 856px) {
+    flex-direction: column;
     display: none;
   }
   @media screen and (max-width: 419px) {
@@ -32,18 +33,22 @@
   &__container:nth-last-child(1) {
     position: absolute;
     right: 0;
+    @media screen and (max-width: 856px) {
+      position: static;
+    }
   }
 }
+@media screen and (max-width: 856px) {
+  .filter.active {
+    display: flex;
+    padding-top: 0;
+  }
+}
+
 .filter-adaptive {
   display: none;
   position: relative;
   cursor: pointer;
-  @media screen and (max-width: 722px) {
-    display: flex;
-    gap: 8px;
-    padding: 0 0 20px 0;
-    align-items: center;
-  }
 
   &__delete-button {
     border-radius: 8px;
@@ -99,5 +104,28 @@
   &:hover {
     background-color: #0000380d;
     color: #00002e;
+  }
+}
+
+button.filterBtn {
+  display: none;
+  @media screen and (max-width: 856px) {
+    display: block;
+    margin-bottom: 10px;
+    background-color: #cfd8f7;
+    padding: 10px 15px;
+    border-radius: 10px;
+  }
+}
+
+@media screen and (max-width: 856px) {
+  .popup-content {
+    right: 25px;
+    left: 25px !important;
+    margin-top: -45px !important;
+  }
+
+  div#popup-root svg {
+    display: none;
   }
 }
