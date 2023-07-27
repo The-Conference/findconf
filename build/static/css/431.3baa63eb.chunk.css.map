@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/431.3baa63eb.chunk.css","mappings":"AAAA,KAGE,YAAa,CACb,qBAAsB,CAFtB,gBAAiB,CADjB,iBAIF,CCLA,MACE,iBAAoB","sources":["App.css","Components/Main/main.scss"],"sourcesContent":[".App {\n  text-align: center;\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n}\n",".main {\n  padding: 0 0 100px 0;\n}\n"],"names":[],"sourceRoot":""}
