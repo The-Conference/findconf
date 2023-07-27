@@ -6,6 +6,7 @@ import { login } from "../../store/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import close from "../../assets/close.svg";
+
 const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");

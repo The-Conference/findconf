@@ -1,0 +1,71 @@
+$PrimPressed: #184cd3;
+$PrimHover: #4074fb;
+$PrimActive: #2c60e7;
+$Inactive: #bfcff7;
+$SecondActive: #ebefff;
+
+.button {
+  background-color: $PrimActive;
+  color: var(--base-white-100, #fff);
+  -webkit-transition: all 0.2s ease-in-out;
+  border-radius: 8px;
+  text-align: center;
+  &:hover {
+    background-color: $PrimHover;
+  }
+  &:active {
+    background-color: $PrimPressed;
+  }
+  &:disabled {
+    background-color: $Inactive;
+  }
+}
+.button-large {
+  width: 376px;
+  padding: 9px 32px;
+  font-size: 20px;
+  @media screen and (max-width: 1024px) {
+    max-width: 300px;
+    padding: 8px 24px;
+    font-size: 16px;
+  }
+  @media screen and (max-width: 963px) {
+    max-width: 250px;
+    padding: 7px 20px;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 780px) {
+    max-width: 200px;
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+}
+.button-medium {
+  width: 116px;
+  padding: 9px 32px;
+  font-size: 16px;
+  @media screen and (max-width: 1024px) {
+    max-width: 100px;
+    padding: 8px 24px;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 963px) {
+    max-width: 80px;
+    padding: 7px 20px;
+    font-size: 12px;
+  }
+  @media screen and (max-width: 780px) {
+    max-width: 60px;
+    padding: 6px 16px;
+    font-size: 10px;
+  }
+}
+.button-small {
+  width: 100px;
+  padding: 9px 24px;
+  font-size: 14px;
+}
+// :export {
+//   max: $max;
+//   desc: $desc;
+// }
