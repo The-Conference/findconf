@@ -12,7 +12,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
-
 const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
 const LazyApp = React.lazy(() => import("./App"));
 const LazyAllConferences = React.lazy(() =>

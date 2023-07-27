@@ -1,0 +1,100 @@
+.check-mail {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    max-width: 461px;
+    margin: 100px auto;
+    @media screen and (max-width: 1024px) {
+      margin: 80px auto;
+    }
+    @media screen and (max-width: 963px) {
+      margin: 60px auto;
+    }
+    @media screen and (max-width: 768px) {
+      margin: 40px auto;
+    }
+  }
+  &__title {
+    text-align: center;
+    font-size: 56px;
+    font-family: "Manrope bold";
+    @media screen and (max-width: 1024px) {
+      font-size: 48px;
+    }
+    @media screen and (max-width: 963px) {
+      font-size: 40px;
+    }
+    @media screen and (max-width: 780px) {
+      font-size: 35px;
+    }
+    span {
+      color: #2c60e7;
+    }
+  }
+  &__text {
+    text-align: center;
+    color: rgba(0, 0, 56, 0.7);
+    margin: 16px auto 0 auto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20.8px;
+    max-width: 461px;
+    @media screen and (max-width: 1024px) {
+      font-size: 14px;
+      line-height: 15.8px;
+      max-width: 400px;
+    }
+    @media screen and (max-width: 963px) {
+      font-size: 12px;
+      line-height: 10.8px;
+      max-width: 300px;
+    }
+    @media screen and (max-width: 780px) {
+      font-size: 10px;
+      line-height: 10px;
+      max-width: 250px;
+    }
+  }
+  &__img {
+    max-width: 472.885px;
+    margin: 83px auto;
+    @media screen and (max-width: 1024px) {
+      max-width: 400px;
+      margin: 63px auto;
+    }
+    @media screen and (max-width: 963px) {
+      max-width: 300px;
+      margin: 53px auto;
+    }
+    @media screen and (max-width: 780px) {
+      max-width: 250px;
+      margin: 43px auto;
+    }
+  }
+  &__button {
+    margin: 0 auto;
+    max-width: 376px;
+    padding: 9px 32px;
+    text-align: center;
+    background-color: #2c60e7;
+    color: var(--base-white-100, #fff);
+    border-radius: 8px;
+    font-size: 18px;
+
+    @media screen and (max-width: 1024px) {
+      max-width: 300px;
+      padding: 8px 24px;
+      font-size: 16px;
+    }
+    @media screen and (max-width: 963px) {
+      max-width: 250px;
+      padding: 7px 20px;
+      font-size: 14px;
+    }
+    @media screen and (max-width: 780px) {
+      max-width: 200px;
+      padding: 6px 16px;
+      font-size: 12px;
+    }
+  }
+}
