@@ -39,7 +39,7 @@ const AboutService = () => {
           <br />
           <ul>
             {items.map((item, index) => (
-              <li key={index}>{item}</li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </div>
