@@ -1,6 +1,7 @@
 import React from "react";
 import check from "../../assets/check-mail.svg";
 import "./check-mail.scss";
+import "../UI kit/Buttons.scss";
 const CheckMail = () => {
   return (
     <div className="check-mail">

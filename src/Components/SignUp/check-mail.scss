@@ -1,3 +1,4 @@
+@import "../UI kit/Buttons.scss";
 .check-mail {
   &__container {
     display: flex;
@@ -69,6 +70,41 @@
     @media screen and (max-width: 780px) {
       max-width: 250px;
       margin: 43px auto;
+    }
+  }
+
+  &__button {
+    color: var(--base-white-100, #fff);
+    background-color: #2c60e7;
+    border-radius: 8px;
+    padding: 9px 32px;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 40px auto 0 auto;
+    &:hover {
+      background-color: $PrimHover;
+    }
+    &:active {
+      background-color: $PrimPressed;
+    }
+    &:disabled {
+      background-color: $Inactive;
+    }
+    @media screen and (max-width: 1024px) {
+      font-size: 16px;
+    }
+    @media screen and (max-width: 963px) {
+      font-size: 12px;
+      line-height: 10.8px;
+      max-width: 300px;
+    }
+    @media screen and (max-width: 780px) {
+      font-size: 10px;
+      line-height: 10px;
+      max-width: 250px;
+    }
+    a {
+      color: white;
     }
   }
 }

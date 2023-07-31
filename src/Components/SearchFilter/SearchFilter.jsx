@@ -10,7 +10,7 @@ const SearchFilter = () => {
   const nav = useNavigate();
   const ref = useRef();
   const dispatch = useDispatch();
-  const { search } = useSelector((state) => state);
+  const search = useSelector((state) => state.search);
 
   const [filteredList, setFilteredList] = useState(search);
   const [value, setValue] = useState("");

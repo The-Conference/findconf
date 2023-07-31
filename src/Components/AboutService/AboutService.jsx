@@ -5,8 +5,8 @@ import { developers, founders } from "../../utils/Founders/FOUNDERS";
 
 const AboutService = () => {
   const renderStaff = (staff) => {
-    return staff.map((el, index) => (
-      <div key={index} className="about__staff-founders">
+    return staff.map((el) => (
+      <div key={el.name} className="about__staff-founders">
         <div className="about__staff-founders-pic">
           <img src={el.pic} alt="фото" width={300} height={300} />
         </div>
@@ -38,7 +38,7 @@ const AboutService = () => {
           <p>{date}</p>
           <br />
           <ul>
-            {items.map((item, index) => (
+            {items.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
