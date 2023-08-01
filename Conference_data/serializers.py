@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 from django.utils.html import linebreaks
 
-from .models import Conference, Tag, Favorite
+from .models import Conference, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -49,11 +49,3 @@ class ConferenceSerializer(serializers.ModelSerializer):
                   'conf_name', 'conf_s_desc', 'conf_desc', 'org_name',
                   'themes', 'online', 'conf_href', 'offline', 'conf_address',
                   'contacts', 'rinc', 'tags', 'conf_status')
-
-
-
-class FavoriteSerialize(serializers.ModelSerializer):
-
-    class Meta:
-        model = Favorite
-        fields = ("user", "conference")

@@ -3,8 +3,6 @@ from django.utils import timezone
 
 from ckeditor.fields import RichTextField
 
-from Conference_crm.models import User
-
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
@@ -74,12 +72,3 @@ class Conference(models.Model):
         return f'{self.un_name} - {self.conf_name}'
 
 
-
-
-
-class Favorite(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    conference = models.ForeignKey(Conference, null=True, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.conference.id}'

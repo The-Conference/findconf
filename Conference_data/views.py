@@ -1,13 +1,9 @@
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from rest_framework import generics, status
+from rest_framework import generics
 from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
 from Conference_crm.permissions.permissions import ReadOnlyOrAdminPermission
 
-from .models import Conference, Favorite
-from .serializers import ConferenceSerializer, FavoriteSerialize
+from .models import Conference
+from .serializers import ConferenceSerializer
 
 
 class ConferenceList(generics.ListCreateAPIView):
@@ -40,28 +36,3 @@ class ConferenceDetail(generics.RetrieveUpdateDestroyAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, pk=self.kwargs['pk'])
         return obj
-
-
-
-class FavoriteView(APIView):
-    bad_request_message = 'An error has occurred'
-
-    def post(self, request, pk):
-
-        conference = Conference.objects.get(pk=pk)
-        if not Favorite.objects.filter(user=request.user, conference_id=conference.id).exists():
-            Favorite.objects.create(user=request.user, conference=conference)
-            return Response({'detail': 'Conference added to favorites'}, status=status.HTTP_200_OK)
-        else:
-            Favorite.objects.filter(user=request.user, conference=conference).delete()
-            return Response({'detail': 'Conference already in favorites'}, status=status.HTTP_200_OK)
-
-
-    def get(self, request):
-        favorites = Favorite.objects.filter(user=request.user)
-        if favorites.exists():
-            serializer = FavoriteSerialize(favorites, many=True)
-            return Response(serializer.data)
-        else:
-            return Response("No conferences added to favorites yet")
-
