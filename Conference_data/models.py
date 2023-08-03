@@ -1,7 +1,11 @@
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 
 from ckeditor.fields import RichTextField
+
+from Conference_crm.models import User
 
 
 class Tag(models.Model):
@@ -47,6 +51,8 @@ class Conference(models.Model):
     wos = models.BooleanField(default=False)
     scopus = models.BooleanField(default=False)
 
+    favorites = GenericRelation('Favorite')
+
     def save(self, *args, **kwargs):
         if not self.pk and self.generate_conf_id:
             self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
@@ -70,5 +76,27 @@ class Conference(models.Model):
 
     def __str__(self):
         return f'{self.un_name} - {self.conf_name}'
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    class Meta:
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранные'
+        ordering = ['-id']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'object_id', 'content_type'],
+                name='unique_user_content_type_object_id'
+            )
+        ]
+
+
+
+
 
 

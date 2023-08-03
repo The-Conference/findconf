@@ -197,8 +197,9 @@ CKEDITOR_CONFIGS = {
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'api/auth/users/activation/{uid}/{token}', # Fix
-    'SEND_ACTIVATION_EMAIL': False,
+    'EMAIL_RESET_CONFIRM_URL': '#/email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'api/auth/users/activation/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
     'LOGIN_FIELD': 'email',
 
     'USER_AUTHENTICATION_RULES': [
@@ -209,3 +210,15 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'Conference_crm.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "dentes310723@gmail.com"
+EMAIL_HOST_PASSWORD = "uxcbhgvcrylarjug"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+DEFAULT_FROM_EMAIL = "theconference@gmail.com"
+
+# uxcb hgvc ryla rjug

@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
+
+
 from .managers import CustomUserManager
 
 
@@ -11,6 +13,12 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
+
+    def save(self, *args, **kwargs):
+        self.username = self.email
+        super().save(*args, **kwargs)
+
+
 
 
 
