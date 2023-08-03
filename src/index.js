@@ -188,7 +188,7 @@ const router = createBrowserRouter([
     redirectTo: "/login",
   },
   {
-    path: "/username/reset/confirm/:uid/:token",
+    path: "/api/auth/users/activation/:uid/:token",
     element: (
       <>
         <Registered />
