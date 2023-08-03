@@ -11,6 +11,7 @@ import Login from "./Components/Login/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
+import Registered from "./Components/SignUp/Registered";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
 const LazyApp = React.lazy(() => import("./App"));
@@ -185,6 +186,14 @@ const router = createBrowserRouter([
       </>
     ),
     redirectTo: "/login",
+  },
+  {
+    path: "/username/reset/confirm/:uid/:token",
+    element: (
+      <>
+        <Registered />
+      </>
+    ),
   },
 
   {
