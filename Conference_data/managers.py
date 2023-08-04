@@ -5,8 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import Favorite
 from django.contrib.contenttypes.models import ContentType
+from drf_spectacular.utils import extend_schema
+
 
 class ManageFavorite:
+    @extend_schema(tags=["favorites"])
     @action(
         detail=True,
         methods=['get'],
@@ -42,6 +45,7 @@ class ManageFavorite:
             queryset = queryset.annotate(is_favorite=Exists(is_favorite_subquery))
         return queryset
 
+    @extend_schema(tags=["favorites"])
     @action(
         detail=False,
         methods=['get'],
