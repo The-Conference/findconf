@@ -1,0 +1,7 @@
+[run]
+source = .
+branch = True
+omit = */Conferences/*, **/migrations/*, manage.py, **/tests/*
+
+[report]
+skip_covered = True
