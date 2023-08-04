@@ -69,7 +69,7 @@ class Conference(models.Model):
     @property
     def conf_status(self) -> str:
         current_date = timezone.now().date()
-        if self.conf_date_begin is None or self.conf_date_end is None:  # TODO: Delete?
+        if self.conf_date_end is None:
             return "Дата уточняется"
         elif self.conf_date_begin <= current_date <= self.conf_date_end:
             return "Конференция идёт"

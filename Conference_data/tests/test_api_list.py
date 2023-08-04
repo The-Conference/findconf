@@ -26,14 +26,14 @@ class ConferenceListTests(APITestCase):
     def test_list_get_200(self):
         response = self.client.get(self.URL)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue(isinstance(response.data, list))
-        self.assertEqual(len(response.data), 1)
+        self.assertTrue(isinstance(response.data['results'], list))
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_list_get_200_no_unchecked_in_output(self):
         self.client.post(self.URL, TEST_CONF_FULL)
         response = self.client.get(self.URL)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_list_post_401(self):
         response = self.client.post(self.URL)
@@ -105,62 +105,62 @@ class ConferenceListFilterTests(APITestCase):
     def test_list_filter_offline(self):
         response = self.client.get(f'{self.URL}?offline=true')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('offline'), True)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('offline'), True)
 
     def test_list_filter_online(self):
         response = self.client.get(f'{self.URL}?online=true')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('online'), True)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('online'), True)
 
     def test_list_filter_rinc(self):
         response = self.client.get(f'{self.URL}?rinc=true')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('rinc'), True)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('rinc'), True)
 
     def test_list_filter_vak(self):
         response = self.client.get(f'{self.URL}?vak=true')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('vak'), True)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('vak'), True)
 
     def test_list_filter_wos(self):
         response = self.client.get(f'{self.URL}?wos=true')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('wos'), True)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('wos'), True)
 
     def test_list_filter_scopus(self):
         response = self.client.get(f'{self.URL}?scopus=true')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('scopus'), True)
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('scopus'), True)
 
     def test_list_filter_tags(self):
         response = self.client.get(f'{self.URL}?tags=tag_1')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        tag_names = [i['name'] for i in response.data[0].get('tags')]
+        self.assertEqual(len(response.data['results']), 1)
+        tag_names = [i['name'] for i in response.data['results'][0].get('tags')]
         self.assertTrue('tag_1' in tag_names)
 
     def test_list_filter_tags_multiple(self):
         self.conf.tags.add(self.t2)
         response = self.client.get(f'{self.URL}?tags=tag_1,tag_2')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_list_filter_un_name(self):
         response = self.client.get(f'{self.URL}?un_name=test%20uni')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('un_name'), 'test uni')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('un_name'), 'test uni')
 
     def test_list_filter_un_name_multiple(self):
         response = self.client.get(f'{self.URL}?un_name=test%20uni,un_name')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_list_filter_conf_status_started(self):
         self.conf.conf_date_begin = self.today
@@ -168,8 +168,8 @@ class ConferenceListFilterTests(APITestCase):
         self.conf.save()
         response = self.client.get(f'{self.URL}?conf_status=started')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('conf_status'), 'Конференция идёт')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('conf_status'), 'Конференция идёт')
 
     def test_list_filter_conf_status_starting_soon(self):
         self.conf.conf_date_begin = self.today + timezone.timedelta(days=1)
@@ -177,8 +177,8 @@ class ConferenceListFilterTests(APITestCase):
         self.conf.save()
         response = self.client.get(f'{self.URL}?conf_status=starting_soon')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('conf_status'), 'Конференция скоро начнётся')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('conf_status'), 'Конференция скоро начнётся')
 
     def test_list_filter_conf_status_finished(self):
         self.conf.conf_date_begin = self.today - timezone.timedelta(days=2)
@@ -186,8 +186,8 @@ class ConferenceListFilterTests(APITestCase):
         self.conf.save()
         response = self.client.get(f'{self.URL}?conf_status=finished')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
-        self.assertEqual(response.data[0].get('conf_status'), 'Конференция окончена')
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(response.data['results'][0].get('conf_status'), 'Конференция окончена')
 
     def test_list_filter_conf_status_scheduled(self):
         self.conf.conf_date_begin = self.today + timezone.timedelta(days=20)
@@ -195,8 +195,8 @@ class ConferenceListFilterTests(APITestCase):
         self.conf.save()
         response = self.client.get(f'{self.URL}?conf_status=scheduled')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0].get('conf_status'), 'Конференция запланирована')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0].get('conf_status'), 'Конференция запланирована')
 
     def test_list_filter_conf_status_multiple(self):
         self.conf.conf_date_begin = self.today
@@ -204,23 +204,23 @@ class ConferenceListFilterTests(APITestCase):
         self.conf.save()
         response = self.client.get(f'{self.URL}?conf_status=started,finished')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_list_filter_conf_status_nonexistent(self):
         response = self.client.get(f'{self.URL}?conf_status=nn')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(len(response.data['results']), 0)
 
     def test_list_ordering_by_date_asc(self):
         response = self.client.get(f'{self.URL}?ordering=date_asc')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
-        self.assertEqual(response.data[0]['conf_date_begin'], '2021-09-01')
-        self.assertEqual(response.data[1]['conf_date_begin'], '2023-06-28')
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(response.data['results'][0]['conf_date_begin'], '2021-09-01')
+        self.assertEqual(response.data['results'][1]['conf_date_begin'], '2023-06-28')
 
     def test_list_ordering_by_date_desc(self):
         response = self.client.get(f'{self.URL}?ordering=date_desc')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
-        self.assertEqual(response.data[0]['conf_date_begin'], '2023-06-28')
-        self.assertEqual(response.data[1]['conf_date_begin'], '2021-09-01')
+        self.assertEqual(len(response.data['results']), 2)
+        self.assertEqual(response.data['results'][0]['conf_date_begin'], '2023-06-28')
+        self.assertEqual(response.data['results'][1]['conf_date_begin'], '2021-09-01')
