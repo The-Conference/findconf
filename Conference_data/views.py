@@ -21,7 +21,7 @@ class ConferenceList(generics.ListCreateAPIView):
     serializer_class = ConferenceSerializer
     permission_classes = [ReadOnlyOrAdminPermission]
     filterset_class = ConferenceFilter
-    queryset = Conference.objects.filter(checked=True)
+    queryset = Conference.objects.filter(checked=True).order_by('conf_date_begin')
 
 
 class ConferenceDetail(generics.RetrieveUpdateDestroyAPIView):
