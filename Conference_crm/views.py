@@ -3,10 +3,7 @@ from djoser.views import UserViewSet
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
 
-from .models import User
-# from .serializer import UserSerializer
 
 
 class UserByToken(APIView):
@@ -34,10 +31,4 @@ class CustomUserViewSet(UserViewSet):
 
 
 
-
-    # def de(self, request, *args, **kwargs):
-    #     if not request.user.is_superuser:
-    #         request.user.delete()
-    #         return Response(status=status.HTTP_204_NO_CONTENT)
-    #     return Response(status=status.HTTP_403_FORBIDDEN)
 
