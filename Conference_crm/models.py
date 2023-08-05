@@ -16,10 +16,3 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.username = self.email
         super().save(*args, **kwargs)
-
-
-
-
-
-
-
