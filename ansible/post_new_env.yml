@@ -1,0 +1,40 @@
+- name: renewal env
+  hosts: test
+  gather_facts: false
+  vars:
+    - dev_path: /usr/data
+  become: true
+  become_user: "root"
+  become_method: "sudo"
+  
+  tasks:
+
+    - name: copy new env to test (django folder)
+      copy:
+        src: "../.metadata/.env"
+        dest: "{{ dev_path }}/django/app/Conferences/"
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy new env to test (root folder)
+      copy:
+        src: "../.metadata/.env"
+        dest: "/root/.env"
+      when:
+        - inventory_hostname in groups ["test"]
+
+    - name: copy new env to prod (django folder)
+      copy:
+        src: "../.metadata/.env"
+        dest: "{{ dev_path }}/django/app/Conferences/"
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    - name: copy new env to prod (root folder)
+      copy:
+        src: "../.metadata/.env"
+        dest: "/root/.env"
+      when:
+        - inventory_hostname in groups ["prod"]
+
+    
