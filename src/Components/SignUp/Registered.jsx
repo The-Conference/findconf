@@ -7,13 +7,12 @@ import { useParams } from "react-router-dom";
 
 const Registered = () => {
   const { token, uid } = useParams();
-  
 
   useEffect(() => {
     const confirmRegistration = async () => {
       try {
         const response = await axios.post(
-          `http://test.theconf.ru/api/auth/users/activation/`,
+          `https://test.theconf.ru/api/auth/users/activation/`,
           { uid, token }
         );
         console.log(response);
