@@ -127,7 +127,7 @@ export const fetchAllConferences = () => async (dispatch) => {
   try {
     await api
       .get("/api/")
-      .then((response) => dispatch(fetchConferences(response.data)));
+      .then((response) => dispatch(fetchConferences(response.data.results)));
   } catch (e) {
     dispatch(hasError(e.message));
   }
@@ -140,7 +140,7 @@ export const fetchFilteredConferences = () => async (dispatch) => {
   try {
     await api
       .get(`/api/`)
-      .then((response) => dispatch(handleFilter(response.data)));
+      .then((response) => dispatch(handleFilter(response.data.results)));
   } catch (e) {
     dispatch(hasError(e.message));
   }
@@ -163,7 +163,7 @@ export const filteredContent = () => async (dispatch) => {
   // console.log(readyUrl);
   try {
     await api.get(`/api/${readyUrl}`).then((response) => {
-      dispatch(handleFilter(response.data));
+      dispatch(handleFilter(response.data.results));
       // console.log(response.data);
     });
   } catch (e) {

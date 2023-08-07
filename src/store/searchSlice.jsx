@@ -17,7 +17,7 @@ export const fetchResults = () => async (dispatch) => {
   try {
     await api
       .get("/api/")
-      .then((response) => dispatch(handleSearch(response.data)));
+      .then((response) => dispatch(handleSearch(response.data.results)));
   } catch (e) {
     console.log(e);
   }
