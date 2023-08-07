@@ -2,12 +2,12 @@ import "./App.css";
 import React, { useEffect } from "react";
 import Main from "./Components/Main/Main";
 import { useDispatch } from "react-redux";
-import { fetchFilteredConferences } from "./store/postData";
+import { filteredContent } from "./store/postData";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchFilteredConferences());
+    dispatch(filteredContent());
   }, [dispatch]);
 
   return (

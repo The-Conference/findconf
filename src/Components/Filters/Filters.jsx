@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./filters.scss";
-import { filteredContent } from "../../store/postData";
+import { filteredContent, handlePage, reset } from "../../store/postData";
 import { fetchResults } from "../../store/searchSlice";
 import {
   handleColor,
@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import white from "../../assets/whitecross.svg";
 import grey from "../../assets/greycross.svg";
 import { allKeys } from "../../utils/FILTERS";
-import reset from "../../assets/reset.svg";
+import reset2 from "../../assets/reset.svg";
 import {
   StyledPopup,
   StyledPopupTitle,
@@ -127,6 +127,8 @@ const Filters = () => {
   }, [cardId, dispatch, searchParams]);
 
   useEffect(() => {
+    dispatch(handlePage(1));
+    dispatch(reset());
     dispatch(filteredContent());
     dispatch(fetchResults());
     const currentParams = Object.fromEntries(searchParams.entries());
@@ -270,7 +272,7 @@ const Filters = () => {
                 >
                   <img
                     onClick={() => deleteOneGroup(item.id)}
-                    src={reset}
+                    src={reset2}
                     alt="сброс фильтров"
                     title="сбросить фильтры"
                   />

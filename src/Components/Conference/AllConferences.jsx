@@ -1,35 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useSearchParams, useParams } from "react-router-dom";
 import hearts from "../../assets/follow.svg";
-import following from "../../assets/following.svg";
+// import following from "../../assets/following.svg";
 import "./conference.scss";
-import { filteredContent } from "../../store/postData";
+
 import { useSelector, useDispatch } from "react-redux";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
-
-import {
-  handleSave,
-  handleFollow,
-  paginate,
-  addMore,
-} from "../../store/postData";
+import { filteredContent, handlePage } from "../../store/postData";
 import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
 import EmptyResult from "../EmptyResult/EmptyResult";
 import EmptyFave from "../EmptyResult/emptyFave";
 import { getDatesInRange } from "../../utils/getDatesRange";
-import Pagination from "../Pagination/Pagination";
 
 const AllConferences = ({ data, keywords, id }) => {
-  const { conferences, isLoading, currentPage, conferencesPerPage } =
-    useSelector((state) => state.conferences);
+  const { conferences, isLoading, count, page } = useSelector(
+    (state) => state.conferences
+  );
   const [searchParams] = useSearchParams();
 
   const dispatch = useDispatch();
   const { periods, date } = useParams();
-  const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
-  const [fave, setFave] = useState(Favourite);
+
+  useEffect(() => {
+    if (
+      conferences.length !== count &&
+      data !== "prev4" &&
+      data !== "prev3" &&
+      data !== "prev2" &&
+      data !== "prev1"
+    ) {
+      const fetchData = async () => {
+        try {
+          dispatch(handlePage(page + 1));
+
+          dispatch(filteredContent());
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      const handleScroll = () => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+
+        // проверяем, достигли ли мы конца скролла
+        if (scrollTop + clientHeight + 100 >= scrollHeight && !isLoading) {
+          fetchData();
+        }
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [dispatch, isLoading, page, count, conferences.length, data]);
 
   let result = [];
   let match = [];
@@ -149,38 +177,6 @@ const AllConferences = ({ data, keywords, id }) => {
   if (data === "prev4") {
     result = types.prev4;
   }
-
-  const handleFave = (id) => {
-    if (fave.includes(id)) {
-      setFave(fave.filter((el) => el !== id));
-    } else {
-      setFave([...fave, id]);
-    }
-  };
-
-  let lastConferenceIndex = currentPage * conferencesPerPage;
-  let firstConferenceIndex = lastConferenceIndex - conferencesPerPage;
-  let currentConference = result.slice(
-    firstConferenceIndex,
-    lastConferenceIndex
-  );
-
-  useEffect(() => {
-    dispatch(handleSave(fave));
-  }, [dispatch, fave]);
-  useEffect(() => {
-    if (
-      data !== "prev1" &&
-      data !== "prev2" &&
-      data !== "prev3" &&
-      data !== "prev4" &&
-      data !== "all" &&
-      data !== "collection1" &&
-      data !== "collection2"
-    ) {
-      dispatch(filteredContent());
-    }
-  }, [dispatch, data]);
 
   return (
     <section
@@ -302,9 +298,8 @@ const AllConferences = ({ data, keywords, id }) => {
         <EmptyFave />
       )}
       <div className="conference__container">
-        {!isLoading &&
-          result.length > 0 &&
-          currentConference.map((el) => (
+        {result.length > 0 &&
+          result.map((el) => (
             <div key={el.id} className="conference__block">
               <div className="conference__bg">
                 <div className="conference__bg-top">
@@ -327,20 +322,12 @@ const AllConferences = ({ data, keywords, id }) => {
                         : "red-status"
                     }
                   >
-                    {el.conf_status || "Дата уточняется"}
+                    {el.conf_status}
                   </span>
                   <img
-                    title={
-                      el.follow === false
-                        ? "добавить в избранное"
-                        : "удалить из избранного"
-                    }
-                    src={el.follow === false ? hearts : following}
+                    title="добавить в избранное"
+                    src={hearts}
                     alt="follow"
-                    onClick={() => {
-                      handleFave(el.id);
-                      dispatch(handleFollow(el.id));
-                    }}
                     width="25"
                     height="24"
                   />
@@ -416,18 +403,11 @@ const AllConferences = ({ data, keywords, id }) => {
             </div>
           ))}
       </div>
-      {data !== "prev1" &&
-        data !== "prev2" &&
-        data !== "prev3" &&
-        data !== "prev4" &&
-        result.length > 20 && (
-          <Pagination
-            currentConference={currentConference}
-            totalConferences={result.length}
-            paginate={paginate}
-            addMore={addMore}
-          />
-        )}
+      {isLoading && (
+        <div style={{ marginTop: "50px" }}>
+          <LoaderTemplateTwo />
+        </div>
+      )}
     </section>
   );
 };

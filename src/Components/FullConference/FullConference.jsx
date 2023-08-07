@@ -1,41 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../404/404";
-import {
-  handleSave,
-  handleFollow,
-  fetchFilteredConferences,
-} from "../../store/postData";
+import { filteredContent, hasError, fetchOne } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
 import follow from "../../assets/followSmall.svg";
-import following from "../../assets/followingSmall.svg";
+// import following from "../../assets/followingSmall.svg";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { options } from "../../utils/options";
 import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
-
+import axios from "axios";
 import ShareButton from "../ShareButton/ShareButton";
 const FullConference = () => {
   const { confId } = useParams();
-  const { conferences } = useSelector((state) => state.conferences);
-  const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
-  const [fave, setFave] = useState(Favourite);
+  const { conferences, oneConference } = useSelector(
+    (state) => state.conferences
+  );
+
   const dispatch = useDispatch();
   const [desc, setDesc] = useState(true);
   const [contacts, setContacts] = useState(false);
 
   let content;
-  let full = conferences.find(({ id }) => id === +confId);
+  let full = oneConference;
 
-  const handleFave = (id) => {
-    if (fave.includes(id)) {
-      setFave(fave.filter((el) => el !== id));
-      console.log(fave);
-    } else {
-      setFave([...fave, id]);
-    }
-  };
+  useEffect(() => {
+    fetchOneConference();
+    dispatch(filteredContent());
+    window.scrollTo(0, 0);
+  }, [confId, dispatch]);
 
   const handleDesc = () => {
     if (contacts === true) {
@@ -51,7 +45,7 @@ const FullConference = () => {
   if (conferences.length === 0) {
     content = <LoaderTemplate />;
   }
-  if (conferences.filter((el) => el.id === +confId).length > 0) {
+  if (oneConference) {
     content = (
       <div className="full-conference__container">
         <div className="full-conference__container-top">
@@ -74,21 +68,13 @@ const FullConference = () => {
                 : "red-status"
             }
           >
-            {full.conf_status || "Дата уточняется"}
+            {full.conf_status}
           </span>
           <div className="social">
             <img
-              title={
-                full.follow === false
-                  ? "добавить в избранное"
-                  : "удалить из избранного"
-              }
-              src={full.follow === false ? follow : following}
+              title="добавить в избранное"
+              src={follow}
               alt="follow"
-              onClick={() => {
-                handleFave(full.id);
-                dispatch(handleFollow(full.id));
-              }}
               width="32"
               height="32"
             />
@@ -268,11 +254,16 @@ const FullConference = () => {
   } else if (conferences.length && !full) {
     content = <NotFound />;
   }
-  useEffect(() => {
-    dispatch(fetchFilteredConferences());
-    window.scrollTo(0, 0);
-    dispatch(handleSave(fave));
-  }, [confId, dispatch, fave]);
+
+  const fetchOneConference = async () => {
+    try {
+      await axios
+        .get(`https://test.theconf.ru/api/${confId}/`)
+        .then((response) => dispatch(fetchOne(response.data)));
+    } catch (e) {
+      dispatch(hasError(e.message));
+    }
+  };
 
   return (
     <>
