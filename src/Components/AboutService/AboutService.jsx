@@ -4,30 +4,32 @@ import "./about.scss";
 import { developers, founders } from "../../utils/Founders/FOUNDERS";
 
 const AboutService = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [loadedImageCount, setLoadedImageCount] = useState(0);
+  const totalImages = founders.length + developers.length; // Assuming founders and developers are arrays of staff data
 
   const handleImageLoad = () => {
-    setIsLoading(false);
+    setLoadedImageCount((prevCount) => prevCount + 1);
   };
 
+  const allImagesLoaded = loadedImageCount === totalImages;
   const renderStaff = (staff) => {
     return staff.map((el) => (
       <div key={el.name} className="about__staff-founders">
         <div
           className={`'about__staff-founders-pic' ${
-            isLoading
+            !allImagesLoaded
               ? " about__staff-founders-pic blur"
               : "about__staff-founders-pic"
           }`}
         >
-          {isLoading && <div className="blur-image-placeholder"></div>}
+          {!allImagesLoaded && <div className="blur-image-placeholder"></div>}
           <img
             onLoad={handleImageLoad}
             src={el.pic}
             alt="фото"
             width={300}
             height={300}
-            className={`'' ${isLoading ? "hidden" : ""}`}
+            className={!allImagesLoaded ? "hidden" : ""}
           />
         </div>
         <div className="role">{el.role}</div>

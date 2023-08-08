@@ -168,6 +168,9 @@
             transform: scale(1.05);
           }
         }
+        .hidden {
+          opacity: 1;
+        }
       }
       .role {
         position: absolute;
@@ -231,8 +234,5 @@
   }
   .blur {
     filter: blur(3px) grayscale(100%);
-  }
-  .hidden {
-    opacity: 1;
   }
 }
