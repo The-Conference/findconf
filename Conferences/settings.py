@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*&ftx+e*icp41065vd#55-%ee3ijqhidl1&o58uorh(if#5pb'  # 'django-insecure-_co5$38c_i%@)d8-2bw9y=@bm8k&x%5+k8oz=-ozf071dr%kyc'
+SECRET_KEY = '*&ftx+e*icp41065vd#55-%ee3ijqhidl1&o58uorh(if#5pb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,17 +42,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_swagger',
+    'drf_spectacular',
     'corsheaders',
     'ckeditor',
     'Conference_data',
     'Conference_crm',
     'rest_framework.authtoken',
     'djoser',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,7 +79,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
 
     ],
-
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -106,19 +114,19 @@ WSGI_APPLICATION = 'Conferences.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'findconf',
-        'USER': 'findconf',
-        'PASSWORD': 'rbhuele',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-    #909961
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'my_db.sqlite3',
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'findconf',
+    #     'USER': 'findconf',
+    #     'PASSWORD': 'rbhuele',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
     # }
+    #909961
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'my_db.sqlite3',
+    }
     # 'default': {
     #     'ENGINE': env('DB_ENGINE'),
     #     'NAME': env('DB_NAME'),
@@ -164,24 +172,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# celery
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-# CELERY_BROKER_URL = 'redis://redis:6379'
-# CELERY_RESULT_BACKEND = 'redis://redis:6379'
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
 
 # ckEditor config
 CKEDITOR_CONFIGS = {
@@ -189,8 +187,10 @@ CKEDITOR_CONFIGS = {
         'toolbar': [
             ['Bold', 'Italic', 'Underline', 'Strike'],
             ['NumberedList', 'BulletedList'],
+            ['lineheight'],
         ],
         'removePlugins': 'elementspath',
+        'extraPlugins': ['lineheight'],
     }
 }
 
@@ -210,6 +210,14 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = 'Conference_crm.User'
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'The Conf',
+    'DESCRIPTION': 'Conferences project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': True,
+    'SCHEMA_PATH_PREFIX': '/api/',
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

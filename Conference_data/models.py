@@ -21,7 +21,7 @@ class Tag(models.Model):
 
 class Conference(models.Model):
     conf_id = models.TextField(unique=True)
-    hash = models.CharField(null=True, blank=True, max_length=500)
+    hash = models.CharField(null=True, blank=True, max_length=500)  # Legacy code, deprecated
     un_name = models.CharField(max_length=500, verbose_name="ВУЗ")
     local = models.BooleanField(default=True, verbose_name="Международная")
     reg_date_begin = models.DateField(null=True, blank=True, verbose_name="Начало регистрации")
@@ -45,7 +45,7 @@ class Conference(models.Model):
     checked = models.BooleanField(default=False, verbose_name="Проверено")
     tags = models.ManyToManyField(Tag, blank=True, verbose_name="Теги")
 
-    generate_conf_id = models.BooleanField(default=False)
+    generate_conf_id = models.BooleanField(default=False)  # Legacy code, deprecated
 
     vak = models.BooleanField(default=False)
     wos = models.BooleanField(default=False)
@@ -53,22 +53,38 @@ class Conference(models.Model):
 
     favorites = GenericRelation('Favorite')
 
-    def save(self, *args, **kwargs):
-        if not self.pk and self.generate_conf_id:
+    def clean(self) -> None:
+        """Validate_unique is needed to show an error in admin,
+        otherwise it fails with error 500."""
+        if not self.conf_id:
             self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
+        self.validate_unique()
+
+    def save(self, *args, **kwargs):
+        self.conf_s_desc = self.normalize(self.conf_s_desc)
+        self.conf_desc = self.normalize(self.conf_desc)
+        self.clean()
         super().save(*args, **kwargs)
 
+    @staticmethod
+    def normalize(string: str) -> str:
+        if string:
+            string.replace('\n', '').replace('\t', '')
+        return string
+
     @property
-    def conf_status(self):
+    def conf_status(self) -> str:
         current_date = timezone.now().date()
-        if self.conf_date_begin is None or self.conf_date_end is None:
-            return "Неизвестно (уточнить у организатора)"
+        if self.conf_date_end is None:
+            return "Дата уточняется"
         elif self.conf_date_begin <= current_date <= self.conf_date_end:
-            return "Конференция началась"
-        elif (self.conf_date_begin - current_date).days == 2:
+            return "Конференция идёт"
+        elif (self.conf_date_begin - current_date).days <= 14 and current_date < self.conf_date_begin:
             return "Конференция скоро начнётся"
+        elif self.conf_date_begin > current_date:
+            return "Конференция запланирована"
         else:
-            return None if self.conf_date_begin > current_date else "Конференция окончена"
+            return "Конференция окончена"
 
     class Meta:
         verbose_name = "Конференция"
@@ -94,9 +110,3 @@ class Favorite(models.Model):
                 name='unique_user_content_type_object_id'
             )
         ]
-
-
-
-
-
-

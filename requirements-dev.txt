@@ -1,0 +1,4 @@
+-r requirements.txt
+coverage>=7.2.7
+django-stubs>=4.2.1
+djangorestframework-stubs>=3.14.1
