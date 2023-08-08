@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import step from "../../assets/Step.svg";
 import "./about.scss";
 import { developers, founders } from "../../utils/Founders/FOUNDERS";
 
 const AboutService = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
+  };
+
   const renderStaff = (staff) => {
     return staff.map((el) => (
       <div key={el.name} className="about__staff-founders">
-        <div className="about__staff-founders-pic">
-          <img src={el.pic} alt="фото" width={300} height={300} />
+        <div
+          className={`'about__staff-founders-pic' ${
+            isLoading
+              ? " about__staff-founders-pic blur"
+              : "about__staff-founders-pic"
+          }`}
+        >
+          {isLoading && <div className="blur-image-placeholder"></div>}
+          <img
+            onLoad={handleImageLoad}
+            src={el.pic}
+            alt="фото"
+            width={300}
+            height={300}
+            className={`'' ${isLoading ? "hidden" : ""}`}
+          />
         </div>
         <div className="role">{el.role}</div>
         <div className="name">
