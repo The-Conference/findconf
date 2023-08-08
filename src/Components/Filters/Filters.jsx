@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./filters.scss";
-import { filteredContent, handlePage, reset } from "../../store/postData";
+import {
+  filteredContent,
+  handlePage,
+  reset,
+  fetchParams,
+} from "../../store/postData";
 import { fetchResults } from "../../store/searchSlice";
 import {
   handleColor,
@@ -39,9 +44,22 @@ const Filters = () => {
   const [del, setDel] = useState(false);
   const [allVals, setAllVals] = useState([]);
   const [allKey, setAllKey] = useState([]);
+  const [params, setParams] = useState({});
+  function removeComma(obj) {
+    const result = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+        result[key] = value.endsWith(",") ? value.slice(0, -1) : value;
+      }
+    }
+    return result;
+  }
+
   const handleAddParams = (q, value, id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const currentValue = currentParams[q];
+
     let newParams;
     if (currentValue) {
       if (currentValue.includes(value)) {
@@ -51,16 +69,20 @@ const Filters = () => {
           newParams = currentParams;
           dispatch(handleDeleteColor(id));
         } else {
-          newParams = { ...currentParams, [q]: newValue };
+          newParams = { ...currentParams, [q]: newValue.trim() };
         }
       } else if (id === 7) {
-        newParams = { ...currentParams, [q]: `${value}` };
+        newParams = { ...currentParams, [q]: `${value.trim()}` };
       } else {
-        newParams = { ...currentParams, [q]: `${currentValue}${value}` };
+        newParams = {
+          ...currentParams,
+          [q]: `${currentValue}${value.trim()}`,
+        };
       }
     } else {
-      newParams = { ...currentParams, [q]: value };
+      newParams = { ...currentParams, [q]: value.trim() };
     }
+    setParams(removeComma(newParams));
 
     setSearchParams(new URLSearchParams(newParams));
   };
@@ -127,6 +149,7 @@ const Filters = () => {
   }, [cardId, dispatch, searchParams]);
 
   useEffect(() => {
+    dispatch(fetchParams(params));
     dispatch(handlePage(1));
     dispatch(reset());
     dispatch(filteredContent());

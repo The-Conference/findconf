@@ -5,6 +5,7 @@ const initialState = {
   count: 0,
   page: 1,
   conferences: [],
+  params: null,
   oneConference: null,
   isLoading: false,
   error: false,
@@ -23,6 +24,9 @@ export const postData = createSlice({
     },
     handlePage: (state, action) => {
       state.page = action.payload;
+    },
+    fetchParams: (state, action) => {
+      state.params = action.payload;
     },
 
     handleCount: (state, action) => {
@@ -50,6 +54,7 @@ export const {
   reset,
   hasError,
   fetchOne,
+  fetchParams,
   handlePage,
   handleCount,
 } = postData.actions;
@@ -69,32 +74,17 @@ export const {
 export const filteredContent = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const { page } = getState().conferences;
-  const currentUrl = window.location.href;
-  let query = "?" + currentUrl.split("?")[1];
-  let replacedUrl = query.replace(/\+/g, "%20").replace(/%2C/g, ",");
-  console.log(page);
-  const readyUrl =
-    query.includes("true") ||
-    query.includes("date_asc") ||
-    query.includes("date_desc") ||
-    query.includes("undefined")
-      ? replacedUrl
-      : replacedUrl.slice(0, -1);
+  const { params } = getState().conferences;
+
+  // Формирование URL-строки с параметрами
+  const urlParams = new URLSearchParams(params);
+  const finalUrl = `?${urlParams.toString()}`;
+  const readyUrl = decodeURI(finalUrl).replace(/%2C/gi, ",");
 
   try {
     const response = await api.get(`/api/${readyUrl}&page=${page}`);
     dispatch(fetchConferences(response.data.results));
     dispatch(handleCount(response.data.count));
-  } catch (e) {
-    dispatch(hasError(e.message));
-  }
-};
-
-export const prev1 = () => async (dispatch) => {
-  dispatch(startLoading());
-  try {
-    const response = await api.get(`/api/?conf_status=starting_soon`);
-    dispatch(fetchConferences(response.data.results));
   } catch (e) {
     dispatch(hasError(e.message));
   }
