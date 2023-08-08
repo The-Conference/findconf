@@ -21,7 +21,7 @@ export default function ShareButton() {
   useOnClickOutside(ref, () => setIsOpen(false));
 
   const { pathname } = useLocation();
-  const shareUrl = `theconf.ru${pathname}`;
+  const shareUrl = `test.theconf.ru${pathname}`;
 
   return (
     <>
