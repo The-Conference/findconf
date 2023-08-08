@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
-import axios from "axios";
+
 const initialState = {
   count: 0,
   page: 1,
@@ -65,18 +65,6 @@ export const {
 //     dispatch(hasError(e.message));
 //   }
 // };
-export const addMoreConferences = () => async (dispatch, getState) => {
-  dispatch(startLoading());
-  const { page } = getState().conferences;
-  console.log(page);
-  try {
-    const response = await axios.get(page);
-    dispatch(fetchConferences(response.data.results));
-    dispatch(handleCount(response.data.count));
-  } catch (e) {
-    dispatch(hasError(e.message));
-  }
-};
 
 export const filteredContent = () => async (dispatch, getState) => {
   dispatch(startLoading());
@@ -97,6 +85,16 @@ export const filteredContent = () => async (dispatch, getState) => {
     const response = await api.get(`/api/${readyUrl}&page=${page}`);
     dispatch(fetchConferences(response.data.results));
     dispatch(handleCount(response.data.count));
+  } catch (e) {
+    dispatch(hasError(e.message));
+  }
+};
+
+export const prev1 = () => async (dispatch) => {
+  dispatch(startLoading());
+  try {
+    const response = await api.get(`/api/?conf_status=starting_soon`);
+    dispatch(fetchConferences(response.data.results));
   } catch (e) {
     dispatch(hasError(e.message));
   }

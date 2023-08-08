@@ -25,7 +25,7 @@ const AllConferences = ({ data, keywords, id }) => {
 
   useEffect(() => {
     if (
-      conferences.length !== count &&
+      conferences.length < count &&
       data !== "prev4" &&
       data !== "prev3" &&
       data !== "prev2" &&
@@ -122,21 +122,13 @@ const AllConferences = ({ data, keywords, id }) => {
     favourites: conferences.filter((el) => el.follow === true),
     searchRes: match,
     date: conferences.filter((el) => confs.includes(el.id)),
-    collection1: conferences.filter(
-      (el) => el.conf_status !== "Конференция окончена"
-    ),
-    collection2: conferences.filter(
-      (el) => el.conf_status === "Конференция окончена"
-    ),
 
     periods: conferences.filter(
       (el) =>
         range.includes(new Date(el.conf_date_begin).toLocaleDateString()) ||
         range.includes(new Date(el.conf_date_end).toLocaleDateString())
     ),
-    prev1: conferences
-      .filter((el) => el.conf_status !== "Конференция окончена")
-      .slice(0, 2),
+    // prev1: conferences.slice(0, 2),
     prev2: conferences
       .filter((el) => el.conf_status === "Конференция окончена")
       .slice(0, 2),
@@ -154,10 +146,10 @@ const AllConferences = ({ data, keywords, id }) => {
     result = types.searchRes;
   }
   if (data === "collection1") {
-    result = types.collection1;
+    result = conferences;
   }
   if (data === "collection2") {
-    result = types.collection2;
+    result = conferences;
   }
   if (data === "date") {
     result = types.date;
@@ -166,7 +158,7 @@ const AllConferences = ({ data, keywords, id }) => {
     result = types.periods;
   }
   if (data === "prev1") {
-    result = types.prev1;
+    result = conferences.slice(0, 2);
   }
   if (data === "prev2") {
     result = types.prev2;
@@ -230,13 +222,13 @@ const AllConferences = ({ data, keywords, id }) => {
         )}
 
         {data === "prev1" && (
-          <a href="/collection1">
+          <a href="/collection1?conf_status=starting_soon%2C">
             <p className="forward">Предстоящие конференции</p>
             <span>&gt;</span>
           </a>
         )}
         {data === "prev2" && (
-          <a href="/collection2">
+          <a href="/collection2?conf_status=finished%2C">
             <p className="forward">Прошедшие конференции</p>
             <span>&gt;</span>
           </a>
