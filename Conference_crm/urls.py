@@ -10,6 +10,6 @@ urlpatterns = [
 router = DefaultRouter()
 router.register("users", CustomUserViewSet)
 
-# User = get_user_model()
+
 
 urlpatterns += router.urls
