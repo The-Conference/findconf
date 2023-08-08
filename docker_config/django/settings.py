@@ -215,7 +215,7 @@ CKEDITOR_CONFIGS = {
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'api/auth/users/activation/{uid}/{token}',  # Fix
+    'ACTIVATION_URL': 'users/activation/{uid}/{token}',  # Fix
     'SEND_ACTIVATION_EMAIL': True,
     'LOGIN_FIELD': 'email',
 
