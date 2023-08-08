@@ -5,6 +5,7 @@ import {
   handlePage,
   reset,
   fetchParams,
+  cleanParams,
 } from "../../store/postData";
 import { fetchResults } from "../../store/searchSlice";
 import {
@@ -149,11 +150,8 @@ const Filters = () => {
   }, [cardId, dispatch, searchParams]);
 
   useEffect(() => {
-    dispatch(fetchParams(params));
-    dispatch(handlePage(1));
-    dispatch(reset());
-    dispatch(filteredContent());
     dispatch(fetchResults());
+
     const currentParams = Object.fromEntries(searchParams.entries());
     const allValues = [];
     allValues.push(
@@ -197,9 +195,20 @@ const Filters = () => {
         ([param]) => !paramsToRemove.includes(param)
       )
     );
+    setParams(removeComma(newParams));
+    dispatch(fetchParams(params));
     dispatch(handleDeleteColor(id));
     setSearchParams(new URLSearchParams(newParams));
   };
+
+  useEffect(() => {
+    dispatch(reset());
+    dispatch(cleanParams());
+    dispatch(handlePage(1));
+    dispatch(fetchParams(params));
+    dispatch(filteredContent());
+  }, [params, dispatch]);
+
   return (
     <>
       <button className="filterBtn" onClick={() => setMenu(!menu)}>
@@ -216,7 +225,9 @@ const Filters = () => {
             onClick={() => {
               deletAllFilters();
               dispatch(handleDeleteAllColors());
-              dispatch(filteredContent);
+              dispatch(reset());
+              dispatch(cleanParams());
+              dispatch(filteredContent());
             }}
           >
             {(del && (

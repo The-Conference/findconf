@@ -5,7 +5,7 @@ const initialState = {
   count: 0,
   page: 1,
   conferences: [],
-  params: null,
+  params: "",
   oneConference: null,
   isLoading: false,
   error: false,
@@ -27,6 +27,9 @@ export const postData = createSlice({
     },
     fetchParams: (state, action) => {
       state.params = action.payload;
+    },
+    cleanParams: (state, action) => {
+      state.params = "";
     },
 
     handleCount: (state, action) => {
@@ -57,6 +60,7 @@ export const {
   fetchParams,
   handlePage,
   handleCount,
+  cleanParams,
 } = postData.actions;
 
 // export const fetchAllConferences = () => async (dispatch) => {
@@ -78,11 +82,11 @@ export const filteredContent = () => async (dispatch, getState) => {
 
   // Формирование URL-строки с параметрами
   const urlParams = new URLSearchParams(params);
-  const finalUrl = `?${urlParams.toString()}`;
+  const finalUrl = `${urlParams.toString()}`;
   const readyUrl = decodeURI(finalUrl).replace(/%2C/gi, ",");
 
   try {
-    const response = await api.get(`/api/${readyUrl}&page=${page}`);
+    const response = await api.get(`/api/?${readyUrl}&page=${page}`);
     dispatch(fetchConferences(response.data.results));
     dispatch(handleCount(response.data.count));
   } catch (e) {

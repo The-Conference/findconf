@@ -19,7 +19,7 @@ const AllConferences = ({ data, keywords, id }) => {
     (state) => state.conferences
   );
   const [searchParams] = useSearchParams();
-
+  console.log(conferences);
   const dispatch = useDispatch();
   const { periods, date } = useParams();
 
@@ -122,13 +122,16 @@ const AllConferences = ({ data, keywords, id }) => {
     favourites: conferences.filter((el) => el.follow === true),
     searchRes: match,
     date: conferences.filter((el) => confs.includes(el.id)),
-
+    collection1: conferences,
+    collection2: conferences,
     periods: conferences.filter(
       (el) =>
         range.includes(new Date(el.conf_date_begin).toLocaleDateString()) ||
         range.includes(new Date(el.conf_date_end).toLocaleDateString())
     ),
-    // prev1: conferences.slice(0, 2),
+    prev1: conferences
+      .filter((el) => el.conf_status !== "Конференция окончена")
+      .slice(0, 2),
     prev2: conferences
       .filter((el) => el.conf_status === "Конференция окончена")
       .slice(0, 2),
@@ -146,10 +149,10 @@ const AllConferences = ({ data, keywords, id }) => {
     result = types.searchRes;
   }
   if (data === "collection1") {
-    result = conferences;
+    result = types.collection1;
   }
   if (data === "collection2") {
-    result = conferences;
+    result = types.collection2;
   }
   if (data === "date") {
     result = types.date;
@@ -158,7 +161,7 @@ const AllConferences = ({ data, keywords, id }) => {
     result = types.periods;
   }
   if (data === "prev1") {
-    result = conferences.slice(0, 2);
+    result = types.prev1;
   }
   if (data === "prev2") {
     result = types.prev2;
@@ -184,17 +187,17 @@ const AllConferences = ({ data, keywords, id }) => {
       <div className="conference__type">
         {data === "all" && (
           <div className="back">
-            <Link to="/">
+            <a href="/">
               <span className="backarrow">&lt;</span> <p>Все конференции</p>
-            </Link>
+            </a>
           </div>
         )}
 
         {data === "favourites" && (
           <div className="back">
-            <Link to="/">
+            <a href="/">
               <span className="backarrow">&lt;</span> <p>Избранное</p>
-            </Link>
+            </a>
           </div>
         )}
         {data === "search-results" && (
@@ -205,30 +208,30 @@ const AllConferences = ({ data, keywords, id }) => {
         )}
         {data === "collection1" && (
           <div className="back">
-            <Link to="/">
+            <a href="/">
               {" "}
               <span className="backarrow">&lt;</span>{" "}
               <p>Предстоящие конференции</p>
-            </Link>
+            </a>
           </div>
         )}
         {data === "collection2" && (
           <div className="back">
-            <Link to="/">
+            <a href="/">
               <span className="backarrow">&lt;</span>{" "}
               <p>Прошедшие конференции</p>
-            </Link>
+            </a>
           </div>
         )}
 
         {data === "prev1" && (
-          <a href="/collection1?conf_status=starting_soon%2C">
+          <a href="/collection1">
             <p className="forward">Предстоящие конференции</p>
             <span>&gt;</span>
           </a>
         )}
         {data === "prev2" && (
-          <a href="/collection2?conf_status=finished%2C">
+          <a href="/collection2">
             <p className="forward">Прошедшие конференции</p>
             <span>&gt;</span>
           </a>
@@ -247,24 +250,24 @@ const AllConferences = ({ data, keywords, id }) => {
         )}
         {data === "date" && (
           <div className="back">
-            <Link to="/">
+            <a href="/">
               <span className="backarrow">&lt;</span>{" "}
               <p>
                 Конференции на <span>{date}</span>
               </p>
-            </Link>
+            </a>
           </div>
         )}
         {data === "periods" && (
           <div className="back">
-            <Link to="/">
+            <a href="/">
               <span className="backarrow">&lt;</span>{" "}
               <p>
                 Конференции c{" "}
                 {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
                 по {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
               </p>
-            </Link>
+            </a>
           </div>
         )}
       </div>
