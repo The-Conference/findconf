@@ -23,9 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('Conference_data.urls')),
     path('api/conf_auth/', include('rest_framework.urls')),
-    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('Conference_crm.urls')),
     path('api/auth-token/', include('djoser.urls.authtoken')),
-    path('api/user/', include('Conference_crm.urls')),
     path('docs/openapi/', SpectacularAPIView.as_view(), name='openapi-schema'),
     path('docs/', SpectacularSwaggerView.as_view(url_name='openapi-schema'), name='swagger-ui'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

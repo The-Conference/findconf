@@ -11,6 +11,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class ConferenceSerializer(serializers.ModelSerializer):
+    is_favorite = serializers.BooleanField(read_only=True)
     tags = TagSerializer(many=True, required=False)
     conf_id = serializers.CharField(required=False)
 
@@ -53,4 +54,4 @@ class ConferenceSerializer(serializers.ModelSerializer):
                   'conf_date_end', 'conf_card_href', 'reg_href',
                   'conf_name', 'conf_s_desc', 'conf_desc', 'org_name',
                   'themes', 'online', 'conf_href', 'offline', 'conf_address',
-                  'contacts', 'rinc', 'tags', 'vak', 'wos', 'scopus', 'conf_status')
+                  'contacts', 'rinc', 'tags', 'vak', 'wos', 'scopus', 'conf_status', 'is_favorite')

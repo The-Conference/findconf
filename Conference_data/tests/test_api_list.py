@@ -13,7 +13,7 @@ from ..models import Conference, Tag
 class ConferenceListTests(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.URL = reverse('conf-list')
+        cls.URL = reverse('api-list')
         user = get_user_model()
         cls.user = user.objects.create_user(email='user@example.com', password='123')
         cls.admin = user.objects.create_superuser(email='admin@example.com', password='123')
@@ -89,7 +89,7 @@ class ConferenceListTests(APITestCase):
 class ConferenceListFilterTests(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.URL = reverse('conf-list')
+        cls.URL = reverse('api-list')
         conf_b_data = TEST_CONF_FULL.copy()
         conf_b_data['checked'] = True
         del conf_b_data['tags']

@@ -18,7 +18,7 @@ class ConferenceDetailTests(APITestCase):
         self.client.raise_request_exception = False
         self.conf = Conference.objects.create(**TEST_CONF_DICT)
         self.test_conf_data = TEST_CONF_DICT.copy()
-        self.URL = reverse('conf-detail', kwargs={'pk': self.conf.pk})
+        self.URL = reverse('api-detail', kwargs={'pk': self.conf.pk})
 
     def test_detail_get_200(self):
         response = self.client.get(self.URL)
@@ -27,7 +27,7 @@ class ConferenceDetailTests(APITestCase):
         self.assertEqual(response.data.get('id'), self.conf.pk)
 
     def test_detail_get_404(self):
-        response = self.client.get(reverse('conf-detail', kwargs={'pk': 10}))
+        response = self.client.get(reverse('api-detail', kwargs={'pk': 10}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_detail_patch_200(self):
