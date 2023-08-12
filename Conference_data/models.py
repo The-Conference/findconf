@@ -41,7 +41,7 @@ class Conference(models.Model):
     conf_address = models.TextField(null=True, blank=True, verbose_name="Адрес")
     contacts = models.TextField(null=True, blank=True, verbose_name="Контакты")
     rinc = models.BooleanField(default=False, verbose_name="РИНЦ")
-    data = models.JSONField(blank=True, null=True)
+    data = models.JSONField(blank=True, null=True)  # Legacy code, deprecated
     checked = models.BooleanField(default=False, verbose_name="Проверено")
     tags = models.ManyToManyField(Tag, blank=True, verbose_name="Теги")
 

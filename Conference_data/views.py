@@ -1,9 +1,12 @@
 from rest_framework import viewsets
 from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
 from Conference_crm.permissions.permissions import ReadOnlyOrAdminPermission
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from .managers import ManageFavorite
 from .models import Conference
-from .serializers import ConferenceSerializer
+from .serializers import ConferenceSerializer, ConferenceShortSerializer
 from .filters import ConferenceFilter
 
 
@@ -24,4 +27,11 @@ class ConferenceViewSet(viewsets.ModelViewSet, ManageFavorite):
     def get_queryset(self):
         queryset = Conference.objects.filter(checked=True).order_by('conf_date_begin')
         queryset = self.annotate_qs_is_favorite_field(queryset)
+        queryset = queryset.prefetch_related('tags')
         return queryset
+
+    @extend_schema(tags=["default"])
+    @action(methods=['get'], detail=False, serializer_class=ConferenceShortSerializer)
+    def calendar(self, request):
+        serializer = self.serializer_class(self.get_queryset(), many=True)
+        return Response(serializer.data)

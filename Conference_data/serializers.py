@@ -10,6 +10,18 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
+class UniversitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Conference
+        fields = ('un_name', )
+
+
+class ConferenceShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Conference
+        fields = ('id', 'conf_date_begin', 'conf_date_end')
+
+
 class ConferenceSerializer(serializers.ModelSerializer):
     is_favorite = serializers.BooleanField(read_only=True)
     tags = TagSerializer(many=True, required=False)
