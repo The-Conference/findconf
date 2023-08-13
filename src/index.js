@@ -46,9 +46,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
           <ProtectedFaves />
-          <LazyFooter />
         </Suspense>
       </>
     ),
