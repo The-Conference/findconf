@@ -112,7 +112,7 @@ export const fetchFavourite = () => async (dispatch) => {
       const response = await api.get(`/api/favorites/`, {
         headers,
       });
-      dispatch(fetchConferences(response.data));
+      dispatch(fetchConferencesOnce(response.data));
       dispatch(handleCount(response.data.count));
       console.log(response.data);
     }
