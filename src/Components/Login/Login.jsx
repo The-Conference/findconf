@@ -30,7 +30,7 @@ const Login = () => {
   };
   useEffect(() => {
     if (isAuthenticated) {
-      nav("/profile");
+      nav("/");
     }
   }, [isAuthenticated, nav]);
 

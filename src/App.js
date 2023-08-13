@@ -2,12 +2,13 @@ import "./App.css";
 import React, { useEffect } from "react";
 import Main from "./Components/Main/Main";
 import { useDispatch } from "react-redux";
-import { filteredContent } from "./store/postData";
+import { fetchOnce } from "./store/postData";
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(filteredContent());
+    dispatch(fetchOnce());
   }, [dispatch]);
 
   return (

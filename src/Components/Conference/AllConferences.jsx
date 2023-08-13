@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-import { Link, useSearchParams, useParams } from "react-router-dom";
-import hearts from "../../assets/follow.svg";
-// import following from "../../assets/following.svg";
-import "./conference.scss";
+import { useSearchParams, useParams } from "react-router-dom";
 
+import "./conference.scss";
+import FollowButton from "../FollowButton/FollowButton";
 import { useSelector, useDispatch } from "react-redux";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
-import { filteredContent, handlePage } from "../../store/postData";
+import {
+  filteredContent,
+  handlePage,
+  fetchFavourite,
+} from "../../store/postData";
 import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
 import EmptyResult from "../EmptyResult/EmptyResult";
@@ -18,23 +21,28 @@ const AllConferences = ({ data, keywords, id }) => {
   const { conferences, isLoading, count, page } = useSelector(
     (state) => state.conferences
   );
+
   const [searchParams] = useSearchParams();
-  console.log(conferences);
   const dispatch = useDispatch();
   const { periods, date } = useParams();
-
+  useEffect(() => {
+    if (data === "favourites") {
+      dispatch(fetchFavourite());
+      console.log("bitch");
+    }
+  }, [dispatch, data]);
   useEffect(() => {
     if (
       conferences.length < count &&
       data !== "prev4" &&
       data !== "prev3" &&
       data !== "prev2" &&
-      data !== "prev1"
+      data !== "prev1" &&
+      data !== "favorites"
     ) {
       const fetchData = async () => {
         try {
           dispatch(handlePage(page + 1));
-
           dispatch(filteredContent());
         } catch (error) {
           console.log(error);
@@ -119,7 +127,6 @@ const AllConferences = ({ data, keywords, id }) => {
 
   const types = {
     all: conferences,
-    favourites: conferences.filter((el) => el.follow === true),
     searchRes: match,
     date: conferences.filter((el) => confs.includes(el.id)),
     collection1: conferences,
@@ -143,7 +150,7 @@ const AllConferences = ({ data, keywords, id }) => {
     result = types.all;
   }
   if (data === "favourites") {
-    result = types.favourites;
+    result = conferences;
   }
   if (data === "search-results") {
     result = types.searchRes;
@@ -274,7 +281,8 @@ const AllConferences = ({ data, keywords, id }) => {
       {data !== "prev1" &&
         data !== "prev2" &&
         data !== "prev3" &&
-        data !== "prev4" && <Filters />}
+        data !== "prev4" &&
+        data !== "favourites" && <Filters />}
 
       {(isLoading &&
         data !== "prev1" &&
@@ -319,13 +327,7 @@ const AllConferences = ({ data, keywords, id }) => {
                   >
                     {el.conf_status}
                   </span>
-                  <img
-                    title="добавить в избранное"
-                    src={hearts}
-                    alt="follow"
-                    width="25"
-                    height="24"
-                  />
+                  <FollowButton id={el.id} favorite={el.is_favorite} />
                 </div>
                 <div className="conference__bg-middle">
                   {el.tags.map((el) => el.name).length > 0 ? (

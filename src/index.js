@@ -12,6 +12,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
 import Registered from "./Components/SignUp/Registered";
+import ProtectedFaves from "./Components/ProtectedRoute/ProtectedFaves";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
 const LazyApp = React.lazy(() => import("./App"));
@@ -41,17 +42,19 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/favourite/",
+    path: "/favourite",
     element: (
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyAllConferences data={"favourites"} />
+          <ProtectedFaves />
           <LazyFooter />
         </Suspense>
       </>
     ),
+    redirectTo: "/login",
   },
+
   {
     path: "/all",
     element: (
@@ -187,6 +190,15 @@ const router = createBrowserRouter([
     ),
     redirectTo: "/login",
   },
+  // {
+  //   path: "/favourite",
+  //   element: (
+  //     <>
+  //       <ProtectedRoute />
+  //     </>
+  //   ),
+  //   redirectTo: "/login",
+  // },
   {
     path: "/users/activation/:uid/:token",
     element: (
