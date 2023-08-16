@@ -155,7 +155,7 @@ export const filteredContent = () => async (dispatch, getState) => {
 export const addDeleteFave = () => async (dispatch, getState) => {
   const accessToken = localStorage.getItem("auth_token"); // Получение токена из Local Storage
   const { id } = getState().conferences;
-  console.log(id);
+
   if (!accessToken) {
     throw new Error("Токен не найден в Local Storage");
   }

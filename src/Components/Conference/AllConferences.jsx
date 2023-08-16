@@ -327,7 +327,11 @@ const AllConferences = ({ data, keywords, id }) => {
                   >
                     {el.conf_status}
                   </span>
-                  <FollowButton id={el.id} favorite={el.is_favorite} />
+                  <FollowButton
+                    id={el.id}
+                    favorite={el.is_favorite}
+                    type={"card"}
+                  />
                 </div>
                 <div className="conference__bg-middle">
                   {el.tags.map((el) => el.name).length > 0 ? (

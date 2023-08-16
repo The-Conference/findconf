@@ -5,7 +5,9 @@ import hearts from "../../assets/follow.svg";
 import following from "../../assets/following.svg";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-function FollowButton({ id, favorite }) {
+import hearts2 from "../../assets/followSmall.svg";
+import following2 from "../../assets/followingSmall.svg";
+function FollowButton({ id, favorite, type }) {
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
   const [localIsFave, setLocalIsFave] = useState(favorite);
   const dispatch = useDispatch();
@@ -20,8 +22,13 @@ function FollowButton({ id, favorite }) {
       nav("/login");
     }
   };
+  let img = null;
+  if (type === "card") {
+    img = localIsFave ? following : hearts;
+  } else {
+    img = localIsFave ? following2 : hearts2;
+  }
 
-  const img = localIsFave ? following : hearts;
   const title = localIsFave ? "удалить из избранного" : "добавить в избранное";
 
   return (
@@ -30,8 +37,8 @@ function FollowButton({ id, favorite }) {
       onClick={handleButtonClick}
       src={img}
       alt="follow"
-      width="25"
-      height="24"
+      width={type === "card" ? "25" : "32"}
+      height={type === "card" ? "24" : "32"}
     />
   );
 }

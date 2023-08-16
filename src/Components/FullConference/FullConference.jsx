@@ -4,14 +4,13 @@ import NotFound from "../404/404";
 import { filteredContent, hasError, fetchOne } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
-import follow from "../../assets/followSmall.svg";
-// import following from "../../assets/followingSmall.svg";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
 import { options } from "../../utils/options";
 import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import ShareButton from "../ShareButton/ShareButton";
+import FollowButton from "../FollowButton/FollowButton";
 const FullConference = () => {
   const { confId } = useParams();
   const { conferences, oneConference } = useSelector(
@@ -24,8 +23,30 @@ const FullConference = () => {
 
   let content;
   let full = oneConference;
-
   useEffect(() => {
+    const fetchOneConference = async () => {
+      const Token = localStorage.getItem("auth_token"); // Получение токена из Local Storage
+
+      const headers = {
+        Authorization: `Token ${Token}`,
+        Accept: "application/json",
+      };
+
+      try {
+        if (Token) {
+          await axios
+            .get(`https://test.theconf.ru/api/${confId}/`, { headers })
+            .then((response) => dispatch(fetchOne(response.data)));
+        } else {
+          await axios
+            .get(`https://test.theconf.ru/api/${confId}/`)
+            .then((response) => dispatch(fetchOne(response.data)));
+        }
+      } catch (e) {
+        dispatch(hasError(e.message));
+      }
+    };
+
     fetchOneConference();
     dispatch(filteredContent());
     window.scrollTo(0, 0);
@@ -71,13 +92,12 @@ const FullConference = () => {
             {full.conf_status}
           </span>
           <div className="social">
-            <img
-              title="добавить в избранное"
-              src={follow}
-              alt="follow"
-              width="32"
-              height="32"
+            <FollowButton
+              id={full.id}
+              favorite={full.is_favorite}
+              type={"full"}
             />
+
             <ShareButton />
           </div>
         </div>
@@ -254,16 +274,6 @@ const FullConference = () => {
   } else if (conferences.length && !full) {
     content = <NotFound />;
   }
-
-  const fetchOneConference = async () => {
-    try {
-      await axios
-        .get(`https://test.theconf.ru/api/${confId}/`)
-        .then((response) => dispatch(fetchOne(response.data)));
-    } catch (e) {
-      dispatch(hasError(e.message));
-    }
-  };
 
   return (
     <>

@@ -12,8 +12,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
 import Registered from "./Components/SignUp/Registered";
-import ProtectedFaves from "./Components/ProtectedRoute/ProtectedFaves";
-import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import ProtectedFaves from "./Components/ProtectedRoutes/ProtectedFaves";
+
 const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
 const LazyApp = React.lazy(() => import("./App"));
 const LazyAllConferences = React.lazy(() =>
@@ -179,24 +179,6 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  {
-    path: "/profile",
-    element: (
-      <>
-        <ProtectedRoute />
-      </>
-    ),
-    redirectTo: "/login",
-  },
-  // {
-  //   path: "/favourite",
-  //   element: (
-  //     <>
-  //       <ProtectedRoute />
-  //     </>
-  //   ),
-  //   redirectTo: "/login",
-  // },
   {
     path: "/users/activation/:uid/:token",
     element: (

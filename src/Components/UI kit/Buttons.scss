@@ -1,26 +1,22 @@
-$PrimPressed: #184cd3;
-$PrimHover: #4074fb;
-$PrimActive: #2c60e7;
-$Inactive: #bfcff7;
-$SecondActive: #ebefff;
+@import "./Colors.scss";
 
 .button {
-  background-color: $PrimActive;
+  background-color: $SapphireMain;
   color: white;
   -webkit-transition: all 0.2s ease-in-out;
   border-radius: 8px;
   text-align: center;
   &:hover {
-    background-color: $PrimHover;
+    background-color: $Sapphire700;
   }
   &:active {
-    background-color: $PrimPressed;
+    background-color: $Sapphire800;
   }
   &:disabled {
-    background-color: $Inactive;
+    background-color: $Sapphire400;
   }
 }
-.button-large {
+.button-large-filled {
   width: 376px;
   padding: 9px 32px;
   font-size: 20px;
@@ -66,7 +62,3 @@ $SecondActive: #ebefff;
   padding: 9px 24px;
   font-size: 14px;
 }
-// :export {
-//   max: $max;
-//   desc: $desc;
-// }
