@@ -16,7 +16,7 @@ urlpatterns = [
                              pagination_class=None),
          name='tag-list'),
     path('lists/universities/',
-         ListAPIView.as_view(queryset=Conference.objects.values('un_name').distinct(),
+         ListAPIView.as_view(queryset=Conference.objects.filter(checked=True).values('un_name').distinct(),
                              serializer_class=UniversitySerializer,
                              pagination_class=None),
          name='un-list'),
