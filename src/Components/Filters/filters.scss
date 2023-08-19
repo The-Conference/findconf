@@ -6,6 +6,7 @@
   position: relative;
   text-transform: capitalize;
   font-size: 12px;
+
   @media screen and (max-width: 856px) {
     flex-direction: column;
     display: none;

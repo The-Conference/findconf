@@ -9,6 +9,20 @@ export const StyledPopup = styled(Popup)`
   &-content {
     padding: 15px;
     width: 287px !important;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 12px; /* ширина scrollbar */
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #dedee5; /* цвет дорожки */
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #2c60e7; /* цвет плашки */
+      border-radius: 20px; /* закругления плашки */
+      border: 3px solid #dedee5; /* padding вокруг плашки */
+    }
   }
 `;
 
@@ -96,21 +110,9 @@ export const StyledPopupInput = styled.input`
 
 export const StyledScroll = styled.div`
   max-height: 235px;
-  overflow-y: auto;
+  /* overflow-y: auto;
   overflow-x: hidden;
   padding-right: 5px;
-  &::-webkit-scrollbar {
-    width: 12px; /* ширина scrollbar */
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #dedee5; /* цвет дорожки */
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #2c60e7; /* цвет плашки */
-    border-radius: 20px; /* закругления плашки */
-    border: 3px solid #dedee5; /* padding вокруг плашки */
-  }
   &:after {
     background: rgb(255, 255, 255);
     background: linear-gradient(
@@ -138,5 +140,5 @@ export const StyledScroll = styled.div`
     position: absolute;
     transition: all 0.2s ease 0s;
     width: 238px;
-  }
+  } */
 `;
