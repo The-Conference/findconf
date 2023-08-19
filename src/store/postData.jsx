@@ -3,7 +3,7 @@ import { api } from "../api";
 import axios from "axios";
 const initialState = {
   count: 0,
-  page: 1,
+  page: 0,
   conferences: [],
   params: "",
   oneConference: null,
@@ -131,6 +131,7 @@ export const filteredContent = () => async (dispatch, getState) => {
   const urlParams = new URLSearchParams(params);
   const finalUrl = `${urlParams.toString()}`;
   const readyUrl = decodeURI(finalUrl).replace(/%2C/gi, ",");
+
   const headers = {
     Authorization: `Token ${Token}`,
     Accept: "application/json",

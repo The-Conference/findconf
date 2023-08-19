@@ -7,7 +7,7 @@ import {
   fetchParams,
   cleanParams,
 } from "../../store/postData";
-import { fetchResults } from "../../store/searchSlice";
+import { fetchTags, fetchUnis } from "../../store/searchSlice";
 import {
   handleColor,
   handleDeleteColor,
@@ -45,7 +45,10 @@ const Filters = () => {
   const [del, setDel] = useState(false);
   const [allVals, setAllVals] = useState([]);
   const [allKey, setAllKey] = useState([]);
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState(
+    Object.fromEntries(searchParams.entries())
+  );
+
   function removeComma(obj) {
     const result = {};
     for (const key in obj) {
@@ -99,31 +102,28 @@ const Filters = () => {
     setData(matches.length ? matches : dataInitial);
   };
 
-  const { search } = useSelector((state) => state);
+  const { universities, tags } = useSelector((state) => state.search);
 
   useEffect(() => {
-    const universities = search
+    const unis = universities
       .map((el) => el.un_name && el.un_name.trim())
       .filter((item, index, arr) => item && arr.indexOf(item) === index)
       .map((item) => ({
         name: item,
         key: "un_name",
       }));
-    const tags = new Set();
 
-    search.forEach((el) => {
-      el.tags.forEach((elem) => {
-        if (elem.name) {
-          tags.add(elem.name);
-        }
-      });
-    });
+    const uniqueTags = tags
+      .map((el) => el.name && el.name.trim())
+      .filter((item, index, arr) => item && arr.indexOf(item) === index)
+      .map((item) => ({
+        name: item,
+        key: "tags",
+      }));
 
-    const uniqueTags = [...tags].map((name) => ({ name, key: "tags" }));
-
-    dispatch(handleData({ id: 1, data: universities }));
+    dispatch(handleData({ id: 1, data: unis }));
     dispatch(handleData({ id: 2, data: uniqueTags }));
-  }, [dispatch, search]);
+  }, [dispatch, universities, tags]);
 
   useEffect(() => {
     const currentParams = Object.fromEntries(searchParams.entries());
@@ -150,7 +150,8 @@ const Filters = () => {
   }, [cardId, dispatch, searchParams]);
 
   useEffect(() => {
-    dispatch(fetchResults());
+    dispatch(fetchTags());
+    dispatch(fetchUnis());
 
     const currentParams = Object.fromEntries(searchParams.entries());
     const allValues = [];
@@ -207,6 +208,7 @@ const Filters = () => {
     dispatch(handlePage(1));
     dispatch(fetchParams(params));
     dispatch(filteredContent());
+    // window.scrollTo(0, 0);
   }, [params, dispatch]);
 
   return (

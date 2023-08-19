@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./searchfilter.scss";
 import Highlighter from "react-highlight-words";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchResults } from "../../store/searchSlice";
+import { fetchUnis, fetchTags } from "../../store/searchSlice";
 import useOnClickOutside from "../Hooks/useOnClickOutside";
 import { options } from "../../utils/options";
 const SearchFilter = () => {
@@ -53,7 +53,8 @@ const SearchFilter = () => {
     }
   };
   const handleFocus = () => {
-    dispatch(fetchResults());
+    dispatch(fetchUnis());
+    dispatch(fetchTags());
     setFocus(true);
   };
   useEffect(() => {
