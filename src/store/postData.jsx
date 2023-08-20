@@ -30,7 +30,19 @@ export const postData = createSlice({
       state.params = action.payload;
     },
     cleanParams: (state) => {
-      state.params = "";
+      const keyToKeep = "search";
+      const newObj = Object.keys(state.params).reduce((acc, key) => {
+        if (key === keyToKeep) {
+          acc[key] = state.params[key];
+        }
+        return acc;
+      }, {});
+
+      if (state.params.hasOwnProperty("search")) {
+        state.params = newObj;
+      } else {
+        state.params = "";
+      }
     },
 
     handleCount: (state, action) => {
@@ -131,7 +143,8 @@ export const filteredContent = () => async (dispatch, getState) => {
   const urlParams = new URLSearchParams(params);
   const finalUrl = `${urlParams.toString()}`;
   const readyUrl = decodeURI(finalUrl).replace(/%2C/gi, ",");
-
+  console.log(readyUrl);
+  console.log(params);
   const headers = {
     Authorization: `Token ${Token}`,
     Accept: "application/json",

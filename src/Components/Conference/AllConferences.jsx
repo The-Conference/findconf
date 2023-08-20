@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSearchParams, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import "./conference.scss";
 import FollowButton from "../FollowButton/FollowButton";
@@ -22,13 +22,12 @@ const AllConferences = ({ data, keywords, id }) => {
     (state) => state.conferences
   );
 
-  const [searchParams] = useSearchParams();
+  const { value } = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const { periods, date } = useParams();
   useEffect(() => {
     if (data === "favourites") {
       dispatch(fetchFavourite());
-      console.log("bitch");
     }
   }, [dispatch, data]);
   useEffect(() => {
@@ -71,7 +70,6 @@ const AllConferences = ({ data, keywords, id }) => {
   let match = [];
   let confs = [];
   let range = [];
-  let value = [];
   let newPeriod = [];
   let recsPrev = [];
 
@@ -90,25 +88,7 @@ const AllConferences = ({ data, keywords, id }) => {
       );
     });
   }
-  if (data === "search-results") {
-    value = searchParams.get("search");
-    if (value) {
-      let newValue = value
-        .trim()
-        .split(" ")
-        .filter((el) => el.length > 2)
-        .join("|");
 
-      let regexp = new RegExp(newValue, "gi");
-      match = conferences.filter((el) => {
-        return (
-          regexp.test(el.un_name) ||
-          regexp.test(el.conf_name) ||
-          regexp.test(el.tags.map((el) => el.name))
-        );
-      });
-    }
-  }
   if (data === "date") {
     let period = conferences.map((el) => {
       const d1 = new Date(el.conf_date_begin);
@@ -153,7 +133,7 @@ const AllConferences = ({ data, keywords, id }) => {
     result = conferences;
   }
   if (data === "search-results") {
-    result = types.searchRes;
+    result = conferences;
   }
   if (data === "collection1") {
     result = types.collection1;

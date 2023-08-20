@@ -148,11 +148,11 @@ const Filters = () => {
       all.forEach((elem) => dispatch(handleColor(elem.id)));
     }
   }, [cardId, dispatch, searchParams]);
-
   useEffect(() => {
     dispatch(fetchTags());
     dispatch(fetchUnis());
-
+  }, [dispatch]);
+  useEffect(() => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const allValues = [];
     allValues.push(

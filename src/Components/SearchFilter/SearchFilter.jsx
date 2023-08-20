@@ -3,30 +3,38 @@ import { useSelector, useDispatch } from "react-redux";
 import "./searchfilter.scss";
 import Highlighter from "react-highlight-words";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchUnis, fetchTags } from "../../store/searchSlice";
+import { SearchResults, getValue } from "../../store/searchSlice";
 import useOnClickOutside from "../Hooks/useOnClickOutside";
 import { options } from "../../utils/options";
+import { useSearchParams } from "react-router-dom";
+
 const SearchFilter = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const nav = useNavigate();
   const ref = useRef();
+  const [popup, setPopup] = useState(false);
+  useOnClickOutside(ref, () => setPopup(false));
   const dispatch = useDispatch();
-  const search = useSelector((state) => state.search);
+  const { search } = useSelector((state) => state.search);
 
   const [filteredList, setFilteredList] = useState(search);
+
   const [value, setValue] = useState("");
   const [focus, setFocus] = useState(false);
   let lighted = value
     .trim()
     .split(" ")
     .filter((el) => el.length > 2);
+  const handleInputChange = (e) => {
+    setSearchParams({ search: e.target.value });
+  };
 
   const handleValue = (e) => {
     e.preventDefault();
 
     handleNavigation();
   };
-  const [popup, setPopup] = useState(false);
-  useOnClickOutside(ref, () => setPopup(false));
 
   const filterBySearch = (event) => {
     const { value } = event.target;
@@ -34,8 +42,8 @@ const SearchFilter = () => {
     const regex = new RegExp(trimmedValue.split(" ").join("|"), "gi");
     setValue(value);
     const updatedList = search.filter(
-      ({ org_name, conf_name, tags }) =>
-        regex.test(org_name) ||
+      ({ un_name, conf_name, tags }) =>
+        regex.test(un_name) ||
         regex.test(conf_name) ||
         tags.some(({ name }) => regex.test(name)) ||
         regex.test("онлайн") ||
@@ -52,15 +60,14 @@ const SearchFilter = () => {
       window.location.reload();
     }
   };
-  const handleFocus = () => {
-    dispatch(fetchUnis());
-    dispatch(fetchTags());
-    setFocus(true);
-  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  useEffect(() => {
+    dispatch(getValue(searchParams.get("search")));
+    dispatch(SearchResults());
+  }, [searchParams, dispatch]);
   return (
     <form
       className="search"
@@ -69,13 +76,16 @@ const SearchFilter = () => {
     >
       <div className="input">
         <input
-          onFocus={handleFocus}
+          onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           maxLength={100}
           type="search"
           placeholder="Тема конференции, организатор, тематика"
           className={focus === true ? "input-focused" : "search-box"}
+          value={searchParams.get("search") || ""}
           onChange={(e) => {
+            handleInputChange(e);
+
             filterBySearch(e);
           }}
         />
@@ -98,7 +108,7 @@ const SearchFilter = () => {
                           highlightClassName="highlight"
                           searchWords={lighted}
                           autoEscape={false}
-                          textToHighlight={item.org_name}
+                          textToHighlight={item.un_name}
                           key={index}
                         />
                       </li>
