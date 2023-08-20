@@ -167,7 +167,7 @@ const AllConferences = ({ data, keywords, id }) => {
         data === "prev2" ||
         data === "prev3" ||
         data === "prev4"
-          ? "conference prev preview-bottom"
+          ? "conf-prev  preview-bottom"
           : "conference"
       }
     >
@@ -284,7 +284,91 @@ const AllConferences = ({ data, keywords, id }) => {
         {result.length > 0 &&
           result.map((el) => (
             <div key={el.id} className="conference__block">
-              <div className="conference__bg">
+              <div className="conference__wrapper">
+                <div className="conference__tags">
+                  <div className="conference__tags-name">
+                    {el.tags.map((elem) =>
+                      elem.name
+                        .split(",")
+                        .map((tag, index) => <span key={index}>{tag}</span>)
+                    )}
+                    {el.online === true && <span>Онлайн</span>}
+                    {el.offline === true && <span>Офлайн</span>}
+                  </div>
+                  <FollowButton
+                    id={el.id}
+                    favorite={el.is_favorite}
+                    type={"card"}
+                  />
+                </div>
+                <h2 className="conference__title">{el.conf_name}</h2>
+                <p className="conference__text">
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Explicabo suscipit temporibus nihil illum nisi error
+                  accusantium, numquam eius nobis excepturi quod iste ex, dicta
+                  magnam omnis quis ea molestiae quas. Lorem ipsum dolor sit
+                  amet consectetur, adipisicing elit. Explicabo suscipit
+                  temporibus nihil illum nisi error accusantium, numquam eius
+                  nobis excepturi quod iste ex, dicta magnam omnis quis ea
+                  molestiae quas. Lorem ipsum dolor sit amet consectetur,
+                  adipisicing elit. Explicabo suscipit temporibus nihil illum
+                  nisi error accusantium, numquam eius nobis excepturi quod iste
+                  ex, dicta magnam omnis quis ea molestiae quas.
+                </p>
+                <a
+                  className="conference__more"
+                  aria-label="Подробнее о конференции"
+                  href={`/conferences/${el.id}`}
+                >
+                  <span></span>
+                </a>
+                <a
+                  className="conference__more2"
+                  aria-label="Подробнее о конференции"
+                  href={`/conferences/${el.id}`}
+                >
+                  <span></span>
+                </a>
+                <div className="conference__date">
+                  Дата проведения:
+                  <span>
+                    {el.conf_date_end === null
+                      ? new Date(el.conf_date_begin)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3)
+                      : el.conf_date_begin === null
+                      ? new Date(el.conf_date_end)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3)
+                      : el.conf_date_end !== el.conf_date_begin
+                      ? new Date(el.conf_date_begin)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3) +
+                        " - " +
+                        new Date(el.conf_date_end)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3)
+                      : new Date(el.conf_date_begin)
+                          .toLocaleDateString("ru", options)
+                          .slice(0, -3)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+      {isLoading && (
+        <div style={{ marginTop: "50px" }}>
+          <LoaderTemplateTwo />
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default AllConferences;
+
+/* <div className="conference__bg">
                 <div className="conference__bg-top">
                   <span
                     className={
@@ -379,18 +463,4 @@ const AllConferences = ({ data, keywords, id }) => {
                 </div>
                 <a href={`/conferences/${el.id}`}>
                   <div className="conference__title">{el.conf_name}</div>
-                </a>
-              </div>
-            </div>
-          ))}
-      </div>
-      {isLoading && (
-        <div style={{ marginTop: "50px" }}>
-          <LoaderTemplateTwo />
-        </div>
-      )}
-    </section>
-  );
-};
-
-export default AllConferences;
+                </a> */

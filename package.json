@@ -12,6 +12,7 @@
     "dompurify": "^3.0.5",
     "enzyme": "^3.11.0",
     "fuse.js": "^6.6.2",
+    "iconoir-react": "^6.11.0",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-calendar": "^4.5.0",
