@@ -28,10 +28,10 @@ function FollowButton({ id, favorite }) {
       fill="#f8d448"
       onClick={handleButtonClick}
       title={title}
-      height={24}
+      height={25}
       color="#f8d448"
       style={{ cursor: "pointer" }}
-      width={24}
+      width={25}
     />
   ) : (
     <Star
