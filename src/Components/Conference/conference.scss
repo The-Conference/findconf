@@ -105,7 +105,6 @@
     padding-top: 8px;
     height: 95px;
     color: #9999ab;
-
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -174,36 +173,6 @@
       margin: 0;
     }
   }
-  //   &__tags {
-  //     padding: 8px 16px 0 16px;
-  //     @media (max-width: 544px) {
-  //       padding: 0 10px 0 10px;
-  //     }
-  //     &-container {
-  //       small {
-  //         color: #0000384d;
-  //         font-family: "Manrope bold";
-  //         &:not(:last-of-type):after {
-  //           content: "\2022";
-  //           padding: 0 1.5px 0 2.5px;
-  //           font-size: 13px;
-  //           color: #00003833;
-  //           @media screen and (max-width: 1000px) {
-  //             font-size: 12px;
-  //           }
-  //           @media screen and (max-width: 440px) {
-  //             font-size: 10px;
-  //           }
-  //         }
-  //         @media screen and (max-width: 1000px) {
-  //           font-size: 14px;
-  //         }
-  //         @media screen and (max-width: 440px) {
-  //           font-size: 12px;
-  //         }
-  //       }
-  //     }
-  //   }
 
   &__type {
     font-size: 32px;
@@ -277,137 +246,6 @@
   &__wrapper {
     padding: 28px;
   }
-
-  &__bg {
-    height: 206px;
-    background-color: white;
-    border-radius: 13px;
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    -webkit-transition: all 0.4s ease-in-out;
-
-    @media screen and (max-width: 1212px) {
-      height: 190px;
-    }
-    @media screen and (max-width: 1059px) {
-      height: 180px;
-    }
-    @media screen and (max-width: 1018px) {
-      height: 170px;
-    }
-    @media screen and (max-width: 961px) {
-      height: 160px;
-    }
-    @media screen and (max-width: 900px) {
-      height: 150px;
-    }
-    @media (max-width: 847px) {
-      height: 140px;
-    }
-    @media (max-width: 809px) {
-      height: 225px;
-    }
-    @media (max-width: 646px) {
-      height: 200px;
-    }
-    @media (max-width: 575px) {
-      height: 180px;
-      padding: 14px;
-    }
-    @media (max-width: 514px) {
-      height: 150px;
-      padding: 13px;
-    }
-    @media (max-width: 432px) {
-      height: 130px;
-      padding: 8px;
-    }
-    @media (max-width: 377px) {
-      height: 115px;
-    }
-    &-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      font-size: 12px;
-
-      img {
-        cursor: pointer;
-        -webkit-transition: all 0.2s ease-in-out;
-        &:hover {
-          transform: scale(1.1);
-        }
-        @media (max-width: 938px) {
-          transform: scale(0.9);
-        }
-        @media (max-width: 847px) {
-          transform: scale(0.8);
-        }
-        @media (max-width: 445px) {
-          transform: scale(0.7);
-        }
-      }
-    }
-    &-middle {
-      color: white;
-      text-transform: capitalize;
-      font-size: 23px;
-      @media (max-width: 486px) {
-        font-size: 18px;
-      }
-    }
-    &-bottom {
-      color: white;
-      background-color: rgba(255, 255, 255, 0.1);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 7px 14px;
-      border-radius: 6px;
-      width: max-content;
-      @media (max-width: 544px) {
-        font-size: 10px;
-        padding: 5px 8px;
-      }
-      @media (max-width: 1219px) {
-        margin-bottom: 0;
-      }
-    }
-    span {
-      // color: white;
-      // background-color: #37d175;
-      padding: 6px 14px;
-      border-radius: 6px;
-      @media (max-width: 544px) {
-        padding: 5px;
-        height: 28px;
-      }
-    }
-  }
-  &__organizer {
-    color: #00003880;
-    margin: 5px 0;
-    display: flex;
-
-    p {
-      color: #0000384d;
-      width: 140px;
-      margin-right: 10px;
-    }
-  }
-  // &__date {
-  //   color: #00003880;
-
-  //   margin: 5px 0;
-  //   display: flex;
-  //   p {
-  //     color: #0000384d;
-  //     width: 140px;
-  //     margin-right: 10px;
-  //   }
-  // }
 }
 
 .yellow-status {
@@ -430,12 +268,7 @@
   background-color: #e95f3f;
   color: white;
 }
-.preview-bottom {
-  padding-bottom: 60px;
-  @media (max-width: 810px) {
-    padding-bottom: 40px;
-  }
-}
+
 .prev {
   min-height: auto;
 }

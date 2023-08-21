@@ -279,7 +279,7 @@ const FullConference = () => {
     <>
       <div className="full-conference">{content}</div>
       {full && (
-        <div>
+        <div style={{ paddingBottom: "30px" }}>
           <AllConferences data={"prev4"} keywords={full.themes} id={full.id} />
         </div>
       )}
