@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "./header.scss";
-import { filteredContent, reset } from "../../store/postData";
+import { fetchOnce, reset } from "../../store/postData";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../store/authSlice";
@@ -15,8 +15,10 @@ const Header = () => {
   const handleLogOut = () => {
     dispatch(logout());
     dispatch(reset());
-    dispatch(filteredContent());
+
     nav("/");
+
+    dispatch(fetchOnce());
   };
   return (
     <header style={{ padding: "0 20px" }}>

@@ -3,7 +3,7 @@ import { api } from "../api";
 import axios from "axios";
 const initialState = {
   count: 0,
-  page: 0,
+  page: 1,
   conferences: [],
   params: "",
   oneConference: null,

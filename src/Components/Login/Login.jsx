@@ -31,6 +31,7 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       nav("/");
+      window.location.reload();
     }
   }, [isAuthenticated, nav]);
 
