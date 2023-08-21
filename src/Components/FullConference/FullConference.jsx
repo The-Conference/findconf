@@ -138,13 +138,12 @@ const FullConference = () => {
             </div>
             <div>
               <span>Форма участия:</span>
-              <span className="both">
-                {full.online ? "онлайн" : ""} {full.offline ? "оффлайн" : ""}
-              </span>
+              <span className="both">{full.online ? "онлайн" : ""}</span>
+              <span className="both">{full.offline ? "оффлайн" : ""}</span>
             </div>
             <div>
               <span>Регистрация:</span>
-              {full.reg_date_begin === null && full.reg_date_end === null && (
+              {/* {full.reg_date_begin === null && full.reg_date_end === null && (
                 <span className="online">дата уточняется</span>
               )}
 
@@ -175,12 +174,24 @@ const FullConference = () => {
                       .toLocaleDateString("ru", options)
                       .slice(0, -3)}
                   </span>
-                ))}
+                ))} */}
             </div>
             <div>
               <span>Публикация:</span>
               <span className="online">
-                {full.rinc ? "РИНЦ" : "без публикации"}
+                <span className="publish">{full.rinc ? "РИНЦ   " : ""}</span>
+                <span className="publish">{full.vak ? "ВАК   " : ""}</span>
+                <span className="publish"> {full.wos ? "WOS    " : ""}</span>
+                <span className="publish">
+                  {!full.scopus &&
+                    !full.wos &&
+                    !full.vak &&
+                    !full.rinc &&
+                    "без публикации"}
+                </span>
+                <span className="publish">
+                  {full.scopus ? "Scopus    " : ""}
+                </span>
               </span>
             </div>
           </div>
@@ -192,7 +203,9 @@ const FullConference = () => {
             <hr />
             <div>
               <span>Тематика:</span>{" "}
-              <span className="online"> {full.tags.map((el) => el.name)}</span>
+              {full.tags.map((el) => (
+                <span className="online"> {el.name}</span>
+              ))}
             </div>
           </div>
         </div>

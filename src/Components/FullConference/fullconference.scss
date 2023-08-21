@@ -83,11 +83,6 @@
     @media (max-width: 480px) {
       grid-template-columns: repeat(1, 1fr);
     }
-    div {
-      span {
-        margin-right: 3px;
-      }
-    }
   }
 
   &__tabs {
@@ -177,8 +172,10 @@
   }
   .online,
   .offline,
-  .both {
+  .both,
+  .publish {
     color: black;
+    margin-left: 3px;
   }
   .useful-links {
     font-size: 22px;
