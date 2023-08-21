@@ -1,0 +1,44 @@
+[project]
+name = "findconf-backend"
+version = "1"
+requires-python = ">=3.10"
+dependencies = [
+    "django",
+    "django-ckeditor",
+    "django-cors-headers",
+    "django-environ",
+    "djangorestframework",
+    "djoser",
+    "gunicorn",
+    "psycopg2-binary",
+    "whitenoise",
+    "drf-spectacular",
+    "django-filter",
+]
+
+[project.optional-dependencies]
+dev = [
+    "coverage",
+    "django-stubs",
+    "djangorestframework-stubs",
+    "pip-tools",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[tool.setuptools]
+py-modules = []
+
+[tool.coverage.run]
+branch = true
+source = ["."]
+omit = [
+    "*/Conferences/*",
+    "**/migrations/*",
+    "manage.py",
+    "**/tests/*",
+]
+
+[tool.coverage.report]
+skip_covered = true
