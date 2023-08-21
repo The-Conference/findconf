@@ -16,9 +16,7 @@ const Main = () => {
       <Suspense fallback={<LoaderTemplateTwo />}>
         {(isAuthenticated && <GreetingForAuth />) || <Greeting />}
         {/* <Calendar /> */}
-        <AllConferences data={"prev1"} />
-        <AllConferences data={"prev2"} />
-        <AllConferences data={"prev3"} />
+        <AllConferences data={"prev"} />
       </Suspense>
     </div>
   );

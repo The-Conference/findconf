@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 import "./conference.scss";
 import FollowButton from "../FollowButton/FollowButton";
@@ -15,7 +14,6 @@ import Filters from "../Filters/Filters";
 import { options } from "../../utils/options";
 import EmptyResult from "../EmptyResult/EmptyResult";
 import EmptyFave from "../EmptyResult/emptyFave";
-import { getDatesInRange } from "../../utils/getDatesRange";
 
 const AllConferences = ({ data, keywords, id }) => {
   const { conferences, isLoading, count, page } = useSelector(
@@ -24,7 +22,7 @@ const AllConferences = ({ data, keywords, id }) => {
 
   const { value } = useSelector((state) => state.search);
   const dispatch = useDispatch();
-  const { periods, date } = useParams();
+
   useEffect(() => {
     if (data === "favourites") {
       dispatch(fetchFavourite());
@@ -33,10 +31,8 @@ const AllConferences = ({ data, keywords, id }) => {
   useEffect(() => {
     if (
       conferences.length < count &&
+      data !== "prev" &&
       data !== "prev4" &&
-      data !== "prev3" &&
-      data !== "prev2" &&
-      data !== "prev1" &&
       data !== "favorites"
     ) {
       const fetchData = async () => {
@@ -67,10 +63,6 @@ const AllConferences = ({ data, keywords, id }) => {
   }, [dispatch, isLoading, page, count, conferences.length, data]);
 
   let result = [];
-  let match = [];
-  let confs = [];
-  let range = [];
-  let newPeriod = [];
   let recsPrev = [];
 
   if (data === "prev4") {
@@ -89,93 +81,23 @@ const AllConferences = ({ data, keywords, id }) => {
     });
   }
 
-  if (data === "date") {
-    let period = conferences.map((el) => {
-      const d1 = new Date(el.conf_date_begin);
-      const d2 = new Date(el.conf_date_end);
-      const id = el.id;
-      let period = getDatesInRange(d1, d2);
-      return { per: period, ind: id };
-    });
-    let amount = period.filter((el) => el.per.includes(date));
-    confs = amount.map((el) => el.ind);
-  }
-  if (data === "periods") {
-    newPeriod = periods.split(",").map((item) => new Date(item));
-    range = getDatesInRange(newPeriod[0], newPeriod[1]);
-  }
-
   const types = {
-    all: conferences,
-    searchRes: match,
-    date: conferences.filter((el) => confs.includes(el.id)),
-    collection1: conferences,
-    collection2: conferences,
-    periods: conferences.filter(
-      (el) =>
-        range.includes(new Date(el.conf_date_begin).toLocaleDateString()) ||
-        range.includes(new Date(el.conf_date_end).toLocaleDateString())
-    ),
-    prev1: conferences
-      .filter((el) => el.conf_status !== "Конференция окончена")
-      .slice(0, 2),
-    prev2: conferences
-      .filter((el) => el.conf_status === "Конференция окончена")
-      .slice(0, 2),
-    prev3: conferences.slice(0, 2),
     prev4: recsPrev.filter((el) => el.id !== id).slice(0, 2),
   };
 
-  if (data === "all") {
-    result = types.all;
-  }
-  if (data === "favourites") {
-    result = conferences;
-  }
-  if (data === "search-results") {
-    result = conferences;
-  }
-  if (data === "collection1") {
-    result = types.collection1;
-  }
-  if (data === "collection2") {
-    result = types.collection2;
-  }
-  if (data === "date") {
-    result = types.date;
-  }
-  if (data === "periods") {
-    result = types.periods;
-  }
-  if (data === "prev1") {
-    result = types.prev1;
-  }
-  if (data === "prev2") {
-    result = types.prev2;
-  }
-  if (data === "prev3") {
-    result = types.prev3;
-  }
   if (data === "prev4") {
     result = types.prev4;
+  } else {
+    result = conferences;
   }
 
   return (
-    <section
-      className={
-        data === "prev1" ||
-        data === "prev2" ||
-        data === "prev3" ||
-        data === "prev4"
-          ? "conf-prev  preview-bottom"
-          : "conference"
-      }
-    >
+    <section className={data === "prev4" ? "conf-prev prev" : "conference"}>
       <div className="conference__type">
         {data === "all" && (
           <div className="back">
             <a href="/">
-              <span className="backarrow">&lt;</span> <p>Все конференции</p>
+              <span className="backarrow">&lt;</span> <p>Конференции</p>
             </a>
           </div>
         )}
@@ -193,89 +115,26 @@ const AllConferences = ({ data, keywords, id }) => {
             <p>Результаты по запросу "{value}"</p>
           </div>
         )}
-        {data === "collection1" && (
-          <div className="back">
-            <a href="/">
-              {" "}
-              <span className="backarrow">&lt;</span>{" "}
-              <p>Предстоящие конференции</p>
-            </a>
-          </div>
-        )}
-        {data === "collection2" && (
-          <div className="back">
-            <a href="/">
-              <span className="backarrow">&lt;</span>{" "}
-              <p>Прошедшие конференции</p>
-            </a>
-          </div>
-        )}
 
-        {data === "prev1" && (
-          <a href="/collection1">
-            <p className="forward">Предстоящие конференции</p>
-            <span>&gt;</span>
-          </a>
-        )}
-        {data === "prev2" && (
-          <a href="/collection2">
-            <p className="forward">Прошедшие конференции</p>
-            <span>&gt;</span>
-          </a>
-        )}
-        {data === "prev3" && (
-          <a href="/all">
-            <p className="forward">Все конференции</p>
-            <span>&gt;</span>
-          </a>
-        )}
         {data === "prev4" && result.length > 0 && (
           <div className="similar">
             <p className="forward">Похожие конференции</p>
             <span>&gt;</span>
           </div>
         )}
-        {data === "date" && (
-          <div className="back">
-            <a href="/">
-              <span className="backarrow">&lt;</span>{" "}
-              <p>
-                Конференции на <span>{date}</span>
-              </p>
-            </a>
-          </div>
-        )}
-        {data === "periods" && (
-          <div className="back">
-            <a href="/">
-              <span className="backarrow">&lt;</span>{" "}
-              <p>
-                Конференции c{" "}
-                {newPeriod[0].toLocaleDateString("ru", options).slice(0, -7)}
-                по {newPeriod[1].toLocaleDateString("ru", options).slice(0, -7)}
-              </p>
-            </a>
-          </div>
-        )}
       </div>
-      {data !== "prev1" &&
-        data !== "prev2" &&
-        data !== "prev3" &&
-        data !== "prev4" &&
-        data !== "favourites" && <Filters />}
+      {data !== "prev" && data !== "prev4" && data !== "favourites" && (
+        <Filters />
+      )}
 
-      {(isLoading &&
-        data !== "prev1" &&
-        data !== "prev2" &&
-        data !== "prev3" &&
-        data !== "prev4" && <LoaderTemplate />) ||
+      {(isLoading && data !== "prev" && data !== "prev4" && (
+        <LoaderTemplate />
+      )) ||
         (isLoading && <LoaderTemplateTwo />)}
       {!isLoading &&
         result.length === 0 &&
         data !== "favourites" &&
-        data !== "prev1" &&
-        data !== "prev2" &&
-        data !== "prev3" &&
+        data !== "prev" &&
         data !== "prev4" && <EmptyResult />}
       {!isLoading && result.length === 0 && data === "favourites" && (
         <EmptyFave />

@@ -90,30 +90,7 @@ const router = createBrowserRouter([
       </>
     ),
   },
-  {
-    path: "/collection2/",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"collection2"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: "/collection1/",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"collection1"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
+
   {
     path: "/search/",
     element: (
@@ -139,30 +116,6 @@ const router = createBrowserRouter([
     ),
   },
 
-  {
-    path: "/date/:date",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"date"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: "/dates/:periods",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"periods"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
   {
     path: "/signup",
     element: (
