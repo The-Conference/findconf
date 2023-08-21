@@ -6,13 +6,15 @@ const GreetingForAuth = () => {
   return (
     <div className="greeting">
       <div className="greeting__text" style={{ alignSelf: "center" }}>
-        <h1 className="greeting__text-second">С возвращением! </h1>
+        <h1 className="greeting__text-first" style={{ color: "#2C60E7" }}>
+          С возвращением!{" "}
+        </h1>
 
         <p>Мы подобрали для тебя несколько интересных конференций</p>
       </div>
       <div className="greeting__pic">
         <img
-          style={{ padding: "40px" }}
+          className="greeting__pic-auth"
           loading="lazy"
           src={greet}
           alt="conference"
