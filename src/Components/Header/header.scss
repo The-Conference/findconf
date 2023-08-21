@@ -1,113 +1,102 @@
-.header {
-  display: flex;
-  height: 88px;
-  justify-content: space-between;
-  align-items: center;
-  gap: 39px;
-  max-width: 1170px;
-  margin: 0 auto;
-  padding: 75px 0 75px 0;
-  @media (max-width: 860px) {
-    gap: 20px;
-    padding: 65px 0 65px 0;
-  }
-  @media screen and (max-width: 700px) {
-    position: relative;
-  }
-  @media (max-width: 460px) {
-    padding: 45px 0 15px 0;
-  }
-  // @media (max-width: 860px) {
-  //   gap: 20px;
-  // }
-  &__logo {
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    @media screen and (max-width: 860px) {
-      display: block;
-      width: auto;
-    }
-    img {
-      max-width: 100%;
-      height: 40px;
-    }
-    span {
-      font-size: 26px;
-      font-family: "Manrope semibold";
-      letter-spacing: 4.7px;
-      margin-left: 13px;
-      white-space: nowrap;
-      @media screen and (max-width: 967px) {
-        display: none;
-      }
-    }
-  }
+header {
+  background-color: white;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.04);
+  border-radius: 0px 0px 28px 28px;
 
-  &__nav {
-    a {
-      -webkit-transition: all 0.2s ease-in-out;
-      &:hover {
-        color: #4074fb;
-      }
+  .header {
+    display: flex;
+    height: 88px;
+    align-items: center;
+    gap: 40px;
+    max-width: 1170px;
+    margin: 0 auto;
+    max-height: 80px;
+
+    @media (max-width: 860px) {
+      gap: 20px;
     }
-    @media screen and (max-width: 1300px) {
-      display: none;
+    @media screen and (max-width: 700px) {
+      position: relative;
     }
-    ul {
+
+    // @media (max-width: 860px) {
+    //   gap: 20px;
+    // }
+    &__logo {
+      text-align: left;
+      cursor: pointer;
       display: flex;
-      gap: 32px;
-      font-weight: 500;
-      white-space: nowrap;
       align-items: center;
-      button {
-        &:hover {
-          color: #2c60e7;
+      @media screen and (max-width: 860px) {
+        display: block;
+        width: auto;
+      }
+      img {
+        max-width: 100%;
+        height: 40px;
+      }
+      span {
+        font-size: 26px;
+        font-family: "Manrope semibold";
+        letter-spacing: 4.7px;
+        margin-left: 13px;
+        white-space: nowrap;
+        @media screen and (max-width: 967px) {
+          display: none;
         }
       }
     }
-  }
-  &__signin {
-    width: 96px;
-    height: 40px;
-    background-color: #2c60e7;
-    border-radius: 7px;
-    color: white;
-    font-size: 16px;
 
-    &:hover {
-      background-color: #4074fb;
-      color: white;
-    }
-  }
-  &__profile {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #ebefff;
-      width: 40px;
-      height: 40px;
-      border-radius: 7px;
-      &:hover {
-        background-color: #2c60e7;
-        stroke-width: 1.6px;
-        stroke: white;
-        fill: none;
+    &__nav {
+      a {
+        -webkit-transition: all 0.2s ease-in-out;
+      }
+      @media screen and (max-width: 1300px) {
+        display: none;
+      }
+      ul {
+        display: flex;
+        gap: 32px;
+        font-weight: 500;
+        white-space: nowrap;
+        align-items: center;
       }
     }
-
-    button {
-      width: 134px;
+    &__signin {
       height: 40px;
       background-color: #2c60e7;
       border-radius: 7px;
-      color: white;
+      padding: 0px 12px;
+      display: flex;
+      align-items: center;
       font-size: 16px;
+      color: white;
+      a {
+        color: white;
+      }
+    }
+    &__profile {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+        border-radius: 7px;
+      }
+
+      button {
+        width: 134px;
+        height: 40px;
+        background-color: #2c60e7;
+        border-radius: 7px;
+        color: white;
+        font-size: 16px;
+      }
     }
   }
 }

@@ -5,7 +5,7 @@ import GreetingForAuth from "../Greeting/GreetingForAuth";
 import { LoaderTemplateTwo } from "../../utils/Loader/LoaderTemplate";
 import { useSelector } from "react-redux";
 import "../../Components/UI kit/Buttons.scss";
-const Calendar = React.lazy(() => import("../Calendar/Calendar"));
+// const Calendar = React.lazy(() => import("../Calendar/Calendar"));
 const Greeting = React.lazy(() => import("../Greeting/Greeting"));
 const AllConferences = React.lazy(() => import("../Conference/AllConferences"));
 
@@ -15,7 +15,7 @@ const Main = () => {
     <div className="main">
       <Suspense fallback={<LoaderTemplateTwo />}>
         {(isAuthenticated && <GreetingForAuth />) || <Greeting />}
-        <Calendar />
+        {/* <Calendar /> */}
         <AllConferences data={"prev1"} />
         <AllConferences data={"prev2"} />
         <AllConferences data={"prev3"} />

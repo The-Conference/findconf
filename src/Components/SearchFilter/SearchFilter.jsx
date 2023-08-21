@@ -43,11 +43,12 @@ const SearchFilter = () => {
     setValue(value);
     const updatedList = search.filter(
       ({ un_name, conf_name, tags }) =>
-        regex.test(un_name) ||
-        regex.test(conf_name) ||
-        tags.some(({ name }) => regex.test(name)) ||
-        regex.test("онлайн") ||
-        regex.test("офлайн")
+        regex.test(un_name) || regex.test(conf_name)
+      //  ||
+      // tags.some(({ name }) => regex.test(name))
+      //  ||
+      // regex.test("онлайн") ||
+      // regex.test("офлайн")
     );
     setFilteredList(updatedList);
     if (value.length > 0) {
@@ -69,15 +70,16 @@ const SearchFilter = () => {
     dispatch(SearchResults());
   }, [searchParams, dispatch]);
   return (
-    <form
-      className="search"
-      onSubmit={(e) => handleValue(e)}
-      style={{ border: focus ? "2px solid #4074fb" : "none" }}
-    >
+    <form className="search" onSubmit={(e) => handleValue(e)}>
+      {focus === true ? <div className="focus"></div> : null}
       <div className="input">
         <input
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
+          onFocus={() => {
+            setFocus(true);
+          }}
+          onBlur={() => {
+            setFocus(false);
+          }}
           maxLength={100}
           type="search"
           placeholder="Тема конференции, организатор, тематика"
@@ -89,6 +91,7 @@ const SearchFilter = () => {
             filterBySearch(e);
           }}
         />
+        <button onClick={handleNavigation}>Найти</button>
       </div>
       <div className="dropdown-filter" ref={ref}>
         <ul>
@@ -122,7 +125,7 @@ const SearchFilter = () => {
                         />
                       </div>
                       <div>
-                        <small>
+                        <small className="tags-date">
                           <Highlighter
                             key={index}
                             highlightClassName="highlight"
@@ -151,7 +154,7 @@ const SearchFilter = () => {
                             }
                           />
                         </small>
-                        {item.tags.map((elem) =>
+                        {/* {item.tags.map((elem) =>
                           elem.name.split(",").map((tag, index) => (
                             <small>
                               <Highlighter
@@ -163,30 +166,7 @@ const SearchFilter = () => {
                               />
                             </small>
                           ))
-                        )}
-
-                        {item.online === true && (
-                          <small>
-                            <Highlighter
-                              highlightClassName="highlight"
-                              searchWords={lighted}
-                              autoEscape={false}
-                              textToHighlight={"онлайн"}
-                              key={index}
-                            />
-                          </small>
-                        )}
-                        {item.offline === true && (
-                          <small>
-                            <Highlighter
-                              highlightClassName="highlight"
-                              searchWords={lighted}
-                              autoEscape={false}
-                              textToHighlight={"офлайн"}
-                              key={index}
-                            />
-                          </small>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </Link>
@@ -200,7 +180,7 @@ const SearchFilter = () => {
                   setValue("");
                 }}
               >
-                Все результаты
+                Показать все результаты
               </button>
             </div>
           )}
