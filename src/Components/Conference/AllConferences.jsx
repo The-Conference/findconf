@@ -294,6 +294,7 @@ const AllConferences = ({ data, keywords, id }) => {
                     )}
                     {el.online === true && <span>Онлайн</span>}
                     {el.offline === true && <span>Офлайн</span>}
+                    <span>{el.conf_status}</span>
                   </div>
                   <FollowButton
                     id={el.id}
