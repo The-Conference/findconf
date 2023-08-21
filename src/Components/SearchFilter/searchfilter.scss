@@ -5,6 +5,7 @@
   border-radius: 7px;
   display: flex;
   flex-direction: column;
+  z-index: 1000;
 
   .input {
     display: flex;
@@ -72,13 +73,14 @@
 
     ul {
       position: absolute;
-      top: 15px;
+      top: 0;
       width: 100%;
       max-height: 300px;
       overflow: auto;
       background-color: white;
       border-radius: 7px;
-      box-shadow: 0px 8px 24px rgba(0, 0, 46, 0.12);
+      box-shadow: 0px 8px 24px 0px #00002e1f;
+
       color: #00003880;
       border-radius: 7px;
       cursor: pointer;

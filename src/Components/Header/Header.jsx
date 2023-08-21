@@ -7,7 +7,7 @@ import { fetchOnce, reset } from "../../store/postData";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../store/authSlice";
-import { Star } from "iconoir-react";
+import { Star, Bell } from "iconoir-react";
 const Header = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
@@ -32,8 +32,20 @@ const Header = () => {
         <SearchFilter />
         <nav className="header__nav">
           <ul>
-            <li>
+            {/* <li>
               <Link to="/about">О сервисе </Link>
+            </li> */}
+            <li>
+              <div className="header__profile">
+                <div>
+                  <Bell
+                    style={{ cursor: "pointer" }}
+                    title="Уведомления"
+                    height={24}
+                    width={24}
+                  />
+                </div>
+              </div>
             </li>
             <li>
               {(isAuthenticated && (
