@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../404/404";
-import { filteredContent, hasError, fetchOne } from "../../store/postData";
+import {
+  filteredContent,
+  hasError,
+  fetchOne,
+  startLoading,
+} from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
@@ -13,7 +18,7 @@ import ShareButton from "../ShareButton/ShareButton";
 import FollowButton from "../FollowButton/FollowButton";
 const FullConference = () => {
   const { confId } = useParams();
-  const { conferences, oneConference } = useSelector(
+  const { conferences, oneConference, isLoading } = useSelector(
     (state) => state.conferences
   );
 
@@ -25,6 +30,7 @@ const FullConference = () => {
   let full = oneConference;
   useEffect(() => {
     const fetchOneConference = async () => {
+      dispatch(startLoading());
       const Token = localStorage.getItem("auth_token"); // Получение токена из Local Storage
 
       const headers = {
@@ -63,7 +69,7 @@ const FullConference = () => {
     setContacts(true);
   };
 
-  if (conferences.length === 0) {
+  if (isLoading) {
     content = <LoaderTemplate />;
   }
   if (oneConference) {

@@ -67,6 +67,7 @@ export const postData = createSlice({
 
     fetchOne: (state, action) => {
       state.oneConference = action.payload;
+      state.isLoading = false;
     },
   },
 });
