@@ -110,7 +110,7 @@ const SearchFilter = ({ mobile, desktop, focused, setFocused }) => {
           ) : null}
           <button onClick={handleNavigation}>Найти</button>
         </div>
-        <div className="dropdown-filter" ref={desktop ? ref : null}>
+        <div className="dropdown-filter" ref={ref}>
           <ul>
             {lighted.length !== 0 &&
               popup === true &&
