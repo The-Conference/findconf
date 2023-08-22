@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+
 const ProtectedRoute = () => {
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
 
@@ -11,7 +11,6 @@ const ProtectedRoute = () => {
     <>
       <Header />
       <Profile />
-      <Footer />
     </>
   ) : (
     <Login />

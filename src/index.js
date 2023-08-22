@@ -48,7 +48,6 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <ProtectedFaves />
-          <FloatingMenu />
         </Suspense>
       </>
     ),
