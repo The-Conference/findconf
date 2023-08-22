@@ -70,91 +70,95 @@ const SearchFilter = () => {
     dispatch(SearchResults());
   }, [searchParams, dispatch]);
   return (
-    <form className="search" onSubmit={(e) => handleValue(e)}>
+    <div className="search-form">
       {focus === true ? <div className="focus"></div> : null}
-      <div className="input">
-        <input
-          onFocus={() => {
-            setFocus(true);
-          }}
-          onBlur={() => {
-            setFocus(false);
-          }}
-          maxLength={100}
-          type="search"
-          placeholder="Тема конференции, организатор, тематика"
-          className={focus === true ? "input-focused" : "search-box"}
-          value={searchParams.get("search") || ""}
-          onChange={(e) => {
-            handleInputChange(e);
+      <form
+        className={focus ? "search search-focused" : "search"}
+        onSubmit={(e) => handleValue(e)}
+      >
+        <div className="input">
+          <input
+            onFocus={() => {
+              setFocus(true);
+            }}
+            onBlur={() => {
+              setFocus(false);
+            }}
+            maxLength={100}
+            type="search"
+            placeholder="Тема конференции, организатор, тематика"
+            className={focus === true ? "input-focused" : "search-box"}
+            value={searchParams.get("search") || ""}
+            onChange={(e) => {
+              handleInputChange(e);
 
-            filterBySearch(e);
-          }}
-        />
-        <button onClick={handleNavigation}>Найти</button>
-      </div>
-      <div className="dropdown-filter" ref={ref}>
-        <ul>
-          {lighted.length !== 0 &&
-            popup === true &&
-            filteredList.map(
-              (item, index) =>
-                index < 3 && (
-                  <Link
-                    key={index}
-                    to={`/conferences/${item.id}`}
-                    onClick={() => setValue("")}
-                  >
-                    <div className="conf" key={index}>
-                      <li>
-                        <Highlighter
-                          highlightClassName="highlight"
-                          searchWords={lighted}
-                          autoEscape={false}
-                          textToHighlight={item.un_name}
-                          key={index}
-                        />
-                      </li>
-                      <div>
-                        <Highlighter
-                          highlightClassName="highlight"
-                          searchWords={lighted}
-                          autoEscape={false}
-                          textToHighlight={item.conf_name}
-                          key={index}
-                        />
-                      </div>
-                      <div>
-                        <small className="tags-date">
+              filterBySearch(e);
+            }}
+          />
+          <button onClick={handleNavigation}>Найти</button>
+        </div>
+        <div className="dropdown-filter" ref={ref}>
+          <ul>
+            {lighted.length !== 0 &&
+              popup === true &&
+              filteredList.map(
+                (item, index) =>
+                  index < 3 && (
+                    <Link
+                      key={index}
+                      to={`/conferences/${item.id}`}
+                      onClick={() => setValue("")}
+                    >
+                      <div className="conf" key={index}>
+                        <li>
                           <Highlighter
-                            key={index}
                             highlightClassName="highlight"
                             searchWords={lighted}
                             autoEscape={false}
-                            textToHighlight={
-                              item.conf_date_end === null
-                                ? new Date(item.conf_date_begin)
-                                    .toLocaleDateString("ru", options)
-                                    .slice(0, -3)
-                                : item.conf_date_begin === null
-                                ? new Date(item.conf_date_end)
-                                    .toLocaleDateString("ru", options)
-                                    .slice(0, -3)
-                                : item.conf_date_end !== item.conf_date_begin
-                                ? new Date(item.conf_date_begin)
-                                    .toLocaleDateString("ru", options)
-                                    .slice(0, -3) +
-                                  " - " +
-                                  new Date(item.conf_date_end)
-                                    .toLocaleDateString("ru", options)
-                                    .slice(0, -3)
-                                : new Date(item.conf_date_begin)
-                                    .toLocaleDateString("ru", options)
-                                    .slice(0, -3)
-                            }
+                            textToHighlight={item.un_name}
+                            key={index}
                           />
-                        </small>
-                        {/* {item.tags.map((elem) =>
+                        </li>
+                        <div>
+                          <Highlighter
+                            highlightClassName="highlight"
+                            searchWords={lighted}
+                            autoEscape={false}
+                            textToHighlight={item.conf_name}
+                            key={index}
+                          />
+                        </div>
+                        <div>
+                          <small className="tags-date">
+                            <Highlighter
+                              key={index}
+                              highlightClassName="highlight"
+                              searchWords={lighted}
+                              autoEscape={false}
+                              textToHighlight={
+                                item.conf_date_end === null
+                                  ? new Date(item.conf_date_begin)
+                                      .toLocaleDateString("ru", options)
+                                      .slice(0, -3)
+                                  : item.conf_date_begin === null
+                                  ? new Date(item.conf_date_end)
+                                      .toLocaleDateString("ru", options)
+                                      .slice(0, -3)
+                                  : item.conf_date_end !== item.conf_date_begin
+                                  ? new Date(item.conf_date_begin)
+                                      .toLocaleDateString("ru", options)
+                                      .slice(0, -3) +
+                                    " - " +
+                                    new Date(item.conf_date_end)
+                                      .toLocaleDateString("ru", options)
+                                      .slice(0, -3)
+                                  : new Date(item.conf_date_begin)
+                                      .toLocaleDateString("ru", options)
+                                      .slice(0, -3)
+                              }
+                            />
+                          </small>
+                          {/* {item.tags.map((elem) =>
                           elem.name.split(",").map((tag, index) => (
                             <small>
                               <Highlighter
@@ -167,26 +171,29 @@ const SearchFilter = () => {
                             </small>
                           ))
                         )} */}
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                )
-            )}
-          {filteredList.length > 0 && lighted.length > 0 && popup === true && (
-            <div className="sticky-button">
-              <button
-                onClick={() => {
-                  handleNavigation();
-                  setValue("");
-                }}
-              >
-                Показать все результаты
-              </button>
-            </div>
-          )}
-        </ul>
-      </div>
-    </form>
+                    </Link>
+                  )
+              )}
+            {filteredList.length > 0 &&
+              lighted.length > 0 &&
+              popup === true && (
+                <div className="sticky-button">
+                  <button
+                    onClick={() => {
+                      handleNavigation();
+                      setValue("");
+                    }}
+                  >
+                    Показать все результаты
+                  </button>
+                </div>
+              )}
+          </ul>
+        </div>
+      </form>
+    </div>
   );
 };
 export default SearchFilter;

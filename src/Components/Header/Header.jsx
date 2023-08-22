@@ -7,7 +7,7 @@ import { fetchOnce, reset } from "../../store/postData";
 import SearchFilter from "../SearchFilter/SearchFilter";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../store/authSlice";
-import { Star, Bell } from "iconoir-react";
+import { Star, Bell, Search } from "iconoir-react";
 const Header = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
@@ -47,6 +47,7 @@ const Header = () => {
                 </div>
               </div>
             </li>
+
             <li>
               {(isAuthenticated && (
                 <a href="/favourite">
@@ -68,6 +69,18 @@ const Header = () => {
               {(!isAuthenticated && <Link to="/login">Войти </Link>) || (
                 <button onClick={handleLogOut}>Выйти</button>
               )}
+            </li>
+            <li className="header__search">
+              <div className="header__profile">
+                <div>
+                  <Search
+                    style={{ cursor: "pointer" }}
+                    title="Найти"
+                    height={24}
+                    width={24}
+                  />
+                </div>
+              </div>
             </li>
           </ul>
         </nav>
