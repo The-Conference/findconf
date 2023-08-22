@@ -49,7 +49,7 @@
     input {
       width: 99%;
       margin: 5px 0 5px 10px;
-
+      // -webkit-touch-callout: none;
       &::placeholder {
         padding-left: 10px;
         color: #9999ab;
