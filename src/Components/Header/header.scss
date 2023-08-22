@@ -5,18 +5,18 @@ header {
 
   .header {
     display: flex;
-    height: 88px;
+    // height: 88px;
     align-items: center;
     gap: 40px;
     max-width: 1270px;
     margin: 0 auto;
     max-height: 80px;
-    @media (max-width: 847px) {
+    @media (max-width: 861px) {
       justify-content: space-between;
     }
     &__search {
       display: none;
-      @media screen and (max-width: 847px) {
+      @media screen and (max-width: 861px) {
         display: block;
       }
     }
@@ -35,12 +35,14 @@ header {
       cursor: pointer;
       display: flex;
       align-items: center;
-      width: max-content;
-      @media screen and (max-width: 860px) {
-        display: block;
+      @media (max-width: 921px) {
+        width: 40px;
+      }
+      @media screen and (max-width: 861px) {
+        padding: 5px;
+        width: 100%;
       }
       img {
-        max-width: 100%;
         height: 40px;
       }
       span {
@@ -51,6 +53,10 @@ header {
         white-space: nowrap;
         @media screen and (max-width: 1069px) {
           display: none;
+        }
+        @media screen and (max-width: 861px) {
+          display: block;
+          font-size: 18px;
         }
       }
     }
@@ -97,7 +103,6 @@ header {
         display: flex;
         align-items: center;
         justify-content: center;
-
         width: 40px;
         height: 40px;
         border-radius: 7px;
