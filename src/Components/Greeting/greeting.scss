@@ -20,7 +20,7 @@
   &__pic {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    justify-content: center;
     img {
       border-radius: 15px;
       width: fit-content;
