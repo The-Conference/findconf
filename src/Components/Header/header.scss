@@ -11,6 +11,8 @@ header {
     max-width: 1270px;
     margin: 0 auto;
     max-height: 80px;
+    justify-content: space-between;
+
     @media (max-width: 861px) {
       justify-content: space-between;
     }
@@ -73,7 +75,7 @@ header {
         align-items: center;
         li {
           &:not(:last-of-type) {
-            @media screen and (max-width: 1300px) {
+            @media screen and (max-width: 861px) {
               display: none;
             }
           }
