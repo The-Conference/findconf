@@ -56,7 +56,11 @@ const Header = () => {
                 <span>THE CONF</span>
               </div>
             </a>
-            <SearchFilter desktop={true} />
+            <SearchFilter
+              desktop={true}
+              focused={focused}
+              setFocused={setFocused}
+            />
 
             <nav className="header__nav">
               <ul>
