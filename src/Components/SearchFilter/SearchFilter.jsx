@@ -15,7 +15,9 @@ const SearchFilter = ({ mobile, desktop, focused, setFocused }) => {
   const nav = useNavigate();
   const ref = useRef();
   const [popup, setPopup] = useState(false);
+
   useOnClickOutside(ref, () => setPopup(false));
+
   const dispatch = useDispatch();
   const { search } = useSelector((state) => state.search);
 
@@ -108,7 +110,7 @@ const SearchFilter = ({ mobile, desktop, focused, setFocused }) => {
           ) : null}
           <button onClick={handleNavigation}>Найти</button>
         </div>
-        <div className="dropdown-filter" ref={ref}>
+        <div className="dropdown-filter" ref={desktop ? ref : null}>
           <ul>
             {lighted.length !== 0 &&
               popup === true &&
