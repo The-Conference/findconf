@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import AllConferences from "../Conference/AllConferences";
 import Login from "../Login/Login";
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 const ProtectedFaves = () => {
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
 
@@ -11,7 +11,7 @@ const ProtectedFaves = () => {
     <>
       <Header />
       <AllConferences data={"favourites"} />
-      <Footer />
+      {/* <Footer /> */}
     </>
   ) : (
     <Login />

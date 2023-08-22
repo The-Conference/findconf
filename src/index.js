@@ -13,7 +13,7 @@ import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
 import AboutService from "./Components/AboutService/AboutService";
 import Registered from "./Components/SignUp/Registered";
 import ProtectedFaves from "./Components/ProtectedRoutes/ProtectedFaves";
-
+import FloatingMenu from "./Components/FloatingMenu/FloatingMenu";
 const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
 const LazyApp = React.lazy(() => import("./App"));
 const LazyAllConferences = React.lazy(() =>
@@ -22,7 +22,7 @@ const LazyAllConferences = React.lazy(() =>
 const LazyFullConference = React.lazy(() =>
   import("./Components/FullConference/FullConference")
 );
-const LazyFooter = React.lazy(() => import("./Components/Footer/Footer"));
+// const LazyFooter = React.lazy(() => import("./Components/Footer/Footer"));
 const LazyEmptyResult = React.lazy(() =>
   import("./Components/EmptyResult/EmptyResult")
 );
@@ -36,7 +36,8 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyApp />
-          <LazyFooter />
+          {/* <LazyFooter /> */}
+          <FloatingMenu />
         </Suspense>
       </>
     ),
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <ProtectedFaves />
+          <FloatingMenu />
         </Suspense>
       </>
     ),
@@ -60,7 +62,8 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyAllConferences data={"all"} />
-          <LazyFooter />
+          <FloatingMenu />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -73,7 +76,8 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyFullConference />
-          <LazyFooter />
+          <FloatingMenu />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -85,7 +89,8 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyAllConferences data={"search-results"} />
-          <LazyFooter />
+          <FloatingMenu />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -98,7 +103,8 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyEmptyResult />
-          <LazyFooter />
+          <FloatingMenu />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -110,7 +116,8 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <AboutService />
-          <LazyFooter />
+          <FloatingMenu />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -148,7 +155,7 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyNotFound />
-          <LazyFooter />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
