@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./searchfilter.scss";
+import "./searchFilterMobile.scss";
 import Highlighter from "react-highlight-words";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchResults, getValue } from "../../store/searchSlice";
@@ -8,7 +9,7 @@ import useOnClickOutside from "../Hooks/useOnClickOutside";
 import { options } from "../../utils/options";
 import { useSearchParams } from "react-router-dom";
 
-const SearchFilter = () => {
+const SearchFilter = ({ mobile, desktop, focused, setFocused }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const nav = useNavigate();
@@ -32,7 +33,7 @@ const SearchFilter = () => {
 
   const handleValue = (e) => {
     e.preventDefault();
-
+    setFocused(false);
     handleNavigation();
   };
 
@@ -57,6 +58,7 @@ const SearchFilter = () => {
   };
   const handleNavigation = () => {
     if (value.length > 1) {
+      setFocused(false);
       nav({ pathname: "/search", search: `?search=${value}` });
       window.location.reload();
     }
@@ -73,7 +75,7 @@ const SearchFilter = () => {
     <div className="search-form">
       {focus === true ? <div className="focus"></div> : null}
       <form
-        className={focus ? "search search-focused" : "search"}
+        className={desktop ? "search" : mobile ? "search-mobile" : ""}
         onSubmit={(e) => handleValue(e)}
       >
         <div className="input">
@@ -95,6 +97,14 @@ const SearchFilter = () => {
               filterBySearch(e);
             }}
           />
+          {mobile ? (
+            <span
+              onClick={() => setFocused(!focused)}
+              className="search-mobile-back"
+            >
+              &larr;
+            </span>
+          ) : null}
           <button onClick={handleNavigation}>Найти</button>
         </div>
         <div className="dropdown-filter" ref={ref}>
@@ -107,7 +117,10 @@ const SearchFilter = () => {
                     <Link
                       key={index}
                       to={`/conferences/${item.id}`}
-                      onClick={() => setValue("")}
+                      onClick={() => {
+                        setValue("");
+                        setFocused(false);
+                      }}
                     >
                       <div className="conf" key={index}>
                         <li>
