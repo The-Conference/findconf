@@ -23,18 +23,20 @@ const Header = () => {
     dispatch(fetchOnce());
   };
   const [focused, setFocused] = useState(false);
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setFocused(false);
-  //     setWindowWidth(window.innerWidth);
-  //   };
+  useEffect(() => {
+    if (windowWidth > 861) {
+      setFocused(false);
+    }
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
 
-  //   window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize);
 
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, [windowWidth]);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [windowWidth]);
   return (
     <>
       {(focused && (
