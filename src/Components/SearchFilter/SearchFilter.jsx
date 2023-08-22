@@ -86,6 +86,7 @@ const SearchFilter = ({ mobile, desktop, focused, setFocused }) => {
             onBlur={() => {
               setFocus(false);
             }}
+            autoFocus={focused ? true : false}
             maxLength={100}
             type="search"
             placeholder="Тема конференции, организатор, тематика"
