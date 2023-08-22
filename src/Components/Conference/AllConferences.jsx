@@ -93,6 +93,7 @@ const AllConferences = ({ data, keywords, id }) => {
 
   return (
     <section className={data === "prev4" ? "conf-prev prev" : "conference"}>
+      {/* <LoaderTemplateTwo /> */}
       <div className="conference__type">
         {data === "all" && (
           <div className="back">

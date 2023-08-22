@@ -68,7 +68,9 @@ const FullConference = () => {
     if (desc === true) setDesc(false);
     setContacts(true);
   };
-
+  if (!full && !isLoading && conferences.length > 0) {
+    content = <NotFound />;
+  }
   if (isLoading) {
     content = <LoaderTemplate />;
   }
@@ -290,8 +292,6 @@ const FullConference = () => {
         )}
       </div>
     );
-  } else if (conferences.length && !full) {
-    content = <NotFound />;
   }
 
   return (
