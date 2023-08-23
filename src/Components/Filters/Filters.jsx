@@ -32,10 +32,11 @@ import "reactjs-popup/dist/index.css";
 import Fuse from "fuse.js";
 import { SearchBar } from "./SearchBar";
 import { useSearchParams } from "react-router-dom";
-
+import { removeComma } from "../../utils/removeComma";
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.filters);
+  const { universities, tags } = useSelector((state) => state.search);
 
   const [dataFiltered, setData] = useState(data);
   const [dataInitial, setDataInitial] = useState(data);
@@ -48,17 +49,6 @@ const Filters = () => {
   const [params, setParams] = useState(
     Object.fromEntries(searchParams.entries())
   );
-
-  function removeComma(obj) {
-    const result = {};
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const value = obj[key];
-        result[key] = value.endsWith(",") ? value.slice(0, -1) : value;
-      }
-    }
-    return result;
-  }
 
   const handleAddParams = (q, value, id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
@@ -101,8 +91,6 @@ const Filters = () => {
     const matches = fuse.search(pattern).map(({ item }) => item);
     setData(matches.length ? matches : dataInitial);
   };
-
-  const { universities, tags } = useSelector((state) => state.search);
 
   useEffect(() => {
     const unis = universities
@@ -361,58 +349,6 @@ const Filters = () => {
           </StyledPopup>
         ))}
       </div>
-
-      {/* <div className="filter-adaptive">
-        {data.some((el) => el.applied === true) && (
-          <button
-            style={{
-              backgroundColor: data.some((el) => el.applied === true)
-                ? "#2c60e7"
-                : "#0000381A",
-            }}
-            className="filter-adaptive__delete-button"
-            onClick={() => {
-              dispatch(fetchFilteredConferences());
-              setMenu(false);
-            }}
-          >
-            {(data.some((el) => el.applied === true) && (
-              <img src={white} alt="" />
-            )) || <img src={grey} alt="" />}
-          </button>
-        )}
-
-        <div className="filter-adaptive__container-button">
-          <span
-            onClick={() => setMenu(!menu)}
-            className={
-              data.some((el) => el.applied === true)
-                ? "filter__delete-button applied-hover"
-                : "filter__delete-button nonapplied-hover"
-            }
-          >
-            Фильтры
-          </span>
-          <ul>
-            {menu &&
-              data.map((item) => (
-                <li
-                  className={
-                    item.applied === true ? "applied-hover" : "nonapplied-hover"
-                  }
-                  onClick={() => {
-                    dispatch(saveFilter(item.name));
-                    dispatch(fetchFilteredConferences());
-                    setMenu(!menu);
-                  }}
-                  key={item.id}
-                >
-                  <div>{item.name}</div>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </div> */}
     </>
   );
 };

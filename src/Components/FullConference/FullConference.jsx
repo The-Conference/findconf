@@ -10,12 +10,12 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
-import { options } from "../../utils/options";
 import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import ShareButton from "../ShareButton/ShareButton";
 import FollowButton from "../FollowButton/FollowButton";
+import { DateFormatter } from "../../utils/options";
 const FullConference = () => {
   const { confId } = useParams();
   const { conferences, oneConference, isLoading } = useSelector(
@@ -118,25 +118,7 @@ const FullConference = () => {
           <div className="full-conference__card-flex">
             <div>
               <span>Дата проведения:</span>
-              {full.conf_date_end === null
-                ? new Date(full.conf_date_begin)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)
-                : full.conf_date_begin === null
-                ? new Date(full.conf_date_end)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)
-                : full.conf_date_end !== full.conf_date_begin
-                ? new Date(full.conf_date_begin)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3) +
-                  " - " +
-                  new Date(full.conf_date_end)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)
-                : new Date(full.conf_date_begin)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)}
+              {DateFormatter(full)}
             </div>
             <div>
               <span>Форма участия:</span>
