@@ -39,10 +39,10 @@
   &__title {
     padding: 16px 0;
     line-height: 31.2px;
-    font-family: "Body L Medium";
+    
     h1 {
       font-size: 26px;
-      font-weight: 700;
+      font-family: "Body L Medium";
       @media (max-width: 1000px) {
         font-size: 26px;
       }
@@ -147,18 +147,24 @@
     }
     h1 {
       font-size: 22px;
-      font-family: "Body M";
+      font-family: "Body L Medium";
     }
   }
   &__contacts {
     pre {
       font-family: "Body M";
       white-space: pre-wrap;
+      div {
+          span {
+            font-family:'Body L Medium'
+          }
+      }
     }
     div {
       padding-bottom: 28px;
       @media (max-width: 900px) {
         font-size: 14px;
+       
       }
 
       p {
@@ -187,6 +193,6 @@
   }
   .useful-links {
     font-size: 22px;
-    font-family: "Body M";
+    font-family:'Body L Medium';
   }
 }
