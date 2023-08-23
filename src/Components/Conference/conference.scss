@@ -94,11 +94,10 @@
   }
   &__text {
     font-size: 16px;
-    font-family: "Manrope";
     line-height: 21.6px;
     padding-top: 8px;
     height: 95px;
-    color: #9999ab;
+    color: #9999AB;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -138,7 +137,7 @@
   }
   &__title {
     font-size: 18px;
-    font-family: "Manrope semibold";
+    font-family: "Regular semibold";
     line-height: 21.6px;
     margin: 8px 0;
     height: 44px;
@@ -171,7 +170,7 @@
   &__type {
     font-size: 32px;
     margin-bottom: 20px;
-    font-family: "Manrope semibold";
+    font-family: "Heading 1";
     .back {
       display: flex;
       padding-top: 40px;

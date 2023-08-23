@@ -13,7 +13,7 @@ const NotFound = () => {
           <h1>Что-то пошло не так(</h1>
           <p>Не волнуйся, мы уже работаем над ошибкой)</p>
           <a href="/">
-            <button className="button button-large">Вернуться домой</button>
+            <button className="button button-large-filled">Вернуться домой</button>
           </a>
         </div>
       </div>

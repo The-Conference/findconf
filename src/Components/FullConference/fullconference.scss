@@ -39,7 +39,7 @@
   &__title {
     padding: 16px 0;
     line-height: 31.2px;
-    font-family: "Manrope semibold";
+    font-family: "Body L Medium";
     h1 {
       font-size: 26px;
       font-weight: 700;
@@ -117,7 +117,7 @@
     }
     pre {
       white-space: pre-wrap;
-      font-family: "Manrope";
+      font-family: "Body M";
 
       ul {
         margin-left: 20px;
@@ -147,12 +147,12 @@
     }
     h1 {
       font-size: 22px;
-      font-family: "Manrope semibold";
+      font-family: "Body M";
     }
   }
   &__contacts {
     pre {
-      font-family: "Manrope";
+      font-family: "Body M";
       white-space: pre-wrap;
     }
     div {
@@ -169,12 +169,12 @@
       }
       span {
         font-size: 22px;
-        font-family: "Manrope semibold";
+        font-family: "Body M";
         padding: 0 0 16px 0;
       }
     }
     .details {
-      font-family: "Manrope";
+      font-family: "Body M";
       font-size: 16px;
     }
   }
@@ -187,6 +187,6 @@
   }
   .useful-links {
     font-size: 22px;
-    font-family: "Manrope semibold";
+    font-family: "Body M";
   }
 }
