@@ -1,7 +1,7 @@
 @import "../../Components/UI\ kit/Colors.scss";
 .conference {
   text-align: left;
-  max-width: 1300px;
+  max-width: 1290px;
   margin: 0 auto;
   padding: 0 20px 40px 20px;
   min-height: 100vh;
@@ -59,7 +59,9 @@
     border-radius: 15px;
     cursor: pointer;
     position: relative;
-
+    &:active {
+      opacity: (0.5);
+    }
     @media screen and (max-width: 1200px) {
       width: 100%;
     }
@@ -97,7 +99,7 @@
     line-height: 21.6px;
     padding-top: 8px;
     height: 95px;
-    color: #9999AB;
+    color: #9999ab;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
