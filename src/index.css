@@ -15,7 +15,7 @@
 @font-face {
   src: url("fonts/Roboto-Medium.ttf");
   font-family: "Body L Medium";
-} 
+}
 
 * {
   padding: 0px;
@@ -130,7 +130,6 @@ body,
 
 body {
   font-family: "Body M";
-
   width: 100%;
   margin: 0 auto;
   height: 100%;
@@ -153,4 +152,16 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   display: none;
+}
+
+.layout {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1310px;
+  justify-content: space-between;
+}
+@media screen and (max-width: 1260px) {
+  .layout {
+    justify-content: center;
+  }
 }

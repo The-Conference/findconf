@@ -27,7 +27,7 @@ const LazyEmptyResult = React.lazy(() =>
   import("./Components/EmptyResult/EmptyResult")
 );
 const LazyNotFound = React.lazy(() => import("./Components/404/404"));
-
+const LazySideBar = React.lazy(() => import("./Components/SideBar/SideBar"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,7 +35,10 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyApp />
+          <div className="layout">
+            <LazySideBar />
+            <LazyApp />
+          </div>
           {/* <LazyFooter /> */}
           <FloatingMenu />
         </Suspense>
@@ -60,7 +63,10 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyAllConferences data={"all"} />
+          <div className="layout">
+            <LazySideBar />
+            <LazyAllConferences data={"all"} />
+          </div>
           <FloatingMenu />
           {/* <LazyFooter /> */}
         </Suspense>
@@ -87,7 +93,10 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyAllConferences data={"search-results"} />
+          <div className="layout">
+            <LazySideBar />
+            <LazyAllConferences data={"search-results"} />
+          </div>
           <FloatingMenu />
           {/* <LazyFooter /> */}
         </Suspense>

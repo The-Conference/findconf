@@ -1,13 +1,12 @@
 .filter {
   display: flex;
   gap: 8px;
-  padding: 20px 0;
-  max-width: 1300px;
+  padding: 0 0 20px 0;
   position: relative;
   text-transform: capitalize;
   font-size: 12px;
 
-  @media screen and (max-width: 856px) {
+  @media screen and (max-width: 995px) {
     flex-direction: column;
     display: none;
   }
@@ -34,12 +33,12 @@
   &__container:nth-last-child(1) {
     position: absolute;
     right: 0;
-    @media screen and (max-width: 856px) {
+    @media screen and (max-width: 995px) {
       position: static;
     }
   }
 }
-@media screen and (max-width: 856px) {
+@media screen and (max-width: 995px) {
   .filter.active {
     display: flex;
     padding-top: 0;
@@ -110,7 +109,7 @@
 
 button.filterBtn {
   display: none;
-  @media screen and (max-width: 856px) {
+  @media screen and (max-width: 995px) {
     display: block;
     margin-bottom: 10px;
     background-color: #cfd8f7;
@@ -119,7 +118,7 @@ button.filterBtn {
   }
 }
 
-@media screen and (max-width: 856px) {
+@media screen and (max-width: 995px) {
   .popup-content {
     right: 25px;
     left: 25px !important;

@@ -13,7 +13,6 @@ import EmptyResult from "../EmptyResult/EmptyResult";
 import EmptyFave from "../EmptyResult/emptyFave";
 import Title from "./Title";
 import Card from "./Card";
-
 const AllConferences = ({ data, keywords, id }) => {
   const { conferences, isLoading, count, page } = useSelector(
     (state) => state.conferences
@@ -21,7 +20,7 @@ const AllConferences = ({ data, keywords, id }) => {
   let result = [];
   let recsPrev = [];
 
-  const { value } = useSelector((state) => state.search);
+  // const { value } = useSelector((state) => state.search);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -91,7 +90,7 @@ const AllConferences = ({ data, keywords, id }) => {
 
   return (
     <section className={data === "prev4" ? "conf-prev prev" : "conference"}>
-      <Title data={data} value={value} />
+      <Title data={data} />
       {data !== "prev" && data !== "prev4" && data !== "favourites" && (
         <Filters />
       )}

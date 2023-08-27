@@ -81,21 +81,18 @@ const Header = () => {
                 </li>
 
                 <li>
-                  {(isAuthenticated && (
-                    <a href="/favourite">
-                      <div className="header__profile">
-                        <div>
-                          <Star
-                            style={{ cursor: "pointer" }}
-                            title="Избранное"
-                            height={24}
-                            width={24}
-                          />
-                        </div>
+                  <a href="/favourite">
+                    <div className="header__profile">
+                      <div>
+                        <Star
+                          style={{ cursor: "pointer" }}
+                          title="Избранное"
+                          height={24}
+                          width={24}
+                        />
                       </div>
-                    </a>
-                  )) ||
-                    null}
+                    </div>
+                  </a>
                 </li>
                 <li className="header__signin">
                   {(!isAuthenticated && <Link to="/login">Войти </Link>) || (

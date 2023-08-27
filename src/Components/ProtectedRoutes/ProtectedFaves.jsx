@@ -5,13 +5,17 @@ import Login from "../Login/Login";
 import Header from "../Header/Header";
 // import Footer from "../Footer/Footer";
 import FloatingMenu from "../FloatingMenu/FloatingMenu";
+import SideBar from "../SideBar/SideBar";
 const ProtectedFaves = () => {
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
 
   return isAuthenticated ? (
     <>
       <Header />
-      <AllConferences data={"favourites"} />
+      <div className="layout">
+        <SideBar />
+        <AllConferences data={"favourites"} />
+      </div>
       <FloatingMenu />
       {/* <Footer /> */}
     </>

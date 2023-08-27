@@ -1,7 +1,9 @@
 .full-conference {
   min-height: 100vh;
-  padding: 60px 20px 75px 20px;
-
+  padding: 100px 20px 75px 20px;
+  @media (max-width: 1000px) {
+    padding: 80px 20px 75px 20px;
+  }
   &__container {
     max-width: 800px;
     margin: 0 auto;
@@ -39,7 +41,7 @@
   &__title {
     padding: 16px 0;
     line-height: 31.2px;
-    
+
     h1 {
       font-size: 26px;
       font-family: "Body L Medium";
@@ -155,16 +157,15 @@
       font-family: "Body M";
       white-space: pre-wrap;
       div {
-          span {
-            font-family:'Body L Medium'
-          }
+        span {
+          font-family: "Body L Medium";
+        }
       }
     }
     div {
       padding-bottom: 28px;
       @media (max-width: 900px) {
         font-size: 14px;
-       
       }
 
       p {
@@ -193,6 +194,6 @@
   }
   .useful-links {
     font-size: 22px;
-    font-family:'Body L Medium';
+    font-family: "Body L Medium";
   }
 }

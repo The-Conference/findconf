@@ -1,28 +1,15 @@
 import React from "react";
+import Greeting from "../Greeting/Greeting";
+import GreetingForAuth from "../Greeting/GreetingForAuth";
+import { useSelector } from "react-redux";
+const Title = ({ data }) => {
+  const isAuthenticated = useSelector((state) => state.auth.token !== null);
 
-const Title = ({ data, value }) => {
   return (
     <>
-      {data !== "prev" ? (
-        <div className="conference__type">
-          <div className="back">
-            <a href={data !== "prev4" ? "/" : null}>
-              <span className="backarrow">&lt;</span>{" "}
-              <p>
-                {data === "all"
-                  ? "Конференции"
-                  : data === "favourites"
-                  ? "Избранное"
-                  : data === "search-results"
-                  ? `Результаты по запросу ${value}`
-                  : data === "prev4"
-                  ? "Похожие конференции"
-                  : null}
-              </p>
-            </a>
-          </div>
-        </div>
-      ) : null}
+      {data !== "prev4" &&
+        (<>{(isAuthenticated && <GreetingForAuth />) || <Greeting />}</> ||
+          null)}
     </>
   );
 };
