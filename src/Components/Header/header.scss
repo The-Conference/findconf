@@ -12,10 +12,11 @@ header {
     // height: 88px;
     align-items: center;
     gap: 40px;
-    max-width: 1310px;
+    max-width: 1350px;
     margin: 0 auto;
     max-height: 80px;
     justify-content: space-between;
+    padding: 0 20px;
 
     @media (max-width: 861px) {
       justify-content: space-between;

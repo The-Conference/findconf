@@ -157,7 +157,7 @@ input[type="search"]::-webkit-search-results-decoration {
 .layout {
   display: flex;
   margin: 0 auto;
-  max-width: 1310px;
+  max-width: 1350px;
   justify-content: space-between;
 }
 @media screen and (max-width: 1260px) {
