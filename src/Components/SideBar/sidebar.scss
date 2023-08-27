@@ -32,8 +32,10 @@
   .active {
     background-color: #eaf0fb;
     color: #2c60e7;
-    fill: #2c60e7;
     border-radius: 10px;
+    a {
+      color: #2c60e7;
+    }
   }
   &-footer {
     padding-left: 20px;
