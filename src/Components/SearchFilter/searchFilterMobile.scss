@@ -7,13 +7,13 @@
     border-radius: 7px;
     display: flex;
     flex-direction: column;
-    z-index: 2000;
+    z-index: 1009;
     position: relative;
   }
   &-back {
     position: absolute;
     left: 15px;
-    top: 17px;
+    top: 26%;
     color: #2c60e7;
     font-size: 25px;
     cursor: pointer;
@@ -197,5 +197,5 @@
   width: 100%;
   height: 100%;
   background-color: #0000001a;
-  z-index: 999;
+  z-index: 1008;
 }
