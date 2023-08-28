@@ -165,3 +165,8 @@ input[type="search"]::-webkit-search-results-decoration {
     justify-content: center;
   }
 }
+@media screen and (max-width: 861px) {
+  .layout {
+    display: block;
+  }
+}

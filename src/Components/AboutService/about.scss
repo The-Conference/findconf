@@ -1,13 +1,16 @@
 .about {
   max-width: 1200px;
-  margin: 100px auto 40px auto;
+  margin: 100px 0 40px 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 20px 40px 20px;
   @media (max-width: 1000px) {
-    margin: 80px auto 40px auto;
+    margin: 80px 0 40px 0;
+  }
+  @media (max-width: 861px) {
+    margin: 80px 0 40px 0;
   }
   h1 {
     font-size: 56px;
@@ -54,6 +57,8 @@
     display: flex;
     border-top: 4px solid #bacaf4;
     padding-bottom: 200px;
+    align-self: flex-end;
+    width: 80%;
     @media (max-width: 1260px) {
       display: none;
     }
@@ -62,7 +67,7 @@
       flex-direction: column;
       align-items: center;
       position: relative;
-      width: 325px;
+      width: 380px;
       &:nth-of-type(3) {
         width: 170px;
       }
@@ -183,7 +188,7 @@
         border-radius: 6px;
         color: white;
         font-size: 12px;
-        font-family: "Manrope medium";
+        font-family: "Body M";
         padding: 6px 14px;
         @media (max-width: 575px) {
           font-size: 12px;
@@ -211,7 +216,7 @@
       }
       p {
         font-size: 18px;
-        font-family: "Manrope semibold";
+        font-family: "Regular semibold";
         padding: 5px 14px;
         @media (max-width: 575px) {
           font-size: 12px;
