@@ -1,6 +1,6 @@
 .about {
-  max-width: 1200px;
   margin: 100px 0 40px 0;
+  width: 73%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -165,7 +165,7 @@
           max-width: 150px;
           max-height: 150px;
         }
-        @media (max-width: 379px) {
+        @media (max-width: 478px) {
           max-width: 260px;
           max-height: 260px;
         }
