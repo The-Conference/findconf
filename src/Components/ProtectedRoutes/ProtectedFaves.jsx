@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import AllConferences from "../Conference/AllConferences";
 import Login from "../Login/Login";
@@ -8,15 +8,16 @@ import FloatingMenu from "../FloatingMenu/FloatingMenu";
 import SideBar from "../SideBar/SideBar";
 const ProtectedFaves = () => {
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
-
+  const [menu, setMenu] = useState(false);
   return isAuthenticated ? (
     <>
       <Header />
       <div className="layout">
-        <SideBar />
+        <SideBar desktop={true} />
         <AllConferences data={"favourites"} />
+        {menu ? <SideBar mobile={true} /> : null}
       </div>
-      <FloatingMenu />
+      <FloatingMenu menu={menu} setMenu={setMenu} />
       {/* <Footer /> */}
     </>
   ) : (

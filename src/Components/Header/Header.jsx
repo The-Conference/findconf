@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/logo.svg";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "./header.scss";
@@ -8,6 +7,7 @@ import SearchFilter from "../SearchFilter/SearchFilter";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../store/authSlice";
 import { Star, Bell, Search } from "iconoir-react";
+import Logo from "./Logo";
 const Header = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
@@ -44,18 +44,7 @@ const Header = () => {
       )) || (
         <header style={{ padding: "0 20px" }}>
           <div className="header">
-            <a href="/">
-              <div className="header__logo">
-                <img
-                  loading="lazy"
-                  src={logo}
-                  alt="logo"
-                  width="57"
-                  height="44"
-                />
-                <span>THE CONF</span>
-              </div>
-            </a>
+            <Logo />
             <SearchFilter
               desktop={true}
               focused={focused}

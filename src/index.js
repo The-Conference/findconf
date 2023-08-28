@@ -10,24 +10,16 @@ import SignUp from "./Components/SignUp/SignUp";
 import Login from "./Components/Login/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
-import AboutService from "./Components/AboutService/AboutService";
 import Registered from "./Components/SignUp/Registered";
 import ProtectedFaves from "./Components/ProtectedRoutes/ProtectedFaves";
-import FloatingMenu from "./Components/FloatingMenu/FloatingMenu";
+import Layout from "./Components/Layout/Layout";
+
 const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
-const LazyApp = React.lazy(() => import("./App"));
-const LazyAllConferences = React.lazy(() =>
-  import("./Components/Conference/AllConferences")
-);
-const LazyFullConference = React.lazy(() =>
-  import("./Components/FullConference/FullConference")
-);
 // const LazyFooter = React.lazy(() => import("./Components/Footer/Footer"));
 const LazyEmptyResult = React.lazy(() =>
   import("./Components/EmptyResult/EmptyResult")
 );
 const LazyNotFound = React.lazy(() => import("./Components/404/404"));
-const LazySideBar = React.lazy(() => import("./Components/SideBar/SideBar"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,12 +27,8 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <div className="layout">
-            <LazySideBar />
-            <LazyApp />
-          </div>
+          <Layout type={"main"} />
           {/* <LazyFooter /> */}
-          <FloatingMenu />
         </Suspense>
       </>
     ),
@@ -58,16 +46,12 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/all",
+    path: "/conferences",
     element: (
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <div className="layout">
-            <LazySideBar />
-            <LazyAllConferences data={"all"} />
-          </div>
-          <FloatingMenu />
+          <Layout type={"conferences"} />
           {/* <LazyFooter /> */}
         </Suspense>
       </>
@@ -80,8 +64,7 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyFullConference />
-          <FloatingMenu />
+          <Layout type={"full"} />
           {/* <LazyFooter /> */}
         </Suspense>
       </>
@@ -93,11 +76,7 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <div className="layout">
-            <LazySideBar />
-            <LazyAllConferences data={"search-results"} />
-          </div>
-          <FloatingMenu />
+          <Layout type={"search"} />
           {/* <LazyFooter /> */}
         </Suspense>
       </>
@@ -111,7 +90,6 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyEmptyResult />
-          <FloatingMenu />
           {/* <LazyFooter /> */}
         </Suspense>
       </>
@@ -123,8 +101,7 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <AboutService />
-          <FloatingMenu />
+          <Layout type={"about"} />
           {/* <LazyFooter /> */}
         </Suspense>
       </>

@@ -10,7 +10,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
-import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import ShareButton from "../ShareButton/ShareButton";
@@ -279,11 +278,6 @@ const FullConference = () => {
   return (
     <>
       <div className="full-conference">{content}</div>
-      {full && (
-        <div style={{ paddingBottom: "30px" }}>
-          <AllConferences data={"prev4"} keywords={full.themes} id={full.id} />
-        </div>
-      )}
     </>
   );
 };

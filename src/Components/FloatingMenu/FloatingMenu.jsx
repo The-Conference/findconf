@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./FloatingMenu.scss";
 import { HomeAlt, User, Bell, Star } from "iconoir-react";
 
-const FloatingMenu = () => {
+const FloatingMenu = ({ menu, setMenu, focus, setFocus }) => {
   const [isMenuFixed, setIsMenuFixed] = useState(false);
 
   useEffect(() => {
@@ -25,19 +25,20 @@ const FloatingMenu = () => {
           </a>
         </li>
         <li>
-          <a href="/">
-            <Bell width={24} height={24} />
-          </a>
+          <Bell width={24} height={24} />
         </li>
         <li>
           <a href="/favourite">
             <Star width={24} height={24} />
           </a>
         </li>
-        <li>
-          <a href="/">
-            <User width={24} height={24} />
-          </a>
+        <li
+          onClick={() => {
+            setMenu(!menu);
+            setFocus(!focus);
+          }}
+        >
+          <User width={24} height={24} />
         </li>
       </ul>
     </nav>

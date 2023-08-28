@@ -6,12 +6,12 @@
   justify-content: space-between;
   position: sticky;
   top: 80px;
-
+  -webkit-transition: all 0.4s ease-in-out;
   &-menu {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-left: 20px;
+    margin: 0 20px;
 
     &-link {
       padding-left: 16px;

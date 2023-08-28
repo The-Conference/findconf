@@ -8,7 +8,7 @@ export const sidebar_menu = [
   {
     icon: <VideoCamera width={24} height={24} />,
     text: "Конференции",
-    link: "/all",
+    link: "/conferences",
   },
   {
     icon: <Trophy width={24} height={24} />,
