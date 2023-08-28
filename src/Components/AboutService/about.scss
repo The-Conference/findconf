@@ -1,6 +1,6 @@
 .about {
   margin: 100px 0 40px 0;
-  width: 72%;
+  width: 80%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,6 @@
   padding: 0 20px 40px 20px;
   @media (max-width: 1000px) {
     margin: 80px 0 40px 0;
-    width: 60%;
   }
   @media (max-width: 861px) {
     width: 100%;
@@ -61,7 +60,7 @@
     border-top: 4px solid #bacaf4;
     padding-bottom: 200px;
     align-self: flex-end;
-    width: 85%;
+    width: 82%;
     @media (max-width: 1260px) {
       display: none;
     }
