@@ -12,7 +12,7 @@ const GreetingForAuth = () => {
 
         <p>Мы подобрали для тебя несколько интересных конференций</p>
       </div>
-      <div className="greeting__pic">
+      <div className="greeting__pic-a">
         <img
           className="greeting__pic-auth"
           loading="lazy"
