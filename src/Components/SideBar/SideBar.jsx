@@ -9,7 +9,7 @@ const SideBar = ({ desktop, mobile }) => {
 
   return (
     <>
-      <div className={desktop ? "sidebar" : "sidebar-mobile"}>
+      <div className={desktop ? "sidebar" : "sidebar-mobile visible fadeIn"}>
         <ul className="sidebar-menu">
           {mobile ? <Logo /> : null}
           {sidebar_menu.map((item, index) => (

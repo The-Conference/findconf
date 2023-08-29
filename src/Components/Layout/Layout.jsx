@@ -17,7 +17,7 @@ const Layout = ({ type }) => {
   return (
     <>
       {focus === true ? <div className="focus"></div> : null}
-      <div className="layout" ref={ref}>
+      <div className={menu ? "layout scroll-hidden" : "layout"} ref={ref}>
         <SideBar desktop={true} />
         {type === "main" && <App />}
         {type === "conferences" && <AllConferences data={"all"} />}
