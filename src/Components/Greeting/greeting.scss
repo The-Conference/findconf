@@ -100,24 +100,26 @@
     line-height: 48px;
     white-space: nowrap;
     padding-bottom: 48px;
-    @media screen and (max-width: 1187px) {
-      font-size: 48px;
-      line-height: 48px;
+    @media screen and (max-width: 1123px) {
+      font-size: 40px;
+      line-height: 40px;
       padding-bottom: 48px;
     }
     @media screen and (max-width: 963px) {
-      font-size: 40px;
-      line-height: 45px;
+      font-size: 30px;
+      line-height: 30px;
       padding-bottom: 40px;
     }
-    @media screen and (max-width: 780px) {
-      font-size: 35px;
-      line-height: 35px;
-      padding-bottom: 20px;
+    @media screen and (max-width: 819px) {
+      padding-bottom: 0;
     }
-    @media screen and (max-width: 559px) {
+    @media screen and (max-width: 780px) {
       font-size: 25px;
       line-height: 25px;
+    }
+    @media screen and (max-width: 559px) {
+      font-size: 20px;
+      line-height: 20px;
     }
   }
   &__text-first {
@@ -125,21 +127,21 @@
     font-family: "Heading 1";
     line-height: 48px;
     white-space: nowrap;
-    @media screen and (max-width: 1187px) {
-      font-size: 48px;
-      line-height: 48px;
+    @media screen and (max-width: 1123px) {
+      font-size: 40px;
+      line-height: 40px;
     }
     @media screen and (max-width: 963px) {
-      font-size: 40px;
-      line-height: 45px;
+      font-size: 30px;
+      line-height: 30px;
     }
     @media screen and (max-width: 780px) {
-      font-size: 35px;
-      line-height: 35px;
-    }
-    @media screen and (max-width: 559px) {
       font-size: 25px;
       line-height: 25px;
+    }
+    @media screen and (max-width: 559px) {
+      font-size: 20px;
+      line-height: 20px;
     }
   }
   &__button {
