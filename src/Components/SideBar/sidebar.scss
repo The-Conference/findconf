@@ -6,6 +6,9 @@
   justify-content: space-between;
   position: sticky;
   top: 80px;
+  @media screen and (max-width: 1261px) {
+    margin-top: 85px;
+  }
 
   &-menu {
     display: flex;
