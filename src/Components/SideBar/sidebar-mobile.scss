@@ -11,7 +11,7 @@
     left: 0;
     z-index: 1010;
     width: 294px;
-    overflow: hidden;
+    overflow: auto;
   }
   .header__logo {
     text-align: left;
@@ -55,4 +55,7 @@
 }
 .visible {
   left: 0;
+}
+.footer-mobile {
+  margin-bottom: 50px;
 }

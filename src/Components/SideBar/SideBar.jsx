@@ -28,7 +28,9 @@ const SideBar = ({ desktop, mobile }) => {
             </li>
           ))}
         </ul>
-        <div className="sidebar-footer">
+        <div
+          className={mobile ? "sidebar-footer footer-mobile" : "sidebar-footer"}
+        >
           <button className="sidebar-footer-button">
             <Wallet />
             <span className="sidebar-footer-text">Поддержи нас :)</span>
