@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from ckeditor.widgets import CKEditorWidget
 
-from .models import Conference, Tag
+from .models import Conference, Tag, Grant
 
 
 class MyAdminSite(admin.AdminSite):
@@ -72,5 +72,21 @@ class ConferenceAdmin(admin.ModelAdmin):
     )
 
 
+class GrantAdminForm(ConferenceAdminForm):
+    class Meta:
+        model = Grant
+        fields = ('un_name', 'local', 'reg_date_begin', 'reg_date_end',
+                  'conf_card_href', 'reg_href', 'conf_name', 'conf_s_desc', 'conf_desc',
+                  'contacts', 'checked', 'tags', 'conf_id',)
+
+
+class GrantAdmin(admin.ModelAdmin):
+    form = GrantAdminForm
+    list_display = ['conf_name', 'checked']
+    search_fields = ['conf_name']
+    list_filter = ['checked']
+
+
 admin_site.register(Conference, ConferenceAdmin)
+admin_site.register(Grant, GrantAdmin)
 admin_site.register(Tag)

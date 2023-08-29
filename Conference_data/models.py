@@ -21,12 +21,11 @@ class Tag(models.Model):
 
 class AbstractItem(models.Model):
     conf_id = models.TextField(unique=True)
-    hash = models.CharField(null=True, blank=True, max_length=500)  # Legacy code, deprecated
     un_name = models.CharField(max_length=500, verbose_name="ВУЗ")
     local = models.BooleanField(default=True, verbose_name="Международная")
     reg_date_begin = models.DateField(null=True, blank=True, verbose_name="Начало регистрации")
     reg_date_end = models.DateField(null=True, blank=True, verbose_name="Окончание регистрации")
-    conf_card_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Карточка конференции")
+    conf_card_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Ссылка на источник")
     reg_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Ссылка на регистрацию")
     conf_name = models.TextField(verbose_name="Название")
     conf_s_desc = RichTextField(null=True, blank=True, verbose_name="Краткое описание")
@@ -61,6 +60,7 @@ class AbstractItem(models.Model):
 
 
 class Conference(AbstractItem):
+    hash = models.CharField(null=True, blank=True, max_length=500)  # Legacy code, deprecated
     conf_date_begin = models.DateField(verbose_name="Дата начала")
     conf_date_end = models.DateField(null=True, blank=True, verbose_name="Дата окончания")
     org_name = models.TextField(null=True, blank=True, verbose_name="Организатор")
@@ -109,6 +109,11 @@ class Grant(AbstractItem):
     class Meta:
         verbose_name = "Грант"
         verbose_name_plural = "Гранты"
+
+    def clean(self) -> None:
+        if not self.conf_id:
+            self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.reg_date_end}"
+        self.validate_unique()
 
 
 class Favorite(models.Model):

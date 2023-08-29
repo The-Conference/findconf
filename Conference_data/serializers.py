@@ -1,7 +1,7 @@
 from rest_framework import serializers, exceptions
 from django.core.exceptions import ValidationError
 
-from .models import Conference, Tag
+from .models import Conference, Tag, Grant
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -67,3 +67,20 @@ class ConferenceSerializer(serializers.ModelSerializer):
                   'conf_name', 'conf_s_desc', 'conf_desc', 'org_name',
                   'themes', 'online', 'conf_href', 'offline', 'conf_address',
                   'contacts', 'rinc', 'tags', 'vak', 'wos', 'scopus', 'conf_status', 'is_favorite')
+
+
+class GrantSerializer(ConferenceSerializer):
+    class Meta:
+        model = Grant
+        fields = '__all__'
+
+    def create(self, validated_data):
+        tag_list = None
+        if 'tags' in validated_data:
+            tags_data = validated_data.pop('tags')
+            tag_list = self.get_new_tags(tags_data)
+
+        conf = Grant.objects.create(**validated_data)
+        if tag_list:
+            conf.tags.set(tag_list)
+        return conf
