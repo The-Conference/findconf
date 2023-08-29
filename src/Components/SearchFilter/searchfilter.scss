@@ -8,16 +8,14 @@
   z-index: 2000;
   position: relative;
   @media (max-width: 1273px) {
-    width: 700px;
-  }
-  @media (max-width: 1183px) {
     width: 600px;
   }
-  @media (max-width: 1091px) {
+  @media (max-width: 1183px) {
     width: 500px;
   }
+
   @media (max-width: 1069px) {
-    width: 650px;
+    width: 550px;
   }
   @media (max-width: 999px) {
     width: 500px;
