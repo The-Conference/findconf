@@ -18,6 +18,7 @@ const Layout = ({ type }) => {
   useEffect(() => {
     if (windowWidth > 861) {
       setFocus(false);
+      setMenu(false);
     }
     if (windowWidth <= 861 && menu) {
       setFocus(true);
