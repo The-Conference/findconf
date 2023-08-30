@@ -33,7 +33,7 @@ const Registered = () => {
 
         <img className="registered__img" src={welcome} alt="welcome" />
         <Link className="registered__link" to="/login">
-          <div className="registered__button"> На главную</div>
+          <div className="registered__button"> Авторизоваться</div>
         </Link>
       </div>
     </div>
