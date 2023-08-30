@@ -33,7 +33,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
             tags_data = validated_data.pop('tags')
             tag_list = self.get_new_tags(tags_data)
 
-        conf = Conference.objects.create(**validated_data)
+        conf = self.Meta.model.objects.create(**validated_data)
         if tag_list:
             conf.tags.set(tag_list)
         return conf
@@ -73,14 +73,3 @@ class GrantSerializer(ConferenceSerializer):
     class Meta:
         model = Grant
         fields = '__all__'
-
-    def create(self, validated_data):
-        tag_list = None
-        if 'tags' in validated_data:
-            tags_data = validated_data.pop('tags')
-            tag_list = self.get_new_tags(tags_data)
-
-        conf = Grant.objects.create(**validated_data)
-        if tag_list:
-            conf.tags.set(tag_list)
-        return conf

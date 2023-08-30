@@ -7,7 +7,19 @@ from rest_framework.response import Response
 from .managers import ManageFavorite
 from .models import Conference, Grant
 from .serializers import ConferenceSerializer, ConferenceShortSerializer, GrantSerializer
-from .filters import ConferenceFilter
+from .filters import ConferenceFilter, GrantFilter
+
+
+class GrantViewSet(viewsets.ModelViewSet, ManageFavorite):
+    serializer_class = GrantSerializer
+    permission_classes = [ReadOnlyOrAdminPermission]
+    filterset_class = GrantFilter
+    queryset = Grant.objects.filter(checked=True).order_by('reg_date_end')
+
+    def get_queryset(self):
+        queryset = self.annotate_qs_is_favorite_field(self.queryset)
+        queryset = queryset.prefetch_related('tags')
+        return queryset
 
 
 @extend_schema_view(
@@ -19,31 +31,13 @@ from .filters import ConferenceFilter
         ]
     )
 )
-class ConferenceViewSet(viewsets.ModelViewSet, ManageFavorite):
+class ConferenceViewSet(GrantViewSet):
     serializer_class = ConferenceSerializer
     permission_classes = [ReadOnlyOrAdminPermission]
     filterset_class = ConferenceFilter
+    queryset = Conference.objects.filter(checked=True).order_by('conf_date_begin')
 
-    def get_queryset(self):
-        queryset = Conference.objects.filter(checked=True).order_by('conf_date_begin')
-        queryset = self.annotate_qs_is_favorite_field(queryset)
-        queryset = queryset.prefetch_related('tags')
-        return queryset
-
-    @extend_schema(tags=["default"])
     @action(methods=['get'], detail=False, serializer_class=ConferenceShortSerializer)
     def calendar(self, request):
         serializer = self.serializer_class(self.get_queryset(), many=True)
         return Response(serializer.data)
-
-
-class GrantViewSet(viewsets.ModelViewSet, ManageFavorite):
-    serializer_class = GrantSerializer
-    permission_classes = [ReadOnlyOrAdminPermission]
-    filterset_class = None
-
-    def get_queryset(self):
-        queryset = Grant.objects.filter(checked=True)
-        queryset = self.annotate_qs_is_favorite_field(queryset)
-        queryset = queryset.prefetch_related('tags')
-        return queryset

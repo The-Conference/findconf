@@ -7,8 +7,8 @@ from .models import Tag, Conference
 from .serializers import TagSerializer, UniversitySerializer
 
 router = DefaultRouter()
-router.register('confs', ConferenceViewSet, basename="api")
-router.register('grants', GrantViewSet, basename='api')
+router.register('confs', ConferenceViewSet)
+router.register('grants', GrantViewSet)
 
 urlpatterns = [
     path('lists/tags/',

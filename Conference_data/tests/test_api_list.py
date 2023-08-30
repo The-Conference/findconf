@@ -1,4 +1,3 @@
-from collections import OrderedDict
 from django.utils import timezone
 
 from rest_framework.reverse import reverse
@@ -13,7 +12,7 @@ from ..models import Conference, Tag
 class ConferenceListTests(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.URL = reverse('api-list')
+        cls.URL = reverse('conference-list')
         user = get_user_model()
         cls.user = user.objects.create_user(email='user@example.com', password='123')
         cls.admin = user.objects.create_superuser(email='admin@example.com', password='123')
@@ -73,7 +72,7 @@ class ConferenceListTests(APITestCase):
         del self.test_conf_data['conf_id']
         response = self.client.post(self.URL, self.test_conf_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data.get('conf_id'), 'test unitest name2021-09-01')
+        self.assertEqual(response.data.get('conf_id'), 'testunitestname2021-09-01')
 
     def test_list_post_all_fields_201(self):
         self.client.force_authenticate(user=self.admin)
@@ -89,7 +88,7 @@ class ConferenceListTests(APITestCase):
 class ConferenceListFilterTests(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.URL = reverse('api-list')
+        cls.URL = reverse('conference-list')
         conf_b_data = TEST_CONF_FULL.copy()
         conf_b_data['checked'] = True
         del conf_b_data['tags']

@@ -4,7 +4,7 @@ from django_filters import rest_framework, BaseInFilter, CharFilter, OrderingFil
 from django.utils import timezone
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
-from .models import Conference
+from .models import Conference, Grant
 
 
 class CharInFilter(BaseInFilter, CharFilter):
@@ -85,3 +85,12 @@ class ConferenceFilter(rest_framework.FilterSet):
         model = Conference
         fields = ['offline', 'online', 'rinc', 'vak', 'wos', 'scopus', 'tags', 'un_name', 'conf_status',
                   'conf_date_begin', 'conf_date_end']
+
+
+class GrantFilter(rest_framework.FilterSet):
+    tags = CharInFilter(field_name='tags__name', lookup_expr='in', distinct=True)
+    un_name = CharInFilter(field_name='un_name', lookup_expr='in', distinct=True)
+
+    class Meta:
+        model = Grant
+        fields = ['un_name']

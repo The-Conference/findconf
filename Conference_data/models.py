@@ -42,8 +42,7 @@ class AbstractItem(models.Model):
     def clean(self) -> None:
         """Validate_unique is needed to show an error in admin,
         otherwise it fails with error 500."""
-        if not self.conf_id:
-            self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}"
+        self.conf_id = self.conf_id.replace(' ', '')
         self.validate_unique()
 
     def save(self, *args, **kwargs):
@@ -81,7 +80,7 @@ class Conference(AbstractItem):
     def clean(self) -> None:
         if not self.conf_id:
             self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
-        self.validate_unique()
+        super().clean()
 
     @property
     def conf_status(self) -> str:
@@ -113,7 +112,7 @@ class Grant(AbstractItem):
     def clean(self) -> None:
         if not self.conf_id:
             self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.reg_date_end}"
-        self.validate_unique()
+        super().clean()
 
 
 class Favorite(models.Model):
