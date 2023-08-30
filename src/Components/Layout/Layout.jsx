@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import SideBar from "../SideBar/SideBar";
 import App from "../../App";
 import AllConferences from "../Conference/AllConferences";
@@ -9,11 +9,29 @@ import useOnClickOutside from "../Hooks/useOnClickOutside";
 const Layout = ({ type }) => {
   const [menu, setMenu] = useState(false);
   const [focus, setFocus] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const ref = useRef();
   useOnClickOutside(ref, () => {
     setMenu(false);
     setFocus(false);
   });
+  useEffect(() => {
+    if (windowWidth > 861) {
+      setFocus(false);
+    }
+    if (windowWidth <= 861 && menu) {
+      setFocus(true);
+    }
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [windowWidth, menu]);
   return (
     <>
       {focus === true ? <div className="focus"></div> : null}
