@@ -23,7 +23,7 @@ class ConferenceAdminForm(forms.ModelForm):
     conf_s_desc = forms.CharField(
         label='Краткое описание',
         required=False,
-        widget=CKEditorWidget(config_name='default'))
+        widget=forms.Textarea(attrs={'rows': '10', 'cols': '80'}))
     conf_desc = forms.CharField(
         label='Полное описание',
         widget=CKEditorWidget(config_name='default'))
