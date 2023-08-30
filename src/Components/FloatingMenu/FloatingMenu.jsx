@@ -19,10 +19,13 @@ const FloatingMenu = ({ menu, setMenu, focus, setFocus }) => {
   return (
     <nav className={`floating-menu ${isMenuFixed ? "fixed" : ""}`}>
       <ul>
-        <li>
-          <a href="/">
-            <HomeAlt width={24} height={24} />
-          </a>
+        <li
+          onClick={() => {
+            setMenu(!menu);
+            setFocus(!focus);
+          }}
+        >
+          <HomeAlt width={24} height={24} />
         </li>
         <li>
           <Bell width={24} height={24} />
@@ -32,12 +35,7 @@ const FloatingMenu = ({ menu, setMenu, focus, setFocus }) => {
             <Star width={24} height={24} />
           </a>
         </li>
-        <li
-          onClick={() => {
-            setMenu(!menu);
-            setFocus(!focus);
-          }}
-        >
+        <li>
           <User width={24} height={24} />
         </li>
       </ul>
