@@ -191,6 +191,7 @@ CKEDITOR_CONFIGS = {
         ],
         'removePlugins': 'elementspath',
         'extraPlugins': ['lineheight'],
+        'width': '60vw',
     }
 }
 
