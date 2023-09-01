@@ -82,9 +82,33 @@ class GrantAdminForm(ConferenceAdminForm):
 
 class GrantAdmin(admin.ModelAdmin):
     form = GrantAdminForm
-    list_display = ['conf_name', 'checked']
+    list_display = ['conf_name', 'reg_date_end', 'checked']
     search_fields = ['conf_name']
-    list_filter = ['checked']
+    list_filter = ['reg_date_end', 'checked']
+    fieldsets = (
+        (None, {
+            'fields': ('conf_name', 'un_name')
+        }),
+        ('Характеристики', {
+            'fields': [('local', 'checked')],
+        }),
+        ('Даты', {
+            'fields': [('reg_date_begin', 'reg_date_end')],
+        }),
+        ('Тексты', {
+            'fields': ('conf_s_desc', 'conf_desc', 'contacts'),
+        }),
+        ('Ссылки', {
+            'fields': ('conf_card_href', 'reg_href'),
+        }),
+        ('Тэги', {
+            'fields': ('tags', ),
+        }),
+        ('Разное', {
+            'classes': ['collapse'],
+            'fields': ('conf_id', ),
+        }),
+    )
 
 
 admin_site.register(Conference, ConferenceAdmin)

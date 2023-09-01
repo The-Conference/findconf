@@ -72,4 +72,6 @@ class ConferenceSerializer(serializers.ModelSerializer):
 class GrantSerializer(ConferenceSerializer):
     class Meta:
         model = Grant
-        fields = '__all__'
+        fields = ('un_name', 'local', 'reg_date_begin', 'reg_date_end',
+                  'conf_card_href', 'reg_href', 'conf_name', 'conf_s_desc', 'conf_desc',
+                  'contacts', 'checked', 'tags', 'conf_id',)
