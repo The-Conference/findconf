@@ -20,7 +20,7 @@ class ConferenceAdminForm(forms.ModelForm):
         required=False,
         widget=FilteredSelectMultiple(verbose_name='Тэги', is_stacked=False),
     )
-    synopsis = forms.CharField(
+    short_description = forms.CharField(
         label='Краткое описание',
         required=False,
         widget=forms.Textarea(attrs={'rows': '10', 'cols': '80'}))
@@ -33,7 +33,7 @@ class ConferenceAdminForm(forms.ModelForm):
         model = Conference
         fields = ('un_name', 'local', 'reg_date_begin', 'reg_date_end',
                   'conf_date_begin', 'conf_date_end', 'source_href', 'reg_href',
-                  'title', 'synopsis', 'description', 'org_name', 'themes',
+                  'title', 'short_description', 'description', 'org_name', 'themes',
                   'online', 'conf_href', 'offline', 'conf_address', 'contacts', 'rinc',
                   'vak', 'wos', 'scopus', 'checked', 'tags', 'item_id',)
 
@@ -54,7 +54,7 @@ class ConferenceAdmin(admin.ModelAdmin):
             'fields': [('conf_date_begin', 'conf_date_end'), ('reg_date_begin', 'reg_date_end')],
         }),
         ('Тексты', {
-            'fields': ('synopsis', 'description', 'conf_address', 'contacts'),
+            'fields': ('short_description', 'description', 'conf_address', 'contacts'),
         }),
         ('Ссылки', {
             'fields': ('source_href', 'reg_href', 'conf_href'),
@@ -76,7 +76,7 @@ class GrantAdminForm(ConferenceAdminForm):
     class Meta:
         model = Grant
         fields = ('un_name', 'local', 'reg_date_begin', 'reg_date_end',
-                  'source_href', 'reg_href', 'title', 'synopsis', 'description',
+                  'source_href', 'reg_href', 'title', 'short_description', 'description',
                   'contacts', 'checked', 'tags', 'item_id',)
 
 
@@ -96,7 +96,7 @@ class GrantAdmin(admin.ModelAdmin):
             'fields': [('reg_date_begin', 'reg_date_end')],
         }),
         ('Тексты', {
-            'fields': ('synopsis', 'description', 'contacts'),
+            'fields': ('short_description', 'description', 'contacts'),
         }),
         ('Ссылки', {
             'fields': ('source_href', 'reg_href'),

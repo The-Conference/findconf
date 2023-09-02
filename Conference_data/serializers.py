@@ -64,7 +64,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
         fields = ('id', 'item_id', 'un_name', 'local',
                   'reg_date_begin', 'reg_date_end', 'conf_date_begin',
                   'conf_date_end', 'source_href', 'reg_href',
-                  'title', 'synopsis', 'description', 'org_name',
+                  'title', 'short_description', 'description', 'org_name',
                   'themes', 'online', 'conf_href', 'offline', 'conf_address',
                   'contacts', 'rinc', 'tags', 'vak', 'wos', 'scopus', 'conf_status', 'is_favorite')
 
@@ -73,5 +73,5 @@ class GrantSerializer(ConferenceSerializer):
     class Meta:
         model = Grant
         fields = ('un_name', 'local', 'reg_date_begin', 'reg_date_end',
-                  'source_href', 'reg_href', 'title', 'synopsis', 'description',
+                  'source_href', 'reg_href', 'title', 'short_description', 'description',
                   'contacts', 'checked', 'tags', 'item_id',)

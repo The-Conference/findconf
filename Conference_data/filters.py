@@ -44,7 +44,7 @@ class ConferenceFilter(rest_framework.FilterSet):
     def text_search(queryset, name, value):
         """Search uses Postgres dialect, will not work with SQLite."""
         search_vector = (
-                SearchVector('title', 'synopsis', 'description', weight='A', config='russian') +
+                SearchVector('title', 'short_description', 'description', weight='A', config='russian') +
                 SearchVector('un_name', 'conf_address', weight='B', config='russian')
         )
         search_string = re.sub(r'\s+', ' | ', value)

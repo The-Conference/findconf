@@ -27,7 +27,7 @@ class AbstractItem(models.Model):
     source_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Ссылка на источник")
     reg_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Ссылка на регистрацию")
     title = models.TextField(verbose_name="Название")
-    synopsis = RichTextField(null=True, blank=True, verbose_name="Краткое описание")
+    short_description = RichTextField(null=True, blank=True, verbose_name="Краткое описание")
     description = RichTextField(verbose_name="Описание")
     contacts = models.TextField(null=True, blank=True, verbose_name="Контакты")
     checked = models.BooleanField(default=False, verbose_name="Проверено")
@@ -45,7 +45,7 @@ class AbstractItem(models.Model):
         self.validate_unique()
 
     def save(self, *args, **kwargs):
-        self.synopsis = self.normalize(self.synopsis)
+        self.short_description = self.normalize(self.short_description)
         self.description = self.normalize(self.description)
         self.clean()
         super().save(*args, **kwargs)
@@ -58,7 +58,6 @@ class AbstractItem(models.Model):
 
 
 class Conference(AbstractItem):
-    hash = models.CharField(null=True, blank=True, max_length=500)  # Legacy code, deprecated
     conf_date_begin = models.DateField(verbose_name="Дата начала")
     conf_date_end = models.DateField(null=True, blank=True, verbose_name="Дата окончания")
     org_name = models.TextField(null=True, blank=True, verbose_name="Организатор")
@@ -68,8 +67,6 @@ class Conference(AbstractItem):
     offline = models.BooleanField(default=True, verbose_name="Оффлайн")
     conf_address = models.TextField(null=True, blank=True, verbose_name="Адрес")
     rinc = models.BooleanField(default=False, verbose_name="РИНЦ")
-    data = models.JSONField(blank=True, null=True)  # Legacy code, deprecated
-    generate_conf_id = models.BooleanField(default=False)  # Legacy code, deprecated
     vak = models.BooleanField(default=False, verbose_name="ВАК")
     wos = models.BooleanField(default=False, verbose_name="WoS")
     scopus = models.BooleanField(default=False, verbose_name="Scopus")

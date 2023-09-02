@@ -17,7 +17,7 @@ TEST_CONF_FULL = {
     "source_href": "http://example.com/",
     "reg_href": "http://example.com/",
     "title": "title",
-    "synopsis": "synopsis",
+    "short_description": "short_description",
     "description": "description",
     "org_name": "org_name",
     "themes": "themes",
