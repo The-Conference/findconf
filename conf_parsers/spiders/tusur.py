@@ -19,10 +19,10 @@ class TusurSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
         conf_s_desc = response.xpath("string(//div[@class='annotation-text'])").get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
+        new_item.add_value('short_description', conf_s_desc)
 
         for line in response.xpath("//div[@class='news-item']//*[self::p or self::ul or self::ol]"):
             new_item = default_parser_xpath(line, new_item)

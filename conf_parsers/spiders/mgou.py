@@ -20,8 +20,8 @@ class MgouSpider(scrapy.Spider):
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
                 new_item = get_dates(date, new_item, is_vague=True)
-                new_item.add_value('conf_name', conf_name)
-                new_item.add_value('conf_desc', conf_name)
+                new_item.add_value('title', conf_name)
+                new_item.add_value('description', conf_name)
                 if 'онлайн' in conf_name or 'интернет' in conf_name:
                     new_item.add_value('online', True)
 

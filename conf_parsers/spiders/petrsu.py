@@ -15,14 +15,14 @@ class PetrsuSpider(scrapy.Spider):
     def parse(self, response, **kwargs):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_css('conf_name', 'div#conf_name::text')
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_css('title', 'div#title::text')
+        new_item.add_value('source_href', response.url)
         conf_s_desc = response.css('p::text').get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
-        dates = response.xpath("string(//div[@id='conf_name'])").get()
+        new_item.add_value('short_description', conf_s_desc)
+        dates = response.xpath("string(//div[@id='title'])").get()
         new_item = get_dates(dates, new_item)
 
-        for line in response.xpath("//div[@id='conf_desc']//*[self::p or self::div or self::table]"):
+        for line in response.xpath("//div[@id='description']//*[self::p or self::div or self::table]"):
             new_item = default_parser_xpath(line, new_item)
         if href := new_item.get_output_value('reg_href'):
             new_item.replace_value('reg_href', href)
@@ -43,8 +43,8 @@ class PetrsuPagesSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_xpath('conf_name', "//h1/text()")
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_xpath('title', "//h1/text()")
+        new_item.add_value('source_href', response.url)
 
         for line in response.css("div.page-content").xpath(".//*[self::p or self::ul]"):
             new_item = default_parser_xpath(line, new_item)

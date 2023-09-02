@@ -16,11 +16,11 @@ class A1spbgmuSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem())
+        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_name = response.xpath("string(//div[@class='page-header'])").get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('title', conf_name)
+        new_item.add_value('source_href', response.url)
         new_item = get_dates(conf_name, new_item)
 
         for line in response.xpath("//div[@itemprop='articleBody']//*[self::p]"):

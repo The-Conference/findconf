@@ -28,9 +28,9 @@ class UnitechMoSpider(CrawlSpider, UnitechMo):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
-        new_item.add_css('conf_s_desc', "div.col-md-12::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
+        new_item.add_css('short_description', "div.col-md-12::text")
 
         for line in response.xpath("//div[@class='container']//div[@class='col-md-12']//*[self::p]"):
             new_item = default_parser_xpath(line, new_item)
@@ -61,9 +61,9 @@ class UnitechMoSpider2(scrapy.Spider, UnitechMo):
 
                 new_item = get_dates(f'{date} {month} {year}', new_item, is_vague=True)
                 new_item.add_value('conf_address', re.split(r'(\d+)', date)[0])
-                new_item.add_value('conf_name', title)
-                new_item.add_value('conf_desc', title)
-                new_item.add_value('conf_card_href', response.url)
+                new_item.add_value('title', title)
+                new_item.add_value('description', title)
+                new_item.add_value('source_href', response.url)
 
                 yield new_item.load_item()
 
@@ -79,11 +79,11 @@ class UnitechMoSpider3(scrapy.Spider, UnitechMo):
             if 'конфер' in title.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-                new_item.add_value('conf_card_href', response.url)
-                new_item.add_value('conf_name', title)
+                new_item.add_value('source_href', response.url)
+                new_item.add_value('title', title)
                 date = line.xpath('./following-sibling::p')[0].get()
                 desc = line.xpath('./following-sibling::p//text()')[1].get()
-                new_item.add_value('conf_desc', desc)
+                new_item.add_value('description', desc)
                 new_item = get_dates(date, new_item)
 
                 yield new_item.load_item()

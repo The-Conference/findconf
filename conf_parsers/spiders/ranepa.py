@@ -19,9 +19,9 @@ class RanepaSpiderIIM(CrawlSpider):
         if 'онференц' in desc.lower():
             new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-            new_item.add_value('conf_card_href', response.url)
-            new_item.add_css('conf_name', "h1::text")
-            new_item.add_value('conf_s_desc', desc)
+            new_item.add_value('source_href', response.url)
+            new_item.add_css('title', "h1::text")
+            new_item.add_value('short_description', desc)
             dates = response.xpath("string(//div[@class='conf-intro__date'])").get()
             new_item = get_dates(dates, new_item)
             new_item.add_css('conf_address', "div.contacts__left > div.contact::text")
@@ -44,15 +44,15 @@ class RanepaSpiderIURR(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('source_href', response.url)
         conf_name = response.css("h1::text").get()
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_value('title', conf_name)
         new_item = get_dates(conf_name, new_item)
 
         for line in response.xpath("//div[@class='thecontent']//*[self::p or self::ul]"):
             new_item = default_parser_xpath(line, new_item)
         desc = response.xpath("//div[@class='thecontent']//*[self::p][position() < 10]//text()").getall()
-        new_item.replace_value('conf_desc', desc)
+        new_item.replace_value('description', desc)
         yield new_item.load_item()
 
 
@@ -70,14 +70,14 @@ class RanepaSpiderIGSU(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
 
         text_block = response.xpath("//div[@class='et_pb_text_inner']")
         for line in text_block.xpath("./*[self::p or self::ul or starts-with(name(),'h')]"):
             new_item = default_parser_xpath(line, new_item)
         if not new_item.get_collected_values('conf_date_begin'):
-            new_item = get_dates(new_item.get_output_value('conf_desc'), new_item)
+            new_item = get_dates(new_item.get_output_value('description'), new_item)
 
         yield new_item.load_item()
 
@@ -95,8 +95,8 @@ class RanepaSpiderGSCM(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
 
         for line in response.xpath("//div[@class='news-detail__text']//*[self::p or self::ul]"):
             new_item = default_parser_xpath(line, new_item)
@@ -117,9 +117,9 @@ class RanepaSpiderION(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
-        new_item.add_xpath('conf_s_desc', "string(//div[@class='b-program-fin']/p)")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
+        new_item.add_xpath('short_description', "string(//div[@class='b-program-fin']/p)")
 
         # no tags. Splitting text by <br>
         for line in response.xpath("//article/*[not(div)]//text()"):

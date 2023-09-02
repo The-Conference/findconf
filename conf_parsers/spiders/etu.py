@@ -35,8 +35,8 @@ class EtuSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_value('conf_name', response.meta.get('title'))
+        new_item.add_value('source_href', response.url)
+        new_item.add_value('title', response.meta.get('title'))
         new_item = get_dates(response.meta.get('dates'), new_item)
         new_item.add_css('conf_address', "div.location::text")
 

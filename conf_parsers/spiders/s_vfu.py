@@ -19,8 +19,8 @@ class SVfuSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "div.px-4 > h2::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "div.px-4 > h2::text")
 
         for line in response.xpath("//div[@class='px-4']/div//*[self::p or self::div or self::h1]"):
             new_item = default_parser_xpath(line, new_item)

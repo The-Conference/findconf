@@ -28,14 +28,13 @@ class VolsuSpider(scrapy.Spider):
         next_page = response.xpath("//a[contains(text(), 'Следующая')]/@href").get()
         yield scrapy.Request(response.urljoin(next_page), callback=self.parse_links, meta={"playwright": True})
 
-
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h2::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h2::text")
         conf_s_desc = response.xpath("string(//div[@class='news-detail']/p)").get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
+        new_item.add_value('short_description', conf_s_desc)
 
         for line in response.xpath("//div[@class='news-detail']//*[self::p or self::div or self::ul]"):
             new_item = default_parser_xpath(line, new_item)

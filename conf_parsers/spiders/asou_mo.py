@@ -20,10 +20,10 @@ class AsouMoSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_css('conf_name', "h1.entry-title::text")
+        new_item.add_css('title', "h1.entry-title::text")
         conf_s_desc = response.xpath("//div[@class='one-news__intro-description']")
-        new_item.add_value('conf_s_desc', conf_s_desc.xpath("string(.)").get())
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('short_description', conf_s_desc.xpath("string(.)").get())
+        new_item.add_value('source_href', response.url)
         new_item.add_xpath('conf_address', "string(//div[contains(@class, 'tabs__place-info--loc')])")
         new_item.add_xpath('contacts', "string(//div[contains(@class, 'tabs__place-info--phone')])")
         new_item.add_css('reg_href', 'a.button--register::attr(href)')

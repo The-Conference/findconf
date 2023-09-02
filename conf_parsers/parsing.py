@@ -87,7 +87,7 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
     if lowercase is None:
         lowercase = line.casefold()
 
-    new_item.add_value('conf_desc', line)
+    new_item.add_value('description', line)
 
     if 'ринц' in lowercase:
         new_item.add_value('rinc', True)

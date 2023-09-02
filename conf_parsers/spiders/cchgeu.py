@@ -18,8 +18,8 @@ class CchgeuSpider(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_name = response.xpath("//h1/text()").get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('title', conf_name)
+        new_item.add_value('source_href', response.url)
         new_item.add_xpath('contacts', "//div[@class='news-detail']//a[contains(@href, 'mailto')]/@href")
 
         text = response.xpath("//div[@class='news-detail']/div[not(@class or @style)]")

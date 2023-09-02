@@ -41,10 +41,10 @@ class UneconSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_value('conf_name', response.meta.get('title'))
+        new_item.add_value('source_href', response.url)
+        new_item.add_value('title', response.meta.get('title'))
         conf_s_desc = response.xpath("string(//div[@class='post_content']/p)").get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
+        new_item.add_value('short_description', conf_s_desc)
         conf_date_begin = find_date_in_string(response.meta.get('date_start'))
         conf_date_end = find_date_in_string(response.meta.get('date_end'))
         new_item.add_value('conf_date_begin', conf_date_begin[0])

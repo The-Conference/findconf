@@ -18,14 +18,14 @@ class RushSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h2.zagol::text")
-        new_item.add_xpath('conf_s_desc', "string(//div[@class='col-sm-8']/p)")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h2.zagol::text")
+        new_item.add_xpath('short_description', "string(//div[@class='col-sm-8']/p)")
 
         for line in response.xpath("//div[@class='col-xl-12']//*[self::p or self::li]"):
             new_item = default_parser_xpath(line, new_item)
         if not new_item.get_collected_values('conf_date_begin'):
-            new_item = get_dates(new_item.get_output_value('conf_s_desc'), new_item)
+            new_item = get_dates(new_item.get_output_value('short_description'), new_item)
         if not new_item.get_collected_values('conf_date_begin'):
             dates = response.xpath("string(//div[@class='col-sm-8']/strong)").get()
             new_item = get_dates(dates, new_item)

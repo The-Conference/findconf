@@ -24,10 +24,10 @@ class SpbgasuSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "string(//h1[@class='page-head__title'])")
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "string(//h1[@class='page-head__title'])")
         conf_s_desc = response.xpath("string(//p[contains(@class, 'page-head__subtitle')])").get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
+        new_item.add_value('short_description', conf_s_desc)
         new_item = get_dates(conf_s_desc, new_item, is_vague=True)
 
         for line in response.xpath("//main/*[@class='app-section _small-gutter']"):

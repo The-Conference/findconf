@@ -17,9 +17,9 @@ class KbsuSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('source_href', response.url)
         conf_name = response.meta.get('link_text')
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_value('title', conf_name)
         new_item = get_dates(response.xpath("//h1/text()").get(), new_item)
 
         for line in response.xpath("//div[@class='single__content content ']//*[self::p or self::ul or self::ol]"):

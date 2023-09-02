@@ -2,6 +2,8 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
+from collections import ChainMap
+
 from scrapy import Item, Field
 from itemloaders.processors import TakeFirst, MapCompose, Join, Compose
 from scrapy.loader import ItemLoader
@@ -11,40 +13,46 @@ from pprint import pformat
 from .utils import normalize_string
 
 
-def absolute_url(url, loader_context):
-    """Convert relative URLs to absolute."""
+def absolute_url(url: str, loader_context: ChainMap) -> str:
+    """Convert relative URLs to absolute.
+
+    Args:
+        url: Absolute or relative URL.
+        loader_context: Parent URL, passed as a 'selector' parameter of the item loader object.
+
+    Returns:
+        Absolute URL.
+    """
+    if loader_context is None:
+        raise ValueError('No context was passed. Make sure to include "selector=" in the item loader.')
     return loader_context['selector'].urljoin(url)
 
 
-def fix_emails(url):
+def fix_emails(url: str) -> str:
     """Remove leftover tags."""
     return url.replace('mailto:', '')
 
 
 class ConferenceItem(Item):
-    conf_id = Field()
-    hash = Field()
+    item_id = Field()
     un_name = Field()
     local = Field()
     reg_date_begin = Field()
     reg_date_end = Field()
     conf_date_begin = Field()
     conf_date_end = Field()
-    conf_card_href = Field()
+    source_href = Field()
     reg_href = Field()
-    conf_name = Field()
-    conf_s_desc = Field()
-    conf_desc = Field()
+    title = Field()
+    short_description = Field()
+    description = Field()
     org_name = Field()
-    themes = Field()
     online = Field()
     conf_href = Field()
     offline = Field()
     conf_address = Field()
     contacts = Field()
     rinc = Field()
-    data = Field()
-    checked = Field()
     vak = Field()
     wos = Field()
     scopus = Field()
@@ -57,13 +65,13 @@ class ConferenceItem(Item):
 class ConferenceLoader(ItemLoader):
     default_output_processor = TakeFirst()
 
-    conf_s_desc_out = Compose(Join(), normalize_string)
-    conf_desc_out = Compose(Join(), normalize_string)
+    short_description_out = Compose(Join(), normalize_string)
+    description_out = Compose(Join(), normalize_string)
     conf_address_out = Compose(Join(), normalize_string)
     contacts_out = Compose(Join(), normalize_string)
 
     org_name_in = MapCompose(normalize_string)
-    conf_name_in = MapCompose(normalize_string)
-    conf_card_href_in = MapCompose(unquote)
+    title_in = MapCompose(normalize_string)
+    source_href_in = MapCompose(unquote)
     conf_href_in = MapCompose(unquote, absolute_url, fix_emails)
     reg_href_in = MapCompose(unquote, absolute_url, fix_emails)

@@ -15,8 +15,8 @@ class LinguanetSpider(scrapy.Spider):
             full_text = line.xpath("string(.)").get().lower()
             if 'конфер' in full_text:
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-                new_item.add_value('conf_name', conf_name)
-                new_item.add_value('conf_desc', conf_name)
+                new_item.add_value('title', conf_name)
+                new_item.add_value('description', conf_name)
 
                 new_item = get_dates(full_text, new_item)
                 date = new_item.get_output_value('conf_date_begin')
@@ -29,9 +29,9 @@ class LinguanetSpider(scrapy.Spider):
                     if 'регистрац' in text:
                         new_item.add_value('reg_href', link)
                     if 'информационное' in text or 'подробнее' in text:
-                        new_item.add_value('conf_card_href', response.urljoin(link))
+                        new_item.add_value('source_href', response.urljoin(link))
                     if 'ссылка на официальный' in text:
-                        new_item.add_value('conf_card_href', link)
+                        new_item.add_value('source_href', link)
 
                 yield new_item.load_item()
 
@@ -44,18 +44,18 @@ class LinguanetSpider2(scrapy.Spider):
 
     def parse(self, response, **kwargs):
         for line in response.xpath("//div[@class='news-index clearfix']"):
-            conf_card_href = line.css("a::attr(href)").get()
+            source_href = line.css("a::attr(href)").get()
             conf_s_desc = ' '.join(i.get() for i in line.xpath("./text()"))
             if 'онференц' in conf_s_desc:
-                yield scrapy.Request(response.urljoin(conf_card_href),
+                yield scrapy.Request(response.urljoin(source_href),
                                      meta={'desc': conf_s_desc}, callback=self.parse_items)
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "//h1/text()")
-        new_item.add_value('conf_s_desc', response.meta.get('desc'))
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "//h1/text()")
+        new_item.add_value('short_description', response.meta.get('desc'))
 
         if not new_item.get_collected_values('conf_date_begin'):
             new_item = get_dates(response.meta.get('desc'), new_item)

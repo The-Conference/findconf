@@ -40,8 +40,8 @@ class MireaSpider(scrapy.Spider):
                          'конф' in conf.get('title').lower()):
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-                new_item.add_value('conf_card_href', response.url)
-                new_item.add_value('conf_name', conf.get('title'))
+                new_item.add_value('source_href', response.url)
+                new_item.add_value('title', conf.get('title'))
                 new_item = get_dates(conf.get('date'), new_item, is_vague=True)
                 new_item = default_parser_xpath(conf.get('title'), new_item)
                 new_item.add_value('org_name', conf.get('org'))

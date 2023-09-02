@@ -16,11 +16,11 @@ class BstuSpider(scrapy.Spider):
             conf_name = link.xpath("string(.)").get()
             if 'конференц' in conf_name.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-                new_item.add_value('conf_name', conf_name)
-                new_item.add_value('conf_desc', conf_name)
+                new_item.add_value('title', conf_name)
+                new_item.add_value('description', conf_name)
                 href = link.css("a::attr(href)").get() or None
                 if href:
-                    new_item.add_value('conf_card_href', response.urljoin(href))
+                    new_item.add_value('source_href', response.urljoin(href))
                 dates_str = link.css("strong::text")[-1].get()
                 new_item = get_dates(dates_str, new_item)
 

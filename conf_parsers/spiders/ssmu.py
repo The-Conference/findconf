@@ -30,11 +30,11 @@ class SsmuSpider(scrapy.Spider):
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
                 new_item = get_dates(date, new_item, is_vague=True)
-                new_item.add_value('conf_name', title)
-                new_item.add_value('conf_desc', title)
+                new_item.add_value('title', title)
+                new_item.add_value('description', title)
                 new_item.add_value('conf_address', conf_address)
                 new_item.add_value('contacts', contacts)
-                new_item.add_value('conf_card_href', response.url)
+                new_item.add_value('source_href', response.url)
 
                 if 'онлайн' in conf_address or 'гибридн' in conf_address:
                     new_item.add_value('online', True)

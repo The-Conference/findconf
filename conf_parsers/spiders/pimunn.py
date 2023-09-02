@@ -32,9 +32,9 @@ class PimunnSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_value('conf_name', response.meta.get('title'))
-        new_item.add_value('conf_s_desc', response.meta.get('descr'))
+        new_item.add_value('source_href', response.url)
+        new_item.add_value('title', response.meta.get('title'))
+        new_item.add_value('short_description', response.meta.get('descr'))
 
         conf_block = response.css("div.t-redactor__text")
         new_item = default_parser_xpath(conf_block, new_item)

@@ -25,8 +25,8 @@ class MaiSpider(scrapy.Spider):
             if 'конфер' in conf_name.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-                new_item.add_value('conf_name', conf_name)
-                new_item.add_value('conf_card_href', response.url)
+                new_item.add_value('title', conf_name)
+                new_item.add_value('source_href', response.url)
                 new_item.add_value('conf_href', link)
                 new_item = get_dates(date, new_item, is_vague=True)
 
@@ -46,8 +46,8 @@ class MaiSpider2(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
 
         for line in response.xpath("//article//*[self::p or self::li]"):
             new_item = default_parser_xpath(line, new_item)

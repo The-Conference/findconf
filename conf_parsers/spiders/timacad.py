@@ -18,9 +18,9 @@ class TimacadSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1.news-inner__title::text")
-        new_item.add_xpath('conf_s_desc', "string(//p[@class='news-inner__description'])")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1.news-inner__title::text")
+        new_item.add_xpath('short_description', "string(//p[@class='news-inner__description'])")
         date = response.css("span.news-inner__date::text").get()
         new_item = get_dates(date, new_item)
 

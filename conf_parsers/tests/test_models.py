@@ -10,13 +10,13 @@ from conf_parsers.items import ConferenceLoader, ConferenceItem
 class TestModels(TestCase):
     def test_string_too_long(self):
         long_string = 'X' * 600
-        db_item = ConferenceItemDB(conf_card_href=long_string)
-        self.assertEqual(500, len(db_item.conf_card_href))
+        db_item = ConferenceItemDB(source_href=long_string)
+        self.assertEqual(500, len(db_item.source_href))
 
     def test_string_ok(self):
         long_string = 'X' * 100
-        db_item = ConferenceItemDB(conf_card_href=long_string)
-        self.assertEqual(100, len(db_item.conf_card_href))
+        db_item = ConferenceItemDB(source_href=long_string)
+        self.assertEqual(100, len(db_item.source_href))
 
 
 class TestItemLoader(TestCase):
@@ -25,7 +25,7 @@ class TestItemLoader(TestCase):
         url = 'http://example.com'
         cls.response = HtmlResponse(url=url, request=Request(url=url))
         cls.href_fields = ('reg_href', 'conf_href')
-        cls.text_fields = ('conf_s_desc', 'conf_desc', 'conf_address', 'contacts')
+        cls.text_fields = ('short_description', 'description', 'conf_address', 'contacts')
 
     def setUp(self) -> None:
         self.loader = ConferenceLoader(item=ConferenceItem(), selector=self.response)
@@ -52,7 +52,7 @@ class TestItemLoader(TestCase):
     def test_unquote_encoded_url(self):
         string = 'http%3A%2F%2Fexample.com%2F%D1%82%D0%B5%D1%81%D1%82%2F'
         expected = 'http://example.com/тест/'
-        for field in 'conf_card_href', *self.href_fields:
+        for field in 'source_href', *self.href_fields:
             self.loader.add_value(field, string)
             self.assertEqual(expected, self.loader.get_output_value(field))
 

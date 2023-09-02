@@ -25,9 +25,9 @@ class SzgmuSpider(CrawlSpider):
             conf_name = conf.css('h1::text').get()
             if 'онференц' in conf_name.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-                new_item.add_value('conf_card_href', response.url)
-                new_item.add_value('conf_name', conf_name)
-                new_item.add_value('conf_desc', conf_name)
+                new_item.add_value('source_href', response.url)
+                new_item.add_value('title', conf_name)
+                new_item.add_value('description', conf_name)
                 dates_select = conf.xpath("string(//div[@class='meta-panel'])").get()
                 new_item = get_dates(dates_select, new_item)
 

@@ -22,9 +22,9 @@ class SfeduSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "string(//h3[@id='tit1'])")
-        new_item.add_xpath('conf_s_desc', "string(//span[@class='short_description'])")
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "string(//h3[@id='tit1'])")
+        new_item.add_xpath('short_description', "string(//span[@class='short_description'])")
 
         for line in response.xpath("//div[@class='content']//*[self::p or self::li]"):
             new_item = default_parser_xpath(line, new_item)

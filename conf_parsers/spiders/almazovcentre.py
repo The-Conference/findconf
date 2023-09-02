@@ -18,8 +18,8 @@ class AlmazovcentreSpider(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_name = response.css("a.entry-title::text").get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('title', conf_name)
+        new_item.add_value('source_href', response.url)
         new_item.add_xpath('reg_href', "//div[@class='personal']/a[contains(.,'Регистрация')]/@href")
         new_item = get_dates(conf_name, new_item)
 
