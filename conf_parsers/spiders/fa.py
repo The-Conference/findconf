@@ -31,8 +31,8 @@ class FaSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "string(//h2)")
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "string(//h2)")
 
         block = response.xpath("//div[@class='ms-rte-layoutszone-inner']")
         for line in block.xpath(".//*[self::p or self::ul or self::div]"):

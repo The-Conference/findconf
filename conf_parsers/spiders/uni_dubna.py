@@ -21,9 +21,9 @@ class UniDubnaSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1.title_one::text")
-        new_item.add_xpath('conf_s_desc', "string(//h5[@class='description info1'])")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1.title_one::text")
+        new_item.add_xpath('short_description', "string(//h5[@class='description info1'])")
         dates_select = response.xpath("string(//h4[@class='hero-text-small'])").get()
         new_item = get_dates(dates_select, new_item)
 

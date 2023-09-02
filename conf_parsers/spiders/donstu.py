@@ -18,10 +18,10 @@ class DonstuSpider(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_name = response.xpath("//div[@class='title']/text()").get()
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_value('title', conf_name)
         conf_s_desc = response.xpath("//div[@class='desc']/text()").get()
-        new_item.add_value('conf_s_desc', conf_s_desc)
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('short_description', conf_s_desc)
+        new_item.add_value('source_href', response.url)
         conf_date_begin = response.xpath("string(//div[@class='event-date'])").get()
         new_item = get_dates(conf_date_begin, new_item)
         conf_address = response.xpath("string(//div[@class='event-location'])").get()

@@ -25,8 +25,8 @@ class MrsuSpider(CrawlSpider):
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
                 link = conf_name_item.xpath('.//a/@href').get()
-                new_item.add_value('conf_card_href', response.urljoin(link))
-                new_item.add_value('conf_name', conf_name)
+                new_item.add_value('source_href', response.urljoin(link))
+                new_item.add_value('title', conf_name)
 
                 for item in card.css("div.info__text"):
                     text = item.xpath('string(.)').get()
@@ -45,15 +45,15 @@ class MrsuSpider(CrawlSpider):
                     elif 'Статус' in text:
                         ...
                     else:
-                        new_item.add_value('conf_desc', text)
+                        new_item.add_value('description', text)
                         if 'онлайн' in text:
                             new_item.add_value('online', True)
                             link = item.xpath('.//a/@href').get()
                             new_item.add_value('conf_href', link)
 
-                conf_desc = new_item.get_collected_values('conf_desc')
+                conf_desc = new_item.get_collected_values('description')
                 if not conf_desc:
-                    new_item.add_value('conf_desc', conf_name)
+                    new_item.add_value('description', conf_name)
                 new_item.add_value('rinc', True if 'ринц' in conf_desc else False)
 
                 yield new_item.load_item()

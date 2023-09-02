@@ -19,8 +19,8 @@ class MisisSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "//h1/text()")
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "//h1/text()")
         conf_date_begin = response.xpath("//canvas/@data-begin-datetime").get()
         conf_date_begin = parse(conf_date_begin, settings={'DATE_ORDER': 'YMD'}).date()
         new_item.add_value('conf_date_begin', conf_date_begin)

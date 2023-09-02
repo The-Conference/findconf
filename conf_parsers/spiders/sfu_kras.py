@@ -20,9 +20,9 @@ class SfuKrasSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "string(//h2)")
-        new_item.add_xpath('conf_s_desc', "string(//h4)")
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "string(//h2)")
+        new_item.add_xpath('short_description', "string(//h4)")
 
         for line in response.xpath("//div[@class='confs-container']//*[self::div[@class='row']]"):
             new_item = default_parser_xpath(line, new_item)

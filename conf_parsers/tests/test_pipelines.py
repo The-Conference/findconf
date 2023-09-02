@@ -44,12 +44,12 @@ class TestDropOldItemsPipeline(TestCase):
     def test_date_found_new(self):
         today = datetime.now().date()
         str_today = f'{today.day}-{today.month}-{today.year}'
-        item = ConferenceItem(conf_s_desc=str_today)
-        expected = {'conf_date_begin': today, 'conf_date_end': None, 'conf_s_desc': str_today}
+        item = ConferenceItem(short_description=str_today)
+        expected = {'conf_date_begin': today, 'conf_date_end': None, 'short_description': str_today}
         self.assertEqual(expected, DropOldItemsPipeline.process_item(item, self.spider))
 
     def test_date_not_found(self):
-        item = ConferenceItem(conf_s_desc='test')
+        item = ConferenceItem(short_description='test')
         with self.assertRaises(DropItem) as e:
             DropOldItemsPipeline.process_item(item, self.spider)
         self.assertEqual('Date not found', str(e.exception))
@@ -59,11 +59,11 @@ class TestSaveToDBPipeline(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.item = ConferenceItem(
-            conf_id='test',
+            item_id='test',
             un_name='test_spider',
             conf_date_begin=datetime.now().date(),
-            conf_desc='',
-            conf_name='test conf',
+            description='',
+            title='test conf',
         )
         cls.db_item = ConferenceItemDB(**cls.item)
         cls.spider = SampleSpider()
@@ -87,7 +87,7 @@ class TestSaveToDBPipeline(TestCase):
         q = select(ConferenceItemDB).where(ConferenceItemDB.id == 1)
         res = self.session.execute(q).scalars().first()
         self.assertTrue(res)
-        self.assertEqual('test', res.conf_id)
+        self.assertEqual('test', res.item_id)
 
     def test_save_duplicate_id(self):
         self.session.add(self.db_item)
@@ -119,31 +119,23 @@ class TestSaveToDBPipeline(TestCase):
 
 
 class TestFillTheBlanksPipeline(TestCase):
-    def test_hash(self):
+    def test_item_id_single(self):
+        """Do not change.
+        Changing item_id format will result in duplicate entries in DB."""
         item = ConferenceItem(
             conf_date_begin=date(2022, 1, 2),
-            conf_name='test conf',
+            title='test conf',
         )
         result = FillTheBlanksPipeline.process_item(item, SampleSpider)
-        self.assertEqual('f4cdb5994b1ee684cd4bce261d5aaf69', result['hash'])
+        self.assertEqual('test_spider_2022-01-02_None_testconf', result['item_id'])
 
-    def test_conf_id_single(self):
+    def test_item_id_double(self):
         """Do not change.
-        Changing conf_id format will result in duplicate entries in DB."""
-        item = ConferenceItem(
-            conf_date_begin=date(2022, 1, 2),
-            conf_name='test conf',
-        )
-        result = FillTheBlanksPipeline.process_item(item, SampleSpider)
-        self.assertEqual('test_spider_2022-01-02_None_testconf', result['conf_id'])
-
-    def test_conf_id_double(self):
-        """Do not change.
-        Changing conf_id format will result in duplicate entries in DB."""
+        Changing item_id format will result in duplicate entries in DB."""
         item = ConferenceItem(
             conf_date_begin=date(2022, 1, 2),
             conf_date_end=date(2022, 1, 3),
-            conf_name='test conf',
+            title='test conf',
         )
         result = FillTheBlanksPipeline.process_item(item, SampleSpider)
-        self.assertEqual('test_spider_2022-01-02_2022-01-03_testconf', result['conf_id'])
+        self.assertEqual('test_spider_2022-01-02_2022-01-03_testconf', result['item_id'])

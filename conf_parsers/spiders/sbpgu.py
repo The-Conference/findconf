@@ -16,8 +16,8 @@ class SbpguSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
         dates = response.xpath("string(//div[@class='event-details__date'])").get()
         new_item = get_dates(dates, new_item)
         new_item.add_xpath('conf_address', "string(//div[@class='event-details__place'])")

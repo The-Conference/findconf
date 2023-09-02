@@ -22,7 +22,7 @@ from .utils import find_date_in_string
 
 class SaveToDBPipeline:
     """Use bulk insert to save items to PostgreSQL.
-    Items with duplicate conf_id are ignored.
+    Items with duplicate item_id are ignored.
     Does not raise DropItem exceptions."""
     @classmethod
     def from_crawler(cls, crawler):
@@ -39,9 +39,9 @@ class SaveToDBPipeline:
         return item
 
     def close_spider(self, spider):
-        insert_statement = insert(ConferenceItemDB).values(self.items).returning(ConferenceItemDB.conf_id)
-        insert_or_do_nothing = insert_statement.on_conflict_do_nothing(index_elements=[ConferenceItemDB.conf_id])
-        to_save = [i.get("conf_id") for i in self.items]
+        insert_statement = insert(ConferenceItemDB).values(self.items).returning(ConferenceItemDB.item_id)
+        insert_or_do_nothing = insert_statement.on_conflict_do_nothing(index_elements=[ConferenceItemDB.item_id])
+        to_save = [i.get("item_id") for i in self.items]
         spider.logger.debug(f'Saving to DB: {to_save}')
 
         if to_save:
@@ -65,15 +65,14 @@ class FillTheBlanksPipeline:
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
-        adapter['conf_id'] = f"{spider.name}" \
+        adapter['item_id'] = f"{spider.name}" \
                              f"_{adapter.get('conf_date_begin')}" \
                              f"_{adapter.get('conf_date_end')}" \
-                             f"_{''.join(adapter.get('conf_name').split())[:50]}"
+                             f"_{''.join(adapter.get('title').split())[:50]}"
         if not adapter.get('conf_date_end'):
             adapter['conf_date_end'] = adapter.get('conf_date_begin')
         adapter['un_name'] = spider.un_name
-        adapter['hash'] = hashlib.md5(bytes(adapter['conf_id'], 'utf-8')).hexdigest()
-        text = f"{adapter.get('conf_name')} {adapter.get('conf_s_desc')}"
+        text = f"{adapter.get('title')} {adapter.get('short_description')}"
         adapter['local'] = False if 'международн' in text.lower() else True
         return item
 
@@ -88,14 +87,14 @@ class DropOldItemsPipeline:
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
-        if not adapter.get('conf_date_begin') and adapter.get('conf_s_desc'):
+        if not adapter.get('conf_date_begin') and adapter.get('short_description'):
             # look for dates in the short description
-            if dates := find_date_in_string(adapter.get('conf_s_desc')):
+            if dates := find_date_in_string(adapter.get('short_description')):
                 adapter['conf_date_begin'] = dates[0]
                 adapter['conf_date_end'] = dates[1] if len(dates) > 1 else None
 
         if not adapter.get('conf_date_begin'):
-            spider.logger.warning(f"Date not found {adapter.get('conf_card_href')}")
+            spider.logger.warning(f"Date not found {adapter.get('source_href')}")
             spider.logger.debug(item)
             raise DropItem('Date not found')
         filter_date = spider.settings.get('FILTER_DATE')

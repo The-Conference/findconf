@@ -21,13 +21,13 @@ class MguSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "string(//h1)")
-        new_item.add_xpath('conf_s_desc', "string(//p[@class='event__description'])")
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "string(//h1)")
+        new_item.add_xpath('short_description', "string(//p[@class='event__description'])")
         regs = response.xpath("//div[@class='col-sm-4 event-table__cell'][last()]")
         new_item = default_parser_xpath(regs, new_item)
         new_item = get_dates(response.meta.get('type_and_date'), new_item)
-        new_item.replace_value('conf_desc', '')
+        new_item.replace_value('description', '')
 
         for block in response.xpath("//div[@class='block__content']"):
             title = block.xpath("string(./h2)").get()

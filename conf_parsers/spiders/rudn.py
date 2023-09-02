@@ -18,8 +18,8 @@ class RudnSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
         new_item.add_css('conf_address', "div.conf-det__place-address::text")
         new_item.add_css('contacts', "div.conf-det__card-person_info_email::text")
         new_item.add_css('contacts', "div.conf-det__card-person_info_phone::text")

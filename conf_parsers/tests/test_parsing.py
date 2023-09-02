@@ -50,7 +50,7 @@ class TestParsing(TestCase):
         self.assertEqual('Место проведения: г.Н-ск, ул. Тестовая', self.new_item.get_output_value('conf_address'))
 
     def test_sample_conf(self):
-        self.assertEqual(10, len(self.new_item.get_collected_values('conf_desc')))
+        self.assertEqual(10, len(self.new_item.get_collected_values('description')))
         self.assertEqual('http://example.com/123/', self.new_item.get_output_value('conf_href'))
 
     def test_text_parser_sample_contacts(self):

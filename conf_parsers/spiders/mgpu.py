@@ -18,9 +18,9 @@ class MgpuSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('source_href', response.url)
         conf_name = response.xpath("//h1/text()").get()
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_value('title', conf_name)
         dates = response.xpath("string(//div[@class='event-info-date'])").get()
         new_item = get_dates(dates, new_item)
 

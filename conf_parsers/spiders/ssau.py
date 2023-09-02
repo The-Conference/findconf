@@ -18,8 +18,8 @@ class SsauSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
         new_item = get_dates(response.xpath("//div[@class='mt-3']/text()[6]").get(), new_item)
 
         for line in response.xpath("//article[@class='col news-content']//text()"):

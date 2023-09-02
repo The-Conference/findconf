@@ -22,8 +22,8 @@ class MsalSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', 'h1::text')
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', 'h1::text')
         for tag in response.css("div.text-sm.mt-2"):
             tag_txt = tag.xpath("string(.)").get().lower()
             new_item = get_dates(tag_txt, new_item)
@@ -34,6 +34,6 @@ class MsalSpider(CrawlSpider):
 
         for line in response.xpath("//div[@id='articleBody']//*[self::p]"):
             new_item = default_parser_xpath(line, new_item)
-        new_item.add_xpath('conf_desc', "string(//div[contains(@class, 'text-block')])")
+        new_item.add_xpath('description', "string(//div[contains(@class, 'text-block')])")
 
         yield new_item.load_item()

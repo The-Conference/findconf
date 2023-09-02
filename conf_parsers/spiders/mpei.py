@@ -14,11 +14,11 @@ class MpeiSpider(scrapy.Spider):
             new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
             conf_name = card.css("div:not([class])::text").get()
-            new_item.add_value('conf_name', conf_name)
-            new_item.add_value('conf_card_href', response.url)
+            new_item.add_value('title', conf_name)
+            new_item.add_value('source_href', response.url)
             _dates = card.xpath("string(.//div[@class='event-date'])").get()
             new_item = get_dates(_dates, new_item, is_vague=True)
-            new_item.add_value('conf_desc', conf_name)
+            new_item.add_value('description', conf_name)
 
             for line in card.xpath(".//div[@class='event-info']"):
                 text = line.xpath("./text()").get()

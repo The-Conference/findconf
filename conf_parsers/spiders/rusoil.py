@@ -30,8 +30,8 @@ class RusoilSpider(scrapy.Spider):
             if 'онференц' in title.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-                new_item.add_value('conf_card_href', response.url)
-                new_item.add_value('conf_name', title)
+                new_item.add_value('source_href', response.url)
+                new_item.add_value('title', title)
                 new_item = get_dates(dates, new_item, is_vague=True)
                 new_item = default_parser_xpath(title, new_item)
                 new_item.add_value('contacts', contacts)

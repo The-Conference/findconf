@@ -20,10 +20,10 @@ class GubkinSpider(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
         conf_name = response.xpath("string(//div[@class='modal-header'])").get()
-        new_item.add_value('conf_name', conf_name)
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_value('conf_s_desc', conf_name)
-        new_item.add_css('conf_desc', "div.modal-body:not(.ul)::text")
+        new_item.add_value('title', conf_name)
+        new_item.add_value('source_href', response.url)
+        new_item.add_value('short_description', conf_name)
+        new_item.add_css('description', "div.modal-body:not(.ul)::text")
 
         _dates = response.xpath("string(//li[@class='date-short'])").get()
         new_item = get_dates(_dates, new_item)

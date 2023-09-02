@@ -19,8 +19,8 @@ class TsuSpider(scrapy.Spider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h1::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
 
         for line in response.xpath("//div[@class='text-content']/*[self::p or self::ul or self::ol]"):
             new_item = default_parser_xpath(line, new_item)

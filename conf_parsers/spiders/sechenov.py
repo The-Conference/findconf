@@ -17,8 +17,8 @@ class SechenovSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_xpath('conf_name', "string(//div[@class='news-header'])")
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "string(//div[@class='news-header'])")
 
         for line in response.xpath("//div[@class='event-detail-txt']//*[self::p or self::li]"):
             new_item = default_parser_xpath(line, new_item)

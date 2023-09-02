@@ -20,9 +20,9 @@ class SguSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
+        new_item.add_value('source_href', response.url)
         conf_name = response.css("div.field-name-name-field").xpath("string(.)").get()
-        new_item.add_value('conf_name', conf_name)
+        new_item.add_value('title', conf_name)
         dates = response.css("div.field_conf_when").xpath("string(.)").get()
         new_item = get_dates(dates, new_item)
 

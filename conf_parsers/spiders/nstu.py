@@ -18,8 +18,8 @@ class NstuSpider(CrawlSpider):
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
 
-        new_item.add_value('conf_card_href', response.url)
-        new_item.add_css('conf_name', "h3::text")
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h3::text")
         dates = response.xpath("string(//div[@class='text-bold mb-1'])").get()
         new_item = get_dates(dates, new_item)
 

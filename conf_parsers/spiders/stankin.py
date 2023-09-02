@@ -42,11 +42,11 @@ class StankinSpider(scrapy.Spider):
         text = " ".join(text)
         if 'конфер' in text.lower():
             new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
-            new_item.add_value('conf_card_href', self.base_url + response.meta.get("id"))
-            new_item.add_value('conf_name', response.meta.get("name"))
+            new_item.add_value('source_href', self.base_url + response.meta.get("id"))
+            new_item.add_value('title', response.meta.get("name"))
 
             for line in re.split(r"\s+\n", text):
                 new_item = default_parser_xpath(line, new_item)
             if not new_item.get_collected_values('conf_date_begin'):
-                new_item = get_dates(new_item.get_output_value('conf_desc'), new_item)
+                new_item = get_dates(new_item.get_output_value('description'), new_item)
             yield new_item.load_item()
