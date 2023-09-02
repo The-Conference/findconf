@@ -1,10 +1,8 @@
-from collections import OrderedDict
-from django.utils import timezone
-
-from rest_framework.reverse import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+from rest_framework import status
+from rest_framework.reverse import reverse
+from rest_framework.test import APITestCase
 
 from .fixtures import TEST_CONF_DICT, TEST_CONF_FULL
 from ..models import Conference, Tag
@@ -13,7 +11,7 @@ from ..models import Conference, Tag
 class ConferenceListTests(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.URL = reverse('api-list')
+        cls.URL = reverse('conference-list')
         user = get_user_model()
         cls.user = user.objects.create_user(email='user@example.com', password='123')
         cls.admin = user.objects.create_superuser(email='admin@example.com', password='123')
@@ -48,7 +46,7 @@ class ConferenceListTests(APITestCase):
         self.client.force_authenticate(user=self.admin)
         response = self.client.post(self.URL, self.test_conf_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data.get('conf_id')[0].code, 'unique')
+        self.assertEqual(response.data.get('item_id')[0].code, 'unique')
 
     def test_list_post_400_incomplete(self):
         self.client.force_authenticate(user=self.admin)
@@ -57,23 +55,23 @@ class ConferenceListTests(APITestCase):
         self.assertEqual(len(response.data), 4)
         self.assertEqual(response.data.get('un_name')[0].code, 'required')
         self.assertEqual(response.data.get('conf_date_begin')[0].code, 'required')
-        self.assertEqual(response.data.get('conf_name')[0].code, 'required')
-        self.assertEqual(response.data.get('conf_desc')[0].code, 'required')
+        self.assertEqual(response.data.get('title')[0].code, 'required')
+        self.assertEqual(response.data.get('description')[0].code, 'required')
 
-    def test_list_post_201_with_conf_id(self):
+    def test_list_post_201_with_item_id(self):
         self.client.force_authenticate(user=self.admin)
-        self.test_conf_data['conf_id'] = 'test02'
+        self.test_conf_data['item_id'] = 'test02'
         response = self.client.post(self.URL, self.test_conf_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data.get('conf_id'), 'test02')
+        self.assertEqual(response.data.get('item_id'), 'test02')
         self.assertEqual(Conference.objects.all().count(), 2)
 
-    def test_list_post_201_without_conf_id(self):
+    def test_list_post_201_without_item_id(self):
         self.client.force_authenticate(user=self.admin)
-        del self.test_conf_data['conf_id']
+        del self.test_conf_data['item_id']
         response = self.client.post(self.URL, self.test_conf_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data.get('conf_id'), 'test unitest name2021-09-01')
+        self.assertEqual(response.data.get('item_id'), 'testunitestname2021-09-01')
 
     def test_list_post_all_fields_201(self):
         self.client.force_authenticate(user=self.admin)
@@ -89,7 +87,7 @@ class ConferenceListTests(APITestCase):
 class ConferenceListFilterTests(APITestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.URL = reverse('api-list')
+        cls.URL = reverse('conference-list')
         conf_b_data = TEST_CONF_FULL.copy()
         conf_b_data['checked'] = True
         del conf_b_data['tags']

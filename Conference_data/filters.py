@@ -1,10 +1,11 @@
 import re
-from django.db.models import Q
-from django_filters import rest_framework, BaseInFilter, CharFilter, OrderingFilter, DateFromToRangeFilter
-from django.utils import timezone
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
-from .models import Conference
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.db.models import Q
+from django.utils import timezone
+from django_filters import rest_framework, BaseInFilter, CharFilter, OrderingFilter, DateFromToRangeFilter
+
+from .models import Conference, Grant
 
 
 class CharInFilter(BaseInFilter, CharFilter):
@@ -43,7 +44,7 @@ class ConferenceFilter(rest_framework.FilterSet):
     def text_search(queryset, name, value):
         """Search uses Postgres dialect, will not work with SQLite."""
         search_vector = (
-                SearchVector('conf_name', 'conf_s_desc', 'conf_desc', weight='A', config='russian') +
+                SearchVector('title', 'short_description', 'description', weight='A', config='russian') +
                 SearchVector('un_name', 'conf_address', weight='B', config='russian')
         )
         search_string = re.sub(r'\s+', ' | ', value)
@@ -85,3 +86,12 @@ class ConferenceFilter(rest_framework.FilterSet):
         model = Conference
         fields = ['offline', 'online', 'rinc', 'vak', 'wos', 'scopus', 'tags', 'un_name', 'conf_status',
                   'conf_date_begin', 'conf_date_end']
+
+
+class GrantFilter(rest_framework.FilterSet):
+    tags = CharInFilter(field_name='tags__name', lookup_expr='in', distinct=True)
+    un_name = CharInFilter(field_name='un_name', lookup_expr='in', distinct=True)
+
+    class Meta:
+        model = Grant
+        fields = ['un_name']
