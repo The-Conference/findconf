@@ -23,7 +23,7 @@ class ConferenceItemDB(Base):
     reg_href = Column(String(500), nullable=True, default=null(), doc="Link to the registration form. Parsed.")
     title = Column(String, nullable=False, doc="Conference title. Parsed.")
     short_description = Column(String, nullable=True, default=null(),
-                               doc="Conference short description. Mostly unused. Parsed.")
+                               doc="Conference short description. Parsed.")
     description = Column(String, nullable=False, default='', doc="Conference full description. Parsed.")
     org_name = Column(String, nullable=True, default=null(), doc="Conference organisers. Field unused.")
     online = Column(Boolean, default=False, doc="True if the conference is accessible on the Internet. Parsed.")
