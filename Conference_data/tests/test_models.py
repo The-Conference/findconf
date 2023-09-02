@@ -1,8 +1,8 @@
-from django.utils import timezone
 from django.test import TestCase
+from django.utils import timezone
 
-from ..models import Conference, Tag, Grant
 from .fixtures import TEST_CONF_DICT
+from ..models import Conference, Tag, Grant
 
 
 class ConferenceModelTests(TestCase):
@@ -45,13 +45,13 @@ class ConferenceModelTests(TestCase):
         self.assertEqual(str(conf), 'test uni - test name')
 
     def test_conf_no_id(self):
-        del self.test_conf_data['conf_id']
+        del self.test_conf_data['item_id']
         conf = Conference.objects.create(**self.test_conf_data)
-        self.assertEqual(conf.conf_id, 'testunitestname2021-09-01')
+        self.assertEqual(conf.item_id, 'testunitestname2021-09-01')
 
     def test_conf_with_id(self):
         conf = Conference.objects.create(**self.test_conf_data)
-        self.assertEqual(conf.conf_id, 'test01')
+        self.assertEqual(conf.item_id, 'test01')
 
 
 class TagModelTests(TestCase):
@@ -63,10 +63,10 @@ class TagModelTests(TestCase):
 class GrantModelTests(TestCase):
     def test_grant_no_id(self):
         grant = Grant.objects.create(
-            un_name='test uni', conf_name='test name', reg_date_end='2021-09-02')
-        self.assertEqual(grant.conf_id, 'testunitestname2021-09-02')
+            un_name='test uni', title='test name', reg_date_end='2021-09-02')
+        self.assertEqual(grant.item_id, 'testunitestname2021-09-02')
 
     def test_grant_with_id(self):
         grant = Grant.objects.create(
-            un_name='test uni', conf_name='test name', reg_date_end='2021-09-02', conf_id='test id')
-        self.assertEqual(grant.conf_id, 'testid')
+            un_name='test uni', title='test name', reg_date_end='2021-09-02', item_id='test id')
+        self.assertEqual(grant.item_id, 'testid')

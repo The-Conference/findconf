@@ -1,9 +1,8 @@
+from ckeditor.fields import RichTextField
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
-
-from ckeditor.fields import RichTextField
 
 from Conference_crm.models import User
 
@@ -20,16 +19,16 @@ class Tag(models.Model):
 
 
 class AbstractItem(models.Model):
-    conf_id = models.TextField(unique=True)
+    item_id = models.TextField(unique=True)
     un_name = models.CharField(max_length=500, verbose_name="ВУЗ")
     local = models.BooleanField(default=True, verbose_name="Международная")
     reg_date_begin = models.DateField(null=True, blank=True, verbose_name="Начало регистрации")
     reg_date_end = models.DateField(null=True, blank=True, verbose_name="Окончание регистрации")
-    conf_card_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Ссылка на источник")
+    source_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Ссылка на источник")
     reg_href = models.URLField(null=True, blank=True, max_length=500, verbose_name="Ссылка на регистрацию")
-    conf_name = models.TextField(verbose_name="Название")
-    conf_s_desc = RichTextField(null=True, blank=True, verbose_name="Краткое описание")
-    conf_desc = RichTextField(verbose_name="Описание")
+    title = models.TextField(verbose_name="Название")
+    synopsis = RichTextField(null=True, blank=True, verbose_name="Краткое описание")
+    description = RichTextField(verbose_name="Описание")
     contacts = models.TextField(null=True, blank=True, verbose_name="Контакты")
     checked = models.BooleanField(default=False, verbose_name="Проверено")
 
@@ -37,17 +36,17 @@ class AbstractItem(models.Model):
         abstract = True
 
     def __str__(self):
-        return f'{self.un_name} - {self.conf_name}'
+        return f'{self.un_name} - {self.title}'
 
     def clean(self) -> None:
         """Validate_unique is needed to show an error in admin,
         otherwise it fails with error 500."""
-        self.conf_id = self.conf_id.replace(' ', '')
+        self.item_id = self.item_id.replace(' ', '')
         self.validate_unique()
 
     def save(self, *args, **kwargs):
-        self.conf_s_desc = self.normalize(self.conf_s_desc)
-        self.conf_desc = self.normalize(self.conf_desc)
+        self.synopsis = self.normalize(self.synopsis)
+        self.description = self.normalize(self.description)
         self.clean()
         super().save(*args, **kwargs)
 
@@ -78,8 +77,8 @@ class Conference(AbstractItem):
     favorites = GenericRelation('Favorite')
 
     def clean(self) -> None:
-        if not self.conf_id:
-            self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.conf_date_begin}"
+        if not self.item_id:
+            self.item_id = f"{self.un_name[:100]}{self.title[:100]}{self.conf_date_begin}"
         super().clean()
 
     @property
@@ -110,8 +109,8 @@ class Grant(AbstractItem):
         verbose_name_plural = "Гранты"
 
     def clean(self) -> None:
-        if not self.conf_id:
-            self.conf_id = f"{self.un_name[:100]}{self.conf_name[:100]}{self.reg_date_end}"
+        if not self.item_id:
+            self.item_id = f"{self.un_name[:100]}{self.title[:100]}{self.reg_date_end}"
         super().clean()
 
 

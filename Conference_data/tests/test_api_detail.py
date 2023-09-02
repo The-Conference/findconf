@@ -1,7 +1,7 @@
-from rest_framework.reverse import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
+from rest_framework import status
+from rest_framework.reverse import reverse
+from rest_framework.test import APITestCase
 
 from .fixtures import TEST_CONF_DICT
 from ..models import Conference
@@ -32,16 +32,16 @@ class ConferenceDetailTests(APITestCase):
 
     def test_detail_patch_200(self):
         self.client.force_authenticate(user=self.admin)
-        response = self.client.patch(self.URL, data={'conf_name': 'changed name'})
+        response = self.client.patch(self.URL, data={'title': 'changed name'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get('conf_name'), 'changed name')
+        self.assertEqual(response.data.get('title'), 'changed name')
 
     def test_detail_put_200(self):
         self.client.force_authenticate(user=self.admin)
-        self.test_conf_data['conf_name'] = 'new name'
+        self.test_conf_data['title'] = 'new name'
         response = self.client.put(self.URL, data=self.test_conf_data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get('conf_name'), 'new name')
+        self.assertEqual(response.data.get('title'), 'new name')
 
     def test_detail_delete_204(self):
         self.client.force_authenticate(user=self.admin)

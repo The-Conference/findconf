@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django import forms
-from django.contrib.admin.widgets import FilteredSelectMultiple
 from ckeditor.widgets import CKEditorWidget
+from django import forms
+from django.contrib import admin
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from .models import Conference, Tag, Grant
 
@@ -20,32 +20,32 @@ class ConferenceAdminForm(forms.ModelForm):
         required=False,
         widget=FilteredSelectMultiple(verbose_name='Тэги', is_stacked=False),
     )
-    conf_s_desc = forms.CharField(
+    synopsis = forms.CharField(
         label='Краткое описание',
         required=False,
         widget=forms.Textarea(attrs={'rows': '10', 'cols': '80'}))
-    conf_desc = forms.CharField(
+    description = forms.CharField(
         label='Полное описание',
         widget=CKEditorWidget(config_name='default'))
-    conf_id = forms.CharField(disabled=True, required=False, help_text='Генерируется автоматически')
+    item_id = forms.CharField(disabled=True, required=False, help_text='Генерируется автоматически')
 
     class Meta:
         model = Conference
         fields = ('un_name', 'local', 'reg_date_begin', 'reg_date_end',
-                  'conf_date_begin', 'conf_date_end', 'conf_card_href', 'reg_href',
-                  'conf_name', 'conf_s_desc', 'conf_desc', 'org_name', 'themes',
+                  'conf_date_begin', 'conf_date_end', 'source_href', 'reg_href',
+                  'title', 'synopsis', 'description', 'org_name', 'themes',
                   'online', 'conf_href', 'offline', 'conf_address', 'contacts', 'rinc',
-                  'vak', 'wos', 'scopus', 'checked', 'tags', 'conf_id',)
+                  'vak', 'wos', 'scopus', 'checked', 'tags', 'item_id',)
 
 
 class ConferenceAdmin(admin.ModelAdmin):
     form = ConferenceAdminForm
-    list_display = ['conf_name', 'conf_date_begin', 'checked']
-    search_fields = ['conf_name']
+    list_display = ['title', 'conf_date_begin', 'checked']
+    search_fields = ['title']
     list_filter = ['conf_date_begin', 'checked']
     fieldsets = (
         (None, {
-            'fields': ('conf_name', 'un_name')
+            'fields': ('title', 'un_name')
         }),
         ('Характеристики', {
             'fields': [('local', 'online', 'offline', 'checked')],
@@ -54,10 +54,10 @@ class ConferenceAdmin(admin.ModelAdmin):
             'fields': [('conf_date_begin', 'conf_date_end'), ('reg_date_begin', 'reg_date_end')],
         }),
         ('Тексты', {
-            'fields': ('conf_s_desc', 'conf_desc', 'conf_address', 'contacts'),
+            'fields': ('synopsis', 'description', 'conf_address', 'contacts'),
         }),
         ('Ссылки', {
-            'fields': ('conf_card_href', 'reg_href', 'conf_href'),
+            'fields': ('source_href', 'reg_href', 'conf_href'),
         }),
         ('Системы цитирования', {
             'fields': [('rinc', 'vak', 'wos', 'scopus')],
@@ -67,7 +67,7 @@ class ConferenceAdmin(admin.ModelAdmin):
         }),
         ('Разное', {
             'classes': ['collapse'],
-            'fields': ('org_name', 'themes', 'conf_id'),
+            'fields': ('org_name', 'themes', 'item_id'),
         }),
     )
 
@@ -76,18 +76,18 @@ class GrantAdminForm(ConferenceAdminForm):
     class Meta:
         model = Grant
         fields = ('un_name', 'local', 'reg_date_begin', 'reg_date_end',
-                  'conf_card_href', 'reg_href', 'conf_name', 'conf_s_desc', 'conf_desc',
-                  'contacts', 'checked', 'tags', 'conf_id',)
+                  'source_href', 'reg_href', 'title', 'synopsis', 'description',
+                  'contacts', 'checked', 'tags', 'item_id',)
 
 
 class GrantAdmin(admin.ModelAdmin):
     form = GrantAdminForm
-    list_display = ['conf_name', 'reg_date_end', 'checked']
-    search_fields = ['conf_name']
+    list_display = ['title', 'reg_date_end', 'checked']
+    search_fields = ['title']
     list_filter = ['reg_date_end', 'checked']
     fieldsets = (
         (None, {
-            'fields': ('conf_name', 'un_name')
+            'fields': ('title', 'un_name')
         }),
         ('Характеристики', {
             'fields': [('local', 'checked')],
@@ -96,17 +96,17 @@ class GrantAdmin(admin.ModelAdmin):
             'fields': [('reg_date_begin', 'reg_date_end')],
         }),
         ('Тексты', {
-            'fields': ('conf_s_desc', 'conf_desc', 'contacts'),
+            'fields': ('synopsis', 'description', 'contacts'),
         }),
         ('Ссылки', {
-            'fields': ('conf_card_href', 'reg_href'),
+            'fields': ('source_href', 'reg_href'),
         }),
         ('Тэги', {
             'fields': ('tags', ),
         }),
         ('Разное', {
             'classes': ['collapse'],
-            'fields': ('conf_id', ),
+            'fields': ('item_id', ),
         }),
     )
 
