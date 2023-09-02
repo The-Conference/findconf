@@ -72,8 +72,7 @@ const AllConferences = ({ data, keywords, id }) => {
     let regexp = new RegExp(newValue, "gi");
     recsPrev = conferences.filter((el) => {
       return (
-        regexp.test(el.conf_name) ||
-        regexp.test(el.tags.map((item) => item.name))
+        regexp.test(el.title) || regexp.test(el.tags.map((item) => item.name))
       );
     });
   }

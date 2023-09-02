@@ -45,8 +45,7 @@ const SearchFilter = ({ mobile, desktop, focused, setFocused }) => {
     const regex = new RegExp(trimmedValue.split(" ").join("|"), "gi");
     setValue(value);
     const updatedList = search.filter(
-      ({ un_name, conf_name, tags }) =>
-        regex.test(un_name) || regex.test(conf_name)
+      ({ un_name, title, tags }) => regex.test(un_name) || regex.test(title)
       //  ||
       // tags.some(({ name }) => regex.test(name))
       //  ||
@@ -140,7 +139,7 @@ const SearchFilter = ({ mobile, desktop, focused, setFocused }) => {
                             highlightClassName="highlight"
                             searchWords={lighted}
                             autoEscape={false}
-                            textToHighlight={item.conf_name}
+                            textToHighlight={item.title}
                             key={index}
                           />
                         </div>

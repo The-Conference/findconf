@@ -97,13 +97,13 @@ export const fetchOnce = () => async (dispatch) => {
 
   try {
     if (Token) {
-      const response = await api.get(`/api/`, {
+      const response = await api.get(`/api/confs/`, {
         headers,
       });
       dispatch(fetchConferencesOnce(response.data.results));
       dispatch(handleCount(response.data.count));
     } else {
-      const response = await api.get(`/api/`);
+      const response = await api.get(`/api/confs/`);
       dispatch(fetchConferencesOnce(response.data.results));
       dispatch(handleCount(response.data.count));
     }
@@ -152,13 +152,13 @@ export const filteredContent = () => async (dispatch, getState) => {
 
   try {
     if (Token) {
-      const response = await api.get(`/api/?${readyUrl}&page=${page}`, {
+      const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`, {
         headers,
       });
       dispatch(fetchConferences(response.data.results));
       dispatch(handleCount(response.data.count));
     } else {
-      const response = await api.get(`/api/?${readyUrl}&page=${page}`);
+      const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`);
       dispatch(fetchConferences(response.data.results));
       dispatch(handleCount(response.data.count));
     }

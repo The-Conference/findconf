@@ -18,7 +18,7 @@ const Card = ({ el }) => {
           </div>
           <FollowButton id={el.id} favorite={el.is_favorite} type={"card"} />
         </div>
-        <h2 className="conference__title">{el.conf_name}</h2>
+        <h2 className="conference__title">{el.title}</h2>
         <p className="conference__text">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Explicabo
           suscipit temporibus nihil illum nisi error accusantium, numquam eius

@@ -27,6 +27,7 @@ const FullConference = () => {
 
   let content;
   let full = oneConference;
+
   useEffect(() => {
     const fetchOneConference = async () => {
       dispatch(startLoading());
@@ -40,11 +41,11 @@ const FullConference = () => {
       try {
         if (Token) {
           await axios
-            .get(`https://test.theconf.ru/api/${confId}/`, { headers })
+            .get(`https://test.theconf.ru/api/confs/${confId}/`, { headers })
             .then((response) => dispatch(fetchOne(response.data)));
         } else {
           await axios
-            .get(`https://test.theconf.ru/api/${confId}/`)
+            .get(`https://test.theconf.ru/api/confs/${confId}/`)
             .then((response) => dispatch(fetchOne(response.data)));
         }
       } catch (e) {
@@ -109,7 +110,7 @@ const FullConference = () => {
           </div>
         </div>
         <div className="full-conference__title">
-          <h1>{full.conf_name}</h1>
+          <h1>{full.title}</h1>
           <small>Информация актуальна на {full.conf_date_begin} </small>
         </div>
 
@@ -210,32 +211,26 @@ const FullConference = () => {
         {desc && !contacts && (
           <div className="full-conference__desc">
             <h1>Условия участия</h1>
-            {(full.conf_desc !== null && full.conf_desc.length === 0 && (
-              <a href={full.conf_card_href} rel="noreferrer" target="_blank">
+            {(full.description !== null && full.description.length === 0 && (
+              <a href={full.source_href} rel="noreferrer" target="_blank">
                 Подробнее о конференции
               </a>
-            )) ||
-              (full.conf_card_href !== null &&
-                full.conf_card_href.length > 0 && (
-                  <pre>
-                    <div
-                      className="full-conference__desc-parsed"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(full.conf_desc),
-                      }}
-                    />
+            )) || (
+              <pre>
+                <div
+                  className="full-conference__desc-parsed"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(full.description),
+                  }}
+                />
 
-                    <div>
-                      <a
-                        href={full.conf_card_href}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        Подробнее о конференции
-                      </a>
-                    </div>
-                  </pre>
-                ))}
+                <div>
+                  <a href={full.source_href} rel="noreferrer" target="_blank">
+                    Подробнее о конференции
+                  </a>
+                </div>
+              </pre>
+            )}
           </div>
         )}
         {!desc && contacts && (
@@ -252,12 +247,8 @@ const FullConference = () => {
               <div>
                 <p className="useful-links">Полезные ссылки </p>
                 <br />
-                {full.conf_card_href && (
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href={full.conf_card_href}
-                  >
+                {full.source_href && (
+                  <a rel="noreferrer" target="_blank" href={full.source_href}>
                     Ссылка на источник
                   </a>
                 )}
