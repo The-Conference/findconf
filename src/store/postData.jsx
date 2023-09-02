@@ -122,7 +122,7 @@ export const fetchFavourite = () => async (dispatch) => {
 
   try {
     if (Token) {
-      const response = await api.get(`/api/favorites/`, {
+      const response = await api.get(`/api/confs/favorites/`, {
         headers,
       });
       dispatch(fetchConferencesOnce(response.data));
@@ -181,7 +181,7 @@ export const addDeleteFave = () => async (dispatch, getState) => {
 
   try {
     const response = await axios.get(
-      `https://test.theconf.ru/api/${id}/favorite/`,
+      `https://test.theconf.ru/api/confs/${id}/favorite/`,
       { headers }
     );
 
