@@ -1,5 +1,7 @@
 import scrapy
-from ..items import ConferenceItem, ConferenceLoader
+from scrapy.spiders import Rule, CrawlSpider
+from scrapy.linkextractors import LinkExtractor
+from ..items import ConferenceItem, ConferenceLoader, GrantItem
 from ..parsing import default_parser_xpath, get_dates
 
 
@@ -32,8 +34,30 @@ class MguSpider(scrapy.Spider):
         for block in response.xpath("//div[@class='block__content']"):
             title = block.xpath("string(./h2)").get()
             if not title:
-                for line in block.xpath("./div[@class='event__text']/*[self::p or self::div or self::ul]"):
+                for line in block.xpath(
+                        "./div[@class='event__text']/*[self::p or self::div or self::ul or self::span]"):
                     new_item = default_parser_xpath(line, new_item)
             if title == 'Контактная информация':
                 new_item.add_value('contacts', block.xpath("string(./div)").get())
+        yield new_item.load_item()
+
+
+class MguGrantSpider(CrawlSpider):
+    name = "grant_mgu"
+    un_name = 'Московский государственный университет имени М.В.Ломоносова'
+    allowed_domains = ["msu.ru"]
+    start_urls = ["https://www.msu.ru/science/grant/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='div.news-list-item-head'),
+             callback="parse_items", follow=False),
+    )
+
+    def parse_items(self, response):
+        new_item = ConferenceLoader(item=GrantItem(), selector=response)
+
+        new_item.add_value('source_href', response.url)
+        new_item.add_xpath('title', "string(//h1)")
+        head = response.xpath(".//div[@class='news-list-item-head']/*[self::h3 or self::div]")
+        new_item = default_parser_xpath(head, new_item)
+        new_item.replace_xpath('description', "string(.//div[@class='news-list-item-text'])")
         yield new_item.load_item()

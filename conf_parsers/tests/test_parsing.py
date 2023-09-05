@@ -5,7 +5,7 @@ from scrapy.http import HtmlResponse, Request
 from scrapy.utils.project import get_project_settings
 
 from conf_parsers.items import ConferenceLoader, ConferenceItem
-from conf_parsers.parsing import default_parser_xpath, parse_plain_text, get_dates
+from conf_parsers.parsing import default_parser_xpath, parse_conf, get_dates
 
 
 class TestParsing(TestCase):
@@ -53,13 +53,12 @@ class TestParsing(TestCase):
         self.assertEqual(10, len(self.new_item.get_collected_values('description')))
         self.assertEqual('http://example.com/123/', self.new_item.get_output_value('conf_href'))
 
-    def test_text_parser_sample_contacts(self):
+    def test_text_conf_parser(self):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=self.response)
         for line in self.response.xpath("//div[@class='news-item']//*[self::p]"):
             line = line.xpath("string(.)").get()
-            new_item = parse_plain_text(line, new_item)
-        self.assertEqual(['Контактное лицо: Иванов Иван Иванович', 'plaintext@example.com'],
-                         self.new_item.get_collected_values('contacts'))
+            new_item = parse_conf(line, new_item)
+        self.assertTrue(new_item.get_output_value('offline'))
 
     def test_parser_str_input(self):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=self.response)

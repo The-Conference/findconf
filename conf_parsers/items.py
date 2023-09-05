@@ -23,7 +23,7 @@ def absolute_url(url: str, loader_context: ChainMap) -> str:
     Returns:
         Absolute URL.
     """
-    if loader_context is None:
+    if loader_context.get('selector') is None:
         raise ValueError('No context was passed. Make sure to include "selector=" in the item loader.')
     return loader_context['selector'].urljoin(url)
 
@@ -33,25 +33,34 @@ def fix_emails(url: str) -> str:
     return url.replace('mailto:', '')
 
 
-class ConferenceItem(Item):
+class _AbstractItem(Item):
+    """Fields common to all item types. Do not use directly."""
     item_id = Field()
     un_name = Field()
     local = Field()
     reg_date_begin = Field()
     reg_date_end = Field()
-    conf_date_begin = Field()
-    conf_date_end = Field()
     source_href = Field()
     reg_href = Field()
     title = Field()
     short_description = Field()
     description = Field()
+    contacts = Field()
+
+
+class GrantItem(_AbstractItem):
+    """Container for Grant items. Use in combination with ConferenceLoader."""
+
+
+class ConferenceItem(_AbstractItem):
+    """Container for Conference items. Use in combination with ConferenceLoader."""
+    conf_date_begin = Field()
+    conf_date_end = Field()
     org_name = Field()
     online = Field()
     conf_href = Field()
     offline = Field()
     conf_address = Field()
-    contacts = Field()
     rinc = Field()
     vak = Field()
     wos = Field()

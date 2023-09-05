@@ -40,10 +40,52 @@
 
             </li>
             <li>
+                    <a class="class" href="#AbstractItem">AbstractItem</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#AbstractItem.validate_code">validate_code</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
                     <a class="class" href="#ConferenceItemDB">ConferenceItemDB</a>
                             <ul class="memberlist">
                         <li>
                                 <a class="function" href="#ConferenceItemDB.__init__">ConferenceItemDB</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.conf_date_begin">conf_date_begin</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.conf_date_end">conf_date_end</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.org_name">org_name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.online">online</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.conf_href">conf_href</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.offline">offline</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.conf_address">conf_address</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.rinc">rinc</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.vak">vak</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.wos">wos</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ConferenceItemDB.scopus">scopus</a>
                         </li>
                         <li>
                                 <a class="variable" href="#ConferenceItemDB.id">id</a>
@@ -64,12 +106,6 @@
                                 <a class="variable" href="#ConferenceItemDB.reg_date_end">reg_date_end</a>
                         </li>
                         <li>
-                                <a class="variable" href="#ConferenceItemDB.conf_date_begin">conf_date_begin</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#ConferenceItemDB.conf_date_end">conf_date_end</a>
-                        </li>
-                        <li>
                                 <a class="variable" href="#ConferenceItemDB.source_href">source_href</a>
                         </li>
                         <li>
@@ -85,40 +121,58 @@
                                 <a class="variable" href="#ConferenceItemDB.description">description</a>
                         </li>
                         <li>
-                                <a class="variable" href="#ConferenceItemDB.org_name">org_name</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#ConferenceItemDB.online">online</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#ConferenceItemDB.conf_href">conf_href</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#ConferenceItemDB.offline">offline</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#ConferenceItemDB.conf_address">conf_address</a>
-                        </li>
-                        <li>
                                 <a class="variable" href="#ConferenceItemDB.contacts">contacts</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#ConferenceItemDB.rinc">rinc</a>
                         </li>
                         <li>
                                 <a class="variable" href="#ConferenceItemDB.checked">checked</a>
                         </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#GrantItemDB">GrantItemDB</a>
+                            <ul class="memberlist">
                         <li>
-                                <a class="variable" href="#ConferenceItemDB.vak">vak</a>
+                                <a class="function" href="#GrantItemDB.__init__">GrantItemDB</a>
                         </li>
                         <li>
-                                <a class="variable" href="#ConferenceItemDB.wos">wos</a>
+                                <a class="variable" href="#GrantItemDB.id">id</a>
                         </li>
                         <li>
-                                <a class="variable" href="#ConferenceItemDB.scopus">scopus</a>
+                                <a class="variable" href="#GrantItemDB.item_id">item_id</a>
                         </li>
                         <li>
-                                <a class="function" href="#ConferenceItemDB.validate_code">validate_code</a>
+                                <a class="variable" href="#GrantItemDB.un_name">un_name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.local">local</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.reg_date_begin">reg_date_begin</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.reg_date_end">reg_date_end</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.source_href">source_href</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.reg_href">reg_href</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.title">title</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.short_description">short_description</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.description">description</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.contacts">contacts</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#GrantItemDB.checked">checked</a>
                         </li>
                 </ul>
 
@@ -152,8 +206,8 @@
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="k">class</span> <span class="nc">ConferenceItemDB</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;Conference_data_conference&#39;</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="k">class</span> <span class="nc">AbstractItem</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="n">__abstract__</span> <span class="o">=</span> <span class="kc">True</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
 </span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Internal ID, automatically generated by the DB.&quot;</span><span class="p">)</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="n">item_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -163,33 +217,41 @@
 </span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>                                              <span class="s2">&quot;Parsed by :func:`~conf_spiders.pipelines.FillTheBlanksPipeline`.&quot;</span><span class="p">)</span>
 </span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">reg_date_begin</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Registration start date. Parsed.&quot;</span><span class="p">)</span>
 </span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">reg_date_end</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Registration end date. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference start date. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference end date. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="n">source_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the conference page. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">reg_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the registration form. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference title. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="n">short_description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>                               <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference short description. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference full description. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference organisers. Field unused.&quot;</span><span class="p">)</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if the conference is accessible on the Internet. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Dedicated website of the conference. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;False in conference is online-only. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference address. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">contacts</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Organisers&#39; contact data. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Российский индекс научного цитирования. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="n">checked</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if manually approved. Manually entered.&quot;</span><span class="p">)</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Высшая Аттестационная Комиссия. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Web of Science. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Elsevier. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">source_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the conference page. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">reg_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the registration form. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference title. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">short_description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference short description. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference full description. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="n">contacts</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Organisers&#39; contact data. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="n">checked</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if manually approved. Manually entered.&quot;</span><span class="p">)</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="nd">@validates</span><span class="p">(</span><span class="s1">&#39;un_name&#39;</span><span class="p">,</span> <span class="s1">&#39;source_href&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_href&#39;</span><span class="p">,</span> <span class="s1">&#39;conf_href&#39;</span><span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="k">def</span> <span class="nf">validate_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically truncates field entries above max character limit.&quot;&quot;&quot;</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">length</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>            <span class="k">return</span> <span class="n">value</span><span class="p">[:</span><span class="n">max_len</span><span class="p">]</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="n">value</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="k">class</span> <span class="nc">ConferenceItemDB</span><span class="p">(</span><span class="n">AbstractItem</span><span class="p">):</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;Conference_data_conference&#39;</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="nd">@validates</span><span class="p">(</span><span class="s1">&#39;hash&#39;</span><span class="p">,</span> <span class="s1">&#39;un_name&#39;</span><span class="p">,</span> <span class="s1">&#39;source_href&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_href&#39;</span><span class="p">,</span> <span class="s1">&#39;conf_href&#39;</span><span class="p">)</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="k">def</span> <span class="nf">validate_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically truncates field entries above max character limit.&quot;&quot;&quot;</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">length</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>            <span class="k">return</span> <span class="n">value</span><span class="p">[:</span><span class="n">max_len</span><span class="p">]</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>        <span class="k">return</span> <span class="n">value</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference start date. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference end date. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference organisers. Field unused.&quot;</span><span class="p">)</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if the conference is accessible on the Internet. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Dedicated website of the conference. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;False in conference is online-only. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference address. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Российский индекс научного цитирования. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Высшая Аттестационная Комиссия. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Web of Science. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Elsevier. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="k">class</span> <span class="nc">GrantItemDB</span><span class="p">(</span><span class="n">AbstractItem</span><span class="p">):</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;Conference_data_grant&#39;</span>
 </span></pre></div>
 
 
@@ -254,6 +316,90 @@ for example, any mapped columns or relationships.</p>
 
                             </div>
                 </section>
+                <section id="AbstractItem">
+                            <input id="AbstractItem-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">AbstractItem</span><wbr>(<span class="base">sqlalchemy.orm.decl_api._DynamicAttributesType</span>, <span class="base">sqlalchemy.inspection.Inspectable[sqlalchemy.orm.mapper.Mapper[typing.Any]]</span>):
+
+                <label class="view-source-button" for="AbstractItem-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#AbstractItem"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AbstractItem-10"><a href="#AbstractItem-10"><span class="linenos">10</span></a><span class="k">class</span> <span class="nc">AbstractItem</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+</span><span id="AbstractItem-11"><a href="#AbstractItem-11"><span class="linenos">11</span></a>    <span class="n">__abstract__</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="AbstractItem-12"><a href="#AbstractItem-12"><span class="linenos">12</span></a>
+</span><span id="AbstractItem-13"><a href="#AbstractItem-13"><span class="linenos">13</span></a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Internal ID, automatically generated by the DB.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-14"><a href="#AbstractItem-14"><span class="linenos">14</span></a>    <span class="n">item_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="AbstractItem-15"><a href="#AbstractItem-15"><span class="linenos">15</span></a>                     <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Actual ID. Generated by :func:`~conf_spiders.pipelines.FillTheBlanksPipeline`.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-16"><a href="#AbstractItem-16"><span class="linenos">16</span></a>    <span class="n">un_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;University name. Given in the spiders&#39; properties.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-17"><a href="#AbstractItem-17"><span class="linenos">17</span></a>    <span class="n">local</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;False in the conference is international. &quot;</span>
+</span><span id="AbstractItem-18"><a href="#AbstractItem-18"><span class="linenos">18</span></a>                                              <span class="s2">&quot;Parsed by :func:`~conf_spiders.pipelines.FillTheBlanksPipeline`.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-19"><a href="#AbstractItem-19"><span class="linenos">19</span></a>    <span class="n">reg_date_begin</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Registration start date. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-20"><a href="#AbstractItem-20"><span class="linenos">20</span></a>    <span class="n">reg_date_end</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Registration end date. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-21"><a href="#AbstractItem-21"><span class="linenos">21</span></a>    <span class="n">source_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the conference page. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-22"><a href="#AbstractItem-22"><span class="linenos">22</span></a>    <span class="n">reg_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the registration form. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-23"><a href="#AbstractItem-23"><span class="linenos">23</span></a>    <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference title. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-24"><a href="#AbstractItem-24"><span class="linenos">24</span></a>    <span class="n">short_description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference short description. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-25"><a href="#AbstractItem-25"><span class="linenos">25</span></a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference full description. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-26"><a href="#AbstractItem-26"><span class="linenos">26</span></a>    <span class="n">contacts</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Organisers&#39; contact data. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-27"><a href="#AbstractItem-27"><span class="linenos">27</span></a>    <span class="n">checked</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if manually approved. Manually entered.&quot;</span><span class="p">)</span>
+</span><span id="AbstractItem-28"><a href="#AbstractItem-28"><span class="linenos">28</span></a>
+</span><span id="AbstractItem-29"><a href="#AbstractItem-29"><span class="linenos">29</span></a>    <span class="nd">@validates</span><span class="p">(</span><span class="s1">&#39;un_name&#39;</span><span class="p">,</span> <span class="s1">&#39;source_href&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_href&#39;</span><span class="p">,</span> <span class="s1">&#39;conf_href&#39;</span><span class="p">)</span>
+</span><span id="AbstractItem-30"><a href="#AbstractItem-30"><span class="linenos">30</span></a>    <span class="k">def</span> <span class="nf">validate_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span id="AbstractItem-31"><a href="#AbstractItem-31"><span class="linenos">31</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically truncates field entries above max character limit.&quot;&quot;&quot;</span>
+</span><span id="AbstractItem-32"><a href="#AbstractItem-32"><span class="linenos">32</span></a>        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">length</span>
+</span><span id="AbstractItem-33"><a href="#AbstractItem-33"><span class="linenos">33</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
+</span><span id="AbstractItem-34"><a href="#AbstractItem-34"><span class="linenos">34</span></a>            <span class="k">return</span> <span class="n">value</span><span class="p">[:</span><span class="n">max_len</span><span class="p">]</span>
+</span><span id="AbstractItem-35"><a href="#AbstractItem-35"><span class="linenos">35</span></a>        <span class="k">return</span> <span class="n">value</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The base class of the class hierarchy.</p>
+
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
+</div>
+
+
+                            <div id="AbstractItem.validate_code" class="classattr">
+                                        <input id="AbstractItem.validate_code-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+                    <div class="decorator">@validates(&#39;un_name&#39;, &#39;source_href&#39;, &#39;reg_href&#39;, &#39;conf_href&#39;)</div>
+
+        <span class="def">def</span>
+        <span class="name">validate_code</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">key</span>, </span><span class="param"><span class="n">value</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="AbstractItem.validate_code-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#AbstractItem.validate_code"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AbstractItem.validate_code-29"><a href="#AbstractItem.validate_code-29"><span class="linenos">29</span></a>    <span class="nd">@validates</span><span class="p">(</span><span class="s1">&#39;un_name&#39;</span><span class="p">,</span> <span class="s1">&#39;source_href&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_href&#39;</span><span class="p">,</span> <span class="s1">&#39;conf_href&#39;</span><span class="p">)</span>
+</span><span id="AbstractItem.validate_code-30"><a href="#AbstractItem.validate_code-30"><span class="linenos">30</span></a>    <span class="k">def</span> <span class="nf">validate_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span><span id="AbstractItem.validate_code-31"><a href="#AbstractItem.validate_code-31"><span class="linenos">31</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically truncates field entries above max character limit.&quot;&quot;&quot;</span>
+</span><span id="AbstractItem.validate_code-32"><a href="#AbstractItem.validate_code-32"><span class="linenos">32</span></a>        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">length</span>
+</span><span id="AbstractItem.validate_code-33"><a href="#AbstractItem.validate_code-33"><span class="linenos">33</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
+</span><span id="AbstractItem.validate_code-34"><a href="#AbstractItem.validate_code-34"><span class="linenos">34</span></a>            <span class="k">return</span> <span class="n">value</span><span class="p">[:</span><span class="n">max_len</span><span class="p">]</span>
+</span><span id="AbstractItem.validate_code-35"><a href="#AbstractItem.validate_code-35"><span class="linenos">35</span></a>        <span class="k">return</span> <span class="n">value</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Automatically truncates field entries above max character limit.</p>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="#Base">Base</a></dt>
+                                <dd id="AbstractItem.__init__" class="function"><a href="#Base.__init__">Base</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
                 <section id="ConferenceItemDB">
                             <input id="ConferenceItemDB-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
@@ -265,44 +411,20 @@ for example, any mapped columns or relationships.</p>
 
     </div>
     <a class="headerlink" href="#ConferenceItemDB"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ConferenceItemDB-10"><a href="#ConferenceItemDB-10"><span class="linenos">10</span></a><span class="k">class</span> <span class="nc">ConferenceItemDB</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-</span><span id="ConferenceItemDB-11"><a href="#ConferenceItemDB-11"><span class="linenos">11</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;Conference_data_conference&#39;</span>
-</span><span id="ConferenceItemDB-12"><a href="#ConferenceItemDB-12"><span class="linenos">12</span></a>
-</span><span id="ConferenceItemDB-13"><a href="#ConferenceItemDB-13"><span class="linenos">13</span></a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Internal ID, automatically generated by the DB.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-14"><a href="#ConferenceItemDB-14"><span class="linenos">14</span></a>    <span class="n">item_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span id="ConferenceItemDB-15"><a href="#ConferenceItemDB-15"><span class="linenos">15</span></a>                     <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Actual ID. Generated by :func:`~conf_spiders.pipelines.FillTheBlanksPipeline`.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-16"><a href="#ConferenceItemDB-16"><span class="linenos">16</span></a>    <span class="n">un_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;University name. Given in the spiders&#39; properties.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-17"><a href="#ConferenceItemDB-17"><span class="linenos">17</span></a>    <span class="n">local</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;False in the conference is international. &quot;</span>
-</span><span id="ConferenceItemDB-18"><a href="#ConferenceItemDB-18"><span class="linenos">18</span></a>                                              <span class="s2">&quot;Parsed by :func:`~conf_spiders.pipelines.FillTheBlanksPipeline`.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-19"><a href="#ConferenceItemDB-19"><span class="linenos">19</span></a>    <span class="n">reg_date_begin</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Registration start date. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-20"><a href="#ConferenceItemDB-20"><span class="linenos">20</span></a>    <span class="n">reg_date_end</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Registration end date. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-21"><a href="#ConferenceItemDB-21"><span class="linenos">21</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference start date. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-22"><a href="#ConferenceItemDB-22"><span class="linenos">22</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference end date. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-23"><a href="#ConferenceItemDB-23"><span class="linenos">23</span></a>    <span class="n">source_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the conference page. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-24"><a href="#ConferenceItemDB-24"><span class="linenos">24</span></a>    <span class="n">reg_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Link to the registration form. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-25"><a href="#ConferenceItemDB-25"><span class="linenos">25</span></a>    <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference title. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-26"><a href="#ConferenceItemDB-26"><span class="linenos">26</span></a>    <span class="n">short_description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span>
-</span><span id="ConferenceItemDB-27"><a href="#ConferenceItemDB-27"><span class="linenos">27</span></a>                               <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference short description. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-28"><a href="#ConferenceItemDB-28"><span class="linenos">28</span></a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference full description. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-29"><a href="#ConferenceItemDB-29"><span class="linenos">29</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference organisers. Field unused.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-30"><a href="#ConferenceItemDB-30"><span class="linenos">30</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if the conference is accessible on the Internet. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-31"><a href="#ConferenceItemDB-31"><span class="linenos">31</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Dedicated website of the conference. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-32"><a href="#ConferenceItemDB-32"><span class="linenos">32</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;False in conference is online-only. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-33"><a href="#ConferenceItemDB-33"><span class="linenos">33</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference address. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-34"><a href="#ConferenceItemDB-34"><span class="linenos">34</span></a>    <span class="n">contacts</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Organisers&#39; contact data. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-35"><a href="#ConferenceItemDB-35"><span class="linenos">35</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Российский индекс научного цитирования. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-36"><a href="#ConferenceItemDB-36"><span class="linenos">36</span></a>    <span class="n">checked</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if manually approved. Manually entered.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-37"><a href="#ConferenceItemDB-37"><span class="linenos">37</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Высшая Аттестационная Комиссия. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-38"><a href="#ConferenceItemDB-38"><span class="linenos">38</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Web of Science. Parsed.&quot;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-39"><a href="#ConferenceItemDB-39"><span class="linenos">39</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Elsevier. Parsed.&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ConferenceItemDB-38"><a href="#ConferenceItemDB-38"><span class="linenos">38</span></a><span class="k">class</span> <span class="nc">ConferenceItemDB</span><span class="p">(</span><span class="n">AbstractItem</span><span class="p">):</span>
+</span><span id="ConferenceItemDB-39"><a href="#ConferenceItemDB-39"><span class="linenos">39</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;Conference_data_conference&#39;</span>
 </span><span id="ConferenceItemDB-40"><a href="#ConferenceItemDB-40"><span class="linenos">40</span></a>
-</span><span id="ConferenceItemDB-41"><a href="#ConferenceItemDB-41"><span class="linenos">41</span></a>    <span class="nd">@validates</span><span class="p">(</span><span class="s1">&#39;hash&#39;</span><span class="p">,</span> <span class="s1">&#39;un_name&#39;</span><span class="p">,</span> <span class="s1">&#39;source_href&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_href&#39;</span><span class="p">,</span> <span class="s1">&#39;conf_href&#39;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB-42"><a href="#ConferenceItemDB-42"><span class="linenos">42</span></a>    <span class="k">def</span> <span class="nf">validate_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span><span id="ConferenceItemDB-43"><a href="#ConferenceItemDB-43"><span class="linenos">43</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically truncates field entries above max character limit.&quot;&quot;&quot;</span>
-</span><span id="ConferenceItemDB-44"><a href="#ConferenceItemDB-44"><span class="linenos">44</span></a>        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">length</span>
-</span><span id="ConferenceItemDB-45"><a href="#ConferenceItemDB-45"><span class="linenos">45</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
-</span><span id="ConferenceItemDB-46"><a href="#ConferenceItemDB-46"><span class="linenos">46</span></a>            <span class="k">return</span> <span class="n">value</span><span class="p">[:</span><span class="n">max_len</span><span class="p">]</span>
-</span><span id="ConferenceItemDB-47"><a href="#ConferenceItemDB-47"><span class="linenos">47</span></a>        <span class="k">return</span> <span class="n">value</span>
+</span><span id="ConferenceItemDB-41"><a href="#ConferenceItemDB-41"><span class="linenos">41</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference start date. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-42"><a href="#ConferenceItemDB-42"><span class="linenos">42</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Date</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference end date. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-43"><a href="#ConferenceItemDB-43"><span class="linenos">43</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference organisers. Field unused.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-44"><a href="#ConferenceItemDB-44"><span class="linenos">44</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;True if the conference is accessible on the Internet. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-45"><a href="#ConferenceItemDB-45"><span class="linenos">45</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">500</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Dedicated website of the conference. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-46"><a href="#ConferenceItemDB-46"><span class="linenos">46</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;False in conference is online-only. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-47"><a href="#ConferenceItemDB-47"><span class="linenos">47</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">null</span><span class="p">(),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Conference address. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-48"><a href="#ConferenceItemDB-48"><span class="linenos">48</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Российский индекс научного цитирования. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-49"><a href="#ConferenceItemDB-49"><span class="linenos">49</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Высшая Аттестационная Комиссия. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-50"><a href="#ConferenceItemDB-50"><span class="linenos">50</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Web of Science. Parsed.&quot;</span><span class="p">)</span>
+</span><span id="ConferenceItemDB-51"><a href="#ConferenceItemDB-51"><span class="linenos">51</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Citation database: Elsevier. Parsed.&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -330,6 +452,149 @@ values in <code>kwargs</code>.</p>
 <p>Only keys that are present as
 attributes of the instance's class are allowed. These could be,
 for example, any mapped columns or relationships.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.conf_date_begin" class="classattr">
+                                <div class="attr variable">
+            <span class="name">conf_date_begin</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.conf_date_begin"></a>
+    
+            <div class="docstring"><p>Conference start date. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.conf_date_end" class="classattr">
+                                <div class="attr variable">
+            <span class="name">conf_date_end</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.conf_date_end"></a>
+    
+            <div class="docstring"><p>Conference end date. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.org_name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">org_name</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.org_name"></a>
+    
+            <div class="docstring"><p>Conference organisers. Field unused.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.online" class="classattr">
+                                <div class="attr variable">
+            <span class="name">online</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.online"></a>
+    
+            <div class="docstring"><p>True if the conference is accessible on the Internet. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.conf_href" class="classattr">
+                                <div class="attr variable">
+            <span class="name">conf_href</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.conf_href"></a>
+    
+            <div class="docstring"><p>Dedicated website of the conference. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.offline" class="classattr">
+                                <div class="attr variable">
+            <span class="name">offline</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.offline"></a>
+    
+            <div class="docstring"><p>False in conference is online-only. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.conf_address" class="classattr">
+                                <div class="attr variable">
+            <span class="name">conf_address</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.conf_address"></a>
+    
+            <div class="docstring"><p>Conference address. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.rinc" class="classattr">
+                                <div class="attr variable">
+            <span class="name">rinc</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.rinc"></a>
+    
+            <div class="docstring"><p>Citation database: Российский индекс научного цитирования. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.vak" class="classattr">
+                                <div class="attr variable">
+            <span class="name">vak</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.vak"></a>
+    
+            <div class="docstring"><p>Citation database: Высшая Аттестационная Комиссия. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.wos" class="classattr">
+                                <div class="attr variable">
+            <span class="name">wos</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.wos"></a>
+    
+            <div class="docstring"><p>Citation database: Web of Science. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="ConferenceItemDB.scopus" class="classattr">
+                                <div class="attr variable">
+            <span class="name">scopus</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ConferenceItemDB.scopus"></a>
+    
+            <div class="docstring"><p>Citation database: Elsevier. Parsed.</p>
 </div>
 
 
@@ -412,32 +677,6 @@ for example, any mapped columns or relationships.</p>
 
 
                             </div>
-                            <div id="ConferenceItemDB.conf_date_begin" class="classattr">
-                                <div class="attr variable">
-            <span class="name">conf_date_begin</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.conf_date_begin"></a>
-    
-            <div class="docstring"><p>Conference start date. Parsed.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.conf_date_end" class="classattr">
-                                <div class="attr variable">
-            <span class="name">conf_date_end</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.conf_date_end"></a>
-    
-            <div class="docstring"><p>Conference end date. Parsed.</p>
-</div>
-
-
-                            </div>
                             <div id="ConferenceItemDB.source_href" class="classattr">
                                 <div class="attr variable">
             <span class="name">source_href</span>
@@ -503,71 +742,6 @@ for example, any mapped columns or relationships.</p>
 
 
                             </div>
-                            <div id="ConferenceItemDB.org_name" class="classattr">
-                                <div class="attr variable">
-            <span class="name">org_name</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.org_name"></a>
-    
-            <div class="docstring"><p>Conference organisers. Field unused.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.online" class="classattr">
-                                <div class="attr variable">
-            <span class="name">online</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.online"></a>
-    
-            <div class="docstring"><p>True if the conference is accessible on the Internet. Parsed.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.conf_href" class="classattr">
-                                <div class="attr variable">
-            <span class="name">conf_href</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.conf_href"></a>
-    
-            <div class="docstring"><p>Dedicated website of the conference. Parsed.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.offline" class="classattr">
-                                <div class="attr variable">
-            <span class="name">offline</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.offline"></a>
-    
-            <div class="docstring"><p>False in conference is online-only. Parsed.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.conf_address" class="classattr">
-                                <div class="attr variable">
-            <span class="name">conf_address</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.conf_address"></a>
-    
-            <div class="docstring"><p>Conference address. Parsed.</p>
-</div>
-
-
-                            </div>
                             <div id="ConferenceItemDB.contacts" class="classattr">
                                 <div class="attr variable">
             <span class="name">contacts</span>
@@ -577,19 +751,6 @@ for example, any mapped columns or relationships.</p>
     <a class="headerlink" href="#ConferenceItemDB.contacts"></a>
     
             <div class="docstring"><p>Organisers' contact data. Parsed.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.rinc" class="classattr">
-                                <div class="attr variable">
-            <span class="name">rinc</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.rinc"></a>
-    
-            <div class="docstring"><p>Citation database: Российский индекс научного цитирования. Parsed.</p>
 </div>
 
 
@@ -607,71 +768,237 @@ for example, any mapped columns or relationships.</p>
 
 
                             </div>
-                            <div id="ConferenceItemDB.vak" class="classattr">
-                                <div class="attr variable">
-            <span class="name">vak</span>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="#AbstractItem">AbstractItem</a></dt>
+                                <dd id="ConferenceItemDB.validate_code" class="function"><a href="#AbstractItem.validate_code">validate_code</a></dd>
 
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.vak"></a>
-    
-            <div class="docstring"><p>Citation database: Высшая Аттестационная Комиссия. Parsed.</p>
-</div>
-
-
+            </div>
+                                </dl>
                             </div>
-                            <div id="ConferenceItemDB.wos" class="classattr">
-                                <div class="attr variable">
-            <span class="name">wos</span>
+                </section>
+                <section id="GrantItemDB">
+                            <input id="GrantItemDB-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">GrantItemDB</span><wbr>(<span class="base">sqlalchemy.orm.decl_api._DynamicAttributesType</span>, <span class="base">sqlalchemy.inspection.Inspectable[sqlalchemy.orm.mapper.Mapper[typing.Any]]</span>):
 
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.wos"></a>
-    
-            <div class="docstring"><p>Citation database: Web of Science. Parsed.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.scopus" class="classattr">
-                                <div class="attr variable">
-            <span class="name">scopus</span>
-
-        
-    </div>
-    <a class="headerlink" href="#ConferenceItemDB.scopus"></a>
-    
-            <div class="docstring"><p>Citation database: Elsevier. Parsed.</p>
-</div>
-
-
-                            </div>
-                            <div id="ConferenceItemDB.validate_code" class="classattr">
-                                        <input id="ConferenceItemDB.validate_code-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-                    <div class="decorator">@validates(&#39;hash&#39;, &#39;un_name&#39;, &#39;source_href&#39;, &#39;reg_href&#39;, &#39;conf_href&#39;)</div>
-
-        <span class="def">def</span>
-        <span class="name">validate_code</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">key</span>, </span><span class="param"><span class="n">value</span></span><span class="return-annotation">):</span></span>
-
-                <label class="view-source-button" for="ConferenceItemDB.validate_code-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="GrantItemDB-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#ConferenceItemDB.validate_code"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ConferenceItemDB.validate_code-41"><a href="#ConferenceItemDB.validate_code-41"><span class="linenos">41</span></a>    <span class="nd">@validates</span><span class="p">(</span><span class="s1">&#39;hash&#39;</span><span class="p">,</span> <span class="s1">&#39;un_name&#39;</span><span class="p">,</span> <span class="s1">&#39;source_href&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_href&#39;</span><span class="p">,</span> <span class="s1">&#39;conf_href&#39;</span><span class="p">)</span>
-</span><span id="ConferenceItemDB.validate_code-42"><a href="#ConferenceItemDB.validate_code-42"><span class="linenos">42</span></a>    <span class="k">def</span> <span class="nf">validate_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-</span><span id="ConferenceItemDB.validate_code-43"><a href="#ConferenceItemDB.validate_code-43"><span class="linenos">43</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically truncates field entries above max character limit.&quot;&quot;&quot;</span>
-</span><span id="ConferenceItemDB.validate_code-44"><a href="#ConferenceItemDB.validate_code-44"><span class="linenos">44</span></a>        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">length</span>
-</span><span id="ConferenceItemDB.validate_code-45"><a href="#ConferenceItemDB.validate_code-45"><span class="linenos">45</span></a>        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_len</span><span class="p">:</span>
-</span><span id="ConferenceItemDB.validate_code-46"><a href="#ConferenceItemDB.validate_code-46"><span class="linenos">46</span></a>            <span class="k">return</span> <span class="n">value</span><span class="p">[:</span><span class="n">max_len</span><span class="p">]</span>
-</span><span id="ConferenceItemDB.validate_code-47"><a href="#ConferenceItemDB.validate_code-47"><span class="linenos">47</span></a>        <span class="k">return</span> <span class="n">value</span>
+    <a class="headerlink" href="#GrantItemDB"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GrantItemDB-54"><a href="#GrantItemDB-54"><span class="linenos">54</span></a><span class="k">class</span> <span class="nc">GrantItemDB</span><span class="p">(</span><span class="n">AbstractItem</span><span class="p">):</span>
+</span><span id="GrantItemDB-55"><a href="#GrantItemDB-55"><span class="linenos">55</span></a>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;Conference_data_grant&#39;</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Automatically truncates field entries above max character limit.</p>
+            <div class="docstring"><p>The base class of the class hierarchy.</p>
+
+<p>When called, it accepts no arguments and returns a new featureless
+instance that has no instance attributes and cannot be given any.</p>
 </div>
 
 
+                            <div id="GrantItemDB.__init__" class="classattr">
+                                <div class="attr function">
+            
+        <span class="name">GrantItemDB</span><span class="signature pdoc-code condensed">(<span class="param"><span class="o">**</span><span class="n">kwargs</span></span>)</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.__init__"></a>
+    
+            <div class="docstring"><p>A simple constructor that allows initialization from kwargs.</p>
+
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.id" class="classattr">
+                                <div class="attr variable">
+            <span class="name">id</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.id"></a>
+    
+            <div class="docstring"><p>Internal ID, automatically generated by the DB.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.item_id" class="classattr">
+                                <div class="attr variable">
+            <span class="name">item_id</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.item_id"></a>
+    
+            <div class="docstring"><p>Actual ID. Generated by <code>~conf_spiders.pipelines.FillTheBlanksPipeline()</code>.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.un_name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">un_name</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.un_name"></a>
+    
+            <div class="docstring"><p>University name. Given in the spiders' properties.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.local" class="classattr">
+                                <div class="attr variable">
+            <span class="name">local</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.local"></a>
+    
+            <div class="docstring"><p>False in the conference is international. Parsed by <code>~conf_spiders.pipelines.FillTheBlanksPipeline()</code>.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.reg_date_begin" class="classattr">
+                                <div class="attr variable">
+            <span class="name">reg_date_begin</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.reg_date_begin"></a>
+    
+            <div class="docstring"><p>Registration start date. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.reg_date_end" class="classattr">
+                                <div class="attr variable">
+            <span class="name">reg_date_end</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.reg_date_end"></a>
+    
+            <div class="docstring"><p>Registration end date. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.source_href" class="classattr">
+                                <div class="attr variable">
+            <span class="name">source_href</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.source_href"></a>
+    
+            <div class="docstring"><p>Link to the conference page. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.reg_href" class="classattr">
+                                <div class="attr variable">
+            <span class="name">reg_href</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.reg_href"></a>
+    
+            <div class="docstring"><p>Link to the registration form. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.title" class="classattr">
+                                <div class="attr variable">
+            <span class="name">title</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.title"></a>
+    
+            <div class="docstring"><p>Conference title. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.short_description" class="classattr">
+                                <div class="attr variable">
+            <span class="name">short_description</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.short_description"></a>
+    
+            <div class="docstring"><p>Conference short description. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.description" class="classattr">
+                                <div class="attr variable">
+            <span class="name">description</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.description"></a>
+    
+            <div class="docstring"><p>Conference full description. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.contacts" class="classattr">
+                                <div class="attr variable">
+            <span class="name">contacts</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.contacts"></a>
+    
+            <div class="docstring"><p>Organisers' contact data. Parsed.</p>
+</div>
+
+
+                            </div>
+                            <div id="GrantItemDB.checked" class="classattr">
+                                <div class="attr variable">
+            <span class="name">checked</span>
+
+        
+    </div>
+    <a class="headerlink" href="#GrantItemDB.checked"></a>
+    
+            <div class="docstring"><p>True if manually approved. Manually entered.</p>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="#AbstractItem">AbstractItem</a></dt>
+                                <dd id="GrantItemDB.validate_code" class="function"><a href="#AbstractItem.validate_code">validate_code</a></dd>
+
+            </div>
+                                </dl>
                             </div>
                 </section>
     </main>

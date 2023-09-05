@@ -37,6 +37,12 @@
                     <a class="function" href="#fix_emails">fix_emails</a>
             </li>
             <li>
+                    <a class="class" href="#GrantItem">GrantItem</a>
+                            <ul class="memberlist">
+                </ul>
+
+            </li>
+            <li>
                     <a class="class" href="#ConferenceItem">ConferenceItem</a>
                             <ul class="memberlist">
                 </ul>
@@ -104,48 +110,57 @@
 </span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">return</span> <span class="n">url</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;mailto:&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 </span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
 </span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="k">class</span> <span class="nc">ConferenceItem</span><span class="p">(</span><span class="n">Item</span><span class="p">):</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="n">item_id</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="n">un_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>    <span class="n">local</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="n">reg_date_begin</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="n">reg_date_end</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="n">source_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="n">reg_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="n">title</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">short_description</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="n">contacts</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="k">return</span> <span class="n">pformat</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;data&#39;</span><span class="p">},</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>                       <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">160</span><span class="p">)</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>
-</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>
-</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="k">class</span> <span class="nc">ConferenceLoader</span><span class="p">(</span><span class="n">ItemLoader</span><span class="p">):</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="n">default_output_processor</span> <span class="o">=</span> <span class="n">TakeFirst</span><span class="p">()</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>
-</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>    <span class="n">short_description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>    <span class="n">description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>    <span class="n">conf_address_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>    <span class="n">contacts_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="k">class</span> <span class="nc">_AbstractItem</span><span class="p">(</span><span class="n">Item</span><span class="p">):</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Fields common to all item types. Do not use directly.&quot;&quot;&quot;</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="n">item_id</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>    <span class="n">un_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="n">local</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="n">reg_date_begin</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="n">reg_date_end</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>    <span class="n">source_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="n">reg_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="n">title</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="n">short_description</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="n">contacts</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="k">class</span> <span class="nc">GrantItem</span><span class="p">(</span><span class="n">_AbstractItem</span><span class="p">):</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for Grant items. Use in combination with ConferenceLoader.&quot;&quot;&quot;</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="k">class</span> <span class="nc">ConferenceItem</span><span class="p">(</span><span class="n">_AbstractItem</span><span class="p">):</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for Conference items. Use in combination with ConferenceLoader.&quot;&quot;&quot;</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>        <span class="k">return</span> <span class="n">pformat</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;data&#39;</span><span class="p">},</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>                       <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">160</span><span class="p">)</span>
 </span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>
-</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>    <span class="n">org_name_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>    <span class="n">title_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>    <span class="n">source_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">)</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>    <span class="n">conf_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>    <span class="n">reg_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a><span class="k">class</span> <span class="nc">ConferenceLoader</span><span class="p">(</span><span class="n">ItemLoader</span><span class="p">):</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>    <span class="n">default_output_processor</span> <span class="o">=</span> <span class="n">TakeFirst</span><span class="p">()</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>    <span class="n">short_description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a>    <span class="n">description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a>    <span class="n">conf_address_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a>    <span class="n">contacts_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a>
+</span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a>    <span class="n">org_name_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a>    <span class="n">title_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a>    <span class="n">source_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">)</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos">85</span></a>    <span class="n">conf_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos">86</span></a>    <span class="n">reg_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -217,66 +232,85 @@
 
 
                 </section>
+                <section id="GrantItem">
+                            <input id="GrantItem-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">GrantItem</span><wbr>(<span class="base"><a href="#_AbstractItem">_AbstractItem</a></span>):
+
+                <label class="view-source-button" for="GrantItem-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#GrantItem"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GrantItem-52"><a href="#GrantItem-52"><span class="linenos">52</span></a><span class="k">class</span> <span class="nc">GrantItem</span><span class="p">(</span><span class="n">_AbstractItem</span><span class="p">):</span>
+</span><span id="GrantItem-53"><a href="#GrantItem-53"><span class="linenos">53</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for Grant items. Use in combination with ConferenceLoader.&quot;&quot;&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Container for Grant items. Use in combination with ConferenceLoader.</p>
+</div>
+
+
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>scrapy.item.Item</dt>
+                                <dd id="GrantItem.__init__" class="function">Item</dd>
+                <dd id="GrantItem.keys" class="function">keys</dd>
+                <dd id="GrantItem.copy" class="function">copy</dd>
+                <dd id="GrantItem.deepcopy" class="function">deepcopy</dd>
+
+            </div>
+            <div><dt>collections.abc.MutableMapping</dt>
+                                <dd id="GrantItem.pop" class="function">pop</dd>
+                <dd id="GrantItem.popitem" class="function">popitem</dd>
+                <dd id="GrantItem.clear" class="function">clear</dd>
+                <dd id="GrantItem.update" class="function">update</dd>
+                <dd id="GrantItem.setdefault" class="function">setdefault</dd>
+
+            </div>
+            <div><dt>collections.abc.Mapping</dt>
+                                <dd id="GrantItem.get" class="function">get</dd>
+                <dd id="GrantItem.items" class="function">items</dd>
+                <dd id="GrantItem.values" class="function">values</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
                 <section id="ConferenceItem">
                             <input id="ConferenceItem-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">ConferenceItem</span><wbr>(<span class="base">scrapy.item.Item</span>):
+    <span class="name">ConferenceItem</span><wbr>(<span class="base"><a href="#_AbstractItem">_AbstractItem</a></span>):
 
                 <label class="view-source-button" for="ConferenceItem-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#ConferenceItem"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ConferenceItem-37"><a href="#ConferenceItem-37"><span class="linenos">37</span></a><span class="k">class</span> <span class="nc">ConferenceItem</span><span class="p">(</span><span class="n">Item</span><span class="p">):</span>
-</span><span id="ConferenceItem-38"><a href="#ConferenceItem-38"><span class="linenos">38</span></a>    <span class="n">item_id</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-39"><a href="#ConferenceItem-39"><span class="linenos">39</span></a>    <span class="n">un_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-40"><a href="#ConferenceItem-40"><span class="linenos">40</span></a>    <span class="n">local</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-41"><a href="#ConferenceItem-41"><span class="linenos">41</span></a>    <span class="n">reg_date_begin</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-42"><a href="#ConferenceItem-42"><span class="linenos">42</span></a>    <span class="n">reg_date_end</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-43"><a href="#ConferenceItem-43"><span class="linenos">43</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-44"><a href="#ConferenceItem-44"><span class="linenos">44</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-45"><a href="#ConferenceItem-45"><span class="linenos">45</span></a>    <span class="n">source_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-46"><a href="#ConferenceItem-46"><span class="linenos">46</span></a>    <span class="n">reg_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-47"><a href="#ConferenceItem-47"><span class="linenos">47</span></a>    <span class="n">title</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-48"><a href="#ConferenceItem-48"><span class="linenos">48</span></a>    <span class="n">short_description</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-49"><a href="#ConferenceItem-49"><span class="linenos">49</span></a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-50"><a href="#ConferenceItem-50"><span class="linenos">50</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-51"><a href="#ConferenceItem-51"><span class="linenos">51</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-52"><a href="#ConferenceItem-52"><span class="linenos">52</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-53"><a href="#ConferenceItem-53"><span class="linenos">53</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-54"><a href="#ConferenceItem-54"><span class="linenos">54</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-55"><a href="#ConferenceItem-55"><span class="linenos">55</span></a>    <span class="n">contacts</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-56"><a href="#ConferenceItem-56"><span class="linenos">56</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-57"><a href="#ConferenceItem-57"><span class="linenos">57</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-58"><a href="#ConferenceItem-58"><span class="linenos">58</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-59"><a href="#ConferenceItem-59"><span class="linenos">59</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
-</span><span id="ConferenceItem-60"><a href="#ConferenceItem-60"><span class="linenos">60</span></a>
-</span><span id="ConferenceItem-61"><a href="#ConferenceItem-61"><span class="linenos">61</span></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="ConferenceItem-62"><a href="#ConferenceItem-62"><span class="linenos">62</span></a>        <span class="k">return</span> <span class="n">pformat</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;data&#39;</span><span class="p">},</span>
-</span><span id="ConferenceItem-63"><a href="#ConferenceItem-63"><span class="linenos">63</span></a>                       <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">160</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ConferenceItem-56"><a href="#ConferenceItem-56"><span class="linenos">56</span></a><span class="k">class</span> <span class="nc">ConferenceItem</span><span class="p">(</span><span class="n">_AbstractItem</span><span class="p">):</span>
+</span><span id="ConferenceItem-57"><a href="#ConferenceItem-57"><span class="linenos">57</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for Conference items. Use in combination with ConferenceLoader.&quot;&quot;&quot;</span>
+</span><span id="ConferenceItem-58"><a href="#ConferenceItem-58"><span class="linenos">58</span></a>    <span class="n">conf_date_begin</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-59"><a href="#ConferenceItem-59"><span class="linenos">59</span></a>    <span class="n">conf_date_end</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-60"><a href="#ConferenceItem-60"><span class="linenos">60</span></a>    <span class="n">org_name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-61"><a href="#ConferenceItem-61"><span class="linenos">61</span></a>    <span class="n">online</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-62"><a href="#ConferenceItem-62"><span class="linenos">62</span></a>    <span class="n">conf_href</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-63"><a href="#ConferenceItem-63"><span class="linenos">63</span></a>    <span class="n">offline</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-64"><a href="#ConferenceItem-64"><span class="linenos">64</span></a>    <span class="n">conf_address</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-65"><a href="#ConferenceItem-65"><span class="linenos">65</span></a>    <span class="n">rinc</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-66"><a href="#ConferenceItem-66"><span class="linenos">66</span></a>    <span class="n">vak</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-67"><a href="#ConferenceItem-67"><span class="linenos">67</span></a>    <span class="n">wos</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-68"><a href="#ConferenceItem-68"><span class="linenos">68</span></a>    <span class="n">scopus</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</span><span id="ConferenceItem-69"><a href="#ConferenceItem-69"><span class="linenos">69</span></a>
+</span><span id="ConferenceItem-70"><a href="#ConferenceItem-70"><span class="linenos">70</span></a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="ConferenceItem-71"><a href="#ConferenceItem-71"><span class="linenos">71</span></a>        <span class="k">return</span> <span class="n">pformat</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;data&#39;</span><span class="p">},</span>
+</span><span id="ConferenceItem-72"><a href="#ConferenceItem-72"><span class="linenos">72</span></a>                       <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">160</span><span class="p">)</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Base class for scraped items.</p>
-
-<p>In Scrapy, an object is considered an <code>item</code> if it is an instance of either
-<code>Item</code> or <code>dict</code>, or any subclass. For example, when the output of a
-spider callback is evaluated, only instances of <code>Item</code> or
-<code>dict</code> are passed to :ref:<code>item pipelines &lt;topics-item-pipeline&gt;</code>.</p>
-
-<p>If you need instances of a custom class to be considered items by Scrapy,
-you must inherit from either <code>Item</code> or <code>dict</code>.</p>
-
-<p>Items must declare <code>Field</code> attributes, which are processed and stored
-in the <code>fields</code> attribute. This restricts the set of allowed field names
-and prevents typos, raising <code>KeyError</code> when referring to undefined fields.
-Additionally, fields can be used to define metadata and control the way
-data is processed internally. Please refer to the :ref:<code>documentation
-about fields &lt;topics-items-fields&gt;</code> for additional information.</p>
-
-<p>Unlike instances of <code>dict</code>, instances of <code>Item</code> may be
-:ref:<code>tracked &lt;topics-leaks-trackrefs&gt;</code> to debug memory leaks.</p>
+            <div class="docstring"><p>Container for Conference items. Use in combination with ConferenceLoader.</p>
 </div>
 
 
@@ -318,19 +352,19 @@ about fields &lt;topics-items-fields&gt;</code> for additional information.</p>
 
     </div>
     <a class="headerlink" href="#ConferenceLoader"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ConferenceLoader-66"><a href="#ConferenceLoader-66"><span class="linenos">66</span></a><span class="k">class</span> <span class="nc">ConferenceLoader</span><span class="p">(</span><span class="n">ItemLoader</span><span class="p">):</span>
-</span><span id="ConferenceLoader-67"><a href="#ConferenceLoader-67"><span class="linenos">67</span></a>    <span class="n">default_output_processor</span> <span class="o">=</span> <span class="n">TakeFirst</span><span class="p">()</span>
-</span><span id="ConferenceLoader-68"><a href="#ConferenceLoader-68"><span class="linenos">68</span></a>
-</span><span id="ConferenceLoader-69"><a href="#ConferenceLoader-69"><span class="linenos">69</span></a>    <span class="n">short_description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="ConferenceLoader-70"><a href="#ConferenceLoader-70"><span class="linenos">70</span></a>    <span class="n">description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="ConferenceLoader-71"><a href="#ConferenceLoader-71"><span class="linenos">71</span></a>    <span class="n">conf_address_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="ConferenceLoader-72"><a href="#ConferenceLoader-72"><span class="linenos">72</span></a>    <span class="n">contacts_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="ConferenceLoader-73"><a href="#ConferenceLoader-73"><span class="linenos">73</span></a>
-</span><span id="ConferenceLoader-74"><a href="#ConferenceLoader-74"><span class="linenos">74</span></a>    <span class="n">org_name_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="ConferenceLoader-75"><a href="#ConferenceLoader-75"><span class="linenos">75</span></a>    <span class="n">title_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
-</span><span id="ConferenceLoader-76"><a href="#ConferenceLoader-76"><span class="linenos">76</span></a>    <span class="n">source_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">)</span>
-</span><span id="ConferenceLoader-77"><a href="#ConferenceLoader-77"><span class="linenos">77</span></a>    <span class="n">conf_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
-</span><span id="ConferenceLoader-78"><a href="#ConferenceLoader-78"><span class="linenos">78</span></a>    <span class="n">reg_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ConferenceLoader-75"><a href="#ConferenceLoader-75"><span class="linenos">75</span></a><span class="k">class</span> <span class="nc">ConferenceLoader</span><span class="p">(</span><span class="n">ItemLoader</span><span class="p">):</span>
+</span><span id="ConferenceLoader-76"><a href="#ConferenceLoader-76"><span class="linenos">76</span></a>    <span class="n">default_output_processor</span> <span class="o">=</span> <span class="n">TakeFirst</span><span class="p">()</span>
+</span><span id="ConferenceLoader-77"><a href="#ConferenceLoader-77"><span class="linenos">77</span></a>
+</span><span id="ConferenceLoader-78"><a href="#ConferenceLoader-78"><span class="linenos">78</span></a>    <span class="n">short_description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="ConferenceLoader-79"><a href="#ConferenceLoader-79"><span class="linenos">79</span></a>    <span class="n">description_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="ConferenceLoader-80"><a href="#ConferenceLoader-80"><span class="linenos">80</span></a>    <span class="n">conf_address_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="ConferenceLoader-81"><a href="#ConferenceLoader-81"><span class="linenos">81</span></a>    <span class="n">contacts_out</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span><span class="n">Join</span><span class="p">(),</span> <span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="ConferenceLoader-82"><a href="#ConferenceLoader-82"><span class="linenos">82</span></a>
+</span><span id="ConferenceLoader-83"><a href="#ConferenceLoader-83"><span class="linenos">83</span></a>    <span class="n">org_name_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="ConferenceLoader-84"><a href="#ConferenceLoader-84"><span class="linenos">84</span></a>    <span class="n">title_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">normalize_string</span><span class="p">)</span>
+</span><span id="ConferenceLoader-85"><a href="#ConferenceLoader-85"><span class="linenos">85</span></a>    <span class="n">source_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">)</span>
+</span><span id="ConferenceLoader-86"><a href="#ConferenceLoader-86"><span class="linenos">86</span></a>    <span class="n">conf_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
+</span><span id="ConferenceLoader-87"><a href="#ConferenceLoader-87"><span class="linenos">87</span></a>    <span class="n">reg_href_in</span> <span class="o">=</span> <span class="n">MapCompose</span><span class="p">(</span><span class="n">unquote</span><span class="p">,</span> <span class="n">absolute_url</span><span class="p">,</span> <span class="n">fix_emails</span><span class="p">)</span>
 </span></pre></div>
 
 

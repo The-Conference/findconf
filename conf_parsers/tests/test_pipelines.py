@@ -9,9 +9,9 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from conf_parsers.items import ConferenceItem
+from conf_parsers.items import ConferenceItem, GrantItem, _AbstractItem
 from conf_parsers.pipelines import DropOldItemsPipeline, SaveToDBPipeline, FillTheBlanksPipeline
-from conf_parsers.models import Base, ConferenceItemDB
+from conf_parsers.models import Base, ConferenceItemDB, GrantItemDB
 
 
 class SampleSpider(scrapy.Spider):
@@ -48,11 +48,22 @@ class TestDropOldItemsPipeline(TestCase):
         expected = {'conf_date_begin': today, 'conf_date_end': None, 'short_description': str_today}
         self.assertEqual(expected, DropOldItemsPipeline.process_item(item, self.spider))
 
-    def test_date_not_found(self):
+    def test_date_not_found_conf(self):
         item = ConferenceItem(short_description='test')
         with self.assertRaises(DropItem) as e:
             DropOldItemsPipeline.process_item(item, self.spider)
         self.assertEqual('Date not found', str(e.exception))
+
+    def test_date_not_found_grant(self):
+        item = GrantItem(short_description='test')
+        with self.assertRaises(DropItem) as e:
+            DropOldItemsPipeline.process_item(item, self.spider)
+        self.assertEqual('Date not found', str(e.exception))
+
+    def test_date_not_found_wrong_type(self):
+        item = _AbstractItem(short_description='test')
+        with self.assertRaises(ValueError):
+            DropOldItemsPipeline.process_item(item, self.spider)
 
 
 class TestSaveToDBPipeline(TestCase):
@@ -108,6 +119,23 @@ class TestSaveToDBPipeline(TestCase):
         with self.assertRaises(IntegrityError):
             self.db.close_spider(self.spider)
 
+    def test_save_wrong_item_type(self):
+        item = _AbstractItem()
+        with self.assertRaises(TypeError):
+            self.db.process_item(item, self.spider)
+
+    def test_save_grant(self):
+        data = self.item.copy()
+        del data['conf_date_begin']
+        item = GrantItem(data)
+        self.db.process_item(item, self.spider)
+        self.db.close_spider(self.spider)
+
+        q = select(GrantItemDB).where(GrantItemDB.id == 1)
+        res = self.session.execute(q).scalars().first()
+        self.assertTrue(res)
+        self.assertEqual('test', res.item_id)
+
     def test_save_nothing(self):
         with self.assertLogs(level='DEBUG') as log:
             self.db.close_spider(self.spider)
@@ -119,7 +147,7 @@ class TestSaveToDBPipeline(TestCase):
 
 
 class TestFillTheBlanksPipeline(TestCase):
-    def test_item_id_single(self):
+    def test_conf_item_id_single(self):
         """Do not change.
         Changing item_id format will result in duplicate entries in DB."""
         item = ConferenceItem(
@@ -129,7 +157,7 @@ class TestFillTheBlanksPipeline(TestCase):
         result = FillTheBlanksPipeline.process_item(item, SampleSpider)
         self.assertEqual('test_spider_2022-01-02_None_testconf', result['item_id'])
 
-    def test_item_id_double(self):
+    def test_conf_item_id_double(self):
         """Do not change.
         Changing item_id format will result in duplicate entries in DB."""
         item = ConferenceItem(
@@ -139,3 +167,13 @@ class TestFillTheBlanksPipeline(TestCase):
         )
         result = FillTheBlanksPipeline.process_item(item, SampleSpider)
         self.assertEqual('test_spider_2022-01-02_2022-01-03_testconf', result['item_id'])
+
+    def test_grant_item_id(self):
+        """Do not change.
+        Changing item_id format will result in duplicate entries in DB."""
+        item = GrantItem(
+            reg_date_end=date(2022, 1, 2),
+            title='test grant',
+        )
+        result = FillTheBlanksPipeline.process_item(item, SampleSpider)
+        self.assertEqual('test_spider_2022-01-02_testgrant', result['item_id'])

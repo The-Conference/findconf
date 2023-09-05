@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 import scrapy
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import get_dates, parse_plain_text
+from ..parsing import get_dates, parse_conf
 
 
 class KpfuSpider(scrapy.Spider):
@@ -27,7 +27,7 @@ class KpfuSpider(scrapy.Spider):
             new_item.add_value('source_href', response.url)
             dates = row.css('td:nth-child(3)::text').get()
             new_item = get_dates(dates, new_item)
-            new_item = parse_plain_text(conf_name, new_item)
+            new_item = parse_conf(conf_name, new_item)
             new_item.add_xpath('conf_address', "string(./td[position()=4])")
             yield new_item.load_item()
 

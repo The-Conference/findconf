@@ -3,7 +3,7 @@ from datetime import datetime
 import scrapy
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import get_dates, parse_plain_text
+from ..parsing import get_dates, parse_conf
 
 
 class GuuSpider(scrapy.Spider):
@@ -31,5 +31,5 @@ class GuuSpider(scrapy.Spider):
                     new_item.add_value('source_href', response.url)
                     new_item.add_value('contacts', contacts)
                     new_item = get_dates(dates, new_item, is_vague=True)
-                    new_item = parse_plain_text(conf_name, new_item)
+                    new_item = parse_conf(conf_name, new_item)
                     yield new_item.load_item()

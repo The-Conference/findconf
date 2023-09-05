@@ -1,6 +1,6 @@
 import scrapy
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import get_dates, parse_plain_text
+from ..parsing import get_dates, parse_conf
 
 
 class GgtuSpider(scrapy.Spider):
@@ -21,5 +21,5 @@ class GgtuSpider(scrapy.Spider):
                 new_item.add_value('title', conf_name)
                 new_item.add_value('source_href', response.url)
                 new_item = get_dates(date, new_item)
-                new_item = parse_plain_text(conf_name, new_item)
+                new_item = parse_conf(conf_name, new_item)
                 yield new_item.load_item()

@@ -2,7 +2,7 @@ from scrapy.spiders import Rule, CrawlSpider
 from scrapy.linkextractors import LinkExtractor
 
 from ..items import ConferenceItem, ConferenceLoader
-from ..parsing import get_dates, parse_plain_text
+from ..parsing import get_dates, parse_conf
 
 
 class TpuSpider(CrawlSpider):
@@ -36,7 +36,7 @@ class TpuSpider(CrawlSpider):
                 new_item.add_value('source_href', response.url)
                 new_item.add_value('conf_href', link)
                 new_item = get_dates(dates, new_item)
-                new_item = parse_plain_text(conf_name, new_item)
+                new_item = parse_conf(conf_name, new_item)
                 new_item.add_value('conf_address', contacts.get())
                 for i in contacts[1:]:
                     new_item.add_value('contacts', i.get())

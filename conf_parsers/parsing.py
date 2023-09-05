@@ -16,6 +16,7 @@ import logging
 from io import BytesIO
 
 from .utils import find_date_in_string, parse_vague_dates
+from .items import ConferenceItem
 
 # pdfplumber logs are extremely verbose
 logging.getLogger("pdfminer").setLevel(logging.WARNING)
@@ -23,6 +24,7 @@ logging.getLogger("pdfminer").setLevel(logging.WARNING)
 
 def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> ItemLoader:
     """Main starting point for generic data parsing & collection.
+    Appends every supplied line of text to the description field.
 
     Args:
         selector: A selector item with text and tags, as it comes from the response.
@@ -32,12 +34,12 @@ def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> Item
     Returns:
         Populated ItemLoader object.
     """
-    if isinstance(selector, Selector):
-        line = selector.get()
-        link = selector.xpath(".//a/@href").get()
-    else:
+    if isinstance(selector, str):
         line = selector
         link = None
+    else:
+        line = selector.get()
+        link = selector.xpath(".//a/@href").get()
 
     # remove inline <script>
     clean_line = remove_tags(remove_tags_with_content(line, ('script',)))
@@ -60,26 +62,33 @@ def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> Item
                 'mailto' not in link):
             new_item.add_value('reg_href', link)
 
-    if ('онлайн' in lowercase
-            or 'трансляц' in lowercase
-            or 'подключит' in lowercase
-            or 'гибридн' in lowercase
-            or 'дистанц' in lowercase
-            or 'ссылка' in lowercase):
-        new_item.add_value('conf_href', link)
-        new_item.add_value('online', True)
+    new_item.add_value('description', clean_line)
 
-    return parse_plain_text(clean_line, new_item, lowercase)
+    if ('тел.' in lowercase
+            or 'контакт' in lowercase
+            or 'mail' in lowercase
+            or 'почт' in lowercase):
+        new_item.add_value('contacts', clean_line)
+
+    if emails := re.search(r'\S+@\S+\.\S+', lowercase):
+        new_item.add_value('contacts', emails.group(0))
+
+    if isinstance(new_item.item, ConferenceItem):
+        return parse_conf(clean_line, new_item, lowercase, link)
+    return new_item
 
 
-def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> ItemLoader:
-    """Search plain text for various data markers, parse, and populate the supplied ItemLoader object
-    with the results. Append every supplied line of text to the description field.
+def parse_conf(line: str,
+               new_item: ItemLoader,
+               lowercase: str = None,
+               link: str = None) -> ItemLoader:
+    """Parse conference-specific fields and populate the supplied ItemLoader object with the results.
 
     Args:
         line: Text to parse, stripped from tags, normalization is not required (handled by the loader).
         lowercase: Same text, casefolded for comparisons.
         new_item: ItemLoader object to append discovered data to.
+        link: URL, if any, contained it the parsed block.
 
     Returns:
         Populated ItemLoader object.
@@ -87,7 +96,15 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
     if lowercase is None:
         lowercase = line.casefold()
 
-    new_item.add_value('description', line)
+    if ('онлайн' in lowercase
+            or 'трансляц' in lowercase
+            or 'подключит' in lowercase
+            or 'гибридн' in lowercase
+            or 'дистанц' in lowercase
+            or 'ссылка' in lowercase):
+        new_item.add_value('online', True)
+        if link:
+            new_item.add_value('conf_href', link)
 
     if 'ринц' in lowercase:
         new_item.add_value('rinc', True)
@@ -108,9 +125,6 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
             or 'провод' in lowercase):
         new_item = get_dates(lowercase, new_item)
 
-    if emails := re.search(r'\S+@\S+\.\S+', lowercase):
-        new_item.add_value('contacts', emails.group(0))
-
     if ('место' in lowercase
             or 'адрес' in lowercase
             or 'город' in lowercase
@@ -118,12 +132,6 @@ def parse_plain_text(line: str, new_item: ItemLoader, lowercase: str = None) -> 
             or 'очно' in lowercase):
         new_item.add_value('conf_address', line)
         new_item.add_value('offline', True)
-
-    if ('тел.' in lowercase
-            or 'контакт' in lowercase
-            or 'mail' in lowercase
-            or 'почт' in lowercase):
-        new_item.add_value('contacts', line)
 
     return new_item
 
