@@ -16,7 +16,7 @@ import logging
 from io import BytesIO
 
 from .utils import find_date_in_string, parse_vague_dates
-from .items import ConferenceItem
+from .items import ConferenceItem, GrantItem
 
 # pdfplumber logs are extremely verbose
 logging.getLogger("pdfminer").setLevel(logging.WARNING)
@@ -75,6 +75,32 @@ def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> Item
 
     if isinstance(new_item.item, ConferenceItem):
         return parse_conf(clean_line, new_item, lowercase, link)
+    elif isinstance(new_item.item, GrantItem):
+        return parse_grant(clean_line, new_item, lowercase)
+    else:
+        return new_item
+
+
+def parse_grant(line: str,
+                new_item: ItemLoader,
+                lowercase: str = None) -> ItemLoader:
+    """Additional grant-specific parsing logic.
+
+    Args:
+        line: Text to parse, stripped from tags, normalization is not required (handled by the loader).
+        lowercase: Same text, casefolded for comparisons.
+        new_item: ItemLoader object to append discovered data to.
+
+    Returns:
+        Populated ItemLoader object.
+    """
+    if dates := find_date_in_string(lowercase):
+        if ('срок' in lowercase) and len(dates) == 1:
+            new_item.add_value('reg_date_end', dates[0])
+        else:
+            new_item.add_value('reg_date_begin', dates[0])
+            new_item.add_value('reg_date_end', dates[1] if 1 < len(dates) else None)
+
     return new_item
 
 

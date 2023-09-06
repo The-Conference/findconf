@@ -1,7 +1,7 @@
 from scrapy.spiders import Rule, CrawlSpider
 from scrapy.linkextractors import LinkExtractor
 
-from ..items import ConferenceItem, ConferenceLoader
+from ..items import ConferenceItem, ConferenceLoader, GrantItem
 from ..parsing import get_dates, default_parser_xpath
 
 
@@ -27,5 +27,27 @@ class SpbstuSpider(CrawlSpider):
         if not new_item.get_collected_values('conf_date_begin'):
             dates = response.xpath("string(//div[@class='event-inf'])").get()
             new_item = get_dates(dates, new_item)
+
+        yield new_item.load_item()
+
+
+class SpbstuGrantSpider(CrawlSpider):
+    name = "grant_spbstu"
+    un_name = 'Санкт-Петербургский политехнический университет Петра Великого'
+    allowed_domains = ["spbstu.ru"]
+    start_urls = ["https://research.spbstu.ru/grants/"]
+    rules = (
+        Rule(LinkExtractor(restrict_css='a.grants__item'),
+             callback="parse_items", follow=False),
+    )
+
+    def parse_items(self, response):
+        new_item = ConferenceLoader(item=GrantItem(), selector=response)
+
+        new_item.add_value('source_href', response.url)
+        new_item.add_css('title', "h1::text")
+
+        for line in response.xpath("//div[@class='content']/*[self::p]"):
+            new_item = default_parser_xpath(line, new_item)
 
         yield new_item.load_item()
