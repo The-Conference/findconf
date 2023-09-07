@@ -43,14 +43,10 @@ def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> Item
 
     # remove inline <script>
     clean_line = remove_tags(remove_tags_with_content(line, ('script',)))
-    lowercase = clean_line.casefold()
 
-    if ('заяв' in lowercase
-            or 'принимаютс' in lowercase
-            or 'участия' in lowercase
-            or 'регистр' in lowercase):
-        if dates := find_date_in_string(lowercase):
-            if ('до' in lowercase or 'оконч' in lowercase or 'срок' in lowercase) and len(dates) == 1:
+    if re.findall(r'(?i)заяв|принимаютс|участия|регистр', clean_line):
+        if dates := find_date_in_string(clean_line):
+            if re.findall(r'(?i)до|оконч|срок', clean_line) and len(dates) == 1:
                 new_item.add_value('reg_date_end', dates[0])
             else:
                 new_item.add_value('reg_date_begin', dates[0])
@@ -64,38 +60,31 @@ def default_parser_xpath(selector: Selector | str, new_item: ItemLoader) -> Item
 
     new_item.add_value('description', clean_line)
 
-    if ('тел.' in lowercase
-            or 'контакт' in lowercase
-            or 'mail' in lowercase
-            or 'почт' in lowercase):
+    if re.findall(r'(?i)тел\.|контакт|mail|почт', clean_line):
         new_item.add_value('contacts', clean_line)
-
-    if emails := re.search(r'\S+@\S+\.\S+', lowercase):
+    if emails := re.search(r'(?i)\S+@\S+\.\S+', clean_line):
         new_item.add_value('contacts', emails.group(0))
 
     if isinstance(new_item.item, ConferenceItem):
-        return parse_conf(clean_line, new_item, lowercase, link)
+        return parse_conf(clean_line, new_item, link)
     elif isinstance(new_item.item, GrantItem):
-        return parse_grant(clean_line, new_item, lowercase)
+        return parse_grant(clean_line, new_item)
     else:
         return new_item
 
 
-def parse_grant(line: str,
-                new_item: ItemLoader,
-                lowercase: str = None) -> ItemLoader:
+def parse_grant(line: str, new_item: ItemLoader) -> ItemLoader:
     """Additional grant-specific parsing logic.
 
     Args:
         line: Text to parse, stripped from tags, normalization is not required (handled by the loader).
-        lowercase: Same text, casefolded for comparisons.
         new_item: ItemLoader object to append discovered data to.
 
     Returns:
         Populated ItemLoader object.
     """
-    if dates := find_date_in_string(lowercase):
-        if ('срок' in lowercase) and len(dates) == 1:
+    if dates := find_date_in_string(line):
+        if re.findall(r'(?i)срок|заявк', line) and len(dates) == 1:
             new_item.add_value('reg_date_end', dates[0])
         else:
             new_item.add_value('reg_date_begin', dates[0])
@@ -104,58 +93,35 @@ def parse_grant(line: str,
     return new_item
 
 
-def parse_conf(line: str,
-               new_item: ItemLoader,
-               lowercase: str = None,
-               link: str = None) -> ItemLoader:
+def parse_conf(line: str, new_item: ItemLoader, link: str = None) -> ItemLoader:
     """Parse conference-specific fields and populate the supplied ItemLoader object with the results.
 
     Args:
         line: Text to parse, stripped from tags, normalization is not required (handled by the loader).
-        lowercase: Same text, casefolded for comparisons.
         new_item: ItemLoader object to append discovered data to.
         link: URL, if any, contained it the parsed block.
 
     Returns:
         Populated ItemLoader object.
     """
-    if lowercase is None:
-        lowercase = line.casefold()
-
-    if ('онлайн' in lowercase
-            or 'трансляц' in lowercase
-            or 'подключит' in lowercase
-            or 'гибридн' in lowercase
-            or 'дистанц' in lowercase
-            or 'ссылка' in lowercase):
+    if re.findall(r'(?i)он.?лайн|трансляц|подключит|гибридн|дистанц|ссылка', line):
         new_item.add_value('online', True)
         if link:
             new_item.add_value('conf_href', link)
 
-    if 'ринц' in lowercase:
+    if re.findall(r'(?i)ринц|российский индекс научного цитирования', line):
         new_item.add_value('rinc', True)
-    if 'scopus' in lowercase:
+    if re.findall(r'(?i)scopus|скопус', line):
         new_item.add_value('scopus', True)
     if 'ВАК' in line:
         new_item.add_value('vak', True)
-    if 'wos' in lowercase or 'web of science' in lowercase:
+    if re.findall(r'(?i)wos|web of science', line):
         new_item.add_value('wos', True)
 
-    if ('состоится' in lowercase
-            or 'состоятся' in lowercase
-            or 'открытие' in lowercase
-            or 'проведен' in lowercase
-            or 'дата' in lowercase
-            or 'пройд' in lowercase
-            or 'проход' in lowercase
-            or 'провод' in lowercase):
-        new_item = get_dates(lowercase, new_item)
+    if re.findall(r'(?i)состо[ия]тся|открытие|проведен|дата|пройд|про[хв]од', line):
+        new_item = get_dates(line, new_item)
 
-    if ('место' in lowercase
-            or 'адрес' in lowercase
-            or 'город' in lowercase
-            or 'гибридн' in lowercase
-            or 'очно' in lowercase):
+    if re.findall(r'(?i)место|адрес(?!.*почт)|\bгород|гибридн|\bочно', line):
         new_item.add_value('conf_address', line)
         new_item.add_value('offline', True)
 

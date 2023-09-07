@@ -100,7 +100,7 @@
 </span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">    Returns:</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">        Absolute URL.</span>
 </span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">if</span> <span class="n">loader_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="k">if</span> <span class="n">loader_context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;selector&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No context was passed. Make sure to include &quot;selector=&quot; in the item loader.&#39;</span><span class="p">)</span>
 </span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="k">return</span> <span class="n">loader_context</span><span class="p">[</span><span class="s1">&#39;selector&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>
@@ -186,7 +186,7 @@
 </span><span id="absolute_url-24"><a href="#absolute_url-24"><span class="linenos">24</span></a><span class="sd">    Returns:</span>
 </span><span id="absolute_url-25"><a href="#absolute_url-25"><span class="linenos">25</span></a><span class="sd">        Absolute URL.</span>
 </span><span id="absolute_url-26"><a href="#absolute_url-26"><span class="linenos">26</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="absolute_url-27"><a href="#absolute_url-27"><span class="linenos">27</span></a>    <span class="k">if</span> <span class="n">loader_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="absolute_url-27"><a href="#absolute_url-27"><span class="linenos">27</span></a>    <span class="k">if</span> <span class="n">loader_context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;selector&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="absolute_url-28"><a href="#absolute_url-28"><span class="linenos">28</span></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No context was passed. Make sure to include &quot;selector=&quot; in the item loader.&#39;</span><span class="p">)</span>
 </span><span id="absolute_url-29"><a href="#absolute_url-29"><span class="linenos">29</span></a>    <span class="k">return</span> <span class="n">loader_context</span><span class="p">[</span><span class="s1">&#39;selector&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </span></pre></div>
