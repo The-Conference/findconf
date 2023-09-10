@@ -14,7 +14,7 @@ import EmptyFave from "../EmptyResult/emptyFave";
 import Title from "./Title";
 import Card from "./Card";
 const AllConferences = ({ data, keywords, id }) => {
-  const { conferences, isLoading, count, page } = useSelector(
+  const { conferences, isLoading, count, page, grants } = useSelector(
     (state) => state.conferences
   );
   let result = [];
@@ -39,11 +39,13 @@ const AllConferences = ({ data, keywords, id }) => {
       const fetchData = async () => {
         try {
           dispatch(handlePage(page + 1));
+
           dispatch(filteredContent());
         } catch (error) {
           console.log(error);
         }
       };
+
       const handleScroll = () => {
         const scrollHeight = document.documentElement.scrollHeight;
         const scrollTop = document.documentElement.scrollTop;
@@ -83,6 +85,8 @@ const AllConferences = ({ data, keywords, id }) => {
 
   if (data === "prev4") {
     result = types.prev4;
+  } else if (data === "grants") {
+    result = grants;
   } else {
     result = conferences;
   }
@@ -90,9 +94,10 @@ const AllConferences = ({ data, keywords, id }) => {
   return (
     <section className={data === "prev4" ? "conf-prev prev" : "conference"}>
       <Title data={data} />
-      {data !== "prev" && data !== "prev4" && data !== "favourites" && (
-        <Filters />
-      )}
+      {data !== "prev" &&
+        data !== "prev4" &&
+        data !== "favourites" &&
+        data !== "grants" && <Filters />}
       {(isLoading && data !== "prev" && data !== "prev4" && (
         <LoaderTemplate />
       )) ||
@@ -101,12 +106,12 @@ const AllConferences = ({ data, keywords, id }) => {
         result.length === 0 &&
         data !== "favourites" &&
         data !== "prev" &&
-        data !== "prev4" && <EmptyResult />}
+        data !== "prev4" && <EmptyResult data={data} />}
       {!isLoading && result.length === 0 && data === "favourites" && (
         <EmptyFave />
       )}
       <div className="conference__container">
-        {result.length > 0 && result.map((el) => <Card el={el} />)}
+        {result.length > 0 && result.map((el) => <Card el={el} data={data} />)}
       </div>
       {isLoading && (
         <div style={{ marginTop: "50px" }}>

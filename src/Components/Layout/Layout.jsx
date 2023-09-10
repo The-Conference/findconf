@@ -40,6 +40,7 @@ const Layout = ({ type }) => {
         <SideBar desktop={true} />
         {type === "main" && <App />}
         {type === "conferences" && <AllConferences data={"all"} />}
+        {type === "grants" && <AllConferences data={"grants"} />}
         {type === "about" && <AboutService />}
         {type === "full" && <FullConference />}
         {type === "search" && <AllConferences data={"search-results"} />}

@@ -57,6 +57,18 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/grants",
+    element: (
+      <>
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <LazyHeader />
+          <Layout type={"grants"} />
+          {/* <LazyFooter /> */}
+        </Suspense>
+      </>
+    ),
+  },
 
   {
     path: "/conferences/:confId",

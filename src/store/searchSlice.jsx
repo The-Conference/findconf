@@ -52,6 +52,7 @@ export const SearchResults = () => async (dispatch, getState) => {
   try {
     await api
       .get(`/api/confs/?search=${value}`)
+
       .then((response) => dispatch(handleSearch(response.data.results)));
   } catch (e) {
     console.log(e);

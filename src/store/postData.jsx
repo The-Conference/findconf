@@ -5,6 +5,7 @@ const initialState = {
   count: 0,
   page: 1,
   conferences: [],
+  grants: [],
   params: "",
   oneConference: null,
   isLoading: false,
@@ -56,6 +57,10 @@ export const postData = createSlice({
       state.conferences = state.conferences.concat(action.payload);
       state.isLoading = false;
     },
+    fetchGrants: (state, action) => {
+      state.grants = state.grants.concat(action.payload);
+      state.isLoading = false;
+    },
     fetchConferencesOnce: (state, action) => {
       state.conferences = [];
       state.conferences = action.payload;
@@ -84,6 +89,7 @@ export const {
   cleanParams,
   fetchId,
   fetchConferencesOnce,
+  fetchGrants,
 } = postData.actions;
 
 export const fetchOnce = () => async (dispatch) => {
@@ -137,9 +143,9 @@ export const fetchFavourite = () => async (dispatch) => {
 export const filteredContent = () => async (dispatch, getState) => {
   dispatch(startLoading());
   const Token = localStorage.getItem("auth_token"); // Получение токена из Local Storage
-
-  const { page } = getState().conferences;
-  const { params } = getState().conferences;
+  const pathname = window.location.pathname;
+  console.log(pathname);
+  const { page, params } = getState().conferences;
 
   const urlParams = new URLSearchParams(params);
   const finalUrl = `${urlParams.toString()}`;
@@ -151,16 +157,46 @@ export const filteredContent = () => async (dispatch, getState) => {
   };
 
   try {
-    if (Token) {
-      const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`, {
-        headers,
-      });
-      dispatch(fetchConferences(response.data.results));
-      dispatch(handleCount(response.data.count));
+    if (pathname.includes("/conferences")) {
+      if (Token) {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`, {
+          headers,
+        });
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      } else {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`);
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      }
+    }
+    if (pathname.includes("/grants")) {
+      if (Token) {
+        const response = await api.get(
+          `/api/grants/?${readyUrl}&page=${page}`,
+          {
+            headers,
+          }
+        );
+        dispatch(fetchGrants(response.data.results));
+        dispatch(handleCount(response.data.count));
+      } else {
+        const response = await api.get(`/api/grants/?${readyUrl}&page=${page}`);
+        dispatch(fetchGrants(response.data.results));
+        dispatch(handleCount(response.data.count));
+      }
     } else {
-      const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`);
-      dispatch(fetchConferences(response.data.results));
-      dispatch(handleCount(response.data.count));
+      if (Token) {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`, {
+          headers,
+        });
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      } else {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`);
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      }
     }
   } catch (e) {
     dispatch(hasError(e.message));
