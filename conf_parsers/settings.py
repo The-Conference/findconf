@@ -148,8 +148,9 @@ DB_PASS = env('DB_PASS', default=None)
 DB_HOST = env('DB_HOST', default=None)
 DB_PORT = env('DB_PORT', default=None)
 DB_NAME = env('DB_NAME', default=None)
+DEFAULT_DB = f"postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-DATABASE_URL = f"postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE_URL = env('DB_URL', default=DEFAULT_DB)
 
 PLAYWRIGHT_BROWSER_TYPE = "webkit"
 PLAYWRIGHT_LAUNCH_OPTIONS = {
