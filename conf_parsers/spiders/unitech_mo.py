@@ -26,7 +26,7 @@ class UnitechMoSpider(CrawlSpider, UnitechMo):
     }
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_css('title', "h1::text")
@@ -57,7 +57,7 @@ class UnitechMoSpider2(scrapy.Spider, UnitechMo):
                 title, date = data
 
             if 'онференц' in title.lower():
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 new_item = get_dates(f'{date} {month} {year}', new_item, is_vague=True)
                 new_item.add_value('conf_address', re.split(r'(\d+)', date)[0])
@@ -77,7 +77,7 @@ class UnitechMoSpider3(scrapy.Spider, UnitechMo):
         for line in container.xpath('.//h4[not(@class)]'):
             title = line.xpath('string(.)').get()
             if 'конфер' in title.lower():
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 new_item.add_value('source_href', response.url)
                 new_item.add_value('title', title)

@@ -16,7 +16,7 @@ class MifiSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_xpath('title', "//h1/text()")

@@ -23,7 +23,7 @@ class GsguSpider(scrapy.Spider):
                 continue
 
             if 'онференц' in conf_name.lower():
-                new_item = ConferenceLoader(item=ConferenceItem())
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
                 new_item.add_value('title', conf_name)
                 new_item.add_value('description', conf_name)
                 new_item.add_value('source_href', self.start_urls[0])

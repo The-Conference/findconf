@@ -17,7 +17,7 @@ class TestParsing(TestCase):
         request = Request(url=url)
         with open(sample, 'rb') as f:
             response = HtmlResponse(url=url, request=request, body=f.read(), encoding='utf-8')
-        loader = ConferenceLoader(item=ConferenceItem(), selector=response)
+        loader = ConferenceLoader(item=ConferenceItem(), response=response)
         for line in response.xpath("//div[@class='news-item']//*[self::p]"):
             loader = default_parser_xpath(line, loader)
         cls.new_item = loader

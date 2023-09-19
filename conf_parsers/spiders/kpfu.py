@@ -21,7 +21,7 @@ class KpfuSpider(scrapy.Spider):
 
     def parse_page(self, response):
         for row in response.xpath("//table//tr[@class='konf_tr']"):
-            new_item = ConferenceLoader(item=ConferenceItem(), selector=row)
+            new_item = ConferenceLoader(item=ConferenceItem(), selector=row, response=response)
             conf_name = row.css('td:nth-child(2) ::text').get()
             new_item.add_value('title', conf_name)
             new_item.add_value('source_href', response.url)

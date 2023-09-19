@@ -25,7 +25,7 @@ class GuuSpider(scrapy.Spider):
                 except ValueError:
                     continue
                 if 'конфер' in conf_name.lower():
-                    new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                    new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                     new_item.add_value('title', conf_name)
                     new_item.add_value('source_href', response.url)

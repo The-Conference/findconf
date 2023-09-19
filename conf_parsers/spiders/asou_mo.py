@@ -18,7 +18,7 @@ class AsouMoSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_css('title', "h1.entry-title::text")
         conf_s_desc = response.xpath("//div[@class='one-news__intro-description']")

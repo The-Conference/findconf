@@ -21,7 +21,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 BOT_NAME = "conf_parsers"
-SPIDER_MODULES = ["conf_parsers.spiders"]
+SPIDER_MODULES = ["conf_parsers.spiders", "conf_parsers.spiders_grants"]
 NEWSPIDER_MODULE = "conf_parsers.spiders"
 
 ROOT_DIR = Path(__file__).resolve().parent.parent

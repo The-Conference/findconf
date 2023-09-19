@@ -176,4 +176,4 @@ class TestFillTheBlanksPipeline(TestCase):
             title='test grant',
         )
         result = FillTheBlanksPipeline.process_item(item, SampleSpider)
-        self.assertEqual('test_spider_2022-01-02_testgrant', result['item_id'])
+        self.assertEqual('test_spider_ed899e549a15199d26f8abde7a103645', result['item_id'])

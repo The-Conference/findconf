@@ -28,7 +28,7 @@ class TestItemLoader(TestCase):
         cls.text_fields = ('short_description', 'description', 'conf_address', 'contacts')
 
     def setUp(self) -> None:
-        self.loader = ConferenceLoader(item=ConferenceItem(), selector=self.response)
+        self.loader = ConferenceLoader(item=ConferenceItem(), response=self.response)
 
     def test_clean_email(self):
         string = 'mailto:test@example.com'

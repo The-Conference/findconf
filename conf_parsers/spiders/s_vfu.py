@@ -17,7 +17,7 @@ class SVfuSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_css('title', "div.px-4 > h2::text")

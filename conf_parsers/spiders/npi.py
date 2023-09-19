@@ -14,7 +14,7 @@ class NpiSpider(scrapy.Spider):
         for row in response.css("div.col-md-10 li"):
             conf_name = row.xpath("string(.)").get()
             if 'конфер' in conf_name.lower():
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 try:
                     conf_name, date = conf_name.split('(')

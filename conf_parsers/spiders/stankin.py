@@ -41,7 +41,7 @@ class StankinSpider(scrapy.Spider):
         text = [i.get("insert") for i in data if not isinstance(i.get("insert"), dict)]
         text = " ".join(text)
         if 'конфер' in text.lower():
-            new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+            new_item = ConferenceLoader(item=ConferenceItem(), response=response)
             new_item.add_value('source_href', self.base_url + response.meta.get("id"))
             new_item.add_value('title', response.meta.get("name"))
 

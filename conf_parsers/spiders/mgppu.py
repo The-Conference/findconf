@@ -15,7 +15,7 @@ class MgppuSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
         dates = response.xpath("//time/text()").get()
         new_item = get_dates(dates, new_item)
         new_item.add_value('source_href', response.url)

@@ -15,7 +15,7 @@ class DonstuSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         conf_name = response.xpath("//div[@class='title']/text()").get()
         new_item.add_value('title', conf_name)

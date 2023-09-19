@@ -28,7 +28,7 @@ class KantianaSpider(scrapy.Spider):
                 continue
 
             if 'конф' in conf_name.lower():
-                new_item = ConferenceLoader(item=ConferenceItem())
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
                 new_item.add_value('title', conf_name)
                 new_item.add_value('source_href', self.start_urls[0])
                 new_item.add_value('description', conf_desc)

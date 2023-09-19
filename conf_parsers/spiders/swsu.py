@@ -32,7 +32,7 @@ class SwsuSpider(scrapy.Spider):
                 conf_name = conf_name.replace('-\n', '')
                 contacts = contacts.replace('-\n', '')
 
-                new_item = ConferenceLoader(item=ConferenceItem())
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
                 new_item.add_value('title', conf_name)
                 new_item.add_value('description', conf_name)
                 new_item.add_value('contacts', contacts)

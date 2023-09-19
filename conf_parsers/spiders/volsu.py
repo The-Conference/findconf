@@ -29,7 +29,7 @@ class VolsuSpider(scrapy.Spider):
         yield scrapy.Request(response.urljoin(next_page), callback=self.parse_links, meta={"playwright": True})
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_css('title', "h2::text")

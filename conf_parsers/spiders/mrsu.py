@@ -22,7 +22,7 @@ class MrsuSpider(CrawlSpider):
             conf_name_item = card.css("div.head__local__institution_with_bread")
             conf_name = conf_name_item.xpath('string(.)').get()
             if 'онференц' in conf_name.lower():
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 link = conf_name_item.xpath('.//a/@href').get()
                 new_item.add_value('source_href', response.urljoin(link))

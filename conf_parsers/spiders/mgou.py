@@ -17,7 +17,7 @@ class MgouSpider(scrapy.Spider):
                 continue
 
             if 'конфер' in conf_name.lower():
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 new_item = get_dates(date, new_item, is_vague=True)
                 new_item.add_value('title', conf_name)

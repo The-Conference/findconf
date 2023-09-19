@@ -13,7 +13,7 @@ class PetrsuSpider(scrapy.Spider):
     start_urls = ["https://conf.petrsu.ru/index.php"]
 
     def parse(self, response, **kwargs):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_css('title', 'div#title::text')
         new_item.add_value('source_href', response.url)
@@ -41,7 +41,7 @@ class PetrsuPagesSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_xpath('title', "//h1/text()")
         new_item.add_value('source_href', response.url)

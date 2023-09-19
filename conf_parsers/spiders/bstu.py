@@ -15,7 +15,7 @@ class BstuSpider(scrapy.Spider):
         for link in links:
             conf_name = link.xpath("string(.)").get()
             if 'конференц' in conf_name.lower():
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
                 new_item.add_value('title', conf_name)
                 new_item.add_value('description', conf_name)
                 href = link.css("a::attr(href)").get() or None

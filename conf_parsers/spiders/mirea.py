@@ -38,7 +38,7 @@ class MireaSpider(scrapy.Spider):
         for conf in collected_confs:
             if conf and ('конф' in conf.get('form').lower() or
                          'конф' in conf.get('title').lower()):
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 new_item.add_value('source_href', response.url)
                 new_item.add_value('title', conf.get('title'))

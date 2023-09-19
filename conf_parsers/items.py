@@ -18,14 +18,14 @@ def absolute_url(url: str, loader_context: ChainMap) -> str:
 
     Args:
         url: Absolute or relative URL.
-        loader_context: Parent URL, passed as a 'selector' parameter of the item loader object.
+        loader_context: Parent URL, passed as a 'response' parameter of the item loader object.
 
     Returns:
         Absolute URL.
     """
-    if loader_context.get('selector') is None:
-        raise ValueError('No context was passed. Make sure to include "selector=" in the item loader.')
-    return loader_context['selector'].urljoin(url)
+    if loader_context.get('response') is None:
+        raise ValueError('No context was passed. Make sure to include response in the item loader.')
+    return loader_context['response'].urljoin(url)
 
 
 def fix_emails(url: str) -> str:

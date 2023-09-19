@@ -17,7 +17,7 @@ class RanepaSpiderIIM(CrawlSpider):
     def parse_items(self, response):
         desc = response.xpath("string(//div[@class='conf-intro__headline'])").get()
         if 'онференц' in desc.lower():
-            new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+            new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
             new_item.add_value('source_href', response.url)
             new_item.add_css('title', "h1::text")
@@ -42,7 +42,7 @@ class RanepaSpiderIURR(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         conf_name = response.css("h1::text").get()
@@ -68,7 +68,7 @@ class RanepaSpiderIGSU(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_css('title', "h1::text")
@@ -93,7 +93,7 @@ class RanepaSpiderGSCM(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_css('title', "h1::text")
@@ -115,7 +115,7 @@ class RanepaSpiderION(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+        new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_css('title', "h1::text")

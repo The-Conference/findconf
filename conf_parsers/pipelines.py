@@ -14,6 +14,8 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from hashlib import md5
+
 from .models import ConferenceItemDB, GrantItemDB
 from .utils import find_date_in_string
 from .items import ConferenceItem, GrantItem
@@ -85,9 +87,9 @@ class FillTheBlanksPipeline:
                 adapter['conf_date_end'] = adapter.get('conf_date_begin')
 
         elif isinstance(item, GrantItem):
-            adapter['item_id'] = f"{spider.name}" \
-                                 f"_{adapter.get('reg_date_end')}" \
-                                 f"_{''.join(adapter.get('title').split())[:50]}"
+            string = f"{adapter.get('reg_date_end')}{adapter.get('title')}"
+            _hash = md5(string.encode(), usedforsecurity=False).hexdigest()
+            adapter['item_id'] = f"{spider.name}_{_hash}"
         return item
 
 

@@ -30,7 +30,7 @@ class TpuSpider(CrawlSpider):
                 continue
 
             if 'конфер' in conf_name.lower():
-                new_item = ConferenceLoader(item=ConferenceItem(), selector=response)
+                new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 new_item.add_value('title', conf_name)
                 new_item.add_value('source_href', response.url)
@@ -54,7 +54,7 @@ class TpuGrantSpider(CrawlSpider):
     )
 
     def parse_items(self, response):
-        new_item = ConferenceLoader(item=GrantItem(), selector=response)
+        new_item = ConferenceLoader(item=GrantItem(), response=response)
 
         new_item.add_value('source_href', response.url)
         new_item.add_css('title', "div.newshead::text")
