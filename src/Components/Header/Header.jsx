@@ -24,7 +24,7 @@ const Header = () => {
   };
   const [focused, setFocused] = useState(false);
   useEffect(() => {
-    if (windowWidth > 861) {
+    if (windowWidth > 1011) {
       setFocused(false);
     }
     const handleResize = () => {

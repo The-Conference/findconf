@@ -1,6 +1,6 @@
 .sidebar-mobile {
   display: none;
-  @media (max-width: 861px) {
+  @media (max-width: 1011px) {
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@
     @media (max-width: 921px) {
       width: 40px;
     }
-    @media screen and (max-width: 861px) {
+    @media screen and (max-width: 1011px) {
       padding: 5px;
       margin-left: 10px;
     }
@@ -39,7 +39,7 @@
       @media screen and (max-width: 1069px) {
         display: none;
       }
-      @media screen and (max-width: 861px) {
+      @media screen and (max-width: 1011px) {
         display: block;
         font-size: 15px;
       }

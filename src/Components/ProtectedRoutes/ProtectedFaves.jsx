@@ -18,10 +18,10 @@ const ProtectedFaves = () => {
     setFocus(false);
   });
   useEffect(() => {
-    if (windowWidth > 861) {
+    if (windowWidth > 1011) {
       setFocus(false);
     }
-    if (windowWidth <= 861 && menu) {
+    if (windowWidth <= 1011 && menu) {
       setFocus(true);
     }
     const handleResize = () => {

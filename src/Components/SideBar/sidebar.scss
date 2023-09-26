@@ -6,6 +6,7 @@
   justify-content: space-between;
   position: sticky;
   top: 80px;
+  width: 17.5%;
   @media screen and (max-width: 1261px) {
     margin-top: 85px;
   }
@@ -15,7 +16,7 @@
     flex-direction: column;
     gap: 5px;
     margin: 0 0 0 20px;
-    @media screen and (max-width: 861px) {
+    @media screen and (max-width: 1011px) {
       margin: 0;
     }
 
@@ -34,7 +35,7 @@
     }
   }
 
-  @media screen and (max-width: 861px) {
+  @media screen and (max-width: 1011px) {
     display: none;
   }
   .active {
