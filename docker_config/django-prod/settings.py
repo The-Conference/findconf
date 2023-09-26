@@ -207,8 +207,10 @@ CKEDITOR_CONFIGS = {
         'toolbar': [
             ['Bold', 'Italic', 'Underline', 'Strike'],
             ['NumberedList', 'BulletedList'],
+            ['lineheight'],
         ],
         'removePlugins': 'elementspath',
+        'extraPlugins': ['lineheight'],
     }
 }
 
