@@ -41,11 +41,11 @@ const FullConference = () => {
       try {
         if (Token) {
           await axios
-            .get(`https://test.theconf.ru/api/confs/${confId}/`, { headers })
+            .get(`https://theconf.ru/api/confs/${confId}/`, { headers })
             .then((response) => dispatch(fetchOne(response.data)));
         } else {
           await axios
-            .get(`https://test.theconf.ru/api/confs/${confId}/`)
+            .get(`https://theconf.ru/api/confs/${confId}/`)
             .then((response) => dispatch(fetchOne(response.data)));
         }
       } catch (e) {

@@ -12,7 +12,7 @@ const Registered = () => {
     const confirmRegistration = async () => {
       try {
         const response = await axios.post(
-          `https://test.theconf.ru/api/auth/users/activation/`,
+          `https://theconf.ru/api/auth/users/activation/`,
           { uid, token }
         );
         console.log(response);

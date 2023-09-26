@@ -217,7 +217,7 @@ export const addDeleteFave = () => async (dispatch, getState) => {
 
   try {
     const response = await axios.get(
-      `https://test.theconf.ru/api/confs/${id}/favorite/`,
+      `https://theconf.ru/api/confs/${id}/favorite/`,
       { headers }
     );
 
