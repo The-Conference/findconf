@@ -10,23 +10,16 @@ import SignUp from "./Components/SignUp/SignUp";
 import Login from "./Components/Login/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoaderTemplateHeader } from "./utils/Loader/LoaderTemplate";
-import AboutService from "./Components/AboutService/AboutService";
-import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import Registered from "./Components/SignUp/Registered";
+import ProtectedFaves from "./Components/ProtectedRoutes/ProtectedFaves";
+import Layout from "./Components/Layout/Layout";
 
 const LazyHeader = React.lazy(() => import("./Components/Header/Header"));
-const LazyApp = React.lazy(() => import("./App"));
-const LazyAllConferences = React.lazy(() =>
-  import("./Components/Conference/AllConferences")
-);
-const LazyFullConference = React.lazy(() =>
-  import("./Components/FullConference/FullConference")
-);
-const LazyFooter = React.lazy(() => import("./Components/Footer/Footer"));
+// const LazyFooter = React.lazy(() => import("./Components/Footer/Footer"));
 const LazyEmptyResult = React.lazy(() =>
   import("./Components/EmptyResult/EmptyResult")
 );
 const LazyNotFound = React.lazy(() => import("./Components/404/404"));
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,32 +27,44 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyApp />
-          <LazyFooter />
+          <Layout type={"main"} />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
   },
   {
-    path: "/favourite/",
+    path: "/favourite",
+    element: (
+      <>
+        <Suspense fallback={<LoaderTemplateHeader />}>
+          <ProtectedFaves />
+        </Suspense>
+      </>
+    ),
+    redirectTo: "/login",
+  },
+
+  {
+    path: "/conferences",
     element: (
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyAllConferences data={"favourites"} />
-          <LazyFooter />
+          <Layout type={"conferences"} />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
   },
   {
-    path: "/all",
+    path: "/grants",
     element: (
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyAllConferences data={"all"} />
-          <LazyFooter />
+          <Layout type={"grants"} />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -71,8 +76,8 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyFullConference />
-          <LazyFooter />
+          <Layout type={"full"} />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -83,36 +88,13 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <LazyAllConferences data={"search-results"} />
-          <LazyFooter />
+          <Layout type={"search"} />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
   },
-  {
-    path: "/collection2/",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"collection2"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: "/collection1/",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"collection1"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
+
   {
     path: "/search/",
     element: (
@@ -120,7 +102,7 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyEmptyResult />
-          <LazyFooter />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
@@ -131,37 +113,13 @@ const router = createBrowserRouter([
       <>
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
-          <AboutService />
-          <LazyFooter />
+          <Layout type={"about"} />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),
   },
 
-  {
-    path: "/date/:date",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"date"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
-  {
-    path: "/dates/:periods",
-    element: (
-      <>
-        <Suspense fallback={<LoaderTemplateHeader />}>
-          <LazyHeader />
-          <LazyAllConferences data={"periods"} />
-          <LazyFooter />
-        </Suspense>
-      </>
-    ),
-  },
   {
     path: "/signup",
     element: (
@@ -179,13 +137,12 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/profile",
+    path: "/users/activation/:uid/:token",
     element: (
       <>
-        <ProtectedRoute />
+        <Registered />
       </>
     ),
-    redirectTo: "/login",
   },
 
   {
@@ -195,7 +152,7 @@ const router = createBrowserRouter([
         <Suspense fallback={<LoaderTemplateHeader />}>
           <LazyHeader />
           <LazyNotFound />
-          <LazyFooter />
+          {/* <LazyFooter /> */}
         </Suspense>
       </>
     ),

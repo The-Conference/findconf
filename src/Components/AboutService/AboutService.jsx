@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import step from "../../assets/Step.svg";
 import "./about.scss";
 import { developers, founders } from "../../utils/Founders/FOUNDERS";
 
 const AboutService = () => {
+  const [loadedImageCount, setLoadedImageCount] = useState(0);
+  const totalImages = founders.length + developers.length; // Assuming founders and developers are arrays of staff data
+
+  const handleImageLoad = () => {
+    setLoadedImageCount((prevCount) => prevCount + 1);
+  };
+
+  const allImagesLoaded = loadedImageCount === totalImages;
   const renderStaff = (staff) => {
-    return staff.map((el, index) => (
-      <div key={index} className="about__staff-founders">
-        <div className="about__staff-founders-pic">
-          <img src={el.pic} alt="фото" width={300} height={300} />
+    return staff.map((el) => (
+      <div key={el.name} className="about__staff-founders">
+        <div
+          className={`'about__staff-founders-pic' ${
+            !allImagesLoaded
+              ? " about__staff-founders-pic blur"
+              : "about__staff-founders-pic"
+          }`}
+        >
+          {!allImagesLoaded && <div className="blur-image-placeholder"></div>}
+          <img
+            onLoad={handleImageLoad}
+            src={el.pic}
+            alt="фото"
+            width={300}
+            height={300}
+            className={!allImagesLoaded ? "hidden" : ""}
+          />
         </div>
         <div className="role">{el.role}</div>
         <div className="name">
@@ -38,8 +60,8 @@ const AboutService = () => {
           <p>{date}</p>
           <br />
           <ul>
-            {items.map((item, index) => (
-              <li key={index}>{item}</li>
+            {items.map((item) => (
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </div>

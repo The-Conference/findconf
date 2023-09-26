@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { registerUser } from "../../store/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Registered from "../SignUp/Registered";
+import CheckMail from "./CheckMail";
 import close from "../../assets/close.svg";
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -66,7 +66,7 @@ const SignUp = () => {
   }, [user.error]);
   return (
     <>
-      {(user.registered === false && (
+      {(user.registered === true && <CheckMail />) || (
         <div className="login">
           <img
             src={close}
@@ -144,7 +144,7 @@ const SignUp = () => {
             <button className="login__button-blue">Войти</button>
           </a>
         </div>
-      )) || <Registered />}
+      )}
     </>
   );
 };

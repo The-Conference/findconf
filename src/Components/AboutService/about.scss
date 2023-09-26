@@ -1,15 +1,23 @@
 .about {
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 100px 0 40px 0;
+  width: 80%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 20px 40px 20px;
+  @media (max-width: 1000px) {
+    margin: 80px 0 40px 0;
+  }
+  @media (max-width: 861px) {
+    width: 100%;
+    margin: 80px 0 40px 0;
+  }
   h1 {
     font-size: 56px;
-    font-family: "Manrope extrabold";
+    font-family: "Heading 1";
     text-align: center;
+    padding-bottom: 20px;
     span {
       color: #2c60e7;
     }
@@ -51,6 +59,8 @@
     display: flex;
     border-top: 4px solid #bacaf4;
     padding-bottom: 200px;
+    align-self: flex-end;
+    width: 82%;
     @media (max-width: 1260px) {
       display: none;
     }
@@ -115,7 +125,7 @@
       }
     }
     h2 {
-      font-family: "Manrope bold";
+      font-family: "Body L Medium";
       text-align: center;
       padding-bottom: 24px;
       font-size: 32px;
@@ -148,15 +158,16 @@
         border-radius: 13px;
         filter: grayscale(100%);
         overflow: hidden;
-        @media (max-width: 617px) {
-          max-width: 220px;
-          max-height: 220px;
-        }
-        @media (max-width: 517px) {
-          max-width: 150px;
-          max-height: 150px;
-        }
-        @media (max-width: 379px) {
+
+        // @media (max-width: 617px) {
+        //   max-width: 220px;
+        //   max-height: 220px;
+        // }
+        // // @media (max-width: 517px) {
+        // //   max-width: 150px;
+        // //   max-height: 150px;
+        // // }
+        @media (max-width: 478px) {
           max-width: 260px;
           max-height: 260px;
         }
@@ -167,6 +178,9 @@
             transform: scale(1.05);
           }
         }
+        .hidden {
+          opacity: 1;
+        }
       }
       .role {
         position: absolute;
@@ -176,7 +190,7 @@
         border-radius: 6px;
         color: white;
         font-size: 12px;
-        font-family: "Manrope medium";
+        font-family: "Body M";
         padding: 6px 14px;
         @media (max-width: 575px) {
           font-size: 12px;
@@ -204,7 +218,7 @@
       }
       p {
         font-size: 18px;
-        font-family: "Manrope semibold";
+        font-family: "Regular semibold";
         padding: 5px 14px;
         @media (max-width: 575px) {
           font-size: 12px;
@@ -214,5 +228,21 @@
         }
       }
     }
+  }
+  .blur-image-placeholder {
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #8d8c8cbe;
+
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  .blur {
+    filter: blur(3px) grayscale(100%);
   }
 }

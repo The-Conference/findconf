@@ -1,0 +1,63 @@
+.sidebar-mobile {
+  display: none;
+  @media (max-width: 1011px) {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1010;
+    width: 294px;
+    overflow: auto;
+  }
+
+  .header__logo {
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 921px) {
+      width: 40px;
+    }
+    @media screen and (max-width: 1011px) {
+      padding: 5px;
+      margin-left: 10px;
+    }
+    img {
+      height: 40px;
+    }
+    span {
+      font-size: 26px;
+      font-family: "Body L Medium";
+      letter-spacing: 4.7px;
+      margin-left: 13px;
+      white-space: nowrap;
+      @media screen and (max-width: 1069px) {
+        display: none;
+      }
+      @media screen and (max-width: 1011px) {
+        display: block;
+        font-size: 15px;
+      }
+    }
+  }
+
+  .active {
+    background-color: #eaf0fb;
+    color: #2c60e7;
+    border-radius: 10px;
+    a {
+      color: #2c60e7;
+    }
+  }
+}
+.visible {
+  left: 0;
+}
+.footer-mobile {
+  margin-bottom: 50px;
+}

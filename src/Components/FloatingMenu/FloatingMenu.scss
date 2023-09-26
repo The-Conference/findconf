@@ -1,0 +1,37 @@
+.floating-menu {
+  display: none;
+  @media screen and (max-width: 1011px) {
+    display: block;
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffff;
+    box-shadow: -2px -2px 4px 0px #00002e1a;
+    z-index: 1;
+    border-radius: 20px 20px 0px 0px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      display: inline;
+      display: inline-block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+  .fixed {
+    position: fixed;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  }
+}

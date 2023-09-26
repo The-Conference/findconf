@@ -1,0 +1,13 @@
+name: 'Init pipeline for update release on prod server'
+
+on:
+  push:
+    tags:
+      - "v.**"
+    branches-ignore:
+      - 'dev/devops'
+      - 'main'
+
+jobs:
+  checkout:
+    uses: The-Conference/findconf/.github/workflows/prod-github-actions-all.yml@main

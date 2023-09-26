@@ -1,22 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { api } from "../api";
-
+import axios from "axios";
 const initialState = {
+  count: 0,
+  page: 1,
   conferences: [],
-  query: "",
-  filters: {
-    form: "",
-    status: "",
-    publish: "",
-    city: "",
-    themes: "",
-    schools: "",
-    sort: "",
-  },
+  grants: [],
+  params: "",
+  oneConference: null,
   isLoading: false,
   error: false,
-  currentPage: 1,
-  conferencesPerPage: 20,
+  id: null,
 };
 export const postData = createSlice({
   name: "conferences",
@@ -25,144 +19,212 @@ export const postData = createSlice({
     startLoading: (state) => {
       state.isLoading = true;
     },
-    addMore: (state, action) => {
-      state.conferencesPerPage = state.conferencesPerPage + action.payload;
-    },
-    paginate: (state, action) => {
-      state.currentPage = action.payload;
-    },
+
     hasError: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
     },
+    handlePage: (state, action) => {
+      state.page = action.payload;
+    },
+    fetchParams: (state, action) => {
+      state.params = action.payload;
+    },
+    cleanParams: (state) => {
+      const keyToKeep = "search";
+      const newObj = Object.keys(state.params).reduce((acc, key) => {
+        if (key === keyToKeep) {
+          acc[key] = state.params[key];
+        }
+        return acc;
+      }, {});
+
+      if (state.params.hasOwnProperty("search")) {
+        state.params = newObj;
+      } else {
+        state.params = "";
+      }
+    },
+
+    handleCount: (state, action) => {
+      state.count = action.payload;
+    },
     reset: (state) => {
-      return (state.conferences = []);
+      state.conferences = [];
     },
 
-    handleFollow: (state, action) => {
-      return state.conferences.forEach((el) =>
-        el.id === action.payload ? (el.follow = !el.follow) : el
-      );
-    },
-    handleSave: (state, action) => {
-      return window.localStorage.setItem(
-        "fave",
-        JSON.stringify(action.payload)
-      );
-    },
-
-    // saveFilter: (state, action) => {
-    //   if (action.payload === "онлайн") {
-    //     state.filters.filter.online = !state.filters.filter.online;
-    //   }
-    //   if (action.payload === "оффлайн") {
-    //     state.filters.filter.offline = !state.filters.filter.offline;
-    //   }
-    //   if (action.payload === "ринц") {
-    //     state.filters.filter.rinc = !state.filters.filter.rinc;
-    //   }
-    //   if (action.payload === "регистрация началась") {
-    //     state.filters.filter.register = !state.filters.filter.register;
-    //   }
-    //   if (action.payload === "ближайшие") {
-    //     state.filters.filter.nearest = !state.filters.filter.nearest;
-    //   }
-    // },
-    // deleteAllFilters: (state, action) => {
-    //   state.filters.filter = {
-    //     online: false,
-    //     offline: false,
-    //     rinc: false,
-    //     register: false,
-    //     nearest: false,
-    //   };
-    // },
     fetchConferences: (state, action) => {
+      state.conferences = state.conferences.concat(action.payload);
+      state.isLoading = false;
+    },
+    fetchGrants: (state, action) => {
+      state.grants = state.grants.concat(action.payload);
+      state.isLoading = false;
+    },
+    fetchConferencesOnce: (state, action) => {
       state.conferences = [];
-
-      let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
-      let data = action.payload;
-
-      for (let item of data) {
-        item.follow =
-          followed.includes(item.id) && followed.length > 0 ? true : false;
-      }
-      state.conferences = data;
+      state.conferences = action.payload;
+      state.isLoading = false;
+    },
+    fetchId: (state, action) => {
+      state.id = action.payload;
     },
 
-    handleFilter: (state, action) => {
-      state.conferences = [];
-
-      let followed = JSON.parse(window.localStorage.getItem("fave")) || [];
-      let data = action.payload;
-
-      for (let item of data) {
-        item.follow =
-          followed.includes(item.id) && followed.length > 0 ? true : false;
-      }
-      state.conferences = data;
+    fetchOne: (state, action) => {
+      state.oneConference = action.payload;
       state.isLoading = false;
     },
   },
 });
 export default postData.reducer;
 export const {
-  handleFollow,
-  handleFilter,
-  saveFilter,
-  handleSave,
-  deleteAllFilters,
   fetchConferences,
   startLoading,
   reset,
   hasError,
-  paginate,
-  addMore,
-  parseUrl,
+  fetchOne,
+  fetchParams,
+  handlePage,
+  handleCount,
+  cleanParams,
+  fetchId,
+  fetchConferencesOnce,
+  fetchGrants,
 } = postData.actions;
 
-export const fetchAllConferences = () => async (dispatch) => {
+export const fetchOnce = () => async (dispatch) => {
   dispatch(startLoading());
+  const Token = localStorage.getItem("auth_token"); // Получение токена из Local Storage
+
+  const headers = {
+    Authorization: `Token ${Token}`,
+    Accept: "application/json",
+  };
 
   try {
-    await api
-      .get("/api/")
-      .then((response) => dispatch(fetchConferences(response.data)));
+    if (Token) {
+      const response = await api.get(`/api/confs/`, {
+        headers,
+      });
+      dispatch(fetchConferencesOnce(response.data.results));
+      dispatch(handleCount(response.data.count));
+    } else {
+      const response = await api.get(`/api/confs/`);
+      dispatch(fetchConferencesOnce(response.data.results));
+      dispatch(handleCount(response.data.count));
+    }
   } catch (e) {
     dispatch(hasError(e.message));
   }
 };
 
-export const fetchFilteredConferences = () => async (dispatch) => {
+export const fetchFavourite = () => async (dispatch) => {
   dispatch(startLoading());
-  dispatch(paginate(1));
+  const Token = localStorage.getItem("auth_token"); // Получение токена из Local Storage
+  const headers = {
+    Authorization: `Token ${Token}`,
+    Accept: "application/json",
+  };
 
   try {
-    await api
-      .get(`/api/`)
-      .then((response) => dispatch(handleFilter(response.data)));
+    if (Token) {
+      const response = await api.get(`/api/confs/favorites/`, {
+        headers,
+      });
+      dispatch(fetchConferencesOnce(response.data));
+      dispatch(handleCount(response.data.count));
+      console.log(response.data);
+    }
   } catch (e) {
     dispatch(hasError(e.message));
   }
 };
 
-export const filteredContent = () => async (dispatch) => {
+export const filteredContent = () => async (dispatch, getState) => {
   dispatch(startLoading());
-  dispatch(paginate(1));
-  const currentUrl = window.location.href;
-  let query = "?" + currentUrl.split("?")[1];
-  let replacedUrl = decodeURIComponent(query)
-    .replace(/\+/g, "%20")
-    .replace(/%2C/g, ",");
+  const Token = localStorage.getItem("auth_token"); // Получение токена из Local Storage
+  const pathname = window.location.pathname;
+  console.log(pathname);
+  const { page, params } = getState().conferences;
 
-  // console.log(replacedUrl);
+  const urlParams = new URLSearchParams(params);
+  const finalUrl = `${urlParams.toString()}`;
+  const readyUrl = decodeURI(finalUrl).replace(/%2C/gi, ",");
+
+  const headers = {
+    Authorization: `Token ${Token}`,
+    Accept: "application/json",
+  };
+
   try {
-    await api.get(`/api/${replacedUrl}`).then((response) => {
-      dispatch(handleFilter(response.data));
-      // console.log(response.data);
-    });
+    if (pathname.includes("/conferences")) {
+      if (Token) {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`, {
+          headers,
+        });
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      } else {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`);
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      }
+    }
+    if (pathname.includes("/grants")) {
+      if (Token) {
+        const response = await api.get(
+          `/api/grants/?${readyUrl}&page=${page}`,
+          {
+            headers,
+          }
+        );
+        dispatch(fetchGrants(response.data.results));
+        dispatch(handleCount(response.data.count));
+      } else {
+        const response = await api.get(`/api/grants/?${readyUrl}&page=${page}`);
+        dispatch(fetchGrants(response.data.results));
+        dispatch(handleCount(response.data.count));
+      }
+    } else {
+      if (Token) {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`, {
+          headers,
+        });
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      } else {
+        const response = await api.get(`/api/confs/?${readyUrl}&page=${page}`);
+        dispatch(fetchConferences(response.data.results));
+        dispatch(handleCount(response.data.count));
+      }
+    }
   } catch (e) {
     dispatch(hasError(e.message));
   }
 };
+export const addDeleteFave = () => async (dispatch, getState) => {
+  const accessToken = localStorage.getItem("auth_token"); // Получение токена из Local Storage
+  const { id } = getState().conferences;
+
+  if (!accessToken) {
+    throw new Error("Токен не найден в Local Storage");
+  }
+
+  const headers = {
+    Authorization: `Token ${accessToken}`,
+    Accept: "application/json",
+  };
+
+  try {
+    const response = await axios.get(
+      `https://test.theconf.ru/api/confs/${id}/favorite/`,
+      { headers }
+    );
+
+    return response.data; // Возвращает полученные данные из ответа
+  } catch (error) {
+    throw error; // Обработка ошибок, например, вывод или повторная попытка
+  }
+};
+
 export const card = (state) => state;

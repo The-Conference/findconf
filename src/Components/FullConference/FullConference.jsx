@@ -2,40 +2,61 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NotFound from "../404/404";
 import {
-  handleSave,
-  handleFollow,
-  fetchFilteredConferences,
+  filteredContent,
+  hasError,
+  fetchOne,
+  startLoading,
 } from "../../store/postData";
 import { useSelector, useDispatch } from "react-redux";
 import "./fullconference.scss";
-import follow from "../../assets/followSmall.svg";
-import following from "../../assets/followingSmall.svg";
 import LoaderTemplate from "../../utils/Loader/LoaderTemplate";
-import { options } from "../../utils/options";
-import AllConferences from "../Conference/AllConferences";
 import DOMPurify from "dompurify";
-
+import axios from "axios";
 import ShareButton from "../ShareButton/ShareButton";
+import FollowButton from "../FollowButton/FollowButton";
+import { DateFormatter } from "../../utils/options";
 const FullConference = () => {
   const { confId } = useParams();
-  const { conferences } = useSelector((state) => state.conferences);
-  const Favourite = JSON.parse(window.localStorage.getItem("fave")) || [];
-  const [fave, setFave] = useState(Favourite);
+  const { conferences, oneConference, isLoading } = useSelector(
+    (state) => state.conferences
+  );
+
   const dispatch = useDispatch();
   const [desc, setDesc] = useState(true);
   const [contacts, setContacts] = useState(false);
 
   let content;
-  let full = conferences.find(({ id }) => id === +confId);
+  let full = oneConference;
 
-  const handleFave = (id) => {
-    if (fave.includes(id)) {
-      setFave(fave.filter((el) => el !== id));
-      console.log(fave);
-    } else {
-      setFave([...fave, id]);
-    }
-  };
+  useEffect(() => {
+    const fetchOneConference = async () => {
+      dispatch(startLoading());
+      const Token = localStorage.getItem("auth_token"); // Получение токена из Local Storage
+
+      const headers = {
+        Authorization: `Token ${Token}`,
+        Accept: "application/json",
+      };
+
+      try {
+        if (Token) {
+          await axios
+            .get(`https://test.theconf.ru/api/confs/${confId}/`, { headers })
+            .then((response) => dispatch(fetchOne(response.data)));
+        } else {
+          await axios
+            .get(`https://test.theconf.ru/api/confs/${confId}/`)
+            .then((response) => dispatch(fetchOne(response.data)));
+        }
+      } catch (e) {
+        dispatch(hasError(e.message));
+      }
+    };
+
+    fetchOneConference();
+    dispatch(filteredContent());
+    window.scrollTo(0, 0);
+  }, [confId, dispatch]);
 
   const handleDesc = () => {
     if (contacts === true) {
@@ -47,11 +68,13 @@ const FullConference = () => {
     if (desc === true) setDesc(false);
     setContacts(true);
   };
-
-  if (conferences.length === 0) {
+  if (!full && !isLoading && conferences.length > 0) {
+    content = <NotFound />;
+  }
+  if (isLoading) {
     content = <LoaderTemplate />;
   }
-  if (conferences.filter((el) => el.id === +confId).length > 0) {
+  if (oneConference) {
     content = (
       <div className="full-conference__container">
         <div className="full-conference__container-top">
@@ -74,29 +97,20 @@ const FullConference = () => {
                 : "red-status"
             }
           >
-            {full.conf_status || "Дата уточняется"}
+            {full.conf_status}
           </span>
           <div className="social">
-            <img
-              title={
-                full.follow === false
-                  ? "добавить в избранное"
-                  : "удалить из избранного"
-              }
-              src={full.follow === false ? follow : following}
-              alt="follow"
-              onClick={() => {
-                handleFave(full.id);
-                dispatch(handleFollow(full.id));
-              }}
-              width="32"
-              height="32"
+            <FollowButton
+              id={full.id}
+              favorite={full.is_favorite}
+              type={"full"}
             />
+
             <ShareButton />
           </div>
         </div>
         <div className="full-conference__title">
-          <h1>{full.conf_name}</h1>
+          <h1>{full.title}</h1>
           <small>Информация актуальна на {full.conf_date_begin} </small>
         </div>
 
@@ -104,35 +118,16 @@ const FullConference = () => {
           <div className="full-conference__card-flex">
             <div>
               <span>Дата проведения:</span>
-              {full.conf_date_end === null
-                ? new Date(full.conf_date_begin)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)
-                : full.conf_date_begin === null
-                ? new Date(full.conf_date_end)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)
-                : full.conf_date_end !== full.conf_date_begin
-                ? new Date(full.conf_date_begin)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3) +
-                  " - " +
-                  new Date(full.conf_date_end)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)
-                : new Date(full.conf_date_begin)
-                    .toLocaleDateString("ru", options)
-                    .slice(0, -3)}
+              {DateFormatter(full)}
             </div>
             <div>
               <span>Форма участия:</span>
-              <span className="both">
-                {full.online ? "онлайн" : ""} {full.offline ? "оффлайн" : ""}
-              </span>
+              <span className="both">{full.online ? "онлайн" : ""}</span>
+              <span className="both">{full.offline ? "оффлайн" : ""}</span>
             </div>
             <div>
               <span>Регистрация:</span>
-              {full.reg_date_begin === null && full.reg_date_end === null && (
+              {/* {full.reg_date_begin === null && full.reg_date_end === null && (
                 <span className="online">дата уточняется</span>
               )}
 
@@ -163,12 +158,24 @@ const FullConference = () => {
                       .toLocaleDateString("ru", options)
                       .slice(0, -3)}
                   </span>
-                ))}
+                ))} */}
             </div>
             <div>
               <span>Публикация:</span>
               <span className="online">
-                {full.rinc ? "РИНЦ" : "без публикации"}
+                <span className="publish">{full.rinc ? "РИНЦ   " : ""}</span>
+                <span className="publish">{full.vak ? "ВАК   " : ""}</span>
+                <span className="publish"> {full.wos ? "WOS    " : ""}</span>
+                <span className="publish">
+                  {!full.scopus &&
+                    !full.wos &&
+                    !full.vak &&
+                    !full.rinc &&
+                    "без публикации"}
+                </span>
+                <span className="publish">
+                  {full.scopus ? "Scopus    " : ""}
+                </span>
               </span>
             </div>
           </div>
@@ -180,7 +187,9 @@ const FullConference = () => {
             <hr />
             <div>
               <span>Тематика:</span>{" "}
-              <span className="online"> {full.tags.map((el) => el.name)}</span>
+              {full.tags.map((el) => (
+                <span className="online"> {el.name}</span>
+              ))}
             </div>
           </div>
         </div>
@@ -202,32 +211,26 @@ const FullConference = () => {
         {desc && !contacts && (
           <div className="full-conference__desc">
             <h1>Условия участия</h1>
-            {(full.conf_desc !== null && full.conf_desc.length === 0 && (
-              <a href={full.conf_card_href} rel="noreferrer" target="_blank">
+            {(full.description !== null && full.description.length === 0 && (
+              <a href={full.source_href} rel="noreferrer" target="_blank">
                 Подробнее о конференции
               </a>
-            )) ||
-              (full.conf_card_href !== null &&
-                full.conf_card_href.length > 0 && (
-                  <pre>
-                    <div
-                      className="full-conference__desc-parsed"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(full.conf_desc),
-                      }}
-                    />
+            )) || (
+              <pre>
+                <div
+                  className="full-conference__desc-parsed"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(full.description),
+                  }}
+                />
 
-                    <div>
-                      <a
-                        href={full.conf_card_href}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        Подробнее о конференции
-                      </a>
-                    </div>
-                  </pre>
-                ))}
+                <div>
+                  <a href={full.source_href} rel="noreferrer" target="_blank">
+                    Подробнее о конференции
+                  </a>
+                </div>
+              </pre>
+            )}
           </div>
         )}
         {!desc && contacts && (
@@ -244,12 +247,8 @@ const FullConference = () => {
               <div>
                 <p className="useful-links">Полезные ссылки </p>
                 <br />
-                {full.conf_card_href && (
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href={full.conf_card_href}
-                  >
+                {full.source_href && (
+                  <a rel="noreferrer" target="_blank" href={full.source_href}>
                     Ссылка на источник
                   </a>
                 )}
@@ -265,23 +264,11 @@ const FullConference = () => {
         )}
       </div>
     );
-  } else if (conferences.length && !full) {
-    content = <NotFound />;
   }
-  useEffect(() => {
-    dispatch(fetchFilteredConferences());
-    window.scrollTo(0, 0);
-    dispatch(handleSave(fave));
-  }, [confId, dispatch, fave]);
 
   return (
     <>
       <div className="full-conference">{content}</div>
-      {full && (
-        <div>
-          <AllConferences data={"prev4"} keywords={full.themes} id={full.id} />
-        </div>
-      )}
     </>
   );
 };

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./filters.scss";
 import {
-  saveFilter,
-  fetchFilteredConferences,
   filteredContent,
+  handlePage,
+  reset,
+  fetchParams,
+  cleanParams,
 } from "../../store/postData";
-import { fetchResults } from "../../store/searchSlice";
+import { fetchTags, fetchUnis } from "../../store/searchSlice";
 import {
   handleColor,
   handleDeleteColor,
@@ -16,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import white from "../../assets/whitecross.svg";
 import grey from "../../assets/greycross.svg";
 import { allKeys } from "../../utils/FILTERS";
-import reset from "../../assets/reset.svg";
+import reset2 from "../../assets/reset.svg";
 import {
   StyledPopup,
   StyledPopupTitle,
@@ -30,10 +32,11 @@ import "reactjs-popup/dist/index.css";
 import Fuse from "fuse.js";
 import { SearchBar } from "./SearchBar";
 import { useSearchParams } from "react-router-dom";
-
+import { removeComma } from "../../utils/removeComma";
 const Filters = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.filters);
+  const { universities, tags } = useSelector((state) => state.search);
 
   const [dataFiltered, setData] = useState(data);
   const [dataInitial, setDataInitial] = useState(data);
@@ -43,9 +46,14 @@ const Filters = () => {
   const [del, setDel] = useState(false);
   const [allVals, setAllVals] = useState([]);
   const [allKey, setAllKey] = useState([]);
+  const [params, setParams] = useState(
+    Object.fromEntries(searchParams.entries())
+  );
+
   const handleAddParams = (q, value, id) => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const currentValue = currentParams[q];
+
     let newParams;
     if (currentValue) {
       if (currentValue.includes(value)) {
@@ -55,16 +63,20 @@ const Filters = () => {
           newParams = currentParams;
           dispatch(handleDeleteColor(id));
         } else {
-          newParams = { ...currentParams, [q]: newValue };
+          newParams = { ...currentParams, [q]: newValue.trim() };
         }
       } else if (id === 7) {
-        newParams = { ...currentParams, [q]: `${value}` };
+        newParams = { ...currentParams, [q]: `${value.trim()}` };
       } else {
-        newParams = { ...currentParams, [q]: `${currentValue}${value}` };
+        newParams = {
+          ...currentParams,
+          [q]: `${currentValue}${value.trim()}`,
+        };
       }
     } else {
-      newParams = { ...currentParams, [q]: value };
+      newParams = { ...currentParams, [q]: value.trim() };
     }
+    setParams(removeComma(newParams));
 
     setSearchParams(new URLSearchParams(newParams));
   };
@@ -80,31 +92,26 @@ const Filters = () => {
     setData(matches.length ? matches : dataInitial);
   };
 
-  const { search } = useSelector((state) => state);
-
   useEffect(() => {
-    const universities = search
+    const unis = universities
       .map((el) => el.un_name && el.un_name.trim())
       .filter((item, index, arr) => item && arr.indexOf(item) === index)
       .map((item) => ({
         name: item,
         key: "un_name",
       }));
-    const tags = new Set();
 
-    search.forEach((el) => {
-      el.tags.forEach((elem) => {
-        if (elem.name) {
-          tags.add(elem.name);
-        }
-      });
-    });
+    const uniqueTags = tags
+      .map((el) => el.name && el.name.trim())
+      .filter((item, index, arr) => item && arr.indexOf(item) === index)
+      .map((item) => ({
+        name: item,
+        key: "tags",
+      }));
 
-    const uniqueTags = [...tags].map((name) => ({ name, key: "tags" }));
-
-    dispatch(handleData({ id: 1, data: universities }));
+    dispatch(handleData({ id: 1, data: unis }));
     dispatch(handleData({ id: 2, data: uniqueTags }));
-  }, [dispatch, search]);
+  }, [dispatch, universities, tags]);
 
   useEffect(() => {
     const currentParams = Object.fromEntries(searchParams.entries());
@@ -129,10 +136,11 @@ const Filters = () => {
       all.forEach((elem) => dispatch(handleColor(elem.id)));
     }
   }, [cardId, dispatch, searchParams]);
-
   useEffect(() => {
-    dispatch(filteredContent());
-    dispatch(fetchResults());
+    dispatch(fetchTags());
+    dispatch(fetchUnis());
+  }, [dispatch]);
+  useEffect(() => {
     const currentParams = Object.fromEntries(searchParams.entries());
     const allValues = [];
     allValues.push(
@@ -147,6 +155,11 @@ const Filters = () => {
       currentParams.ordering
         ? currentParams.ordering.split(",")
         : currentParams.ordering
+    );
+    allValues.push(
+      currentParams.conf_status
+        ? currentParams.conf_status.split(",")
+        : currentParams.conf_status
     );
     let mergedArray = [].concat(...allValues);
 
@@ -171,12 +184,27 @@ const Filters = () => {
         ([param]) => !paramsToRemove.includes(param)
       )
     );
+    setParams(removeComma(newParams));
+    dispatch(fetchParams(params));
     dispatch(handleDeleteColor(id));
     setSearchParams(new URLSearchParams(newParams));
   };
+
+  useEffect(() => {
+    dispatch(reset());
+    dispatch(cleanParams());
+    dispatch(handlePage(1));
+    dispatch(fetchParams(params));
+    dispatch(filteredContent());
+    // window.scrollTo(0, 0);
+  }, [params, dispatch]);
+
   return (
     <>
-      <div className="filter">
+      <button className="filterBtn" onClick={() => setMenu(!menu)}>
+        Фильтры
+      </button>
+      <div className={`filter ${menu ? "active" : ""}`}>
         {del && (
           <div
             className={
@@ -187,7 +215,9 @@ const Filters = () => {
             onClick={() => {
               deletAllFilters();
               dispatch(handleDeleteAllColors());
-              dispatch(filteredContent);
+              dispatch(reset());
+              dispatch(cleanParams());
+              dispatch(filteredContent());
             }}
           >
             {(del && (
@@ -266,7 +296,7 @@ const Filters = () => {
                 >
                   <img
                     onClick={() => deleteOneGroup(item.id)}
-                    src={reset}
+                    src={reset2}
                     alt="сброс фильтров"
                     title="сбросить фильтры"
                   />
@@ -281,22 +311,26 @@ const Filters = () => {
                         checked={
                           (cardId === 4 &&
                             allKey.includes(item.key) === true) ||
-                          (cardId === 5 &&
-                            allKey.includes(item.key) === true) ||
                           (cardId === 6 &&
                             allKey.includes(item.key) === true) ||
                           (cardId !== 4 && allVals.includes(item.name)) ||
-                          (cardId !== 5 && allVals.includes(item.name)) ||
+                          (cardId === 5 && allVals.includes(item.query)) ||
                           (cardId !== 6 && allVals.includes(item.name)) ||
                           (cardId === 7 && allVals.includes(item.query))
                             ? true
                             : false
                         }
                         onChange={() => {
-                          cardId === 4 || cardId === 5 || cardId === 6
+                          cardId === 4 || cardId === 6
                             ? handleAddParams(item.key, "true", cardId)
                             : cardId === 7
                             ? handleAddParams(item.key, item.query, cardId)
+                            : cardId === 5
+                            ? handleAddParams(
+                                item.key,
+                                item.query + ",",
+                                cardId
+                              )
                             : handleAddParams(
                                 item.key,
                                 item.name + ",",
@@ -314,58 +348,6 @@ const Filters = () => {
             )}
           </StyledPopup>
         ))}
-      </div>
-
-      <div className="filter-adaptive">
-        {data.some((el) => el.applied === true) && (
-          <button
-            style={{
-              backgroundColor: data.some((el) => el.applied === true)
-                ? "#2c60e7"
-                : "#0000381A",
-            }}
-            className="filter-adaptive__delete-button"
-            onClick={() => {
-              dispatch(fetchFilteredConferences());
-              setMenu(false);
-            }}
-          >
-            {(data.some((el) => el.applied === true) && (
-              <img src={white} alt="" />
-            )) || <img src={grey} alt="" />}
-          </button>
-        )}
-
-        <div className="filter-adaptive__container-button">
-          <span
-            onClick={() => setMenu(!menu)}
-            className={
-              data.some((el) => el.applied === true)
-                ? "filter__delete-button applied-hover"
-                : "filter__delete-button nonapplied-hover"
-            }
-          >
-            Фильтры
-          </span>
-          <ul>
-            {menu &&
-              data.map((item) => (
-                <li
-                  className={
-                    item.applied === true ? "applied-hover" : "nonapplied-hover"
-                  }
-                  onClick={() => {
-                    dispatch(saveFilter(item.name));
-                    dispatch(fetchFilteredConferences());
-                    setMenu(!menu);
-                  }}
-                  key={item.id}
-                >
-                  <div>{item.name}</div>
-                </li>
-              ))}
-          </ul>
-        </div>
       </div>
     </>
   );

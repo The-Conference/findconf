@@ -1,31 +1,22 @@
 @font-face {
-  src: url("fonts/Manrope-Regular.ttf");
-  font-family: "Manrope";
+  src: url("fonts/Roboto-Light.ttf");
+  font-family: "Body M";
 }
 @font-face {
-  src: url("fonts/Manrope-Bold.ttf");
-  font-family: "Manrope bold";
+  src: url("fonts/Roboto-Regular.ttf");
+  font-family: "Regular semibold";
 }
+
 @font-face {
-  src: url("fonts/Manrope-ExtraBold.ttf");
-  font-family: "Manrope extrabold";
+  src: url("fonts/Roboto-Bold.ttf");
+  font-family: "Heading 1";
 }
+
 @font-face {
-  src: url("fonts/Manrope-ExtraLight.ttf");
-  font-family: "Manrope extralight";
+  src: url("fonts/Roboto-Medium.ttf");
+  font-family: "Body L Medium";
 }
-@font-face {
-  src: url("fonts/Manrope-Medium.ttf");
-  font-family: "Manrope medium";
-}
-@font-face {
-  src: url("fonts/Manrope-SemiBold.ttf");
-  font-family: "Manrope semibold";
-}
-@font-face {
-  src: url("fonts/Manrope-Light.ttf");
-  font-family: "Manrope Light";
-}
+
 * {
   padding: 0px;
   margin: 0px;
@@ -138,8 +129,7 @@ body,
 }
 
 body {
-  font-family: "Manrope";
-
+  font-family: "Body M";
   width: 100%;
   margin: 0 auto;
   height: 100%;
@@ -156,4 +146,39 @@ body {
 .match {
   color: green;
   text-align: center;
+}
+input[type="search"]::-webkit-search-decoration,
+/* input[type="search"]::-webkit-search-cancel-button, */
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+.layout {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1350px;
+  justify-content: space-between;
+}
+/* @media screen and (max-width: 1260px) {
+  .layout {
+    justify-content: center;
+  }
+} */
+.scroll-hidden {
+  overflow: hidden;
+  position: relative;
+  height: 93vh;
+}
+.fadeIn {
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    translate: -100px;
+  }
+  to {
+    translate: 0;
+  }
 }
