@@ -81,7 +81,7 @@ const SignUp = () => {
               Конференции уже ждут твоего участия
             </p>
           </div>
-          <form className="login__form" action="" onSubmit={handleSignUp}>
+          <form className="login__form" onSubmit={handleSignUp}>
             {/* <label htmlFor="">email</label> */}
             <div className="mail">
               <input
