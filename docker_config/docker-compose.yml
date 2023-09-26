@@ -12,6 +12,9 @@ services:
     restart: always
     networks:
       - backend
+    logging:
+      options:
+        max-size: 50m
 
   django:
     build: ./django
@@ -31,6 +34,9 @@ services:
     networks:
       - frontend
       - backend
+    logging:
+      options:
+        max-size: 50m
 
   ofelia:
     image: mcuadros/ofelia:latest
@@ -43,6 +49,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - backend
+    logging:
+      options:
+        max-size: 10m
 
   scrapy:
     build: ./scrapy
@@ -61,6 +70,9 @@ services:
       - django
     networks:
       - backend
+    logging:
+      options:
+        max-size: 10m
 
   nginx:
     image: nginx:latest
@@ -78,6 +90,9 @@ services:
     restart: always
     networks:
       - frontend
+    logging:
+      options:
+        max-size: 10m
 
 networks:
   frontend:

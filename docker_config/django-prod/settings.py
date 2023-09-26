@@ -48,18 +48,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_swagger',
+    'drf_spectacular',
     'corsheaders',
     'ckeditor',
     'Conference_data',
     'Conference_crm',
     'rest_framework.authtoken',
     'djoser',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+   'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,6 +84,17 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
 
     ],
+
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+#        'rest_framework.filters.OrderingFilter',
+    ],
+
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -160,7 +171,7 @@ USE_TZ = True
 STATIC_URL = '/staticfiles/'
 
 STATICFILES_DIRS = [
-    ('static', '/usr/local/lib/python3.11/site-packages/django/contrib/admin'),
+     os.path.join(BASE_DIR, 'static/'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
@@ -172,6 +183,15 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Backend EMAIL settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST =  env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_PASS')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = env('EMAIL_REPLY_ADDR')
 
 #celery
 CELERY_BROKER_URL = 'redis://redis:6379'
@@ -194,8 +214,8 @@ CKEDITOR_CONFIGS = {
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'api/auth/users/activation/{uid}/{token}',  # Fix
-    'SEND_ACTIVATION_EMAIL': False,
+    'ACTIVATION_URL': 'users/activation/{uid}/{token}',  # Fix
+    'SEND_ACTIVATION_EMAIL': True,
     'LOGIN_FIELD': 'email',
 
     'USER_AUTHENTICATION_RULES': [
@@ -203,6 +223,14 @@ DJOSER = {
         'djoser.auth.EmailAuthenticationRule'
     ],
 
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'The Conf',
+    'DESCRIPTION': 'Conferences project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': True,
+    'SCHEMA_PATH_PREFIX': '/api/',
 }
 
 AUTH_USER_MODEL = 'Conference_crm.User'
