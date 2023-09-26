@@ -47,31 +47,33 @@ const Login = () => {
           Конференции уже ждут твоего участия
         </p>
       </div>
-      <form
-        autocomplete="new-password"
-        className="login__form"
-        action=""
-        onSubmit={handleSubmit}
-      >
+      <form className="login__form" onSubmit={handleSubmit}>
         <div className="mail">
           <input
-            type="mail"
-            autocomplete="new-password"
+            type="email"
+            id="email"
+            autocomplete="new-email"
             className={message.length > 0 ? "red-border" : null}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label className={email ? "filled-email " : "email "}>Email</label>
+          <label htmlFor="email" className={email ? "filled-email " : "email "}>
+            Email
+          </label>
         </div>
         <div className="password">
           <input
             type="password"
+            id="password"
             autocomplete="new-password"
             className={message.length > 0 ? "red-border" : null}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <label className={password ? "filled-password " : "password "}>
+          <label
+            htmlFor="password"
+            className={password ? "filled-password " : "password "}
+          >
             Password
           </label>
         </div>

@@ -85,13 +85,17 @@ const SignUp = () => {
             {/* <label htmlFor="">email</label> */}
             <div className="mail">
               <input
-                type="mail"
-                autocomplete="new-password"
+                type="email"
+                id="email"
+                autocomplete="new-email"
                 className={message.length > 0 ? "red-border" : null}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <label className={email ? "filled-email " : "email "}>
+              <label
+                htmlFor="email"
+                className={email ? "filled-email " : "email "}
+              >
                 Email
               </label>
               {/* <label htmlFor="">пароль</label> */}
@@ -99,12 +103,16 @@ const SignUp = () => {
             <div className="password">
               <input
                 type="password"
+                id="pass"
                 autocomplete="new-password"
                 value={password}
                 className={message.length > 0 ? "red-border" : null}
                 onChange={handlePasswordChange}
               />
-              <label className={password ? "filled-password " : "password "}>
+              <label
+                htmlFor="pass"
+                className={password ? "filled-password " : "password "}
+              >
                 Пароль
               </label>
             </div>
