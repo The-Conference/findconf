@@ -5,18 +5,18 @@ from ..parsing import default_parser_xpath
 
 
 class BmstuSpider(CrawlSpider):
-    name = "bmstu"
+    name = 'bmstu'
     un_name = 'Московский государственный технический университет им. Н.Э. Баумана'
-    allowed_domains = ["bmstu.ru"]
-    start_urls = ["https://bmstu.ru/events?category=konferencii-i-forumy&isActual=1"]
+    allowed_domains = ['bmstu.ru']
+    start_urls = ['https://bmstu.ru/events?category=konferencii-i-forumy&isActual=1']
     rules = (
-        Rule(LinkExtractor(restrict_css='a.Card_default'), callback="parse_items", follow=False),
+        Rule(LinkExtractor(restrict_css='a.Card_default'), callback='parse_items', follow=False),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
-        new_item.add_xpath('title', "string(//h5)")
+        new_item.add_xpath('title', 'string(//h5)')
         new_item.add_value('source_href', response.url)
 
         for line in response.xpath("//div[@class='EventsMainContent__content']//*[self::p]"):

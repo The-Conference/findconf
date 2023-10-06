@@ -7,10 +7,10 @@ from ..parsing import get_dates
 
 
 class SsmuSpider(scrapy.Spider):
-    name = "ssmu"
-    allowed_domains = ["ssmu.ru"]
+    name = 'ssmu'
+    allowed_domains = ['ssmu.ru']
     un_name = 'Сибирский Государственный Медицинский Университет'
-    start_urls = ["https://ssmu.ru/ru/nauka/activity/"]
+    start_urls = ['https://ssmu.ru/ru/nauka/activity/']
 
     def parse(self, response, **kwargs):
         year = response.xpath("//*[contains(text(), 'планиру')]").get()
@@ -21,7 +21,9 @@ class SsmuSpider(scrapy.Spider):
 
         for row in response.css('tr'):
             try:
-                date, title, conf_address, contacts = [i.xpath("string(.)").get() for i in row.css('td')]
+                date, title, conf_address, contacts = (
+                    i.xpath('string(.)').get() for i in row.css('td')
+                )
                 date += year
             except ValueError:
                 continue

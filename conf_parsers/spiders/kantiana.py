@@ -8,14 +8,16 @@ from ..parsing import get_dates, parse_pdf_table
 
 
 class KantianaSpider(scrapy.Spider):
-    name = "kantiana"
+    name = 'kantiana'
     un_name = 'Балтийский федеральный университет имени Иммануила Канта'
-    allowed_domains = ["kantiana.ru"]
-    start_urls = ["https://kantiana.ru/science/nauchnye-meropriyatiya-i-konferentsii/"]
+    allowed_domains = ['kantiana.ru']
+    start_urls = ['https://kantiana.ru/science/nauchnye-meropriyatiya-i-konferentsii/']
 
     def parse(self, response, **kwargs):
         current_year = str(datetime.now().year)
-        link = response.xpath(f"//a[@class='link--doc'][contains(text(), {current_year})]/@href").get()
+        link = response.xpath(
+            f"//a[@class='link--doc'][contains(text(), {current_year})]/@href"
+        ).get()
         yield scrapy.Request(url=response.urljoin(unquote(link)), callback=self.parse_pdf)
 
     def parse_pdf(self, response):

@@ -8,10 +8,10 @@ from ..utils import find_date_in_string
 
 
 class UneconSpider(scrapy.Spider):
-    name = "unecon"
-    un_name = "Санкт-Петербургский государственный экономический университет"
-    allowed_domains = ["unecon.ru"]
-    start_urls = ["https://unecon.ru/wp-json/unecon/v1/announcements?"]
+    name = 'unecon'
+    un_name = 'Санкт-Петербургский государственный экономический университет'
+    allowed_domains = ['unecon.ru']
+    start_urls = ['https://unecon.ru/wp-json/unecon/v1/announcements?']
     params = {
         'page': 1,
         'category': 212,
@@ -30,10 +30,11 @@ class UneconSpider(scrapy.Spider):
             link = item.get('link')
             date_start = item.get('date_start')
             date_end = item.get('date_end')
-            yield scrapy.Request(link, callback=self.parse_items,
-                                 meta={'title': title,
-                                       'date_start': date_start,
-                                       'date_end': date_end})
+            yield scrapy.Request(
+                link,
+                callback=self.parse_items,
+                meta={'title': title, 'date_start': date_start, 'date_end': date_end},
+            )
 
         self.params['page'] = int(self.params['page']) + 1
         yield scrapy.Request(self.start_urls[0] + urlencode(self.params), callback=self.parse)

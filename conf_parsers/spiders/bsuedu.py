@@ -5,13 +5,16 @@ from ..utils import find_date_in_string
 
 
 class BsueduSpider(CrawlSpider):
-    name = "bsuedu"
+    name = 'bsuedu'
     un_name = 'Белгородский государственный национальный исследовательский университет'
-    allowed_domains = ["www.bsuedu.ru"]
-    start_urls = ["https://www.bsuedu.ru/bsu/science/meropr/"]
+    allowed_domains = ['www.bsuedu.ru']
+    start_urls = ['https://www.bsuedu.ru/bsu/science/meropr/']
     rules = (
-        Rule(LinkExtractor(restrict_css='td.mob_clear', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='td.mob_clear', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
@@ -22,7 +25,7 @@ class BsueduSpider(CrawlSpider):
         items = response.xpath('//span')
         for item in items:
             text = item.xpath('string(.)').get()
-            value = item.xpath("following-sibling::text()").get()
+            value = item.xpath('following-sibling::text()').get()
 
             if 'Дата начала' in text:
                 new_item.add_value('conf_date_begin', find_date_in_string(value)[0] or None)
@@ -39,11 +42,18 @@ class BsueduSpider(CrawlSpider):
             if 'Категория' in text:
                 new_item.add_value('local', False if 'международн' in value.lower() else True)
             if 'Формат' in text:
-                new_item.add_value('offline', True if 'очный' in value.lower()
-                                                      or 'комбинир' in value.lower() else False)
-                new_item.add_value('online', True if 'онлайн' in value.lower() or
-                                                     'видеоконф' in value.lower() or
-                                                     'комбинир' in value.lower() else False)
+                new_item.add_value(
+                    'offline',
+                    True if 'очный' in value.lower() or 'комбинир' in value.lower() else False,
+                )
+                new_item.add_value(
+                    'online',
+                    True
+                    if 'онлайн' in value.lower()
+                    or 'видеоконф' in value.lower()
+                    or 'комбинир' in value.lower()
+                    else False,
+                )
 
         text = response.xpath("string(//div[@class='news-detail'])").get()
         new_item.add_value('rinc', True if 'ринц' in text.lower() else False)

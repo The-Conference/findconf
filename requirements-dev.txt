@@ -15,6 +15,12 @@ automat==22.10.0
     # via twisted
 backcall==0.2.0
     # via ipython
+black==22.1.0
+    # via blue
+blue==0.9.1
+    # via conf-parsers (pyproject.toml)
+build==1.0.3
+    # via pip-tools
 certifi==2023.7.22
     # via requests
 cffi==1.15.1
@@ -23,6 +29,10 @@ charset-normalizer==3.2.0
     # via
     #   pdfminer-six
     #   requests
+click==8.1.7
+    # via
+    #   black
+    #   pip-tools
 constantly==15.1.0
     # via twisted
 coverage==7.3.1
@@ -47,6 +57,8 @@ executing==1.2.0
     # via stack-data
 filelock==3.12.3
     # via tldextract
+flake8==4.0.1
+    # via blue
 greenlet==2.0.2
     # via
     #   playwright
@@ -86,8 +98,13 @@ markupsafe==2.1.3
     #   pdoc
 matplotlib-inline==0.1.6
     # via ipython
+mccabe==0.6.1
+    # via flake8
+mypy-extensions==1.0.0
+    # via black
 packaging==23.1
     # via
+    #   build
     #   parsel
     #   scrapy
 parsel==1.8.1
@@ -96,6 +113,8 @@ parsel==1.8.1
     #   scrapy
 parso==0.8.3
     # via jedi
+pathspec==0.11.2
+    # via black
 pdfminer-six==20221105
     # via pdfplumber
 pdfplumber==0.10.2
@@ -108,6 +127,10 @@ pickleshare==0.7.5
     # via ipython
 pillow==10.0.0
     # via pdfplumber
+pip-tools==7.3.0
+    # via conf-parsers (pyproject.toml)
+platformdirs==3.11.0
+    # via black
 playwright==1.37.0
     # via scrapy-playwright
 prompt-toolkit==3.0.39
@@ -128,12 +151,16 @@ pyasn1==0.5.0
     #   service-identity
 pyasn1-modules==0.3.0
     # via service-identity
+pycodestyle==2.8.0
+    # via flake8
 pycparser==2.21
     # via cffi
 pydispatcher==2.0.7
     # via scrapy
 pyee==9.0.4
     # via playwright
+pyflakes==2.4.0
+    # via flake8
 pygments==2.16.1
     # via
     #   ipython
@@ -142,6 +169,8 @@ pyopenssl==23.2.0
     # via scrapy
 pypdfium2==4.20.0
     # via pdfplumber
+pyproject-hooks==1.0.0
+    # via build
 python-dateutil==2.8.2
     # via dateparser
 pytz==2023.3.post1
@@ -156,6 +185,8 @@ requests==2.31.0
     #   tldextract
 requests-file==1.5.1
     # via tldextract
+ruff==0.0.292
+    # via conf-parsers (pyproject.toml)
 scrapy==2.10.1
     # via
     #   conf-parsers (pyproject.toml)
@@ -176,6 +207,8 @@ stack-data==0.6.2
     # via ipython
 tldextract==3.5.0
     # via scrapy
+tomli==2.0.1
+    # via black
 traitlets==5.9.0
     # via
     #   ipython
@@ -199,10 +232,13 @@ w3lib==2.1.2
     #   scrapy
 wcwidth==0.2.6
     # via prompt-toolkit
+wheel==0.41.2
+    # via pip-tools
 zope-interface==6.0
     # via
     #   scrapy
     #   twisted
 
 # The following packages are considered to be unsafe in a requirements file:
+# pip
 # setuptools

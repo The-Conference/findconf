@@ -4,16 +4,16 @@ from ..parsing import get_dates
 
 
 class MpeiSpider(scrapy.Spider):
-    name = "mpei"
+    name = 'mpei'
     un_name = 'Национальный исследовательский университет «МЭИ»'
-    allowed_domains = ["mpei.ru"]
-    start_urls = ["https://mpei.ru/Science/ScientificEvents/Pages/default.aspx"]
+    allowed_domains = ['mpei.ru']
+    start_urls = ['https://mpei.ru/Science/ScientificEvents/Pages/default.aspx']
 
     def parse(self, response, **kwargs):
-        for card in response.css("div.event-card"):
+        for card in response.css('div.event-card'):
             new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
-            conf_name = card.css("div:not([class])::text").get()
+            conf_name = card.css('div:not([class])::text').get()
             new_item.add_value('title', conf_name)
             new_item.add_value('source_href', response.url)
             _dates = card.xpath("string(.//div[@class='event-date'])").get()
@@ -21,12 +21,12 @@ class MpeiSpider(scrapy.Spider):
             new_item.add_value('description', conf_name)
 
             for line in card.xpath(".//div[@class='event-info']"):
-                text = line.xpath("./text()").get()
+                text = line.xpath('./text()').get()
                 if 'addr' in line.get():
                     field = 'conf_address'
                 elif 'site' in line.get():
                     field = 'conf_href'
-                    text = line.css("a::attr(href)").get()
+                    text = line.css('a::attr(href)').get()
                 else:
                     field = 'contacts'
                 new_item.add_value(field, text)

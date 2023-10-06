@@ -8,14 +8,16 @@ from ..parsing import get_dates, parse_pdf_table
 
 
 class SwsuSpider(scrapy.Spider):
-    name = "swsu"
+    name = 'swsu'
     un_name = 'Юго-Западный государственный университет'
-    allowed_domains = ["swsu.ru"]
-    start_urls = ["https://swsu.ru/conference/"]
+    allowed_domains = ['swsu.ru']
+    start_urls = ['https://swsu.ru/conference/']
 
     def parse(self, response, **kwargs):
         current_year = str(datetime.now().year)
-        link = response.xpath(f"//main[@class='work_area']//a[contains(text(), {current_year})]/@href").get()
+        link = response.xpath(
+            f"//main[@class='work_area']//a[contains(text(), {current_year})]/@href"
+        ).get()
         yield scrapy.Request(url=response.urljoin(unquote(link)), callback=self.parse_pdf)
 
     def parse_pdf(self, response):

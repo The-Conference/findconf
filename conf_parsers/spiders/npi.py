@@ -5,14 +5,14 @@ from ..parsing import get_dates, parse_conf
 
 
 class NpiSpider(scrapy.Spider):
-    name = "npi"
+    name = 'npi'
     un_name = 'Южно-Российский государственный политехнический университет (НПИ) имени М.И. Платова'
-    allowed_domains = ["npi-tu.ru"]
-    start_urls = ["https://www.npi-tu.ru/science/activities/konferentsii/"]
+    allowed_domains = ['npi-tu.ru']
+    start_urls = ['https://www.npi-tu.ru/science/activities/konferentsii/']
 
     def parse(self, response, **kwargs):
-        for row in response.css("div.col-md-10 li"):
-            conf_name = row.xpath("string(.)").get()
+        for row in response.css('div.col-md-10 li'):
+            conf_name = row.xpath('string(.)').get()
             if 'конфер' in conf_name.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 

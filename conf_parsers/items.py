@@ -35,6 +35,7 @@ def fix_emails(url: str) -> str:
 
 class _AbstractItem(Item):
     """Fields common to all item types. Do not use directly."""
+
     item_id = Field()
     un_name = Field()
     local = Field()
@@ -54,6 +55,7 @@ class GrantItem(_AbstractItem):
 
 class ConferenceItem(_AbstractItem):
     """Container for Conference items. Use in combination with ConferenceLoader."""
+
     conf_date_begin = Field()
     conf_date_end = Field()
     org_name = Field()
@@ -67,8 +69,9 @@ class ConferenceItem(_AbstractItem):
     scopus = Field()
 
     def __repr__(self):
-        return pformat({k: v for k, v in self.items() if k != 'data'},
-                       indent=2, compact=True, width=160)
+        return pformat(
+            {k: v for k, v in self.items() if k != 'data'}, indent=2, compact=True, width=160
+        )
 
 
 class ConferenceLoader(ItemLoader):

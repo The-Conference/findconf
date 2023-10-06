@@ -6,10 +6,10 @@ from ..parsing import get_dates, parse_pdf_table
 
 
 class GsguSpider(scrapy.Spider):
-    name = "gsgu"
+    name = 'gsgu'
     un_name = 'Государственный социально-гуманитарный университет'
-    allowed_domains = ["gukolomna.ru"]
-    start_urls = ["https://gukolomna.ru/"]
+    allowed_domains = ['gukolomna.ru']
+    start_urls = ['https://gukolomna.ru/']
 
     def parse(self, response, **kwargs):
         link = response.xpath("//a[contains(text(), 'Научные мероприятия')]/@href").get()

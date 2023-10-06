@@ -10,36 +10,41 @@ from ..parsing import default_parser_xpath, get_dates
 
 class UnitechMo:
     un_name = 'Технологический университет имени дважды Героя Советского Союза, летчика-космонавта А.А. Леонова'
-    allowed_domains = ["unitech-mo.ru"]
+    allowed_domains = ['unitech-mo.ru']
 
 
 class UnitechMoSpider(CrawlSpider, UnitechMo):
-    name = "unitech_mo"
-    start_urls = ["https://unitech-mo.ru/announcement/"]
+    name = 'unitech_mo'
+    start_urls = ['https://unitech-mo.ru/announcement/']
     rules = (
-        Rule(LinkExtractor(restrict_css='article', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='article', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
         Rule(LinkExtractor(restrict_css='a.modern-page-next')),
     )
-    custom_settings = {
-        "DEPTH_LIMIT": 2
-    }
+    custom_settings = {'DEPTH_LIMIT': 2}
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h1::text")
-        new_item.add_css('short_description', "div.col-md-12::text")
+        new_item.add_css('title', 'h1::text')
+        new_item.add_css('short_description', 'div.col-md-12::text')
 
-        for line in response.xpath("//div[@class='container']//div[@class='col-md-12']//*[self::p]"):
+        for line in response.xpath(
+            "//div[@class='container']//div[@class='col-md-12']//*[self::p]"
+        ):
             new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()
 
 
 class UnitechMoSpider2(scrapy.Spider, UnitechMo):
-    name = "unitech_mo2"
-    start_urls = ["https://unitech-mo.ru/science/research-activities-/youth-science/calendar-of-scientific-events/"]
+    name = 'unitech_mo2'
+    start_urls = [
+        'https://unitech-mo.ru/science/research-activities-/youth-science/calendar-of-scientific-events/'
+    ]
 
     def parse(self, response, **kwargs):
         year = response.xpath("//h3[contains(text(), 'Календарь')]").get()
@@ -69,8 +74,10 @@ class UnitechMoSpider2(scrapy.Spider, UnitechMo):
 
 
 class UnitechMoSpider3(scrapy.Spider, UnitechMo):
-    name = "unitech_mo3"
-    start_urls = ["https://unitech-mo.ru/science/postgraduate-study/scientific-practical-conference/"]
+    name = 'unitech_mo3'
+    start_urls = [
+        'https://unitech-mo.ru/science/postgraduate-study/scientific-practical-conference/'
+    ]
 
     def parse(self, response, **kwargs):
         container = response.css('div.container')

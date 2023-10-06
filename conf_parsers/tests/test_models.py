@@ -52,7 +52,7 @@ class TestItemLoader(TestCase):
     def test_unquote_encoded_url(self):
         string = 'http%3A%2F%2Fexample.com%2F%D1%82%D0%B5%D1%81%D1%82%2F'
         expected = 'http://example.com/тест/'
-        for field in 'source_href', *self.href_fields:
+        for field in ('source_href', *self.href_fields):
             self.loader.add_value(field, string)
             self.assertEqual(expected, self.loader.get_output_value(field))
 

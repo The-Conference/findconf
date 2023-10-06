@@ -5,13 +5,16 @@ from ..parsing import default_parser_xpath
 
 
 class KaiSpider(CrawlSpider):
-    name = "kai"
+    name = 'kai'
     un_name = 'Казанский национальный исследовательский технический университет им. А.Н. Туполева'
-    allowed_domains = ["kai.ru"]
-    start_urls = ["https://kai.ru/science/events"]
+    allowed_domains = ['kai.ru']
+    start_urls = ['https://kai.ru/science/events']
     rules = (
-        Rule(LinkExtractor(restrict_css='a.item', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='a.item', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):

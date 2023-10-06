@@ -5,13 +5,16 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class DonstuSpider(CrawlSpider):
-    name = "donstu"
+    name = 'donstu'
     un_name = 'Донской государственный технический университет'
-    allowed_domains = ["donstu.ru"]
-    start_urls = ["https://donstu.ru/events/"]
+    allowed_domains = ['donstu.ru']
+    start_urls = ['https://donstu.ru/events/']
     rules = (
-        Rule(LinkExtractor(restrict_css='div.event-box', allow='konfer'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='div.event-box', allow='konfer'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):

@@ -25,18 +25,26 @@ class TestParsing(TestCase):
 
     def test_sample_registration(self):
         self.assertEqual('http://example.com/321/', self.new_item.get_output_value('reg_href'))
-        self.assertEqual([datetime.date(2020, 5, 20), datetime.date(2020, 4, 11)],
-                         self.new_item.get_collected_values('reg_date_end'))
+        self.assertEqual(
+            [datetime.date(2020, 5, 20), datetime.date(2020, 4, 11)],
+            self.new_item.get_collected_values('reg_date_end'),
+        )
         self.assertEqual(datetime.date(2020, 5, 20), self.new_item.get_output_value('reg_date_end'))
         self.assertEqual(datetime.date(2020, 5, 15), self.new_item.get_output_value('reg_date_begin'))
 
     def test_sample_dates(self):
-        self.assertEqual(datetime.date(2021, 6, 11), self.new_item.get_output_value('conf_date_end'))
-        self.assertEqual(datetime.date(2021, 6, 10), self.new_item.get_output_value('conf_date_begin'))
+        self.assertEqual(
+            datetime.date(2021, 6, 11), self.new_item.get_output_value('conf_date_end')
+        )
+        self.assertEqual(
+            datetime.date(2021, 6, 10), self.new_item.get_output_value('conf_date_begin')
+        )
 
     def test_sample_contacts(self):
-        self.assertEqual(['Контактное лицо: Иванов Иван Иванович', 'plaintext@example.com'],
-                         self.new_item.get_collected_values('contacts'))
+        self.assertEqual(
+            ['Контактное лицо: Иванов Иван Иванович', 'plaintext@example.com'],
+            self.new_item.get_collected_values('contacts'),
+        )
 
     def test_sample_bools(self):
         self.assertTrue(self.new_item.get_output_value('online'))
@@ -47,7 +55,10 @@ class TestParsing(TestCase):
         self.assertTrue(self.new_item.get_output_value('rinc'))
 
     def test_sample_address(self):
-        self.assertEqual('Место проведения: г.Н-ск, ул. Тестовая', self.new_item.get_output_value('conf_address'))
+        self.assertEqual(
+            'Место проведения: г.Н-ск, ул. Тестовая',
+            self.new_item.get_output_value('conf_address'),
+        )
 
     def test_sample_conf(self):
         self.assertEqual(10, len(self.new_item.get_collected_values('description')))
@@ -56,7 +67,7 @@ class TestParsing(TestCase):
     def test_text_conf_parser(self):
         new_item = ConferenceLoader(item=ConferenceItem(), selector=self.response)
         for line in self.response.xpath("//div[@class='news-item']//*[self::p]"):
-            line = line.xpath("string(.)").get()
+            line = line.xpath('string(.)').get()
             new_item = parse_conf(line, new_item)
         self.assertTrue(new_item.get_output_value('offline'))
 
@@ -73,17 +84,27 @@ class TestGetDates(TestCase):
     def test_get_dates_regular_single(self):
         line = '11 апреля 2020'
         result = get_dates(line, self.new_item)
-        self.assertEqual([datetime.date(2020, 4, 11)], result.get_collected_values('conf_date_begin'))
+        self.assertEqual(
+            [datetime.date(2020, 4, 11)], result.get_collected_values('conf_date_begin')
+        )
         self.assertFalse(result.get_output_value('conf_date_end'))
 
     def test_get_dates_regular_double(self):
         line = '11-12 апреля 2020'
         result = get_dates(line, self.new_item)
-        self.assertEqual([datetime.date(2020, 4, 11)], result.get_collected_values('conf_date_begin'))
-        self.assertEqual([datetime.date(2020, 4, 12)], result.get_collected_values('conf_date_end'))
+        self.assertEqual(
+            [datetime.date(2020, 4, 11)], result.get_collected_values('conf_date_begin')
+        )
+        self.assertEqual(
+            [datetime.date(2020, 4, 12)], result.get_collected_values('conf_date_end')
+        )
 
     def test_get_dates_vague(self):
         line = 'апрель 2020'
         result = get_dates(line, self.new_item, is_vague=True)
-        self.assertEqual([datetime.date(2020, 4, 1)], result.get_collected_values('conf_date_begin'))
-        self.assertEqual([datetime.date(2020, 4, 30)], result.get_collected_values('conf_date_end'))
+        self.assertEqual(
+            [datetime.date(2020, 4, 1)], result.get_collected_values('conf_date_begin')
+        )
+        self.assertEqual(
+            [datetime.date(2020, 4, 30)], result.get_collected_values('conf_date_end')
+        )

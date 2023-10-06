@@ -6,10 +6,10 @@ from ..utils import find_date_in_string
 
 
 class UniDubnaSpider(scrapy.Spider):
-    name = "uni_dubna"
+    name = 'uni_dubna'
     un_name = 'Государственный университет "Дубна"'
-    allowed_domains = ["uni-dubna.ru"]
-    start_urls = ["https://conf.uni-dubna.ru/Home/Conferences"]
+    allowed_domains = ['uni-dubna.ru']
+    start_urls = ['https://conf.uni-dubna.ru/Home/Conferences']
 
     def parse(self, response, **kwargs):
         for conf in response.css('div.card-body'):
@@ -22,11 +22,13 @@ class UniDubnaSpider(scrapy.Spider):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h1.title_one::text")
+        new_item.add_css('title', 'h1.title_one::text')
         new_item.add_xpath('short_description', "string(//h5[@class='description info1'])")
         dates_select = response.xpath("string(//h4[@class='hero-text-small'])").get()
         new_item = get_dates(dates_select, new_item)
 
-        for line in response.xpath("//div[@class='container']//*[self::p or self::h3 or self::h5]"):
+        for line in response.xpath(
+            "//div[@class='container']//*[self::p or self::h3 or self::h5]"
+        ):
             new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

@@ -24,7 +24,9 @@ from .items import ConferenceItem, GrantItem
 class SaveToDBPipeline:
     """Use bulk insert to save items to PostgreSQL.
     Items with duplicate item_id are ignored.
-    Does not raise DropItem exceptions."""
+    Does not raise DropItem exceptions.
+    """
+
     @classmethod
     def from_crawler(cls, crawler):
         settings = crawler.settings
@@ -47,12 +49,16 @@ class SaveToDBPipeline:
         return item
 
     def close_spider(self, spider):
-        to_save = [i.get("item_id") for i in self.items]
+        to_save = [i.get('item_id') for i in self.items]
         spider.logger.debug(f'Saving to DB: {to_save}')
 
         if to_save:
-            insert_statement = insert(self.item_type).values(self.items).returning(self.item_type.item_id)
-            insert_or_do_nothing = insert_statement.on_conflict_do_nothing(index_elements=[self.item_type.item_id])
+            insert_statement = (
+                insert(self.item_type).values(self.items).returning(self.item_type.item_id)
+            )
+            insert_or_do_nothing = insert_statement.on_conflict_do_nothing(
+                index_elements=[self.item_type.item_id]
+            )
             try:
                 saved = self.session.execute(insert_or_do_nothing).fetchall()
                 self.session.commit()
@@ -70,6 +76,7 @@ class SaveToDBPipeline:
 
 class FillTheBlanksPipeline:
     """Fill out fields that are derived from other fields."""
+
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
@@ -79,17 +86,19 @@ class FillTheBlanksPipeline:
         adapter['local'] = False if 'международн' in text.lower() else True
 
         if isinstance(item, ConferenceItem):
-            adapter['item_id'] = f"{spider.name}" \
-                                 f"_{adapter.get('conf_date_begin')}" \
-                                 f"_{adapter.get('conf_date_end')}" \
-                                 f"_{''.join(adapter.get('title').split())[:50]}"
+            adapter['item_id'] = (
+                f'{spider.name}'
+                f"_{adapter.get('conf_date_begin')}"
+                f"_{adapter.get('conf_date_end')}"
+                f"_{''.join(adapter.get('title').split())[:50]}"
+            )
             if not adapter.get('conf_date_end'):
                 adapter['conf_date_end'] = adapter.get('conf_date_begin')
 
         elif isinstance(item, GrantItem):
             string = f"{adapter.get('reg_date_end')}{adapter.get('title')}"
             _hash = md5(string.encode(), usedforsecurity=False).hexdigest()
-            adapter['item_id'] = f"{spider.name}_{_hash}"
+            adapter['item_id'] = f'{spider.name}_{_hash}'
         return item
 
 
@@ -99,7 +108,9 @@ class DropOldItemsPipeline:
     drop item if check fails.
 
     Raises:
-        DropItem: if the date is not found or too old."""
+    DropItem: if the date is not found or too old.
+    """
+
     @staticmethod
     def process_item(item, spider):
         adapter = ItemAdapter(item)
@@ -123,5 +134,5 @@ class DropOldItemsPipeline:
             raise DropItem('Date not found')
         filter_date = spider.settings.get('FILTER_DATE')
         if date < filter_date:
-            raise DropItem(f"Old item [{date}]")
+            raise DropItem(f'Old item [{date}]')
         return item

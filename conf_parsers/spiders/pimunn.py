@@ -6,13 +6,12 @@ from ..parsing import default_parser_xpath
 
 
 class PimunnSpider(scrapy.Spider):
-    name = "pimunn"
+    name = 'pimunn'
     un_name = 'Приволжский исследовательский медицинский университет Министерства здравоохранения Российской Федерации'
-    allowed_domains = ["feeds.tildacdn.com",
-                       "project747694.tilda.ws"]
+    allowed_domains = ['feeds.tildacdn.com', 'project747694.tilda.ws']
 
     def start_requests(self):
-        feed = "https://feeds.tildacdn.com/api/getfeed/?"
+        feed = 'https://feeds.tildacdn.com/api/getfeed/?'
         params = {
             'feeduid': '5da0b30957567621136849-830127464577',
             'recid': '134097321',
@@ -36,6 +35,6 @@ class PimunnSpider(scrapy.Spider):
         new_item.add_value('title', response.meta.get('title'))
         new_item.add_value('short_description', response.meta.get('descr'))
 
-        conf_block = response.css("div.t-redactor__text")
+        conf_block = response.css('div.t-redactor__text')
         new_item = default_parser_xpath(conf_block, new_item)
         yield new_item.load_item()

@@ -6,10 +6,10 @@ from ..parsing import default_parser_xpath
 
 
 class SfuKrasSpider(scrapy.Spider):
-    name = "sfu-kras"
+    name = 'sfu-kras'
     un_name = 'Сибирский федеральный университет'
-    allowed_domains = ["conf.sfu-kras.ru"]
-    start_urls = ["https://conf.sfu-kras.ru/"]
+    allowed_domains = ['conf.sfu-kras.ru']
+    start_urls = ['https://conf.sfu-kras.ru/']
 
     def parse(self, response, **kwargs):
         for link in response.css('div.listItem'):
@@ -21,17 +21,17 @@ class SfuKrasSpider(scrapy.Spider):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_xpath('title', "string(//h2)")
-        new_item.add_xpath('short_description', "string(//h4)")
+        new_item.add_xpath('title', 'string(//h2)')
+        new_item.add_xpath('short_description', 'string(//h4)')
 
         for line in response.xpath("//div[@class='confs-container']//*[self::div[@class='row']]"):
             new_item = default_parser_xpath(line, new_item)
-            lower = line.xpath("string(.)").get().lower()
+            lower = line.xpath('string(.)').get().lower()
             if 'сайт' in lower:
-                href = line.xpath(".//a/@href").get()
+                href = line.xpath('.//a/@href').get()
                 new_item.add_value('conf_href', href)
             if 'mail' in lower:
-                encoded = line.xpath(".//script/text()").get()
+                encoded = line.xpath('.//script/text()').get()
                 if decoded := self.decode_email(encoded):
                     new_item.add_value('contacts', decoded)
         if href := new_item.get_output_value('reg_href'):
@@ -40,7 +40,7 @@ class SfuKrasSpider(scrapy.Spider):
 
     @staticmethod
     def decode_email(encoded: str) -> str:
-        prep = encoded.split('"')[1::2][0].replace("'+'", "")
+        prep = encoded.split('"')[1::2][0].replace("'+'", '')
         decode = html.unescape(prep)
         decode = decode.replace('mailto:', '')
         return decode

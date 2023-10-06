@@ -4,15 +4,17 @@ from ..parsing import get_dates
 
 
 class MgouSpider(scrapy.Spider):
-    name = "mgou"
+    name = 'mgou'
     un_name = 'Государственный университет просвещения'
-    allowed_domains = ["mgou.ru"]
-    start_urls = ["https://mgou.ru/ru/rubric/science/organizatsiya-nauchno-issledovatelskoj-deyatelnosti-mgou-2"]
+    allowed_domains = ['mgou.ru']
+    start_urls = [
+        'https://mgou.ru/ru/rubric/science/organizatsiya-nauchno-issledovatelskoj-deyatelnosti-mgou-2'
+    ]
 
     def parse(self, response, **kwargs):
         for row in response.xpath("//div[@class='customTable']//tr"):
             try:
-                _, conf_name, date, _ = [i.xpath("string(.)").get() for i in row.css('td')]
+                _, conf_name, date, _ = (i.xpath('string(.)').get() for i in row.css('td'))
             except ValueError:
                 continue
 

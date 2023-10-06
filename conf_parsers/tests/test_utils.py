@@ -44,7 +44,7 @@ class TestDateFinder(TestCase):
             '02   –  20    января    2022',
             # '02.01-20.01.2022',  # unhandled edge case, see urfu.py
             'С 02 Января по 20 Января 2022',
-            '2 и 20 января 2022 года'  # normally consecutive
+            """2 и 20 января 2022 года""",  # normally consecutive
         ]
         for case in cases:
             self.assertEqual([date(2022, 1, 2), date(2022, 1, 20)], find_date_in_string(case))
@@ -56,7 +56,7 @@ class TestDateFinder(TestCase):
             'до 35 лет',
             '2020-2021',
             '2023',
-            'https://forms.yandex.ru/u/63c563285056901e70f9180d/'
+            'https://forms.yandex.ru/u/63c563285056901e70f9180d/',
         ]
         for case in cases:
             self.assertEqual([], find_date_in_string(case))
@@ -69,28 +69,33 @@ class TestDateFinder(TestCase):
         ]
         for case in cases:
             self.assertEqual([date(current_year, 4, 26)], find_date_in_string(case))
-        self.assertEqual([date(current_year, 5, 26), date(current_year, 5, 27)],
-                         find_date_in_string('26-27 мая'))
+        self.assertEqual(
+            [date(current_year, 5, 26), date(current_year, 5, 27)],
+            find_date_in_string('26-27 мая'),
+        )
 
 
 class TestVagueDateParser(TestCase):
     def test_vague_date_only_month(self):
         current_year = datetime.now().year
-        self.assertEqual([date(current_year, 7, 1), date(current_year, 7, 31)],
-                         parse_vague_dates('июль'))
+        self.assertEqual(
+            [date(current_year, 7, 1), date(current_year, 7, 31)], parse_vague_dates('июль')
+        )
 
     def test_vague_date_month_range(self):
         current_year = datetime.now().year
-        self.assertEqual([date(current_year, 7, 1), date(current_year, 8, 31)],
-                         parse_vague_dates('июль - август'))
+        self.assertEqual(
+            [date(current_year, 7, 1), date(current_year, 8, 31)],
+            parse_vague_dates('июль - август'),
+        )
 
     def test_vague_date_month_year(self):
-        self.assertEqual([date(2023, 7, 1), date(2023, 7, 31)],
-                         parse_vague_dates('июль 2023'))
+        self.assertEqual([date(2023, 7, 1), date(2023, 7, 31)], parse_vague_dates('июль 2023'))
 
     def test_vague_date_month_year_range(self):
-        self.assertEqual([date(2023, 7, 1), date(2023, 8, 31)],
-                         parse_vague_dates('июль - август 2023'))
+        self.assertEqual(
+            [date(2023, 7, 1), date(2023, 8, 31)], parse_vague_dates('июль - август 2023')
+        )
 
     def test_vague_date_no_match(self):
         self.assertEqual([], parse_vague_dates('test'))

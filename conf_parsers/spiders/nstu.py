@@ -6,20 +6,23 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class NstuSpider(CrawlSpider):
-    name = "nstu"
+    name = 'nstu'
     un_name = 'Новосибирский государственный технический университет'
-    allowed_domains = ["nstu.ru"]
-    start_urls = ["https://www.nstu.ru/science/scientific_events"]
+    allowed_domains = ['nstu.ru']
+    start_urls = ['https://www.nstu.ru/science/scientific_events']
     rules = (
-        Rule(LinkExtractor(restrict_css="div.science-events__item-cell"),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='div.science-events__item-cell'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h3::text")
+        new_item.add_css('title', 'h3::text')
         dates = response.xpath("string(//div[@class='text-bold mb-1'])").get()
         new_item = get_dates(dates, new_item)
 

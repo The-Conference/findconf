@@ -6,20 +6,23 @@ from ..parsing import default_parser_xpath
 
 
 class NarfuSpider(CrawlSpider):
-    name = "narfu"
+    name = 'narfu'
     un_name = 'Северный (Арктический) федеральный университет имени М.В. Ломоносова'
-    allowed_domains = ["narfu.ru"]
-    start_urls = ["https://narfu.ru/science/nauchnye-meropriyatiya/"]
+    allowed_domains = ['narfu.ru']
+    start_urls = ['https://narfu.ru/science/nauchnye-meropriyatiya/']
     rules = (
-        Rule(LinkExtractor(restrict_css='div.events', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='div.events', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_xpath('title', "//h5/text()")
+        new_item.add_xpath('title', '//h5/text()')
 
         for line in response.xpath("//div[@class='events']//*[self::p or self::li or self::ul]"):
             new_item = default_parser_xpath(line, new_item)

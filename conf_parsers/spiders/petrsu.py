@@ -7,10 +7,10 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class PetrsuSpider(scrapy.Spider):
-    name = "petrsu"
+    name = 'petrsu'
     un_name = 'Петрозаводский государственный университет'
-    allowed_domains = ["conf.petrsu.ru"]
-    start_urls = ["https://conf.petrsu.ru/index.php"]
+    allowed_domains = ['conf.petrsu.ru']
+    start_urls = ['https://conf.petrsu.ru/index.php']
 
     def parse(self, response, **kwargs):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
@@ -22,7 +22,9 @@ class PetrsuSpider(scrapy.Spider):
         dates = response.xpath("string(//div[@id='title'])").get()
         new_item = get_dates(dates, new_item)
 
-        for line in response.xpath("//div[@id='description']//*[self::p or self::div or self::table]"):
+        for line in response.xpath(
+            "//div[@id='description']//*[self::p or self::div or self::table]"
+        ):
             new_item = default_parser_xpath(line, new_item)
         if href := new_item.get_output_value('reg_href'):
             new_item.replace_value('reg_href', href)
@@ -30,22 +32,25 @@ class PetrsuSpider(scrapy.Spider):
 
 
 class PetrsuPagesSpider(CrawlSpider):
-    name = "petrsu_pages"
+    name = 'petrsu_pages'
     un_name = 'Петрозаводский государственный университет'
-    allowed_domains = ["petrsu.ru"]
-    start_urls = ["https://petrsu.ru/page/education/school/project/konferentsii-i-konkursy"]
+    allowed_domains = ['petrsu.ru']
+    start_urls = ['https://petrsu.ru/page/education/school/project/konferentsii-i-konkursy']
     rules = (
-        Rule(LinkExtractor(restrict_css='h4', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='h4', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
         Rule(LinkExtractor(restrict_css='ul.pagination > li.next')),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
-        new_item.add_xpath('title', "//h1/text()")
+        new_item.add_xpath('title', '//h1/text()')
         new_item.add_value('source_href', response.url)
 
-        for line in response.css("div.page-content").xpath(".//*[self::p or self::ul]"):
+        for line in response.css('div.page-content').xpath('.//*[self::p or self::ul]'):
             new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

@@ -5,13 +5,16 @@ from ..parsing import default_parser_xpath
 
 
 class SechenovSpider(CrawlSpider):
-    name = "sechenov"
+    name = 'sechenov'
     un_name = 'Первый МГМУ им. И.М. Сеченова Минздрава России (Сеченовский Университет)'
-    allowed_domains = ["www.sechenov.ru"]
-    start_urls = ["https://www.sechenov.ru/pressroom/events/"]
+    allowed_domains = ['www.sechenov.ru']
+    start_urls = ['https://www.sechenov.ru/pressroom/events/']
     rules = (
-        Rule(LinkExtractor(restrict_css='div.event-descr-wrap', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='div.event-descr-wrap', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):

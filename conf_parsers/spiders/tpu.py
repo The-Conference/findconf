@@ -6,13 +6,16 @@ from ..parsing import get_dates, parse_conf, default_parser_xpath
 
 
 class TpuSpider(CrawlSpider):
-    name = "tpu"
+    name = 'tpu'
     un_name = 'Томский технологический институт'
-    allowed_domains = ["tpu.ru"]
-    start_urls = ["https://portal.tpu.ru/science/konf?m=0"]
+    allowed_domains = ['tpu.ru']
+    start_urls = ['https://portal.tpu.ru/science/konf?m=0']
     rules = (
-        Rule(LinkExtractor(restrict_css='span.normal.c-pages', restrict_text='>>'),
-             callback="parse_items", follow=True),
+        Rule(
+            LinkExtractor(restrict_css='span.normal.c-pages', restrict_text='>>'),
+            callback='parse_items',
+            follow=True,
+        ),
     )
 
     def parse_start_url(self, response, **kwargs):
@@ -20,11 +23,11 @@ class TpuSpider(CrawlSpider):
 
     def parse_items(self, response):
         for row in response.xpath("//table[@class='little']//tr"):
-            td = row.xpath(".//td")
+            td = row.xpath('.//td')
             try:
-                conf_name = td[0].xpath("string(.)").get()
-                dates = td[1].xpath("string(.)").get()
-                contacts = td[2].xpath("text()")
+                conf_name = td[0].xpath('string(.)').get()
+                dates = td[1].xpath('string(.)').get()
+                contacts = td[2].xpath('text()')
                 link = td[3].xpath(".//a[contains(., 'меропр')]/@href").get()
             except IndexError:
                 continue
@@ -44,20 +47,23 @@ class TpuSpider(CrawlSpider):
 
 
 class TpuGrantSpider(CrawlSpider):
-    name = "grant_tpu"
+    name = 'grant_tpu'
     un_name = 'Томский технологический институт'
-    allowed_domains = ["tpu.ru"]
-    start_urls = ["https://portal.tpu.ru/departments/otdel/ontp"]
+    allowed_domains = ['tpu.ru']
+    start_urls = ['https://portal.tpu.ru/departments/otdel/ontp']
     rules = (
-        Rule(LinkExtractor(restrict_css='div.newslink', restrict_text='(?i)конкурс|грант'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='div.newslink', restrict_text='(?i)конкурс|грант'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=GrantItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "div.newshead::text")
+        new_item.add_css('title', 'div.newshead::text')
 
         for line in response.xpath("//div[@class='newsbody']/*[self::p or self:: ul]"):
             new_item = default_parser_xpath(line, new_item)

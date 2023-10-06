@@ -1,5 +1,6 @@
 """Internal low-level helper functions, used mainly by automated processes.
-Direct usage is possible, although higher-level functions should be considered first."""
+Direct usage is possible, although higher-level functions should be considered first.
+"""
 
 import re
 import datetime
@@ -20,15 +21,27 @@ def normalize_string(string: str) -> str:
     """
     try:
         # dash, hyphen, minus, etc.
-        string = re.sub(r'[\u002D\u058A\u05BE\u1400\u1806'
-                        r'\u2010-\u2015\u2E17\u2E1A\u2E3A\u2E3B\u2E40'
-                        r'\u301C\u3030\u30A0\uFE31\uFE32\uFE58\uFE63\uFF0D–-]', '-', string)
+        string = re.sub(
+            r'[\u002D\u058A\u05BE\u1400\u1806'
+            r'\u2010-\u2015\u2E17\u2E1A\u2E3A\u2E3B\u2E40'
+            r'\u301C\u3030\u30A0\uFE31\uFE32\uFE58\uFE63\uFF0D–-]',
+            '-',
+            string,
+        )
     except TypeError as e:
-        e.add_note("Attempted to normalize a non-string object. This most likely means "
-                   "that a text field didn't get parsed properly. Is your selector wrong?")
+        e.add_note(
+            'Attempted to normalize a non-string object. This most likely means '
+            "that a text field didn't get parsed properly. Is your selector wrong?"
+        )
         raise
-    string = string.replace('&nbsp;', ' ').replace('\xa0', ' ') \
-        .replace('\r', ' ').replace('\n', ' ').replace('\t', ' ').replace('\u200b', '')
+    string = (
+        string.replace('&nbsp;', ' ')
+        .replace('\xa0', ' ')
+        .replace('\r', ' ')
+        .replace('\n', ' ')
+        .replace('\t', ' ')
+        .replace('\u200b', '')
+    )
     return ' '.join(string.split()).strip()
 
 
@@ -64,18 +77,24 @@ def find_date_in_string(string: str) -> list[datetime.date]:
         if '-' in day:
             day1, day2 = day.split('-')
             # Assuming that the second part of a double date always has a month and a year
-            dates.extend(({'day': day1, 'month': month, 'year': year},
-                          {'day': day2, 'month': month, 'year': year}))
+            dates.extend(
+                (
+                    {'day': day1, 'month': month, 'year': year},
+                    {'day': day2, 'month': month, 'year': year},
+                )
+            )
         else:
             dates.append({'day': day, 'month': month, 'year': year})
 
     for d in dates:
         if not d.get('year'):
             d['year'] = year or str(datetime.datetime.now().year)
-    result = [parse(' '.join(_date.values()),
-                    settings={'DEFAULT_LANGUAGES': ['ru'],
-                              'DATE_ORDER': 'DMY'}
-                    ) for _date in dates]
+    result = [
+        parse(
+            ' '.join(_date.values()), settings={'DEFAULT_LANGUAGES': ['ru'], 'DATE_ORDER': 'DMY'}
+        )
+        for _date in dates
+    ]
     return [i.date() for i in result if i is not None]
 
 
@@ -113,6 +132,14 @@ def parse_vague_dates(string: str) -> list[datetime.date]:
         month1 = month2
 
     formatted = (f'01 {month1} {year}', f'{month2 or month1} {year}')
-    return [parse(part, settings={'DEFAULT_LANGUAGES': ['ru'],
-                                  'DATE_ORDER': 'DMY',
-                                  'PREFER_DAY_OF_MONTH': 'last'}).date() for part in formatted]
+    return [
+        parse(
+            part,
+            settings={
+                'DEFAULT_LANGUAGES': ['ru'],
+                'DATE_ORDER': 'DMY',
+                'PREFER_DAY_OF_MONTH': 'last',
+            },
+        ).date()
+        for part in formatted
+    ]

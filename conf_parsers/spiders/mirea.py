@@ -7,10 +7,10 @@ from ..utils import normalize_string
 
 
 class MireaSpider(scrapy.Spider):
-    name = "mirea"
+    name = 'mirea'
     un_name = 'МИРЭА — Российский технологический университет'
-    allowed_domains = ["mirea.ru"]
-    start_urls = ["https://www.mirea.ru/nauka-i-innovatsii/seminars-and-conferences/"]
+    allowed_domains = ['mirea.ru']
+    start_urls = ['https://www.mirea.ru/nauka-i-innovatsii/seminars-and-conferences/']
 
     def parse(self, response, **kwargs):
         data = response.xpath("//div[@class='uk-width-1-1']//text()")
@@ -36,8 +36,9 @@ class MireaSpider(scrapy.Spider):
                     continue
 
         for conf in collected_confs:
-            if conf and ('конф' in conf.get('form').lower() or
-                         'конф' in conf.get('title').lower()):
+            if conf and (
+                'конф' in conf.get('form').lower() or 'конф' in conf.get('title').lower()
+            ):
                 new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
                 new_item.add_value('source_href', response.url)

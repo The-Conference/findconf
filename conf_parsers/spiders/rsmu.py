@@ -6,14 +6,14 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class RsmuSpider(CrawlSpider):
-    name = "rsmu"
+    name = 'rsmu'
     un_name = 'Российский национальный исследовательский медицинский университет имени Н.И. Пирогова'
-    allowed_domains = ["rsmu.ru"]
-    start_urls = ["https://rsmu.ru/events/"]
+    allowed_domains = ['rsmu.ru']
+    start_urls = ['https://rsmu.ru/events/']
 
     def parse_start_url(self, response, **kwargs):
-        for card in response.css("div.event-info"):
-            text = card.xpath("string(.)").get()
+        for card in response.css('div.event-info'):
+            text = card.xpath('string(.)').get()
             if 'конфер' in text.lower():
                 link = card.xpath(".//a[contains(., 'Подробнее')]/@href").get()
                 yield scrapy.Request(link, callback=self.parse_items)

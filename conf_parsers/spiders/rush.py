@@ -6,20 +6,23 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class RushSpider(CrawlSpider):
-    name = "rush"
+    name = 'rush'
     un_name = 'Российский государственный гуманитарный университет'
-    allowed_domains = ["rsuh.ru"]
-    start_urls = ["https://www.rsuh.ru/anons/"]
+    allowed_domains = ['rsuh.ru']
+    start_urls = ['https://www.rsuh.ru/anons/']
     rules = (
-        Rule(LinkExtractor(restrict_css='div.news_box > a', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='div.news_box > a', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h2.zagol::text")
+        new_item.add_css('title', 'h2.zagol::text')
         new_item.add_xpath('short_description', "string(//div[@class='col-sm-8']/p)")
 
         for line in response.xpath("//div[@class='col-xl-12']//*[self::p or self::li]"):

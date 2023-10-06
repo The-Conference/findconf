@@ -8,13 +8,16 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class VstuSpider(CrawlSpider):
-    name = "vstu"
+    name = 'vstu'
     un_name = 'Волгоградский государственный технический университет'
-    allowed_domains = ["www.vstu.ru"]
-    start_urls = ["https://www.vstu.ru/nauka/konferentsii/"]
+    allowed_domains = ['www.vstu.ru']
+    start_urls = ['https://www.vstu.ru/nauka/konferentsii/']
     rules = (
-        Rule(LinkExtractor(restrict_css='dl.conf', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='dl.conf', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def start_requests(self):
@@ -25,7 +28,7 @@ class VstuSpider(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h1::text")
+        new_item.add_css('title', 'h1::text')
         date = response.xpath("string(//div[@class='content-wrapper']//p)").get()
         new_item = get_dates(date, new_item)
 

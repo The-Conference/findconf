@@ -5,10 +5,10 @@ from ..utils import find_date_in_string
 
 
 class RNFGrantSpider(scrapy.Spider):
-    name = "grant_rnf"
+    name = 'grant_rnf'
     un_name = 'Российский научный фонд'
-    allowed_domains = ["rscf.ru"]
-    start_urls = ["https://rscf.ru/contests/?status=acceptance"]
+    allowed_domains = ['rscf.ru']
+    start_urls = ['https://rscf.ru/contests/?status=acceptance']
 
     def parse(self, response, **kwargs):
         for row in response.css('div#classification-table > div.classification-table-row'):

@@ -5,17 +5,17 @@ from ..parsing import get_dates, parse_conf
 
 
 class UrfuSpider(scrapy.Spider):
-    name = "urfu"
+    name = 'urfu'
     un_name = 'Уральский федеральный университет имени первого Президента России Б.Н. Ельцина'
-    allowed_domains = ["urfu.ru"]
-    start_urls = ["https://urfu.ru/ru/science/konferencii/"]
+    allowed_domains = ['urfu.ru']
+    start_urls = ['https://urfu.ru/ru/science/konferencii/']
 
     def parse(self, response, **kwargs):
         for row in response.xpath("//table[@class='ce-table']//tr"):
-            td = row.xpath(".//td")
+            td = row.xpath('.//td')
             try:
-                conf_name = td[0].xpath("string(.)").get()
-                dates = td[1].xpath("string(.)").get()
+                conf_name = td[0].xpath('string(.)').get()
+                dates = td[1].xpath('string(.)').get()
                 link = td[2].xpath(".//a[contains(., 'меропр')]/@href").get()
             except IndexError:
                 continue

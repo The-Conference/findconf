@@ -7,16 +7,26 @@ from ..parsing import get_dates, parse_conf
 
 
 class KpfuSpider(scrapy.Spider):
-    name = "kpfu"
+    name = 'kpfu'
     un_name = 'Казанский (Приволжский) федеральный университет'
-    allowed_domains = ["kpfu.ru"]
+    allowed_domains = ['kpfu.ru']
 
     def start_requests(self):
-        url = "https://kpfu.ru/portal_new.main_page?"
+        url = 'https://kpfu.ru/portal_new.main_page?'
         year = datetime.now().year
-        querystring = {"p_sub": "49618", "p_group_name": "", "p_meropriatie_vid_type": "2", "p_kon_kfu": "1",
-                       "p_mounth_date": "", "p_year_start": year, "status": "", "p_office": "", "p_date_start": "",
-                       "p_date_end": "", "p_page": "1"}
+        querystring = {
+            'p_sub': '49618',
+            'p_group_name': '',
+            'p_meropriatie_vid_type': '2',
+            'p_kon_kfu': '1',
+            'p_mounth_date': '',
+            'p_year_start': year,
+            'status': '',
+            'p_office': '',
+            'p_date_start': '',
+            'p_date_end': '',
+            'p_page': '1',
+        }
         yield scrapy.Request(url=url + urlencode(querystring), callback=self.parse_page)
 
     def parse_page(self, response):
@@ -28,8 +38,10 @@ class KpfuSpider(scrapy.Spider):
             dates = row.css('td:nth-child(3)::text').get()
             new_item = get_dates(dates, new_item)
             new_item = parse_conf(conf_name, new_item)
-            new_item.add_xpath('conf_address', "string(./td[position()=4])")
+            new_item.add_xpath('conf_address', 'string(./td[position()=4])')
             yield new_item.load_item()
 
-        if next_link := response.xpath("//div[@class='pagination']/a[contains(text(), '»')]/@href").get():
+        if next_link := response.xpath(
+            "//div[@class='pagination']/a[contains(text(), '»')]/@href"
+        ).get():
             yield scrapy.Request(next_link, callback=self.parse_page)

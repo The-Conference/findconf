@@ -1,26 +1,29 @@
 [project]
-name = "conf-parsers"
-version = "1"
-requires-python = ">=3.11"
+name = 'conf-parsers'
+version = '1'
+requires-python = '>=3.11'
 dependencies = [
-    "scrapy",
-    "sqlalchemy",
-    "dateparser",
-    "psycopg[binary]",
-    "scrapy-playwright",
-    "pdfplumber",
-    "django-environ",
+    'scrapy',
+    'sqlalchemy',
+    'dateparser',
+    'psycopg[binary]',
+    'scrapy-playwright',
+    'pdfplumber',
+    'django-environ',
 ]
 
 [project.optional-dependencies]
 dev = [
-    "coverage",
-    "ipython",
-    "pdoc",
+    'coverage',
+    'ipython',
+    'pdoc',
+    'blue',
+    'ruff',
+    'pip-tools',
 ]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ['setuptools', 'wheel']
 
 [tool.setuptools]
 py-modules = []
@@ -33,3 +36,13 @@ omit = ['settings.py']
 
 [tool.coverage.report]
 skip_covered = true
+
+[tool.ruff]
+line-length = 119
+select = ['E', 'F', 'UP', 'W']
+
+[tool.blue]
+line-length = 99
+
+[tool.ruff.pydocstyle]
+convention = 'google'

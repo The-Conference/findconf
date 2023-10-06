@@ -6,16 +6,14 @@ from ..parsing import get_dates
 
 
 class SzgmuSpider(CrawlSpider):
-    name = "szgmu"
+    name = 'szgmu'
     un_name = 'Северо-Западный государственный медицинский университет имени И.И. Мечникова'
-    allowed_domains = ["szgmu.ru"]
-    start_urls = ["https://szgmu.ru/modules/ev/index.php"]
+    allowed_domains = ['szgmu.ru']
+    start_urls = ['https://szgmu.ru/modules/ev/index.php']
     rules = (
         Rule(LinkExtractor(restrict_css='span#next-month'), callback='parse_items', follow=True),
     )
-    custom_settings = {
-        "DEPTH_LIMIT": 6
-    }
+    custom_settings = {'DEPTH_LIMIT': 6}
 
     def parse_start_url(self, response, **kwargs):
         return self.parse_items(response)

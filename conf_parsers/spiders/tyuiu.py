@@ -6,16 +6,17 @@ from ..parsing import get_dates
 
 
 class TyuiuSpider(scrapy.Spider):
-    name = "tyuiu"
+    name = 'tyuiu'
     un_name = 'Тюменский индустриальный университет'
-    allowed_domains = ["www.tyuiu.ru"]
-    start_urls = ["https://www.tyuiu.ru/1028-2/konferentsii-2/"]
+    allowed_domains = ['www.tyuiu.ru']
+    start_urls = ['https://www.tyuiu.ru/1028-2/konferentsii-2/']
 
     def parse(self, response, **kwargs):
         for row in response.css('tr'):
             try:
-                _, title, date, conf_address, contacts, deadline = \
-                    [i.xpath("string(.)").get() for i in row.css('td')]
+                _, title, date, conf_address, contacts, deadline = (
+                    i.xpath('string(.)').get() for i in row.css('td')
+                )
             except ValueError:
                 continue
 

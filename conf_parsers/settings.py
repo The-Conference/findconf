@@ -20,9 +20,9 @@ from scrapy.utils.log import configure_logging
 env = environ.Env()
 environ.Env.read_env()
 
-BOT_NAME = "conf_parsers"
-SPIDER_MODULES = ["conf_parsers.spiders", "conf_parsers.spiders_grants"]
-NEWSPIDER_MODULE = "conf_parsers.spiders"
+BOT_NAME = 'conf_parsers'
+SPIDER_MODULES = ['conf_parsers.spiders', 'conf_parsers.spiders_grants']
+NEWSPIDER_MODULE = 'conf_parsers.spiders'
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 LOG_LEVEL = 'INFO'
@@ -53,10 +53,10 @@ TELNETCONSOLE_ENABLED = False
 # Override the default request headers:
 DEFAULT_REQUEST_HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,'
-              'application/signed-exchange;v=b3;q=0.9',
+    'application/signed-exchange;v=b3;q=0.9',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                  'Chrome/109.0.0.0 Safari/537.36',
-    "Accept-Language": "ru-RU,ru",
+    'Chrome/109.0.0.0 Safari/537.36',
+    'Accept-Language': 'ru-RU,ru',
 }
 
 # Enable or disable spider middlewares
@@ -80,10 +80,10 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "conf_parsers.pipelines.DropOldItemsPipeline": 10,
-    "conf_parsers.pipelines.FillTheBlanksPipeline": 100,
+    'conf_parsers.pipelines.DropOldItemsPipeline': 10,
+    'conf_parsers.pipelines.FillTheBlanksPipeline': 100,
     # This pipeline must be the last
-    "conf_parsers.pipelines.SaveToDBPipeline": 999,
+    'conf_parsers.pipelines.SaveToDBPipeline': 999,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -108,9 +108,9 @@ AUTOTHROTTLE_ENABLED = True
 # HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"
 
 # Set settings whose default value is deprecated to a future-proof value
-REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
-FEED_EXPORT_ENCODING = "utf-8"
+REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
+TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
+FEED_EXPORT_ENCODING = 'utf-8'
 
 RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 408, 429, 403]
 
@@ -119,11 +119,11 @@ class PoliteLogFormatter(logformatter.LogFormatter):
     def dropped(self, item, exception, response, spider):
         return {
             'level': logging.INFO,
-            'msg': "Dropped: %(exception)s" + os.linesep + "item_id: %(item_id)s",
+            'msg': 'Dropped: %(exception)s' + os.linesep + 'item_id: %(item_id)s',
             'args': {
                 'exception': exception,
                 'item_id': item.get('item_id'),
-            }
+            },
         }
 
 
@@ -131,7 +131,7 @@ LOG_FORMATTER = 'conf_parsers.settings.PoliteLogFormatter'
 os.makedirs(ROOT_DIR.joinpath('logs'), exist_ok=True)
 rotating_log_handler = RotatingFileHandler(
     filename=ROOT_DIR.joinpath('logs', 'scrapy.log'),
-    encoding="utf-8",
+    encoding='utf-8',
     maxBytes=2 * 1000000,
     backupCount=5,
 )
@@ -139,8 +139,10 @@ rotating_log_handler = RotatingFileHandler(
 configure_logging(install_root_handler=False)
 logging.basicConfig(
     level=logging.DEBUG,
-    format="%(asctime)s %(levelname)s: %(message)s",
-    handlers=[rotating_log_handler, ],
+    format='%(asctime)s %(levelname)s: %(message)s',
+    handlers=[
+        rotating_log_handler,
+    ],
 )
 
 DB_USER = env('DB_USER', default=None)
@@ -148,14 +150,14 @@ DB_PASS = env('DB_PASS', default=None)
 DB_HOST = env('DB_HOST', default=None)
 DB_PORT = env('DB_PORT', default=None)
 DB_NAME = env('DB_NAME', default=None)
-DEFAULT_DB = f"postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DEFAULT_DB = f'postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 
 DATABASE_URL = env('DB_URL', default=DEFAULT_DB)
 
-PLAYWRIGHT_BROWSER_TYPE = "webkit"
+PLAYWRIGHT_BROWSER_TYPE = 'webkit'
 PLAYWRIGHT_LAUNCH_OPTIONS = {
-    "headless": True,
-    "timeout": 0,
+    'headless': True,
+    'timeout': 0,
 }
 PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 0
 

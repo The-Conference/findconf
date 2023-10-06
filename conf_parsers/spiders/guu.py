@@ -7,21 +7,23 @@ from ..parsing import get_dates, parse_conf
 
 
 class GuuSpider(scrapy.Spider):
-    name = "guu"
+    name = 'guu'
     un_name = 'Государственный университет управления'
-    allowed_domains = ["guu.ru"]
-    start_urls = ["https://guu.ru/science/scince_events/"]
+    allowed_domains = ['guu.ru']
+    start_urls = ['https://guu.ru/science/scince_events/']
 
     def parse(self, response, **kwargs):
         current_year = datetime.now().year
-        for table in response.css("table"):
-            year = table.xpath("string(.//tr/td[position()=3])").get()
+        for table in response.css('table'):
+            year = table.xpath('string(.//tr/td[position()=3])').get()
             year = int(re.findall(r'\d+', year)[0])
             if year < current_year:
                 break
-            for row in table.css("tr"):
+            for row in table.css('tr'):
                 try:
-                    _, conf_name, dates, contacts, _ = [i.xpath("string(.)").get() for i in row.css('td')]
+                    _, conf_name, dates, contacts, _ = (
+                        i.xpath('string(.)').get() for i in row.css('td')
+                    )
                 except ValueError:
                     continue
                 if 'конфер' in conf_name.lower():

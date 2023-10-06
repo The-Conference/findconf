@@ -5,21 +5,23 @@ from ..utils import find_date_in_string
 
 
 class MrsuSpider(CrawlSpider):
-    name = "mrsu"
+    name = 'mrsu'
     un_name = 'Национальный исследовательский Мордовский государственный университет им. Н.П. Огарева'
-    allowed_domains = ["mrsu.ru"]
-    start_urls = ["https://mrsu.ru/ru/sci/conferences/"]
+    allowed_domains = ['mrsu.ru']
+    start_urls = ['https://mrsu.ru/ru/sci/conferences/']
     rules = (
-        Rule(LinkExtractor(restrict_css='a.modern-page-next'), callback='parse_items', follow=True),
+        Rule(
+            LinkExtractor(restrict_css='a.modern-page-next'), callback='parse_items', follow=True
+        ),
     )
 
     def parse_start_url(self, response, **kwargs):
         return self.parse_items(response)
 
     def parse_items(self, response):
-        for card in response.css("div.b-element"):
+        for card in response.css('div.b-element'):
 
-            conf_name_item = card.css("div.head__local__institution_with_bread")
+            conf_name_item = card.css('div.head__local__institution_with_bread')
             conf_name = conf_name_item.xpath('string(.)').get()
             if 'онференц' in conf_name.lower():
                 new_item = ConferenceLoader(item=ConferenceItem(), response=response)
@@ -28,7 +30,7 @@ class MrsuSpider(CrawlSpider):
                 new_item.add_value('source_href', response.urljoin(link))
                 new_item.add_value('title', conf_name)
 
-                for item in card.css("div.info__text"):
+                for item in card.css('div.info__text'):
                     text = item.xpath('string(.)').get()
                     if 'Дата начала' in text:
                         conf_date_begin = find_date_in_string(text)[0]

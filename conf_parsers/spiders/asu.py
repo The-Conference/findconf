@@ -5,14 +5,14 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class AsuSpider(scrapy.Spider):
-    name = "asu"
+    name = 'asu'
     un_name = 'Алтайский государственный университет'
-    allowed_domains = ["asu.ru"]
-    start_urls = ["https://www.asu.ru/science/sci_events/"]
+    allowed_domains = ['asu.ru']
+    start_urls = ['https://www.asu.ru/science/sci_events/']
 
     def parse(self, response, **kwargs):
         for row in response.xpath("//div[@class='tabl_events']//tr"):
-            r = [i.xpath("string(.)").get() for i in row.xpath(".//td")]
+            r = [i.xpath('string(.)').get() for i in row.xpath('.//td')]
             try:
                 conf_type = r[1]
                 title, dates, contacts = r[3:6]

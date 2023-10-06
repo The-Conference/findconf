@@ -5,21 +5,24 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class SpbgasuSpider(scrapy.Spider):
-    name = "spbgasu"
+    name = 'spbgasu'
     un_name = 'Санкт-Петербургский государственный архитектурно-строительный университет'
-    allowed_domains = ["spbgasu.ru"]
-    start_urls = ["https://www.spbgasu.ru/science/konferentsii-i-seminary/"]
+    allowed_domains = ['spbgasu.ru']
+    start_urls = ['https://www.spbgasu.ru/science/konferentsii-i-seminary/']
 
     def parse(self, response, **kwargs):
         for row in response.css('tr'):
             cells = row.css('td')
             if len(cells) > 1:
                 href = cells[1].css('a::attr(href)').get()
-                title = cells[1].xpath("string(.)").get()
-                contacts = cells[-1].xpath("string(.)").get()
+                title = cells[1].xpath('string(.)').get()
+                contacts = cells[-1].xpath('string(.)').get()
                 if href and 'онференц' in title.lower():
-                    yield scrapy.Request(response.urljoin(href), callback=self.parse_items,
-                                         meta={'contacts': contacts})
+                    yield scrapy.Request(
+                        response.urljoin(href),
+                        callback=self.parse_items,
+                        meta={'contacts': contacts},
+                    )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)

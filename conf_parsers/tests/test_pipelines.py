@@ -1,4 +1,3 @@
-import datetime
 from unittest import TestCase
 from datetime import date, datetime
 
@@ -18,7 +17,7 @@ class SampleSpider(scrapy.Spider):
     name = 'test_spider'
     un_name = 'Test Spider 2000'
     settings = get_project_settings()
-    settings['DATABASE_URL'] = "sqlite:///file:test_db?cache=shared&mode=memory&uri=true"
+    settings['DATABASE_URL'] = 'sqlite:///file:test_db?cache=shared&mode=memory&uri=true'
 
 
 class TestDropOldItemsPipeline(TestCase):
@@ -45,7 +44,11 @@ class TestDropOldItemsPipeline(TestCase):
         today = datetime.now().date()
         str_today = f'{today.day}-{today.month}-{today.year}'
         item = ConferenceItem(short_description=str_today)
-        expected = {'conf_date_begin': today, 'conf_date_end': None, 'short_description': str_today}
+        expected = {
+            'conf_date_begin': today,
+            'conf_date_end': None,
+            'short_description': str_today,
+        }
         self.assertEqual(expected, DropOldItemsPipeline.process_item(item, self.spider))
 
     def test_date_not_found_conf(self):
@@ -107,8 +110,13 @@ class TestSaveToDBPipeline(TestCase):
 
         with self.assertLogs(level='INFO') as log:
             self.db.close_spider(self.spider)
-            self.assertEqual(['INFO:test_spider:Saved 0 items to DB: []',
-                              "INFO:test_spider:Duplicate items: {'test'}"], log.output)
+            self.assertEqual(
+                [
+                    'INFO:test_spider:Saved 0 items to DB: []',
+                    "INFO:test_spider:Duplicate items: {'test'}",
+                ],
+                log.output,
+            )
         q = select(ConferenceItemDB)
         res = self.session.execute(q).scalars().all()
         self.assertEqual(1, len(res))
@@ -149,7 +157,8 @@ class TestSaveToDBPipeline(TestCase):
 class TestFillTheBlanksPipeline(TestCase):
     def test_conf_item_id_single(self):
         """Do not change.
-        Changing item_id format will result in duplicate entries in DB."""
+        Changing item_id format will result in duplicate entries in DB.
+        """
         item = ConferenceItem(
             conf_date_begin=date(2022, 1, 2),
             title='test conf',
@@ -159,7 +168,8 @@ class TestFillTheBlanksPipeline(TestCase):
 
     def test_conf_item_id_double(self):
         """Do not change.
-        Changing item_id format will result in duplicate entries in DB."""
+        Changing item_id format will result in duplicate entries in DB.
+        """
         item = ConferenceItem(
             conf_date_begin=date(2022, 1, 2),
             conf_date_end=date(2022, 1, 3),
@@ -170,7 +180,8 @@ class TestFillTheBlanksPipeline(TestCase):
 
     def test_grant_item_id(self):
         """Do not change.
-        Changing item_id format will result in duplicate entries in DB."""
+        Changing item_id format will result in duplicate entries in DB.
+        """
         item = GrantItem(
             reg_date_end=date(2022, 1, 2),
             title='test grant',

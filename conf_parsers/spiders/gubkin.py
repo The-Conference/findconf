@@ -6,14 +6,19 @@ from ..parsing import get_dates
 
 
 class GubkinSpider(CrawlSpider):
-    name = "gubkin"
-    un_name = 'Российский государственный университет нефти и газа ' \
-              '(национальный исследовательский университет) имени И.М. Губкина'
-    allowed_domains = ["conf.gubkin.ru"]
-    start_urls = ["https://conf.gubkin.ru/conferences/"]
+    name = 'gubkin'
+    un_name = (
+        'Российский государственный университет нефти и газа '
+        '(национальный исследовательский университет) имени И.М. Губкина'
+    )
+    allowed_domains = ['conf.gubkin.ru']
+    start_urls = ['https://conf.gubkin.ru/conferences/']
     rules = (
-        Rule(LinkExtractor(restrict_css='td.name', restrict_text='онференц', attrs=('data-short',)),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='td.name', restrict_text='онференц', attrs=('data-short',)),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
@@ -23,7 +28,7 @@ class GubkinSpider(CrawlSpider):
         new_item.add_value('title', conf_name)
         new_item.add_value('source_href', response.url)
         new_item.add_value('short_description', conf_name)
-        new_item.add_css('description', "div.modal-body:not(.ul)::text")
+        new_item.add_css('description', 'div.modal-body:not(.ul)::text')
 
         _dates = response.xpath("string(//li[@class='date-short'])").get()
         new_item = get_dates(_dates, new_item)

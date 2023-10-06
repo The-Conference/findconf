@@ -6,13 +6,18 @@ from ..parsing import get_dates, default_parser_xpath
 
 
 class A1spbgmuSpider(CrawlSpider):
-    name = "1spbgmu"
-    un_name = 'Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова'
-    allowed_domains = ["www.1spbgmu.ru"]
-    start_urls = ["https://www.1spbgmu.ru/nauka/konferentsii"]
+    name = '1spbgmu'
+    un_name = (
+        'Первый Санкт-Петербургский государственный медицинский университет им. акад. И.П. Павлова'
+    )
+    allowed_domains = ['www.1spbgmu.ru']
+    start_urls = ['https://www.1spbgmu.ru/nauka/konferentsii']
     rules = (
-        Rule(LinkExtractor(restrict_css='td.list-title', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='td.list-title', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):

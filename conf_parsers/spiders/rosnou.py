@@ -6,23 +6,26 @@ from ..parsing import default_parser_xpath
 
 
 class RosnouSpider(CrawlSpider):
-    name = "rosnou"
+    name = 'rosnou'
     un_name = 'Российский новый университет'
-    allowed_domains = ["rosnou.ru"]
-    start_urls = ["https://rosnou.ru/nauka/conferences/"]
+    allowed_domains = ['rosnou.ru']
+    start_urls = ['https://rosnou.ru/nauka/conferences/']
     rules = (
-        Rule(LinkExtractor(restrict_css='div.article-card'),
-             callback="parse_items", follow=False),
+        Rule(LinkExtractor(restrict_css='div.article-card'), callback='parse_items', follow=False),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        conf_s_desc = response.xpath("string(//div[contains(@class, 'grid-item_widget-text')]/p)").get()
+        conf_s_desc = response.xpath(
+            "string(//div[contains(@class, 'grid-item_widget-text')]/p)"
+        ).get()
         new_item.add_value('short_description', conf_s_desc)
-        new_item.add_css('title', "div.content-header__title-inner::text")
+        new_item.add_css('title', 'div.content-header__title-inner::text')
 
-        for line in response.xpath("//div[@class='stage -gap-grid-inner_y_medium ']//*[self::p or self::ul]"):
+        for line in response.xpath(
+            "//div[@class='stage -gap-grid-inner_y_medium ']//*[self::p or self::ul]"
+        ):
             new_item = default_parser_xpath(line, new_item)
         yield new_item.load_item()

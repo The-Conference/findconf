@@ -6,12 +6,14 @@ from ..parsing import default_parser_xpath, get_dates
 
 
 class RanepaSpiderIIM(CrawlSpider):
-    name = "ranepa-iim"
+    name = 'ranepa-iim'
     un_name = 'Институт отраслевого менеджмента РАНХиГС'
-    allowed_domains = ["iim.ranepa.ru"]
-    start_urls = ["https://iim.ranepa.ru/about/events/"]
+    allowed_domains = ['iim.ranepa.ru']
+    start_urls = ['https://iim.ranepa.ru/about/events/']
     rules = (
-        Rule(LinkExtractor(restrict_css='a.specialty__item'), callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='a.specialty__item'), callback='parse_items', follow=False
+        ),
     )
 
     def parse_items(self, response):
@@ -20,50 +22,60 @@ class RanepaSpiderIIM(CrawlSpider):
             new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
             new_item.add_value('source_href', response.url)
-            new_item.add_css('title', "h1::text")
+            new_item.add_css('title', 'h1::text')
             new_item.add_value('short_description', desc)
             dates = response.xpath("string(//div[@class='conf-intro__date'])").get()
             new_item = get_dates(dates, new_item)
-            new_item.add_css('conf_address', "div.contacts__left > div.contact::text")
+            new_item.add_css('conf_address', 'div.contacts__left > div.contact::text')
 
-            for line in response.xpath("//div[@class='section-indent bgc--default']//*[self::p or self::ul]"):
+            for line in response.xpath(
+                "//div[@class='section-indent bgc--default']//*[self::p or self::ul]"
+            ):
                 new_item = default_parser_xpath(line, new_item)
             yield new_item.load_item()
 
 
 class RanepaSpiderIURR(CrawlSpider):
-    name = "ranepa-iurr"
+    name = 'ranepa-iurr'
     un_name = 'Институт управления и регионального развития РАНХиГС'
-    allowed_domains = ["iurr.ranepa.ru"]
-    start_urls = ["http://iurr.ranepa.ru/category/news/anounces/"]
+    allowed_domains = ['iurr.ranepa.ru']
+    start_urls = ['http://iurr.ranepa.ru/category/news/anounces/']
     rules = (
-        Rule(LinkExtractor(restrict_css='article.single-news-article', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='article.single-news-article', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        conf_name = response.css("h1::text").get()
+        conf_name = response.css('h1::text').get()
         new_item.add_value('title', conf_name)
         new_item = get_dates(conf_name, new_item)
 
         for line in response.xpath("//div[@class='thecontent']//*[self::p or self::ul]"):
             new_item = default_parser_xpath(line, new_item)
-        desc = response.xpath("//div[@class='thecontent']//*[self::p][position() < 10]//text()").getall()
+        desc = response.xpath(
+            "//div[@class='thecontent']//*[self::p][position() < 10]//text()"
+        ).getall()
         new_item.replace_value('description', desc)
         yield new_item.load_item()
 
 
 class RanepaSpiderIGSU(CrawlSpider):
-    name = "ranepa-igsu"
+    name = 'ranepa-igsu'
     un_name = 'Институт государственной службы и управления РАНХиГС'
-    allowed_domains = ["igsu.ranepa.ru"]
-    start_urls = ["https://igsu.ranepa.ru/science/confs/"]
+    allowed_domains = ['igsu.ranepa.ru']
+    start_urls = ['https://igsu.ranepa.ru/science/confs/']
     rules = (
-        Rule(LinkExtractor(restrict_css='h2.entry-title', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='h2.entry-title', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
         Rule(LinkExtractor(restrict_css='div.pull-right')),
     )
 
@@ -71,7 +83,7 @@ class RanepaSpiderIGSU(CrawlSpider):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h1::text")
+        new_item.add_css('title', 'h1::text')
 
         text_block = response.xpath("//div[@class='et_pb_text_inner']")
         for line in text_block.xpath("./*[self::p or self::ul or starts-with(name(),'h')]"):
@@ -83,20 +95,23 @@ class RanepaSpiderIGSU(CrawlSpider):
 
 
 class RanepaSpiderGSCM(CrawlSpider):
-    name = "ranepa-gscm"
+    name = 'ranepa-gscm'
     un_name = 'Институт государственной службы и управления РАНХиГС'
-    allowed_domains = ["gscm.ranepa.ru"]
-    start_urls = ["https://gscm.ranepa.ru/about/events/"]
+    allowed_domains = ['gscm.ranepa.ru']
+    start_urls = ['https://gscm.ranepa.ru/about/events/']
     rules = (
-        Rule(LinkExtractor(restrict_css='a.activity-block', restrict_text='онференц'),
-             callback="parse_items", follow=False),
+        Rule(
+            LinkExtractor(restrict_css='a.activity-block', restrict_text='онференц'),
+            callback='parse_items',
+            follow=False,
+        ),
     )
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h1::text")
+        new_item.add_css('title', 'h1::text')
 
         for line in response.xpath("//div[@class='news-detail__text']//*[self::p or self::ul]"):
             new_item = default_parser_xpath(line, new_item)
@@ -105,24 +120,21 @@ class RanepaSpiderGSCM(CrawlSpider):
 
 
 class RanepaSpiderION(CrawlSpider):
-    name = "ranepa-ion"
+    name = 'ranepa-ion'
     un_name = 'Институт общественных наук РАНХиГС'
-    allowed_domains = ["ion.ranepa.ru"]
-    start_urls = ["https://ion.ranepa.ru/announcement/f/event_type-21/"]
-    rules = (
-        Rule(LinkExtractor(restrict_css='div.b-txt'),
-             callback="parse_items", follow=False),
-    )
+    allowed_domains = ['ion.ranepa.ru']
+    start_urls = ['https://ion.ranepa.ru/announcement/f/event_type-21/']
+    rules = (Rule(LinkExtractor(restrict_css='div.b-txt'), callback='parse_items', follow=False),)
 
     def parse_items(self, response):
         new_item = ConferenceLoader(item=ConferenceItem(), response=response)
 
         new_item.add_value('source_href', response.url)
-        new_item.add_css('title', "h1::text")
+        new_item.add_css('title', 'h1::text')
         new_item.add_xpath('short_description', "string(//div[@class='b-program-fin']/p)")
 
         # no tags. Splitting text by <br>
-        for line in response.xpath("//article/*[not(div)]//text()"):
+        for line in response.xpath('//article/*[not(div)]//text()'):
             new_item = default_parser_xpath(line, new_item)
 
         yield new_item.load_item()
