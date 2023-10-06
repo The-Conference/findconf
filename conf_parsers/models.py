@@ -33,7 +33,9 @@ class AbstractItem(Base):
     reg_date_begin = Column(
         Date, nullable=True, default=null(), doc='Registration start date. Parsed.'
     )
-    reg_date_end = Column(Date, nullable=True, default=null(), doc='Registration end date. Parsed.')
+    reg_date_end = Column(
+        Date, nullable=True, default=null(), doc='Registration end date. Parsed.'
+    )
     source_href = Column(String(500), default=null(), doc='Link to the conference page. Parsed.')
     reg_href = Column(
         String(500), nullable=True, default=null(), doc='Link to the registration form. Parsed.'
@@ -45,7 +47,9 @@ class AbstractItem(Base):
     description = Column(
         String, nullable=False, default='', doc='Conference full description. Parsed.'
     )
-    contacts = Column(String, nullable=True, default=null(), doc="Organisers' contact data. Parsed.")
+    contacts = Column(
+        String, nullable=True, default=null(), doc="Organisers' contact data. Parsed."
+    )
     checked = Column(Boolean, default=False, doc='True if manually approved. Manually entered.')
 
     @validates('un_name', 'source_href', 'reg_href', 'conf_href')

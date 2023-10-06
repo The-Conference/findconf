@@ -29,8 +29,12 @@ class TestParsing(TestCase):
             [datetime.date(2020, 5, 20), datetime.date(2020, 4, 11)],
             self.new_item.get_collected_values('reg_date_end'),
         )
-        self.assertEqual(datetime.date(2020, 5, 20), self.new_item.get_output_value('reg_date_end'))
-        self.assertEqual(datetime.date(2020, 5, 15), self.new_item.get_output_value('reg_date_begin'))
+        self.assertEqual(
+            datetime.date(2020, 5, 20), self.new_item.get_output_value('reg_date_end')
+        )
+        self.assertEqual(
+            datetime.date(2020, 5, 15), self.new_item.get_output_value('reg_date_begin')
+        )
 
     def test_sample_dates(self):
         self.assertEqual(

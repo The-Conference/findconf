@@ -6,7 +6,9 @@ from ..utils import find_date_in_string
 
 class MrsuSpider(CrawlSpider):
     name = 'mrsu'
-    un_name = 'Национальный исследовательский Мордовский государственный университет им. Н.П. Огарева'
+    un_name = (
+        'Национальный исследовательский Мордовский государственный университет им. Н.П. Огарева'
+    )
     allowed_domains = ['mrsu.ru']
     start_urls = ['https://mrsu.ru/ru/sci/conferences/']
     rules = (

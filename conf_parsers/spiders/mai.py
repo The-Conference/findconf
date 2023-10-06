@@ -9,7 +9,9 @@ from ..utils import find_date_in_string
 
 class MaiSpider(scrapy.Spider):
     name = 'mai'
-    un_name = 'Российский национальный исследовательский медицинский университет имени Н.И. Пирогова'
+    un_name = (
+        'Российский национальный исследовательский медицинский университет имени Н.И. Пирогова'
+    )
     allowed_domains = ['mai.ru']
     start_urls = ['https://mai.ru/science/events/conf/']
 

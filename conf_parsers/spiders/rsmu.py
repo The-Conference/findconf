@@ -7,7 +7,9 @@ from ..parsing import default_parser_xpath, get_dates
 
 class RsmuSpider(CrawlSpider):
     name = 'rsmu'
-    un_name = 'Российский национальный исследовательский медицинский университет имени Н.И. Пирогова'
+    un_name = (
+        'Российский национальный исследовательский медицинский университет имени Н.И. Пирогова'
+    )
     allowed_domains = ['rsmu.ru']
     start_urls = ['https://rsmu.ru/events/']
 

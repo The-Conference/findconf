@@ -6,7 +6,9 @@ from ..parsing import get_dates, parse_conf
 
 class NpiSpider(scrapy.Spider):
     name = 'npi'
-    un_name = 'Южно-Российский государственный политехнический университет (НПИ) имени М.И. Платова'
+    un_name = (
+        'Южно-Российский государственный политехнический университет (НПИ) имени М.И. Платова'
+    )
     allowed_domains = ['npi-tu.ru']
     start_urls = ['https://www.npi-tu.ru/science/activities/konferentsii/']
 

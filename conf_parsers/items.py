@@ -24,7 +24,9 @@ def absolute_url(url: str, loader_context: ChainMap) -> str:
         Absolute URL.
     """
     if loader_context.get('response') is None:
-        raise ValueError('No context was passed. Make sure to include response in the item loader.')
+        raise ValueError(
+            'No context was passed. Make sure to include response in the item loader.'
+        )
     return loader_context['response'].urljoin(url)
 
 
